@@ -1,0 +1,230 @@
+.product__detail {
+    margin: 40px 0;
+    margin-top: 180px;
+}
+.all-img {
+    float:left;
+    list-style: none;
+}
+.img-item img{
+    width: 100px;
+    cursor: pointer;
+    margin: 5px 0;
+}
+#main-img {
+    float: left;
+    max-width: 500px;
+}
+#main-img img {
+    width: 370px;
+    margin-left: 30px;
+    margin-top: 15px;
+    background-size: cover;
+    background-position: center;
+    
+}
+.product__name h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    line-height: 35px;
+}
+.product__price h2{
+    color: #d9121f;
+    margin-bottom: 10px;
+}
+.option-swap {
+    width: 60px;
+    height: 40px;
+    margin-right: 5px;
+    background-color: var(--white-color);
+    color: var(--black-color);
+    margin-bottom: 30px;
+}
+.option-swap:focus {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    border-radius: unset !important;
+    outline: unset;
+    border: unset;
+}
+.product__wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.product__wrap label{
+    font-size: 16px;
+    margin-right: 15px;
+}
+.product__wrap input {
+    width: 50px;
+    height: 40px;
+}
+.control {
+    border-radius: unset;
+    border: 1px solid var(--black-color);
+    background-color: var(--white-color);
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+}
+.text-input {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    border: unset;
+    border-radius: unset;
+    vertical-align: middle;
+}
+.add-cart {
+    width: 200px;
+    height: 40px;
+    background:none;
+    color: var(--white-color);
+    font-size: 16px;
+    transition: 0.8s;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #d9121f;
+    cursor: pointer;
+}
+.add-cart::before {
+    content:"";
+    position: absolute;
+    left:0;
+    width: 100%;
+    height: 0%;
+    background-color:#d9121f;
+    z-index:-1;
+    transition: 0.8s;
+    border-radius: 0 0 50% 50%;
+    top:0;
+    height: 180%;
+    
+}
+.add-cart:hover {
+    color: #d9121f;
+}
+.add-cart:hover::before {
+    height:0%;
+}
+.product__shopnow {
+    display: flex;
+    justify-content: space-between;
+}
+.shopnow {
+    width: 250px;
+    height: 40px;
+    background:none;
+    color: var(--white-color);
+    font-size: 16px;
+    font-weight: 500;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--black-color);
+}
+.shopnow::before {
+    content:"";
+    position: absolute;
+    left:0;
+    width: 100%;
+    height: 0%;
+    background-color:var(--black-color);
+    z-index:-1;
+    transition: 0.8s;
+    border-radius: 0 0 50% 50%;
+    top:0;
+    height: 180%;
+    
+}
+.shopnow:hover {
+    color: var(--black-color)
+}
+.shopnow:hover::before {
+    height:0%;
+}
+.likenow {
+    width: 250px;
+    height: 40px;
+    background:none;
+    color: var(--black-color);
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid var(--black-color);
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    transition: 1s all ease;
+}
+.likenow::before{
+    background-color: var(--black-color);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+    width: 0;
+    height: 100%;
+}
+.likenow:hover::before {
+    width: 100%;
+}
+.likenow:hover {
+    text-decoration: none;
+    color: var(--white-color);
+}
+.product__describe-heading {
+    font-weight: 500;
+    font-size: 30px;
+}
+.name__product {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.col-11 p {
+    font-size: 16px;
+    padding: 4px 0;
+}
+.product__relateto-heading {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 20px;
+    text-decoration: underline;
+}
+.seemore {
+    text-align: center;
+    margin: 70px 0;
+}
+.seemore a {
+    padding: 20px 50px;
+    border: 2px solid var(--black-color);
+    color: var(--black-color);
+    font-size: 16px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: 1s all ease;
+}
+.seemore a::before{
+    background-color: var(--black-color);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+    width: 0;
+    height: 100%;
+}
+.seemore a:hover::before {
+    width: 100%;
+}
+.seemore a:hover {
+    text-decoration: none;
+    color: var(--white-color);
+}
