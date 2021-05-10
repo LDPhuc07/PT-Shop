@@ -15,8 +15,8 @@ class CreateSlideshowsTable extends Migration
     {
         Schema::create('slideshows', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slideshow', 50);
-            $table->string('link');
+            $table->char('slideshow', 100);
+            $table->char('link');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });

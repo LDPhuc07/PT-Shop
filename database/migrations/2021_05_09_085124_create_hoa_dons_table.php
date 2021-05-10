@@ -16,12 +16,13 @@ class CreateHoaDonsTable extends Migration
         Schema::create('hoa_dons', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tai_khoans_id');
-            $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
+            // $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
             $table->dateTime('ngay_lap_hd');
             $table->unsignedBigInteger('tong_tien');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });
+
     }
 
     /**
