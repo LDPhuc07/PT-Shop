@@ -21,6 +21,7 @@ class CreateTaiKhoansTable extends Migration
             $table->char('so_dien_thoai', 10);
             $table->string('dia_chi')->nullable();
             $table->boolean('admin');
+            $table->char('remember_token');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });
