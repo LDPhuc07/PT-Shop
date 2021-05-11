@@ -17,9 +17,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/products/create', function () {
         return view('admin.product.add_product');
     });
-    Route::get('/login', function() {
-        return view('admin.login');
-    });
+    Route::get('/login', 'TaiKhoanController@getDangNhapAdmin');
+    Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/sign-up', function() {
         return view('admin.sign_up');
     });
@@ -28,6 +27,10 @@ Route::group(['prefix' => 'admin'], function() {
         return view('admin.account.index');
     });
     
+});
+
+Route::get('/insert', function() {
+    DB::table('tai_khoans')->insert(['ho_ten'=>'Lê Đức Phú', 'password' => bcrypt('34567'), 'email' => 'ldp@gmail.com', 'so_dien_thoai' => '0366753798', 'admin' => false]);
 });
 
 Route::get('/', function () {
@@ -57,3 +60,6 @@ Route::get('/pay', function () {
 Route::get('/news', function () {
     return view('pages.news');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

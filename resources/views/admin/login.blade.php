@@ -20,16 +20,39 @@
             </div>
             <div class="container-form-login">
                 <h3 class="mb-16">Đăng nhập</h3>
-                <form action="">
-                    <div class="mb-16">
-                        <input class="textbox" type="text" placeholder="Tên đăng nhập">
+                <form method="POST">
+                    @csrf
+                    <div class="login-txt mb-16">
+                        <input class="textbox" name="email" type="text" placeholder="Email">
+                        @if($errors->has('email'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('email') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='email'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
                     </div>
-                    <div class="password-txt mb-16">
-                        <input class="textbox" type="password" placeholder="Mật khẩu">
+                    <div class="login-txt password-txt mb-16">
+                        <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
                         <a class="input-inline-btn" href="#">
                             <i class="fas fa-eye"></i>
                             <i class="fas fa-eye-slash" hidden></i>
                         </a>
+                        @if($errors->has('mat_khau'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('mat_khau') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='mat_khau'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
                     </div>
                     <div class="mb-16">
                         <button class="btn login-btn">Đăng nhập</button>

@@ -612,3 +612,10 @@ html, body {
 .facebook-login-btn i, .google-login-btn i {
   margin-right: 8px;
 }
+.login-txt .error-msg {
+  font-size: 13px;
+  color: red;
+}
+.login-txt .error-msg i {
+  margin-right: 2px;
+}
