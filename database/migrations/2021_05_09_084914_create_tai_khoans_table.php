@@ -17,7 +17,7 @@ class CreateTaiKhoansTable extends Migration
             $table->increments('id');
             $table->string('ho_ten', 50);
             $table->char('email', 50);
-            $table->char('mat_khau');
+            $table->char('password');
             $table->char('so_dien_thoai', 10);
             $table->string('dia_chi')->nullable();
             $table->boolean('admin');
