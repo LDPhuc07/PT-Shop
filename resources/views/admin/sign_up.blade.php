@@ -20,17 +20,91 @@
             </div>
             <div class="register-body">
                 <h3 class="mb-16">Đăng ký</h3>
-                <form action="" class="register-form">
-                    <div class="mb-16"><input class="textbox" type="text" placeholder="Tên đăng nhập"></div>
-                    <div class="mb-16"><input class="textbox" type="password" placeholder="Mật khẩu"></div>
-                    <div class="mb-16"><input class="textbox" type="password" placeholder="Nhập lại mật khẩu"></div>
-                    <div class="mb-16"><input class="textbox" type="text" placeholder="Email"></div>
-                    <div class="mb-16"><input class="textbox" type="text" placeholder="Số điện thoại"></div>
-                    <div><input class="register-btn btn" value="Đăng ký" type="submit"></div>
+                <form action="{{ route('admin.account.sign-up') }}" class="register-form" method="POST">
+                    @csrf
+                    <div class="mb-16 sign-up-txt">
+                        <input class="textbox" name="ho_ten" type="text" placeholder="Họ và tên">
+                        @if($errors->has('ho_ten'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('ho_ten') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='ho_ten'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
+                    </div>
+                    <div class="mb-16 sign-up-txt">
+                        <input class="textbox" name="email" type="text" placeholder="Email">
+                        @if($errors->has('email'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('email') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='email'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
+                    </div>
+                    <div class="mb-16 sign-up-txt">
+                        <input class="textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                        @if($errors->has('mat_khau'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('mat_khau') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='mat_khau'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
+                    </div>
+                    <div class="mb-16 sign-up-txt">
+                        <input class="textbox" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu">
+                        @if($errors->has('nhap_lai_mat_khau'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('nhap_lai_mat_khau') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='nhap_lai_mat_khau'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
+                    </div>
+                    <div class="mb-16 sign-up-txt">
+                        <input class="textbox" name="so_dien_thoai" type="text" placeholder="Số điện thoại">
+                        @if($errors->has('so_dien_thoai'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('so_dien_thoai') }}
+                            </span>
+                            <style>
+                                .login-txt input[name='so_dien_thoai'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                        @endif
+                    </div>
+                    <div>
+                        <input class="register-btn btn" value="Đăng ký" type="submit">
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+    @if(session('thong_bao'))
+        <script>
+            alert({{ session('thong_bao') }});
+                        
+        </script>
+    @endif
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="admin/js/openSidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

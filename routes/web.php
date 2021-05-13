@@ -13,24 +13,20 @@
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/dashboards', 'DashboardController@index');
-    Route::get('/products', 'ProductController@index');
-    Route::get('/products/create', function () {
-        return view('admin.product.add_product');
-    });
+    Route::get('/products', 'SanPhamController@index')->name('admin.products');
+    Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
+    Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');
+    Route::get('/producers/create', 'NhaSanXuatController@create')->name('admin.producers.create');
     Route::get('/login', 'TaiKhoanController@getDangNhapAdmin');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
-    Route::get('/sign-up', function() {
-        return view('admin.sign_up');
-    });
-    
-    Route::get('/accounts', function() {
-        return view('admin.account.index');
-    });
+    Route::get('/logout', 'TaiKhoanController@dangXuatAdmin'); 
+    Route::get('/sign-up','TaiKhoanController@getDangKyAdmin');
+    Route::post('/sign-up,}','TaiKhoanController@postDangKyAdmin')->name('admin.accounts.sign-up');
     
 });
 
 Route::get('/insert', function() {
-    DB::table('tai_khoans')->insert(['ho_ten'=>'Lê Đức Phú', 'password' => bcrypt('34567'), 'email' => 'ldp@gmail.com', 'so_dien_thoai' => '0366753798', 'admin' => false]);
+    DB::table('tai_khoans')->insert(['ho_ten'=>'Lê Đức Phú', 'password' => bcrypt('3456789'), 'email' => 'ldp@gmail.com', 'so_dien_thoai' => '0366753798', 'admin' => false]);
 });
 
 Route::get('/', function () {

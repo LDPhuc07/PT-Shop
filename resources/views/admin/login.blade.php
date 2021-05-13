@@ -23,7 +23,7 @@
                 <form method="POST">
                     @csrf
                     <div class="login-txt mb-16">
-                        <input class="textbox" name="email" type="text" placeholder="Email">
+                        <input class="textbox" name="email" type="text" placeholder="Email" autofocus>
                         @if($errors->has('email'))
                             <span class="error-msg">
                                 <i class="fas fa-times"></i>
@@ -54,7 +54,13 @@
                             </style>
                         @endif
                     </div>
-                    <div class="mb-16">
+                    <div class="login-txt mb-16">
+                        @if(session('thong_bao'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ session('thong_bao') }}
+                            </span>
+                        @endif
                         <button class="btn login-btn">Đăng nhập</button>
                     </div>
                     <div class="social-auth-links text-center">

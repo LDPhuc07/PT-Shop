@@ -6,7 +6,7 @@
             <h3>Sản phẩm</h3>
           </div>
           <div class="add-pro">
-            <a href="admin/products/create">
+            <a href="{{ route('admin.products.create') }}">
               <i class="fas fa-plus"></i>
               <p>Thêm sản phẩm</p>
             </a>
