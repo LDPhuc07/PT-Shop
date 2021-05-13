@@ -25,6 +25,11 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin'); 
     Route::get('/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
     Route::post('/sign-up','TaiKhoanController@postDangKyAdmin');
+     // Môn thể thao
+    Route::match(['get','post'],'/monthethao',("MonTheThaoController@index"))->name('monthethao.index');
+    Route::get('/monthethao/create',("MonTheThaoController@create"))->name('monthethao.create');
+    Route::post('/monthethao/store',("MonTheThaoController@store"))->name('monthethao.store');
+    Route::get('/monthethao/{id}/edit',("MonTheThaoController@edit"))->name('monthethao.edit');
     
 });
 
