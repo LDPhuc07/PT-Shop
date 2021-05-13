@@ -422,6 +422,17 @@ textarea.textbox {
   border-radius: 3px;
   margin-left: 4px;
 }
+.view-detail-btn {
+  background: linear-gradient( 
+  180deg
+ ,#183153,#295085)!important;
+  border-color: #183153;
+  box-shadow: inset 0 1px 0 0 #295085;
+  color: #fff!important;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
 .edit-btn {
   background: linear-gradient( 
   180deg

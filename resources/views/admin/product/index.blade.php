@@ -98,6 +98,7 @@
                             <td>
                               <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                              <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                         <tr>
@@ -109,7 +110,8 @@
                           <td>Đẹp lắm</td>
                           <td>
                             <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                           </td>
                         </tr>
                         <tr>
@@ -121,7 +123,8 @@
                           <td>Đẹp lắm</td>
                           <td>
                             <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                           </td>
                         </tr>
                         <tr>
@@ -133,7 +136,8 @@
                           <td>Đẹp lắm</td>
                           <td>
                             <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                           </td>
                         </tr>
                         <tr>
@@ -145,7 +149,8 @@
                           <td>Đẹp lắm</td>
                           <td>
                             <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                           </td>
                         </tr>
                     </tbody>
