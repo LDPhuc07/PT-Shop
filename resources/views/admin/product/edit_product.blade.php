@@ -6,7 +6,7 @@
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách sản phẩm</span>
         </a>
-        <h3>Thêm mới sản phẩm</h3>
+        <h3>Chỉnh sửa sản phẩm</h3>
       </div>
       <form action="">
         <div class="row add-product-form">
