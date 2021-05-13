@@ -10,12 +10,12 @@ class ChiTietHoaDon extends Model
 
     public function hoaDon()
     {
-        return this->belongsTo('App\HoaDon', 'hoa_dons_id', 'id');
+        return $this->belongsTo('App\HoaDon', 'hoa_dons_id', 'id');
     }
 
     public function sanPham()
     {
-        return this->belongsTo('App\SanPham', 'san_phams_id', 'id');
+        return $this->belongsTo('App\SanPham', 'san_phams_id', 'id');
     }
 
 }
