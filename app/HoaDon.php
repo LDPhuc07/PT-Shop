@@ -11,12 +11,12 @@ class HoaDon extends Model
     
     public function chiTietHoaDon()
     {
-        return this->hasMany('App\ChiTietHoaDon', 'hoa_dons_id', 'id');
+        return $this->hasMany('App\ChiTietHoaDon', 'hoa_dons_id', 'id');
     }
 
     public function taiKhoan()
     {
-        return this->belongsTo('App\TaiKhoan', 'tai_khoans_id', 'id');
+        return $this->belongsTo('App\TaiKhoan', 'tai_khoans_id', 'id');
     }
     
 }

@@ -50,7 +50,7 @@
                     <span class="form-message"></span>
                   </div>
                   
-                  <button class="form-submit">Đăng ký <i class="fi-rs-arrow-right"></i></button>
+                  <button class="form-submit" type="submit">Đăng ký <i class="fi-rs-arrow-right"></i></button>
                   <p style="font-size: 16px;margin: 10px 0;">Bạn đã có tài khoản? <a href="./Login.html" style="color: black; font-weight: bold">Đăng nhập</a></p>
               </form>
             </div>
@@ -88,10 +88,10 @@
             return document.querySelector('#form-1 #password').value;
           }, 'Mật khẩu nhập lại không chính xác')
         ],
-        onSubmit: function (data) {
-          // call api
-          console.log(data);
-        }
+        // onSubmit: function (data) {
+        //   // call api
+        //   console.log(data);
+        // }
       });
   </script>
   <script>

@@ -18,6 +18,7 @@ class CreateMonTheThaosTable extends Migration
             $table->string('ten_the_thao', 50);
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

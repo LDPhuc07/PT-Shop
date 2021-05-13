@@ -10,6 +10,6 @@ class NhaSanXuat extends Model
 
     public function SanPham()
     {
-        return this->hasMany('App\SanPham', 'san_phams_id', 'id');
+        return $this->hasMany('App\SanPham', 'san_phams_id', 'id');
     }
 }

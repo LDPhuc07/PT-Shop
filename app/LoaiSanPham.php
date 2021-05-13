@@ -10,6 +10,6 @@ class LoaiSanPham extends Model
 
     public function sanPham()
     {
-        return this->hasMany('App\SanPham', 'san_phams_id', 'id');
+        return $this->hasMany('App\SanPham', 'san_phams_id', 'id');
     }
 }

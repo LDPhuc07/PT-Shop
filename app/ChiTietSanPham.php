@@ -10,7 +10,7 @@ class ChiTietSanPham extends Model
 
     public function sanPham()
     {
-        return this->belongsTo('App\SanPham', 'san_phams_id', 'id');
+        return $this->belongsTo('App\SanPham', 'san_phams_id', 'id');
     }
 
 }
