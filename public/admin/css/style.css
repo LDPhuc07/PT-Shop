@@ -639,3 +639,13 @@ textarea.textbox {
 .login-txt .error-msg i, .sign-up-txt .error-msg i {
   margin-right: 2px;
 }
+.remember-box {
+  font-size: 14px;
+}
+.remember-box input[type=checkbox] {
+  margin-right: 8px;
+}
+.remember-box a {
+  float: right;
+  margin-right: 6px;
+}

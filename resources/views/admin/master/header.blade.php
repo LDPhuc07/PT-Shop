@@ -6,14 +6,14 @@
     <li class="nav-item">
         <a href="admin/dashboards" class="nav-link">Home</a>
     </li>
-    @if(Auth::check()) {
+    @if(Auth::check())
         <li class="nav-item">
             <a class="nav-link">{{ Auth::user()->ho_ten }}</a>
         </li> 
         <li class="nav-item">
             <a href="admin/logout" class="nav-link">Đăng xuất</a>
         </li>
-    } @else
+    @else
         <li class="nav-item">
             <a href="admin/login" class="nav-link">Đăng nhập</a>
         </li>

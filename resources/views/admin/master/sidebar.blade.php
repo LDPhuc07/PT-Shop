@@ -7,7 +7,7 @@
     <nav>
         <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="admin/dashboards">
+            <a class="nav-link" href="{{ route('admin.dashboards') }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p class="nav-text">Dashboard</p>
             </a>
@@ -19,7 +19,25 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admin/accounts">
+            <a class="nav-link" href="admin/products">
+            <i class="nav-icon fas fa-home"></i>
+            <p class="nav-text">Nhà sản xuất</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="admin/products">
+            <i class="nav-icon fas fa-tshirt"></i>
+            <p class="nav-text">Loại sản phẩm</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="admin/products">
+            <i class="nav-icon far fa-futbol"></i>
+            <p class="nav-text">Môn thể thao</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.accounts') }}">
             <i class="nav-icon fas fa-user"></i>
             <p class="nav-text">Tài khoản</p>
             </a>

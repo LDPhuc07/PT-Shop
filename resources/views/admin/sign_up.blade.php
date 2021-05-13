@@ -20,7 +20,7 @@
             </div>
             <div class="register-body">
                 <h3 class="mb-16">Đăng ký</h3>
-                <form action="{{ route('admin.account.sign-up') }}" class="register-form" method="POST">
+                <form action="" class="register-form" method="POST">
                     @csrf
                     <div class="mb-16 sign-up-txt">
                         <input class="textbox" name="ho_ten" type="text" placeholder="Họ và tên">

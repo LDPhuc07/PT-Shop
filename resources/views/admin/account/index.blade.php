@@ -55,81 +55,43 @@
                     <table class="table-ds-sanpham">
                       <thead>
                           <tr>
-                              <th>Ảnh đại diện</th>
-                              <th>Tên tài khoản</th>
                               <th>Họ và tên</th>
                               <th>Email</th>
                               <th>Số điện thoại</th>
                               <th>Loại tài khoản</th>
+                              <th>Trạng thái</th>
                               <th></th>
                           </tr>
                       </thead>
                       <tbody>
+                        @foreach($arrays as $account)
                         <tr>
+                            <td>{{ $account->ho_ten }}</td>
+                            <td>{{ $account->email }}</td>
+                            <td>{{ $account->so_dien_thoai }}</td>
                             <td>
-                              <img src="https://1.bp.blogspot.com/-r8taaC_nv5U/XngOYFjbRVI/AAAAAAAAZnc/QjGkkHS78GMm6CocQ1OqrWGgQTkG1oQNACLcBGAsYHQ/s1600/Avatar-Facebook%2B%25281%2529.jpg" alt="">
+                              @if($account->admin == true )
+                                Admin
+                              @else
+                                Người dùng
+                              @endif
                             </td>
-                            <td>Khongbiet123</td>
-                            <td>Tạ Minh Tâm</td>
-                            <td>tmtam123@gmail.com</td>
-                            <td>0345678910</td>
-                            <td>Admin</td>
                             <td>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                              @if($account->trang_thai == true )
+                                Đang hoạt động
+                              @else
+                                Đã khóa
+                              @endif
+                            </td>
+                            <td>
+                              @if($account->trang_thai == true )
+                                <a href="{{ route('admin.lockAccounts',$account->id) }}" class="delete-btn"><i class="fas fa-lock"></i></a>
+                              @else
+                                <a href="{{ route('admin.unlockAccounts',$account->id) }}" class="delete-btn"><i class="fas fa-lock-open"></i></a>
+                              @endif
                             </td>
                         </tr>
-                        <tr>
-                          <td>
-                            <img src="https://1.bp.blogspot.com/-r8taaC_nv5U/XngOYFjbRVI/AAAAAAAAZnc/QjGkkHS78GMm6CocQ1OqrWGgQTkG1oQNACLcBGAsYHQ/s1600/Avatar-Facebook%2B%25281%2529.jpg" alt="">
-                          </td>
-                          <td>Khongbiet123</td>
-                          <td>Tạ Minh Tâm</td>
-                          <td>tmtam123@gmail.com</td>
-                          <td>0345678910</td>
-                          <td>Admin</td>
-                          <td>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="https://1.bp.blogspot.com/-r8taaC_nv5U/XngOYFjbRVI/AAAAAAAAZnc/QjGkkHS78GMm6CocQ1OqrWGgQTkG1oQNACLcBGAsYHQ/s1600/Avatar-Facebook%2B%25281%2529.jpg" alt="">
-                          </td>
-                          <td>Khongbiet123</td>
-                          <td>Tạ Minh Tâm</td>
-                          <td>tmtam123@gmail.com</td>
-                          <td>0345678910</td>
-                          <td>Admin</td>
-                          <td>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="https://1.bp.blogspot.com/-r8taaC_nv5U/XngOYFjbRVI/AAAAAAAAZnc/QjGkkHS78GMm6CocQ1OqrWGgQTkG1oQNACLcBGAsYHQ/s1600/Avatar-Facebook%2B%25281%2529.jpg" alt="">
-                          </td>
-                          <td>Khongbiet123</td>
-                          <td>Tạ Minh Tâm</td>
-                          <td>tmtam123@gmail.com</td>
-                          <td>0345678910</td>
-                          <td>Admin</td>
-                          <td>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="https://1.bp.blogspot.com/-r8taaC_nv5U/XngOYFjbRVI/AAAAAAAAZnc/QjGkkHS78GMm6CocQ1OqrWGgQTkG1oQNACLcBGAsYHQ/s1600/Avatar-Facebook%2B%25281%2529.jpg" alt="">
-                          </td>
-                          <td>Khongbiet123</td>
-                          <td>Tạ Minh Tâm</td>
-                          <td>tmtam123@gmail.com</td>
-                          <td>0345678910</td>
-                          <td>Admin</td>
-                          <td>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                          </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                   </table>
                   </div>

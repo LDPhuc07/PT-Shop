@@ -15,11 +15,17 @@ class TaiKhoanController extends Controller
         return view('admin.login');
     }
 
-    public function postDangNhapAdmin(DangNhapRequest $requets) {
-        $email = $requets->email;
-        $password = $requets->mat_khau;
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => true])) {
-            return view('admin.dashboard.index');
+    public function postDangNhapAdmin(DangNhapRequest $requests) {
+        $email = $requests->email;
+        $password = $requests->mat_khau;
+        $remember = $requests->remember;
+        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => true],$remember)) {
+            if(Auth::user()->trang_thai == 1) {
+                return redirect('admin/dashboards');
+            }
+            else {
+                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+            }
         }
         else {
             return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
@@ -28,12 +34,13 @@ class TaiKhoanController extends Controller
 
     public function dangXuatAdmin() { 
         Auth::logout();
-        return redirect('admin/login');
+        return redirect()->route('admin.accounts.login');
     }
 
     public function getDangKyAdmin() {
         return view('admin.sign_up');
     }
+
     public function postDangKyAdmin(DangKyRequest $requests) {
         $newAccount=new TaiKhoan();
         $newAccount->ho_ten = $requests->ho_ten;
@@ -43,5 +50,21 @@ class TaiKhoanController extends Controller
         $newAccount->admin = true;
         $newAccount->save();
         return redirect('admin/login')->with('thong-bao', 'Đăng ký thánh công');
+    }
+    public function index() {
+        $array = ['arrays'=>TaiKhoan::all()];
+        return view('admin.account.index', $array);
+    }
+    public function lock($id) {
+        $new = TaiKhoan::find($id);
+        $new->trang_thai = false;
+        $new->save();
+        return redirect()->route('admin.accounts');
+    }
+    public function unlock($id) {
+        $new = TaiKhoan::find($id);
+        $new->trang_thai = true;
+        $new->save();
+        return redirect()->route('admin.accounts');
     }
 }

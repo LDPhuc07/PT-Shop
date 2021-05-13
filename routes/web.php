@@ -12,16 +12,19 @@
 */
 
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('/dashboards', 'DashboardController@index');
+    Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
     Route::get('/products', 'SanPhamController@index')->name('admin.products');
     Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
     Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');
     Route::get('/producers/create', 'NhaSanXuatController@create')->name('admin.producers.create');
-    Route::get('/login', 'TaiKhoanController@getDangNhapAdmin');
+    Route::get('accounts', 'TaiKhoanController@index')->name('admin.accounts');
+    Route::get('accounts/lock/{id}', 'TaiKhoanController@lock')->name('admin.lockAccounts');
+    Route::get('accounts/unlock/{id}', 'TaiKhoanController@unlock')->name('admin.unlockAccounts');
+    Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin'); 
-    Route::get('/sign-up','TaiKhoanController@getDangKyAdmin');
-    Route::post('/sign-up,}','TaiKhoanController@postDangKyAdmin')->name('admin.accounts.sign-up');
+    Route::get('/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
+    Route::post('/sign-up','TaiKhoanController@postDangKyAdmin');
     
 });
 

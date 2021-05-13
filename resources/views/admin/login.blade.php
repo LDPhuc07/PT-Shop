@@ -54,6 +54,10 @@
                             </style>
                         @endif
                     </div>
+                    <div class="login-txt remember-box mb-16">
+                        <input type="checkbox" name="remember">Nhớ mật khẩu
+                        <a href="{{ route('admin.accounts.sign-up') }}">Đăng ký</a>
+                    </div>
                     <div class="login-txt mb-16">
                         @if(session('thong_bao'))
                             <span class="error-msg">
