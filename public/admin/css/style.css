@@ -649,3 +649,9 @@ textarea.textbox {
   float: right;
   margin-right: 6px;
 }
+/* thnag trung */
+.cursor {
+  cursor: pointer;
+  vertical-align: sub;
+  padding: 5px 10px;
+}

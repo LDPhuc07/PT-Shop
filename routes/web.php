@@ -30,6 +30,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/monthethao/create',("MonTheThaoController@create"))->name('monthethao.create');
     Route::post('/monthethao/store',("MonTheThaoController@store"))->name('monthethao.store');
     Route::get('/monthethao/{id}/edit',("MonTheThaoController@edit"))->name('monthethao.edit');
+    Route::put('/monthethao/{id}',("MonTheThaoController@update"))->name('monthethao.update');
+    Route::delete('/monthethao/delete/{id}',("MonTheThaoController@delete"))->name('monthethao.delete');
+    Route::get('/monthethao/search',("MonTheThaoController@search"))->name('monthethao.search');
     
 });
 
