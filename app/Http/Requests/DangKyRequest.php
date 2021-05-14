@@ -28,7 +28,7 @@ class DangKyRequest extends FormRequest
             'email' => 'required|email|unique:tai_khoans,email',
             'mat_khau' => 'required|min:6',
             'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
-            'so_dien_thoai' => 'required|numeric|unique:tai_khoans,so_dien_thoai'
+            'so_dien_thoai' => 'numeric|unique:tai_khoans,so_dien_thoai'
         ];
     }
 

@@ -9,32 +9,77 @@
     <div class="registration__form">
         <div class="row">
             <div class="col-6">
-              <form action="" method="POST" class="form" id="form-1">
+              <form action="" method="POST" class="form">
+                  @csrf
                   <h3 class="heading">ĐĂNG KÍ</h3>
                   <div class="form-group">
                     <label for="fullname" class="form-label">Tên đầy đủ</label>
-                    <input id="fullname" name="fullname" type="text" placeholder="VD: Sơn Đặng" class="form-control">
+                    <input id="fullname" name="ho_ten" type="text" placeholder="VD: Sơn Đặng" class="form-control">
                     <span class="form-message"></span>
+                    @if($errors->has('ho_ten'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('ho_ten') }}
+                            </span>
+                            <style>
+                                #fullname {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="email" class="form-label">Email</label>
                     <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
                     <span class="form-message"></span>
+                    @if($errors->has('email'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('email') }}
+                            </span>
+                            <style>
+                                #email {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                    <input id="password" name="mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
                     <span class="show-hide" style="top: 51%;"><i class="fas fa-eye"></i></span>
                     <span class="form-message"></span>
+                    @if($errors->has('mat_khau'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('mat_khau') }}
+                            </span>
+                            <style>
+                                #password {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                    @endif
                   </div>
               
                   <div class="form-group">
                     <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
-                    <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+                    <input id="password_confirmation" name="nhap_lai_mat_khau" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
                     <span class="show-hide-two" style="top: 66%;"><i class="fas fa-eye fa-eye-2"></i></span>
                     <span class="form-message"></span>
+                    @if($errors->has('nhap_lai_mat_khau'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('nhap_lai_mat_khau') }}
+                            </span>
+                            <style>
+                                #password_confirmation {
+                                    border: 1px solid red;
+                                }
+                            </style>
+                    @endif
                   </div>
-                  <div class="form-group">
+                  {{--  <div class="form-group">
                     <label for="gender" class="form-label">Giới tính</label>
                     <div>
                       <div class="form-check-inline">
@@ -48,7 +93,7 @@
                     </div>
                     </div>
                     <span class="form-message"></span>
-                  </div>
+                  </div>  --}}
                   
                   <button class="form-submit">Đăng ký <i class="fi-rs-arrow-right"></i></button>
                   <p style="font-size: 16px;margin: 10px 0;">Bạn đã có tài khoản? <a href="./Login.html" style="color: black; font-weight: bold">Đăng nhập</a></p>
@@ -88,10 +133,6 @@
             return document.querySelector('#form-1 #password').value;
           }, 'Mật khẩu nhập lại không chính xác')
         ],
-        onSubmit: function (data) {
-          // call api
-          console.log(data);
-        }
       });
   </script>
   <script>

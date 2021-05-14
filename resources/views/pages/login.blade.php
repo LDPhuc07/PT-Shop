@@ -9,22 +9,46 @@
     <div class="login__form">
       <div class="row">
         <div class="col-6">
-         <form action="" method="POST" class="form" id="form-2">
+         <form action="" method="POST" class="form" >
+           @csrf
             <h3 class="heading">ĐĂNG NHẬP</h3>
             <a href="" class="form__forgot-password">Bạn quên mật khẩu?</a>
             <div class="form-group">
               <label for="email" class="form-label">Email</label>
               <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
               <span class="form-message"></span>
+              @if($errors->has('email'))
+                <span style="font-size: 13px; color:red">
+                    <i class="fas fa-times"></i>
+                    {{ $errors->first('email') }}
+                </span>
+                <style>
+                    #email {
+                        border: 1px solid red;
+                    }
+                </style>
+              @endif
             </div>
         
             <div class="form-group">
-              <label for="password" class="form-label">Mật khẩu</label>
-              <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+              <label for="mat_khau" class="form-label">Mật khẩu</label>
+              <input id="password" name="mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
               <span class="show-hide"><i class="fas fa-eye"></i></span>
               <!-- <i class="fi-rs-eye-crossed undisplay" onclick="showhide()"></i> -->
               <span class="form-message"></span>
+              @if($errors->has('mat_khau'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('mat_khau') }}
+                            </span>
+                            <style>
+                                #password {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
             </div>
+            <input type="hidden" name="remember">
             <button class="form-submit">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
             <h4>HOẶC</h4>
             <div class="form-social">

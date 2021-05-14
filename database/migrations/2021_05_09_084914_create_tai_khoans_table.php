@@ -18,7 +18,7 @@ class CreateTaiKhoansTable extends Migration
             $table->string('ho_ten', 50);
             $table->char('email', 50)->unique('email');
             $table->char('password');
-            $table->char('so_dien_thoai', 10)->unique('so_dien_thoai');
+            $table->char('so_dien_thoai', 10)->unique('so_dien_thoai')->nullable();
             $table->string('dia_chi')->nullable();
             $table->boolean('admin');
             $table->char('remember_token')->nullable();

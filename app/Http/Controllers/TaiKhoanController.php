@@ -14,7 +14,9 @@ class TaiKhoanController extends Controller
     public function getDangNhapAdmin() {
         return view('admin.login');
     }
-
+    public function getDangNhap() {
+        return view('pages.login');
+    }
     public function postDangNhapAdmin(DangNhapRequest $requests) {
         $email = $requests->email;
         $password = $requests->mat_khau;
@@ -31,7 +33,22 @@ class TaiKhoanController extends Controller
             return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
         }
     }
-
+    public function postDangNhap(DangNhapRequest $requests) {
+        $email = $requests->email;
+        $password = $requests->mat_khau;
+        $remember = $requests->remember;
+        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+            if(Auth::user()->trang_thai == 1) {
+                return redirect()->route('index');
+            }
+            else {
+                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+            }
+        }
+        else {
+            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+        }
+    }
     public function dangXuatAdmin() { 
         Auth::logout();
         return redirect()->route('admin.accounts.login');
@@ -40,7 +57,18 @@ class TaiKhoanController extends Controller
     public function getDangKyAdmin() {
         return view('admin.sign_up');
     }
-
+    public function getDangKy() {
+        return view('pages.sign_up');
+    }
+    public function postDangKy(DangKyRequest $requests) {
+        $newAccount=new TaiKhoan();
+        $newAccount->ho_ten = $requests->ho_ten;
+        $newAccount->email = $requests->email;
+        $newAccount->password = Hash::make($requests->mat_khau);
+        $newAccount->admin = false;
+        $newAccount->save();
+        return redirect()->route('accounts.login');
+    }
     public function postDangKyAdmin(DangKyRequest $requests) {
         $newAccount=new TaiKhoan();
         $newAccount->ho_ten = $requests->ho_ten;
@@ -49,7 +77,7 @@ class TaiKhoanController extends Controller
         $newAccount->so_dien_thoai = $requests->so_dien_thoai;
         $newAccount->admin = true;
         $newAccount->save();
-        return redirect('admin/login')->with('thong-bao', 'Đăng ký thánh công');
+        return redirect()->route('admin.accounts.login');
     }
     public function index() {
         $array = ['arrays'=>TaiKhoan::all()];

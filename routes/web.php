@@ -13,7 +13,7 @@
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
-    Route::get('/products', 'SanPhamController@index')->name('admin.products');
+    Route::get('/products', 'SanPhamController@indexAdmin')->name('admin.products');
     Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
     Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');
     Route::get('/producers/create', 'NhaSanXuatController@create')->name('admin.producers.create');
@@ -31,10 +31,11 @@ Route::group(['prefix' => 'admin'], function() {
 Route::get('/insert', function() {
     DB::table('tai_khoans')->insert(['ho_ten'=>'Lê Đức Phú', 'password' => bcrypt('3456789'), 'email' => 'ldp@gmail.com', 'so_dien_thoai' => '0366753798', 'admin' => false]);
 });
-
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
+Route::post('/sign-up','TaiKhoanController@postDangKy');
+Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
+Route::post('/login', 'TaiKhoanController@postDangNhap');
+Route::get('/', 'SanPhamController@index')->name('index');
 Route::get('/products', function () {
     return view('pages.product');
 });
@@ -44,21 +45,15 @@ Route::get('/product-details', function () {
 Route::get('/carts', function () {
     return view('pages.cart');
 });
-Route::get('/login', function () {
-    return view('pages.login');
-});
 Route::get('/sign-up', function () {
     return view('pages.sign_up');
-});
-Route::get('/sign-up', function () {
-    return view('pages.sign_up');
-});
+}); 
 Route::get('/pay', function () {
     return view('pages.pay');
 });
 Route::get('/news', function () {
     return view('pages.news');
 });
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
