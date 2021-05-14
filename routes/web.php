@@ -32,7 +32,22 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/monthethao/{id}/edit',("MonTheThaoController@edit"))->name('monthethao.edit');
     Route::put('/monthethao/{id}',("MonTheThaoController@update"))->name('monthethao.update');
     Route::delete('/monthethao/delete/{id}',("MonTheThaoController@delete"))->name('monthethao.delete');
-    Route::get('/monthethao/search',("MonTheThaoController@search"))->name('monthethao.search');
+    // Route::get('/monthethao/search',("MonTheThaoController@search"))->name('monthethao.search');
+    //  loai sản phẩm
+    Route::match(['get','post'],'/loaisanpham',("LoaisanphamController@index"))->name('loaisanpham.index');
+    Route::get('/loaisanpham/create',("LoaisanphamController@create"))->name('loaisanpham.create');
+    Route::post('/loaisanpham/store',("LoaisanphamController@store"))->name('loaisanpham.store');
+    Route::get('/loaisanpham/{id}/edit',("LoaisanphamController@edit"))->name('loaisanpham.edit');
+    Route::put('/loaisanpham/{id}',("LoaisanphamController@update"))->name('loaisanpham.update');
+    Route::delete('/loaisanpham/delete/{id}',("LoaisanphamController@delete"))->name('loaisanpham.delete');
+    // Route::get('/loaisanpham/search',("LoaisanphamController@search"))->name('loaisanpham.search');
+    // nhà sản xuất
+    Route::match(['get','post'],'/nhasanxuat',("NhaSanXuatController@index"))->name('nhasanxuat.index');
+    Route::get('/nhasanxuat/create',("NhaSanXuatController@create"))->name('nhasanxuat.create');
+    Route::post('/nhasanxuat/store',("NhaSanXuatController@store"))->name('nhasanxuat.store');
+    Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
+    Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
+    Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
     
 });
 

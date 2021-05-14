@@ -18,6 +18,7 @@ class CreateLoaiSanPhamsTable extends Migration
             $table->string('ten_loai_san_pham', 50);
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

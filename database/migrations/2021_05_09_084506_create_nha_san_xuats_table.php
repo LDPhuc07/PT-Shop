@@ -18,6 +18,7 @@ class CreateNhaSanXuatsTable extends Migration
             $table->string('ten_nha_san_xuat', 50);
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
