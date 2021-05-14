@@ -8,15 +8,18 @@
         </a>
         <h3>Chỉnh sửa môn thể thao</h3>
       </div>
-      <form action="{{route('monthethao.store')}}" method="POST">
+      <form action="{{route('monthethao.update',$dsMonTheThao['id'])}}" method="POST">
+        @method('PUT')
         @csrf
+        {{-- <input type="hidden" value="{{$dsMonTheThao['id']}}" name="id"> --}}
         <div class="row add-product-form">
           <div class="col-12 pl-0 pr-10">
             <div class="product-info">
               <div class="product-info-item">
-                <label class="product-info-item-label" for="">Tên sản phẩm<span class="repuired"> *</span></label>
+                <label class="product-info-item-label" for="">Tên môn thể thao<span class="repuired"> *</span></label>
                 <i class="fas fa-info"></i>
-                <input class="textbox" type="text" placeholder="Nhập tên sản phẩm" value="{{$dsMonTheThao['ten_the_thao']}}">
+                <input class="textbox" type="text" placeholder="Nhập tên sản phẩm" value="{{$dsMonTheThao['ten_the_thao']}}" name="tenthethao">
+                <div class="error error-name" 	@if($errors->has('tenthethao')) style="display:block;color:red" @endif>{{$errors->first('tenthethao')}}</div>
               </div>
             </div>
           </div>

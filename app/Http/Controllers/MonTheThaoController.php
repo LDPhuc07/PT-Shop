@@ -12,13 +12,22 @@ class MonTheThaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $dsMonTheThao = ['dsMonTheThao'=>MonTheThao::paginate(4)];
+        // //
+        // $timkiem = MonTheThao::paginate(4);
         // dd($dsMonTheThao);
+        
+        if(!empty($request->search))
+        {
+            $timkiem = MonTheThao::where('ten_the_thao','LIKE','%'.$request->search.'%')->paginate(4);
+        }
+        else
+        {
+            $timkiem = MonTheThao::paginate(4);
+        }
+        $dsMonTheThao = ['dsMonTheThao'=>$timkiem];
         return view('admin.sport.index',$dsMonTheThao); 
-
     }
 
     /**
@@ -149,6 +158,20 @@ class MonTheThaoController extends Controller
         {
             return redirect()->back()->withErrors($validator);
         }
+        
+        if(empty($request->id))
+        {
+            $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+            if(!empty($dsMonTheThao_check)){
+                return redirect()->route('monthethao.index')->with('error', 'Đã có tên môn thể thao');
+            }
+        }
+        $dsMonTheThao = MonTheThao::find($id);
+        $dsMonTheThao->ten_the_thao=$request->tenthethao;
+        $dsMonTheThao->save();
+        
+        // return redirect('admin.sport.index',$dsMonTheThao); 
+        return redirect()->route('monthethao.index')->with('success', 'Cập nhật môn thể thao thành công');
     }
 
     /**
@@ -157,8 +180,22 @@ class MonTheThaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
+        if(empty($id))
+        {
+            // $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+            // if(!empty($dsMonTheThao_check)){
+                return redirect()->route('monthethao.index')->with('error', 'không tìm thấy môn thể thao');
+            // }
+        }
+        $dsMonTheThao = MonTheThao::find($id);
+        $dsMonTheThao->delete();
+        return redirect()->route('monthethao.index')->with('success', 'xóa môn thể thao thành công');
+    }
+    public function search(Request $request)
+    {
+        
     }
 }
