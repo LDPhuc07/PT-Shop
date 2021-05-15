@@ -41,9 +41,7 @@ Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
 Route::get('/', 'SanPhamController@index')->name('index');
-Route::get('/products', function () {
-    return view('pages.product');
-});
+Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
 Route::get('/product-details', function () {
     return view('pages.product_detail');
 });
