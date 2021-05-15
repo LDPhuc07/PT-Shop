@@ -92,4 +92,7 @@
         </div>
       </form>
     </div>
+    <script>
+      console.log('ok');
+    </script>
 @endsection
