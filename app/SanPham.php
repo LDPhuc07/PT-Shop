@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class SanPham extends Model
 {
     protected $table = 'san_phams';
-
+    use SoftDeletes;
     public function anh()
     {
         return $this->hasMany('App\Anh', 'san_phams_id', 'id');
@@ -20,16 +20,16 @@ class SanPham extends Model
 
     public function nhaSanXuat()
     {
-        return $this->belongsTo('App\NhaSanXuat', 'san_phams_id', 'id');
+        return $this->belongsTo('App\NhaSanXuat', 'nha_san_xuats_id', 'id');
     }
 
     public function monTheThao()
     {
-        return $this->belongsTo('App\MonTheThao', 'san_phams_id', 'id');
+        return $this->belongsTo('App\MonTheThao', 'mon_the_thaos_id', 'id');
     }
 
     public function loaiSanPham()
     {
-        return $this->belongsTo('App\LoaiSanPham', 'san_phams_id', 'id');
+        return $this->belongsTo('App\LoaiSanPham', 'loai_san_phams_id', 'id');
     }
 }

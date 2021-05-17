@@ -181,6 +181,11 @@ ul {
     right: 20px;
     transform: translateY(-50%);
 }
+.show-hide-three{
+    position: absolute;
+    right: 20px;
+    transform: translateY(-50%);
+}
 .show-hide i {
     font-size: 20px;
     cursor: pointer;
@@ -189,10 +194,17 @@ ul {
     font-size: 20px;
     cursor: pointer;
 }
+.show-hide-three i {
+    font-size: 20px;
+    cursor: pointer;
+}
 .fa-eye.hide:before {
     content: '\f070';
 }
 .fa-eye-2.hide:before {
+    content: '\f070';
+}
+.fa-eye-3.hide:before {
     content: '\f070';
 }
 #password {

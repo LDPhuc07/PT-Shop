@@ -6,12 +6,13 @@
             <h3>Sản phẩm</h3>
           </div>
           <div class="add-pro">
-            <a href="{{ route('admin.products.create') }}">
+            <a href="{{ route('sanpham.create') }}">
               <i class="fas fa-plus"></i>
               <p>Thêm sản phẩm</p>
             </a>
           </div>
         </div>
+        @include('admin.mess.message')
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
@@ -60,28 +61,47 @@
                               <th>Nhà sản xuất</th>
                               <th>Loại sản phẩm</th>
                               <th>BM thể thao</th>
-                              <th>Ảnh</th>
+                              {{-- <th>Ảnh</th> --}}
+                              <th>Giá bán</th>
+                              <th>Giảm giá</th>
+                              <th>Hình ảnh</th>
                               <th>Mô tả</th>
-                              <th></th>
+                              <th>Chức năng</th>
                           </tr>
                       </thead>
                       <tbody>
+                        @foreach($dsSanPham as $ds)
+                        {{-- @php dd() @endphp --}}
                         <tr>
-                            <td>ADIDAS PREDATOR 20.3 AG/MG</td>
-                            <td>Adidas</td>
-                            <td>Giày</td>
-                            <td>Bóng đá</td>
+                            <td>{{$ds['ten_san_pham']}}</td>
+                            <td>{{$ds->nhaSanXuat->ten_nha_san_xuat}}</td>
+                            <td>{{$ds->loaiSanPham->ten_loai_san_pham}}</td>
+                            <td>{{$ds->monTheThao->ten_the_thao}}</td>
+                            <td>{{$ds['gia_ban']}}</td>
+                            <td>{{$ds['giam_gia']}}</td>
                             <td>
                               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                  <div class="carousel-item active">
-                                    <img class="d-block" src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcStHW4IMH4w1X-BpFBo1EBJ_LNWbO_T3wsZrV3Spj-9nUICVjTbpg52fB4pHGvniO3_n6OMOyTk4cc&usqp=CAc" alt="First slide">
-                                  </div>
-                                  <div class="carousel-item">
-                                    <img class="d-block" src="..." alt="Second slide">
-                                  </div>
-                                  <div class="carousel-item">
-                                    <img class="d-block" src="..." alt="Third slide">
+                                  {{-- @foreach($ds->anh as $key=>$value)
+                                    <div class="carousel-item active">
+                                      <img class="d-block" @if(empty($value->link)) src="{{asset('img/no-image.png')}}" @else src="{{asset($value->link)}}" @endif alt="First slide" name='anh1'>
+                                    </div>
+                                  @endforeach --}}
+                                
+                                  <div class="carousel-inner" style="width:50px;height:50px">
+                                    <div class="carousel-item active">
+                                      <img class="d-block w-100" src="{{asset('img/no-image.png')}}" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="d-block w-100" src="{{asset('img/no-image.png')}}" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="d-block w-100" src="{{asset('img/no-image.png')}}" alt="Third slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="d-block w-100" src="{{asset('img/no-image.png')}}" alt="Fourth slide">
+                                    </div>
+                                  </div>  
                                   </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -94,67 +114,21 @@
                                 </a>
                               </div>
                             </td>
-                            <td>Đẹp lắm</td>
+                            <td>{{$ds['mo_ta']}}</td>
                             <td>
                               <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
                               <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
-                        <tr>
-                          <td>ADIDAS PREDATOR 20.3 AG/MG</td>
-                          <td>Adidas</td>
-                          <td>Giày</td>
-                          <td>Bóng đá</td>
-                          <td><img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcStHW4IMH4w1X-BpFBo1EBJ_LNWbO_T3wsZrV3Spj-9nUICVjTbpg52fB4pHGvniO3_n6OMOyTk4cc&usqp=CAc" alt=""></td>
-                          <td>Đẹp lắm</td>
-                          <td>
-                            <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>ADIDAS PREDATOR 20.3 AG/MG</td>
-                          <td>Adidas</td>
-                          <td>Giày</td>
-                          <td>Bóng đá</td>
-                          <td><img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcStHW4IMH4w1X-BpFBo1EBJ_LNWbO_T3wsZrV3Spj-9nUICVjTbpg52fB4pHGvniO3_n6OMOyTk4cc&usqp=CAc" alt=""></td>
-                          <td>Đẹp lắm</td>
-                          <td>
-                            <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>ADIDAS PREDATOR 20.3 AG/MG</td>
-                          <td>Adidas</td>
-                          <td>Giày</td>
-                          <td>Bóng đá</td>
-                          <td><img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcStHW4IMH4w1X-BpFBo1EBJ_LNWbO_T3wsZrV3Spj-9nUICVjTbpg52fB4pHGvniO3_n6OMOyTk4cc&usqp=CAc" alt=""></td>
-                          <td>Đẹp lắm</td>
-                          <td>
-                            <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>ADIDAS PREDATOR 20.3 AG/MG</td>
-                          <td>Adidas</td>
-                          <td>Giày</td>
-                          <td>Bóng đá</td>
-                          <td><img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcStHW4IMH4w1X-BpFBo1EBJ_LNWbO_T3wsZrV3Spj-9nUICVjTbpg52fB4pHGvniO3_n6OMOyTk4cc&usqp=CAc" alt=""></td>
-                          <td>Đẹp lắm</td>
-                          <td>
-                            <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                            <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                            <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                          </td>
-                        </tr>
                     </tbody>
+                    @endforeach
                   </table>
+                  <nav aria-label="Page navigation example" style="margin-top:20px">
+                    <ul class="pagination">
+                      {!! $dsSanPham->appends(request()->query())->links() !!}
+                    </ul>
+                  </nav>
                   </div>
               </div>
             </div>

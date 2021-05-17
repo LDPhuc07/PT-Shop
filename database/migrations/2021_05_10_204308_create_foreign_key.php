@@ -34,15 +34,6 @@ class CreateForeignKey extends Migration
             $table->foreign('san_phams_id')->references('id')->on('san_phams');
             $table->foreign('hoa_dons_id')->references('id')->on('hoa_dons');
         });
-        //tạo khoa ngoại sau cung để ko bị lỗi hồi giwfo toàn làm xong xong k à :(
-        // Thì giờ rút kinh nghiệm
-        // coi xóa mấy cái seeder ko cân thiể add lại khóa ngoại vao đay
-        //migrate lại rồi seed lại luôn l vậy giờ xóa mấy cái dư truosc ham,
-        // xóa mấy cái seeder có số 1 
-        //add lại khóa ngoại vào đây
-        //migrate lại seed lại luôn à ok
-        //kokee
-        //trả máy
     }
 
     /**

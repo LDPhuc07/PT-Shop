@@ -17,8 +17,8 @@ class CreateAnhsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('san_phams_id');
             // $table->foreign('san_phams_id')->references('id')->on('san_phams');
-            $table->char('anh', 100);
-            $table->char('link');
+            $table->char('anh', 100)->nullable();
+            $table->char('link')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
         });

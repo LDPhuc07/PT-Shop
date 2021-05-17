@@ -9,9 +9,24 @@
           <li class="nav-item nav-item__first">
             <a class="nav-link nav-link__first nav-link__first--separate" href="#">Liên hệ</a>
           </li>
-          <li class="nav-item nav-item__first">
-
-            <a class="nav-link nav-link__first" href="#">Đăng nhập</a>
+          <li class="nav-item nav-item__first nav-item__first-user">
+            <!-- <a class="nav-link nav-link__first" href="#">Đăng nhập</a> -->
+            <img src="{{asset('img/product/noavatar.png')}}" alt="" class="nav-item__first-img">
+            <span class="nav-item__first-name">Quốc Trung</span>
+            <ul class="nav-item__first-menu">
+              <li class="nav-item__first-item">
+                <a href="">Tài khoản của tôi</a>
+              </li>
+              <li class="nav-item__first-item">
+                <a href="">Địa chỉ của tôi</a>
+              </li>
+              <li class="nav-item__first-item">
+                <a href="">Đơn mua</a>
+              </li>
+              <li class="nav-item__first-item">
+                <a href="">Đăng xuất</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>

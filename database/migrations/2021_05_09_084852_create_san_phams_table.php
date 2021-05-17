@@ -27,6 +27,7 @@ class CreateSanPhamsTable extends Migration
             $table->text('mo_ta')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

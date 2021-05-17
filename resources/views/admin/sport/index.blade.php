@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Môn thể thao</h3>
+           <a href="{{route('monthethao.index')}}" style="color:black;"><h3>Môn thể thao</h3></a> 
           </div>
           
           <div class="add-pro">
@@ -57,7 +57,7 @@
                   </table>
                   <nav aria-label="Page navigation example" style="margin-top:20px">
                     <ul class="pagination">
-                      {!! $dsMonTheThao->links() !!}
+                      {!! $dsMonTheThao->appends(request()->query())->links() !!}
                     </ul>
                   </nav>
                   </div>
