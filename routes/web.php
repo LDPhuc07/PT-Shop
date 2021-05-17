@@ -53,6 +53,13 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
     Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
     Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
+    // sản phẩm
+    Route::match(['get','post'],'/sanpham',("SanPhamController@indexAdmin"))->name('sanpham.indexAdmin');
+    Route::get('/sanpham/create',("SanPhamController@create"))->name('sanpham.create');
+    Route::post('/sanpham/store',("SanPhamController@storeAdmin"))->name('sanpham.storeAdmin');
+    // Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
+    // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
+    // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
     
 });
 
@@ -79,6 +86,9 @@ Route::get('/pay', function () {
 });
 Route::get('/news', function () {
     return view('pages.news');
+});
+Route::get('/account', function () {
+    return view('pages.account');
 });
 // Auth::routes();
 

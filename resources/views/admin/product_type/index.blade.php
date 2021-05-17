@@ -57,7 +57,7 @@
                   </table>
                   <nav aria-label="Page navigation example" style="margin-top:20px">
                     <ul class="pagination">
-                      {!! $dsLoaiSanPham->links() !!}
+                      {!! $dsLoaiSanPham->appends(request()->query())->links() !!}
                     </ul>
                   </nav>
                   </div>
