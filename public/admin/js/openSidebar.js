@@ -54,6 +54,9 @@ $('#filter-producer-wrap-id').click(function(){
   $('#popover-catagories').hide();
   showDiv('#popover-producer');
 });
+$('#account-nav').click(function(){
+  showDiv('#account-popover');
+});
 function showDiv(divid) {
   if ($(divid).is(':hidden')) {
     $(divid).show();
@@ -61,5 +64,6 @@ function showDiv(divid) {
     $(divid).hide();
   }
 }
+
   
 
