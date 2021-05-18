@@ -46,6 +46,7 @@ html, body {
 #sidebar-link {
   background-color: white;
   border: none;
+  cursor: pointer;
 }
 .main-header {
   position: fixed;
@@ -53,6 +54,19 @@ html, body {
   background-color: white;
   width: 100%;
   box-shadow: 0px 4px 8px rgb(168 168 168 / 25%);
+}
+.header {
+  background-color: white;
+}
+.header-btn {
+  display: inline-block;
+}
+.header-btn a {
+  color: black;
+}
+.account-btn {
+  float: right;
+  position: relative;
 }
 .brand-link {
   padding: 13px 8px;
@@ -648,4 +662,33 @@ textarea.textbox {
 .remember-box a {
   float: right;
   margin-right: 6px;
+}
+#account-nav {
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}
+.p-15 {
+  padding: 15px;
+}
+.account-popover {
+  width: 160px;
+  font-size: 16px;
+  list-style-type: none;
+  min-height: unset;
+  margin: 0;
+  top: 55px;
+  left: -10px;
+}
+.account-popover a {
+  color: black;
+  padding: 0 12px;
+  line-height: 38px;
+}
+.account-popover li:hover {
+  background-color: rgba(0,0,0,.075);
+}
+a:hover {
+  text-decoration: none;
 }

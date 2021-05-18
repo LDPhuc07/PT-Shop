@@ -17,14 +17,19 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
     Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');
     Route::get('/producers/create', 'NhaSanXuatController@create')->name('admin.producers.create');
-    Route::get('accounts', 'TaiKhoanController@index')->name('admin.accounts');
-    Route::get('accounts/lock/{id}', 'TaiKhoanController@lock')->name('admin.lockAccounts');
-    Route::get('accounts/unlock/{id}', 'TaiKhoanController@unlock')->name('admin.unlockAccounts');
+    Route::get('/accounts', 'TaiKhoanController@index')->name('admin.accounts');
+    Route::get('/accounts/lock/{id}', 'TaiKhoanController@lock')->name('admin.lockAccounts');
+    Route::get('/accounts/unlock/{id}', 'TaiKhoanController@unlock')->name('admin.unlockAccounts');
+    Route::get('/accounts/change-password/{id}', 'TaiKhoanController@getDoiMatKhauAdmin')->name('admin.changPassword');
+    Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
+    Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
+    Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin'); 
     Route::get('/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
     Route::post('/sign-up','TaiKhoanController@postDangKyAdmin');
+    
      // Môn thể thao
     Route::match(['get','post'],'/monthethao',("MonTheThaoController@index"))->name('monthethao.index');
     Route::get('/monthethao/create',("MonTheThaoController@create"))->name('monthethao.create');
