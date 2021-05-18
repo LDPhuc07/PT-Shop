@@ -692,3 +692,8 @@ textarea.textbox {
 a:hover {
   text-decoration: none;
 }
+.cursor {
+  cursor: pointer;
+  vertical-align: sub;
+  padding: 5px 10px;
+}
