@@ -94,6 +94,7 @@ class MonTheThaoController extends Controller
         }
         $dsMonTheThao = new MonTheThao();
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
+        dd($dsMonTheThao);
         $dsMonTheThao->save();
         
         // return redirect('admin.sport.index',$dsMonTheThao); 

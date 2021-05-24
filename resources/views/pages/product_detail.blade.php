@@ -46,10 +46,87 @@
         <div class="product__color">
           <div class="select-swap">
             @foreach($color as $i)
-              @if($i->mau == 'xanh la')
-                <button class="product__color-item green"></button>
+              @if($i->mau == 'xanh duong')
+              <div class="circlecheck">
+                <input type="radio" id="m-option" class="circle-1" name="mau" checked>
+                <label for="m-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'tim')
+              <div class="circlecheck">
+                <input type="radio" id="n-option" class="circle-3" name="mau">
+                <label for="n-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'cam')
+              <div class="circlecheck">
+                <input type="radio" id="a-option" class="circle-2" name="mau">
+                <label for="a-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'vang')
+              <div class="circlecheck">
+                <input type="radio" id="b-option" class="circle-4" name="mau">
+                <label for="b-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
               @endif
               @if($i->mau == 'trang')
+              <div class="circlecheck">
+                <input type="radio" id="c-option" class="circle-5" name="mau">
+                <label for="c-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'den')
+              <div class="circlecheck">
+                <input type="radio" id="d-option" class="circle-6" name="mau">
+                <label for="d-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'xanh la')
+              <div class="circlecheck">
+                <input type="radio" id="e-option" class="circle-7" name="mau">
+                <label for="e-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'xam')
+              <div class="circlecheck">
+                <input type="radio" id="f-option" class="circle-8" name="mau">
+                <label for="f-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'do')
+              <div class="circlecheck">
+                <input type="radio" id="h-option" class="circle-9" name="mau">
+                <label for="h-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              @if($i->mau == 'nau')
+              <div class="circlecheck">
+                <input type="radio" id="k-option" class="circle-10" name="selector">
+                <label for="k-option"></label>
+                
+                <div class="outer-circle"></div>
+              </div>
+              @endif
+              {{-- @if($i->mau == 'trang')
                 <button class="product__color-item white"></button>
               @endif
               @if($i->mau == 'den')
@@ -61,19 +138,33 @@
               @if($i->mau == 'xam')
                 <button class="product__color-item gray"></button>
               @endif
-              @if($i->mau == 'vang')
-                <button class="product__color-item yellow"></button>
-              @endif
               @if($i->mau == 'do')
                 <button class="product__color-item red"></button>
               @endif
               @if($i->mau == 'cam')
                 <button class="product__color-item orange"></button>
-              @endif
-              @if($i->mau == 'tim')
-                <button class="product__color-item violet"></button>
-              @endif
+              @endif --}}
+              
             @endforeach
+            
+                {{-- <div class="circlecheck">
+                  <input type="radio" id="f-option" class="circle-1" name="selector" checked>
+                  <label for="f-option">Radio Mint Color</label>
+                  
+                  <div class="outer-circle"></div>
+                </div>
+                <div class="circlecheck">
+                  <input type="radio" id="g-option" class="circle-2" name="selector">
+                  <label for="g-option">Radio Orange Color</label>
+                  
+                  <div class="outer-circle"></div>
+                </div>
+                <div class="circlecheck">
+                  <input type="radio" id="h-option" class="circle-3" name="selector">
+                  <label for="h-option">Radio Purple Color</label>
+                  
+                  <div class="outer-circle"></div>
+                </div> --}}
           </div>
         </div>
         <div class="product__size">

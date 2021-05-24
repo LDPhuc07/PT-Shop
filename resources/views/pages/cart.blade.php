@@ -39,9 +39,9 @@
                                       </div>
                                       <div class="col-2 center">
                                         <div class="cart-quantity">
-                                            <input type="button" value="-" class="control">
-                                            <input type="text" value="1" class="text-input"> 
-                                            <input type="button" value="+" class="control">
+                                            <input type="button" value="-" class="control" onclick="truSoLuong()">
+                                            <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
+                                            <input type="button" value="+" class="control" onclick="congSoLuong()">
                                         </div>
                                       </div>
                                       <div class="col-3 center">
@@ -67,9 +67,9 @@
                                     </div>
                                     <div class="col-2 center">
                                       <div class="cart-quantity">
-                                          <input type="button" value="-" class="control">
-                                          <input type="text" value="1" class="text-input"> 
-                                          <input type="button" value="+" class="control">
+                                        <input type="button" value="-" class="control" onclick="truSoLuong()">
+                                        <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
+                                        <input type="button" value="+" class="control" onclick="congSoLuong()">
                                       </div>
                                     </div>
                                     <div class="col-3 center">
@@ -95,9 +95,9 @@
                                     </div>
                                     <div class="col-2 center">
                                       <div class="cart-quantity">
-                                          <input type="button" value="-" class="control">
-                                          <input type="text" value="1" class="text-input"> 
-                                          <input type="button" value="+" class="control">
+                                        <input type="button" value="-" class="control" onclick="truSoLuong()">
+                                        <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
+                                        <input type="button" value="+" class="control" onclick="congSoLuong()">
                                       </div>
                                     </div>
                                     <div class="col-3 center">
@@ -170,4 +170,17 @@
 
       }
   </script>
+   <script>
+    function congSoLuong(){
+      var result = document.getElementById('textsoluong').value;
+      document.getElementById('textsoluong').value = parseInt(result) + 1;
+    }
+    function truSoLuong(){
+      var result = document.getElementById('textsoluong').value;
+      if(parseInt(result)>1){
+        document.getElementById('textsoluong').value = parseInt(result) - 1;
+      }
+      
+    }
+</script>
 @endsection
