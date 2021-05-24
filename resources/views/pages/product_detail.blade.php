@@ -86,9 +86,9 @@
         <div class="product__wrap">
           <div class="product__amount">
             <label for="">Số lượng: </label>
-            <input type="button" value="-" class="control">
-            <input type="text" value="1" class="text-input"> 
-            <input type="button" value="+" class="control">
+            <input type="button" value="-" class="control" onclick="truSoLuong()">
+            <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
+            <input type="button" value="+" class="control" onclick="congSoLuong()">
           </div>
           <button class="likenow">Thêm vào danh sách thích</button>
           
@@ -155,4 +155,17 @@
           });
         });
       </script>
+      <script>
+        function congSoLuong(){
+          var result = document.getElementById('textsoluong').value;
+          document.getElementById('textsoluong').value = parseInt(result) + 1;
+        }
+        function truSoLuong(){
+          var result = document.getElementById('textsoluong').value;
+          if(parseInt(result)>1){
+            document.getElementById('textsoluong').value = parseInt(result) - 1;
+          }
+          
+        }
+  </script>
 @endsection
