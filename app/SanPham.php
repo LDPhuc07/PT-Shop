@@ -32,4 +32,8 @@ class SanPham extends Model
     {
         return $this->belongsTo('App\LoaiSanPham', 'loai_san_phams_id', 'id');
     }
+    public function chiTietSanPham()
+    {
+        return $this->hasMany('App\ChiTietSanPham', 'san_phams_id', 'id');
+    }
 }

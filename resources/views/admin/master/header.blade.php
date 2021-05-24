@@ -51,13 +51,24 @@
     </div>
     <div class="header-btn"><a class="p-15" href="">Trang chủ</a></div>
     @if(Auth::check()) 
-        <div class="header-btn account-btn">
-            <button class="p-15" id="account-nav">{{ Auth::user()->ho_ten }}</button>
-            <ul id="account-popover" class="popover account-popover">
+        <div class="header-btn account-btn nav-item-name">
+            <h6 class="p-15 " id="account-nav">{{ Auth::user()->ho_ten }}</h6>
+            {{-- <ul id="account-popover" class="popover account-popover">
                 <li><a href="{{ route('admin.accounts.edit', Auth::user()->id) }}">Quản lý tài khoản</a></li>
                 <li><a href="{{ route('admin.changPassword', Auth::user()->id) }}">Đổi mật khẩu</a></li>
                 <li><a href="admin/logout">Đăng xuất</a></li>
-            </ul>
+            </ul> --}}
+            <ul class="nav-item-menu">
+                <li class="nav-item">
+                    <a href="{{ route('admin.accounts.edit', Auth::user()->id) }}">Quản lý tài khoản</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.changPassword', Auth::user()->id) }}">Đổi mật khẩu</a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin/logout">Đăng xuất</a>
+                </li>
+              </ul>
         </div> 
      @else
         <div class="header-btn account-btn">

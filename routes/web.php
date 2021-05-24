@@ -70,11 +70,9 @@ Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
-Route::get('/', 'SanPhamController@index')->name('index');
+Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
-Route::get('/product-details', function () {
-    return view('pages.product_detail');
-});
+Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
 Route::get('/carts', function () {
     return view('pages.cart');
 });

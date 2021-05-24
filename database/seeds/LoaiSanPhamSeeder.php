@@ -19,7 +19,7 @@ class LoaiSanPhamSeeder extends Seeder
             ['id'=> 4, 'ten_loai_san_pham'=>'quần', 'trang_thai'=>true],
             ['id'=> 5, 'ten_loai_san_pham'=>'áo', 'trang_thai'=>true],
             ['id'=> 6, 'ten_loai_san_pham'=>'túi', 'trang_thai'=>true],
-            ['id'=> 7, 'ten_loai_san_pham'=>'kính', 'trang_thai'=>true],
+            ['id'=> 7, 'ten_loai_san_pham'=>'mũ', 'trang_thai'=>true],
             ['id'=> 8, 'ten_loai_san_pham'=>'vợt', 'trang_thai'=>true],
             ['id'=> 9, 'ten_loai_san_pham'=>'tất', 'trang_thai'=>true],
             ['id'=> 10, 'ten_loai_san_pham'=>'băng giảm đau', 'trang_thai'=>true],

@@ -64,7 +64,7 @@
     border-radius: unset;
     border: 1px solid var(--black-color);
     background-color: var(--white-color);
-    font-size: 16px;
+    font-size: 25px;
     text-align: center;
     vertical-align: middle;
 }
@@ -200,7 +200,7 @@
     margin: 70px 0;
 }
 .seemore a {
-    padding: 20px 50px;
+    padding: 10px 40px;
     border: 2px solid var(--black-color);
     color: var(--black-color);
     font-size: 16px;
@@ -227,4 +227,18 @@
 .seemore a:hover {
     text-decoration: none;
     color: var(--white-color);
+}
+.product__color {
+    margin-bottom: 30px;
+}
+.product__color-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:3px solid #eee!important;
+}
+
+.product__color-item:focus {
+    outline:none;
+    border:3px solid #333!important;
 }

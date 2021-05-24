@@ -14,24 +14,25 @@
           <li data-target="#demo" data-slide-to="2"></li>
         </ul>
         <div class="carousel-inner">
+          {{-- @foreach($slides as $slide) --}}
+          @for($slide = 0; $slide < count($slides); $slide++)
+          @if($slide == 0)
           <div class="carousel-item active">
-            <img src="img/slideshow/1.jpg" alt="Los Angeles" width="1100" height="500">
+            <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption">
               <a href="" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
             </div>   
           </div>
+          @else
           <div class="carousel-item">
-            <img src="img/slideshow/2.jpg" alt="Chicago" width="1100" height="500">
+            <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption">
               <a href="" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
-            </div>    
+            </div>   
           </div>
-          <div class="carousel-item">
-            <img src="img/slideshow/3.jpg" alt="New York" width="1100" height="500">
-            <div class="carousel-caption">
-              <a href="" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
-            </div>    
-          </div>
+          @endif
+          @endfor
+          {{-- @endforeach --}}
         </div>
         <a class="carousel-control-prev" href="#demo" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -47,211 +48,90 @@
         <div class="product_popular">
           <h3 class="product__popular title-product">Sản phẩm phổ biến</h3>
           <div class="row">
+            @foreach($sanphamphobiens as $sanphamphobien)
             <div class="col-6">
               <div class="card" style="width: 100%;">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image" style="width:100%">
+                @foreach($sanphamphobien->anh as $anh)
+                <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image" style="width:100%">
+                @endforeach
                 <div class="card-body">
-                  <h4 class="card-title">GIÀY ADIDAS 4D FUTURECRAFT</h4>
-                  <p class="card-text custom__name-product" style="font-weight: 400;">Some example text some example text. John Doe is an architect and engineer</p>
-                  <a href="#" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
+                  <h4 class="card-title">{{$sanphamphobien['ten_san_pham']}}</h4>
+                  <p class="card-text custom__name-product" style="font-weight: 400;">{{$sanphamphobien['mo_ta']}}</p>
+                  <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
                 </div>
               </div>
             </div>
-            <div class="col-6">
-              <div class="card" style="width: 100%;">
-                <img class="card-img-top" src="img/product/stansmith.jpg" alt="Card image" style="width:100%">
-                <div class="card-body">
-                  <h4 class="card-title">GIÀY ADIDAS 4D FUTURECRAFT</h4>
-                  <p class="card-text custom__name-product" style="font-weight: 400;">Some example text some example textsome example text. John Doe is an architect and engineerSome example text some example textsome example text. John Doe is an architect and engineer</p>
-                  <a href="#" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
-                </div>
-              </div>
-            </div>
+            @endforeach
           </div>
         </div>
         <div class="product__new">
           <h3 class="product__ne title-product">Sản phẩm mới</h3>
             <div class="row">
+              @foreach($sanphammoinhats as $sanphammoinhat)
               <div class="col-3">
-                <a href="" class="product__new-item">
+                <a href="{{route('product_detail',['id'=>$sanphammoinhat->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
-                  <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
+                  @foreach($sanphammoinhat->anh as $anh)
+                    <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image cap">
+                  @endforeach
                   <div class="card-body">
-                    <h5 class="card-title">Nike jodan</h5>
-                    <p class="card-text price-color">1,000,000 đ</p>
+                    <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
+                    <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                   </div>
                 </div>
                 </a>
               </div>
-              <div class="col-3">
-                <a href="" class="product__new-item">
-                <div class="card" style="width: 100%">
-                  <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text price-color">1,000,000 đ</p>
-                  </div>
-                </div>
-                </a>
-              </div>
-              <div class="col-3">
-              <a href="" class="product__new-item">
-                <div class="card" style="width: 100%">
-                  <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text price-color">1,000,000 đ</p>
-                  </div>
-                </div>
-              </a>
-              </div>
-              <div class="col-3">
-                <a href="" class="product__new-item">
-                <div class="card" style="width: 100%">
-                  <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text price-color">1,000,000 đ</p>
-                  </div>
-                </div>
-                </a>
-              </div>
+              @endforeach
             </div>
         </div>
         <div class="product__sale">
           <h3 class="product__sale title-product">Top sản phẩm hot</h3>
           <div class="row">
+            @foreach($sanphamhots as $sanphamhot)
             <div class="col-3">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title custom__name-product">
-                    Card title Card titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard title
-                  </h5>
-                  <div class="product__price">
-                    <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                    <p class="card-text price-color product__price-new">1,000,000 đ</p>
-                  </div>
-                  <div class="sale-off">
-                    <span class="sale-off-percent">20%</span>
-                    <span class="sale-off-label">GIẢM</span>
+              <a href="{{route('product_detail',['id'=>$sanphamhot->id])}}" class="product__new-item">
+                <div class="card" style="width: 100%">
+                  @foreach($sanphamhot->anh as $anh)
+                  <img class="card-img-top" src="{{asset(getlink('product',$anh->link))}}" alt="Card image cap">
+                  @endforeach
+                  <div class="card-body">
+                    <h5 class="card-title custom__name-product">
+                      {{$sanphamhot['ten_san_pham']}}
+                    </h5>
+                    {{-- <div class="product__price">
+                      <p class="card-text price-color product__price-old">1,000,000 đ</p>
+                      <p class="card-text price-color product__price-new">1,000,000 đ</p>
+                    </div> --}}
+                    <p class="card-text price-color">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    <div class="sale-off">
+                      <span class="sale-off-percent">{{$sanphamhot['giam_gia']}}%</span>
+                      <span class="sale-off-label">GIẢM</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
-            <div class="col-3">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title custom__name-product">
-                    Card title Card titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard title
-                  </h5>
-                  <div class="product__price">
-                    <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                    <p class="card-text price-color product__price-new">1,000,000 đ</p>
-                  </div>
-                  <div class="sale-off">
-                    <span class="sale-off-percent">20%</span>
-                    <span class="sale-off-label">GIẢM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title custom__name-product">
-                    Card title Card titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard titleCard title
-                  </h5>
-                  <div class="product__price">
-                    <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                    <p class="card-text price-color product__price-new">1,000,000 đ</p>
-                  </div>
-                  <div class="sale-off">
-                    <span class="sale-off-percent">20%</span>
-                    <span class="sale-off-label">GIẢM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title custom__name-product">
-                    Card title Cardd title
-                  </h5>
-                  <div class="product__price">
-                    <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                    <p class="card-text price-color product__price-new">1,000,000 đ</p>
-                  </div>
-                  <div class="sale-off">
-                    <span class="sale-off-percent">20%</span>
-                    <span class="sale-off-label">GIẢM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endforeach
           </div>
         </div>
         <div class="product__yml">
           <h3 class="product__yml title-product">Có thể bạn sẽ thích</h3>
           <div class="row">
+            @foreach($sanphams as $sanpham)
             <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
+              <a href="{{route('product_detail',['id'=>$sanpham->id])}}" class="product__new-item">
+                <div class="card" style="width: 100%">
+                  @foreach($sanpham->anh as $anh)
+                    <img class="card-img-top" src="{{asset(getlink('product',$anh->link))}}" alt="Card image cap">
+                  @endforeach
+                  <div class="card-body">
+                    <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
+                    <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
-            <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="card" style="width: 100%">
-                <img class="card-img-top" src="img/product/addidas1.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text price-color">1,000,000 đ</p>
-                </div>
-              </div>
-            </div>
+            @endforeach
           </div>
         </div>
       </div>

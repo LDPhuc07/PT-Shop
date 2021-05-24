@@ -80,13 +80,13 @@
                             <td>{{$ds['gia_ban']}}</td>
                             <td>{{$ds['giam_gia']}}</td>
                             <td>
-                              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                              {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                  {{-- @foreach($ds->anh as $key=>$value)
+                                  @foreach($ds->anh as $key=>$value)
                                     <div class="carousel-item active">
                                       <img class="d-block" @if(empty($value->link)) src="{{asset('img/no-image.png')}}" @else src="{{asset($value->link)}}" @endif alt="First slide" name='anh1'>
                                     </div>
-                                  @endforeach --}}
+                                  @endforeach
                                 
                                   <div class="carousel-inner" style="width:50px;height:50px">
                                     <div class="carousel-item active">
@@ -102,7 +102,9 @@
                                       <img class="d-block w-100" src="{{asset('img/no-image.png')}}" alt="Fourth slide">
                                     </div>
                                   </div>  
+                                  
                                   </div>
+                                    
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -112,7 +114,9 @@
                                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                   <span class="sr-only">Next</span>
                                 </a>
-                              </div>
+                                
+                              </div> --}}
+                              <img src="{{asset('img/product/'. $ds['anh'] )}}" alt="anh">
                             </td>
                             <td>{{$ds['mo_ta']}}</td>
                             <td>
@@ -121,6 +125,7 @@
                               <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
+                        {{-- Không khuyến khích làm cách này nha, kiểm tra đổ ra với edit hơi cưcj --}}
                     </tbody>
                     @endforeach
                   </table>

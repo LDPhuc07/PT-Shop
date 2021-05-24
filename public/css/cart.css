@@ -70,7 +70,7 @@
 }
 .text-input {
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     border: unset;
     border-radius: unset;
@@ -128,4 +128,12 @@
     font-size: 20px;
     font-weight: 500;
     position: relative;
+}
+.center {
+    text-align: center;
+}
+.fa-trash {
+    font-size: 16px;
+    color: red;
+    vertical-align: middle;
 }

@@ -14,6 +14,33 @@ html {
     font-family: 'Roboto', sans-serif;/*bỏ dấu gạch chân của chữ*/
     box-sizing: border-box;
 }
+.green {
+    background-color: green;
+}
+.white {
+    background-color: #fff;
+}
+.black {
+    background-color: #000;
+}
+.blue {
+    background-color: blue;
+}
+.gray {
+    background-color: gray;
+}
+.yellow {
+    background-color: yellow;
+}
+.red {
+    background-color: red;
+}
+.orange {
+    background-color: orange;
+}
+.violet {
+    background-color: violet;
+}
 .display {
     display: block;
     transition: 0.8s;

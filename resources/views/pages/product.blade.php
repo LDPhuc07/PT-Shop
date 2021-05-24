@@ -353,7 +353,7 @@
             </div>
                 </div>
                 <div class="loadmore">
-                  <a href="" class="loadmore-btn">Tải thêm</a>
+                  <a href="" class="loadmore-btn">Xem thêm</a>
                 </div>
             </div>
         </div>

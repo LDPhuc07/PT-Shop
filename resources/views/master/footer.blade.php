@@ -30,13 +30,13 @@
           <h3 class="footer__heading">Theo dõi chúng tôi trên</h3>
           <ul class="footer__list">
             <li class="footer__item">
-              <a href="" class="footer__item--link"> <i class="fab fa-facebook-square footer__item--link-icon"></i>facebook</a>
+              <a href="https://www.facebook.com/qTrung0910/" class="footer__item--link"> <i class="fab fa-facebook-square footer__item--link-icon"></i>facebook</a>
             </li>
             <li class="footer__item">
-              <a href="" class="footer__item--link"> <i class="fab fa-instagram-square footer__item--link-icon"></i></i>Instagram</a>
+              <a href="https://www.instagram.com/qtrung0910/" class="footer__item--link"> <i class="fab fa-instagram-square footer__item--link-icon"></i></i>Instagram</a>
             </li>
             <li class="footer__item">
-              <a href="" class="footer__item--link"> <i class="fab fa-tiktok footer__item--link-icon"></i>Tik tok</a>
+              <a href="https://www.tiktok.com/@qtrung0910?lang=vi-VN" class="footer__item--link"> <i class="fab fa-tiktok footer__item--link-icon"></i>Tik tok</a>
             </li>
           </ul>
         </div>
