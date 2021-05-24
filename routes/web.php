@@ -92,3 +92,4 @@ Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+

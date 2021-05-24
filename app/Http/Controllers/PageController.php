@@ -54,17 +54,9 @@ class PageController extends Controller
             $query->where('anhchinh',1);
         }))->first();
        
-        $size = SanPham::where('id',$request->id)->with('chiTietSanPham')
-        ->with(array('chiTietSanPham' => function($query) {
-            $query->whereNotNull('kich_thuoc');
-        }))
-        ->first();
+        $size = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->distinct()->get();
         // dd($size);
-        $color = SanPham::where('id',$request->id)->with('chiTietSanPham')
-        ->with(array('chiTietSanPham' => function($query) {
-            $query->whereNotNull('mau');
-        }))
-        ->first();
+        $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
         // sản phẩm liên quan lấy chung loại
         $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->orderby('id', 'desc')->with('loaiSanPham') 
                                 ->with(array('anh' => function($query) {

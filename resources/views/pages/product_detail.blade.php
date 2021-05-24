@@ -45,7 +45,7 @@
         </div>
         <div class="product__color">
           <div class="select-swap">
-            @foreach($color->chiTietSanPham as $i)
+            @foreach($color as $i)
               @if($i->mau == 'xanh la')
                 <button class="product__color-item green"></button>
               @endif
@@ -78,7 +78,7 @@
         </div>
         <div class="product__size">
           <div class="select-swap">
-            @foreach($size->chiTietSanPham as $i)
+            @foreach($size as $i)
               <button class="option-swap">{{$i->kich_thuoc}}</button>
             @endforeach
           </div>
