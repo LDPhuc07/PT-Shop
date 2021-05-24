@@ -67,6 +67,7 @@ html, body {
 .account-btn {
   float: right;
   position: relative;
+  display: flex;
 }
 .brand-link {
   padding: 13px 8px;

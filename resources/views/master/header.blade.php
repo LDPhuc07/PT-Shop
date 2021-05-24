@@ -10,23 +10,26 @@
             <a class="nav-link nav-link__first nav-link__first--separate" href="#">Liên hệ</a>
           </li>
           <li class="nav-item nav-item__first nav-item__first-user">
-            <!-- <a class="nav-link nav-link__first" href="#">Đăng nhập</a> -->
-            <img src="{{asset('img/product/noavatar.png')}}" alt="" class="nav-item__first-img">
-            <span class="nav-item__first-name">Quốc Trung</span>
-            <ul class="nav-item__first-menu">
-              <li class="nav-item__first-item">
-                <a href="">Tài khoản của tôi</a>
-              </li>
-              <li class="nav-item__first-item">
-                <a href="">Địa chỉ của tôi</a>
-              </li>
-              <li class="nav-item__first-item">
-                <a href="">Đơn mua</a>
-              </li>
-              <li class="nav-item__first-item">
-                <a href="">Đăng xuất</a>
-              </li>
-            </ul>
+            @if(Auth::check() and Auth::user()->admin != 1)
+              <img src="{{asset('img/product/noavatar.png')}}" alt="" class="nav-item__first-img">
+              <span class="nav-item__first-name">{{ Auth::user()->ho_ten }}</span>
+              <ul class="nav-item__first-menu">
+                <li class="nav-item__first-item">
+                  <a href="{{ route('accounts',Auth::user()->id) }}">Tài khoản của tôi</a>
+                </li>
+                <li class="nav-item__first-item">
+                  <a href="{{ route('accounts',Auth::user()->id) }}">Đổi mật khẩu</a>
+                </li>
+                <li class="nav-item__first-item">
+                  <a href="">Đơn mua</a>
+                </li>
+                <li class="nav-item__first-item">
+                  <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
+                </li>
+              </ul>
+            @else
+              <a class="nav-link nav-link__first" href="{{ route('accounts.login') }}">Đăng nhập</a>
+            @endif
           </li>
         </ul>
       </div>

@@ -50,18 +50,18 @@
         </button>
     </div>
     <div class="header-btn"><a class="p-15" href="">Trang chủ</a></div>
-    @if(Auth::check()) 
+    @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
             <button class="p-15" id="account-nav">{{ Auth::user()->ho_ten }}</button>
             <ul id="account-popover" class="popover account-popover">
                 <li><a href="{{ route('admin.accounts.edit', Auth::user()->id) }}">Quản lý tài khoản</a></li>
                 <li><a href="{{ route('admin.changPassword', Auth::user()->id) }}">Đổi mật khẩu</a></li>
-                <li><a href="admin/logout">Đăng xuất</a></li>
+                <li><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></li>
             </ul>
         </div> 
      @else
         <div class="header-btn account-btn">
-            <a href="admin/login" class="p-15">Đăng nhập</a>
+            <a href="{{ route('admin.accounts.login') }}" class="p-15">Đăng nhập</a>
         </div>
     @endif
 </div>

@@ -54,7 +54,10 @@ class TaiKhoanController extends Controller
         Auth::logout();
         return redirect()->route('admin.accounts.login');
     }
-
+    public function dangXuat() { 
+        Auth::logout();
+        return redirect()->route('accounts.login');
+    }
     public function getDangKyAdmin() {
         return view('admin.sign_up');
     }
@@ -114,6 +117,16 @@ class TaiKhoanController extends Controller
             return redirect()->back()->with('thong_bao','Mật khẩu không hợp lệ');
         }
     }
+    public function putDoiMatKhau(DoiMatKhauRequest $requests, $id) {
+        if(Auth::attempt(['email' => Auth::user()->email, 'password' => $requests->mat_khau_cu])) {
+                $new = TaiKhoan::find($id);
+                $new->password = Hash::make($requests->mat_khau_moi);
+                $new->save();
+                return redirect()->route('index');
+        } else {
+            return redirect()->back()->with('thong_bao','Mật khẩu không hợp lệ');
+        }
+    }
     public function editAccountAdmin($id) {
         $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
         return view('admin.account.edit_account',$array);
@@ -147,5 +160,39 @@ class TaiKhoanController extends Controller
         $new->dia_chi = $requests->dia_chi;
         $new->save();
         return redirect()->route('admin.products');
+    }
+    public function updateAccount(Request $requests, $id) {
+        $requests->validate([
+            'ho_ten' => 'required'
+        ],[
+            'ho_ten.required' => 'Vui lòng nhập họ và tên'
+        ]);
+        $new = TaiKhoan::find($id);
+        $new->ho_ten = $requests->ho_ten;
+        if(Auth::user()->email != $requests->email) {
+            $requests->validate([
+                'email' => 'required|email|unique:tai_khoans,email'
+            ],[
+                'email.required' => 'Vui lòng nhập email',
+                'email.email' => 'Email không hợp lệ',
+                'email.unique' => 'Email đã được đăng ký'
+            ]);
+            $new->email = $requests->email;
+        }
+        if(Auth::user()->so_dien_thoai != $requests->so_dien_thoai) {
+            $requests->validate([
+                'so_dien_thoai' => 'unique:tai_khoans,so_dien_thoai'
+            ],[
+                'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký'
+            ]);
+            $new->so_dien_thoai = $requests->so_dien_thoai;
+        }
+        $new->dia_chi = $requests->dia_chi;
+        $new->save();
+        return redirect()->route('index');
+    }
+    public function quanLyTaiKhoan($id) {
+        $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
+        return view('pages.account',$array);
     }
 }

@@ -26,7 +26,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
-    Route::get('/logout', 'TaiKhoanController@dangXuatAdmin'); 
+    Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
     Route::get('/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
     Route::post('/sign-up','TaiKhoanController@postDangKyAdmin');
     
@@ -70,6 +70,7 @@ Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
+Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'SanPhamController@index')->name('index');
 Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
 Route::get('/product-details', function () {
@@ -87,9 +88,9 @@ Route::get('/pay', function () {
 Route::get('/news', function () {
     return view('pages.news');
 });
-Route::get('/account', function () {
-    return view('pages.account');
-});
+Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
+Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
+Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
