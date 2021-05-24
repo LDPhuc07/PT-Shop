@@ -8,7 +8,7 @@
         </a>
         <h3>Thêm mới sản phẩm</h3>
       </div>
-      <form action="{{route('sanpham.storeAdmin')}}" method="post">
+      <form action="{{route('sanpham.storeAdmin')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row add-product-form">
           <div class="col-8 pl-0 pr-10">
@@ -73,14 +73,27 @@
           </div>
           <div class="col-4 pr-0 pl-10">
             <div class="product-info product-picture">
-              <div class="head-product-picture">
+              {{-- <div class="head-product-picture">
                 <span>Ảnh sản phẩm</span>
                 <a href="">Thêm ảnh</a>
-              </div>
+              </div> --}}
+              <label class="product-info-item-label" for="">Thêm ảnh chính<span class="repuired"> *</span></label>
+                <i class="fas fa-info"></i>
+              <input type="file" class="form-control" placeholder="Ảnh"  name="anh" id="anh" onchange="loadfile(event)">
               <div class="product-picture-item">
                 <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" alt="">
               </div>
             </div>
+          </div>
+          @for($i = 1; $i <=4 ; $i++)
+          <div class="col-12 pl-0 mt-20 pr-0">
+            <div class="product-info">
+              <div class="product-info-item">
+                <label class="product-info-item-label" for="">Thêm ảnh chi tiết {{ $i }}</label>
+                <input type="file" name=anhchitiet[]>
+              </div>
+            </div>
+            @endfor
           </div>
           <div class="col-12 pl-0 mt-20 pr-0">
             <div class="product-info">
@@ -102,4 +115,10 @@
         </div>
       </form>
     </div>
+    <script>
+      var loadfile = function(event){
+        var img = document.getElementById('imgsp');
+        img.src = URL.createObjectURL(event.target.files[0]);
+    }
+    </script>
 @endsection

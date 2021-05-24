@@ -16,7 +16,7 @@
     <div class="container-login">
         <div class="form-login">
             <div class="head-form-login">
-                <img class="logo-login" src="https://banner2.cleanpng.com/20190417/fw/kisspng-adidas-run-waist-bag-black-mens-logo-image-thr-adidas-deerupt-bea-world-festival-5cb752a7e7db73.0092557415555181199497.jpg" alt="">
+                <img class="logo-login" src="{{asset('img/logo/logomain.png')}}" alt="" >
             </div>
             <div class="container-form-login">
                 <h3 class="mb-16">Đăng nhập</h3>
@@ -70,10 +70,12 @@
                     <div class="social-auth-links text-center">
                         <p>Hoặc</p>
                         <a class="btn facebook-login-btn" href="">
-                            <i class="fab fa-facebook"></i>Đăng ký bằng Facebook
+                            <span>Đăng nhâp với facebook</span>
+                            <img class= "img-social" src="{{asset('icon/facebook.svg')}}" alt="">
                         </a>
                         <a class="btn google-login-btn" href="">
-                            <i class="fab fa-google-plus-g"></i>Đăng nhập bằng Google
+                            <span>Đăng nhâp với google</span>
+                            <img class= "img-social" src="{{asset('icon/google.svg')}}" alt="">
                         </a>
                     </div>
                 </form>

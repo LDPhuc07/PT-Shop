@@ -61,6 +61,7 @@ html, body {
 .header-btn {
   display: inline-block;
 }
+.p-15:focus{outline:none;}
 .header-btn a {
   color: black;
 }
@@ -613,37 +614,40 @@ textarea.textbox {
 .register-btn, .login-btn {
   width: 100%;
   color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #00BFFF;
+  border-color: #00BFFF;
   font-size: 16px;
 }
 .register-btn:hover, .login-btn:hover {
-  background-color: #c82333;
-  border-color: #bd2130;
+  background-color: #1E90FF;
+  border-color: #1E90FF;
 }
 .facebook-login-btn, .google-login-btn {
   width: 49%;
-  color: #fff;
+  color: black;
   box-shadow: none;
 }
 .facebook-login-btn {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: none;
+  border-color: #333;
 }
-.facebook-login-btn:hover {
-  color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+.facebook-login-btn span {
+    text-transform: uppercase;
+    font-size: 12px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.google-login-btn span {
+  text-transform: uppercase;
+  font-size: 12px;
+  vertical-align: middle;
+  margin-right: 5px;
 }
 .google-login-btn {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: none;
+  border-color: #333;
 }
-.google-login-btn:hover {
-  color: #fff;
-  background-color: #c82333;
-  border-color: #bd2130;
-}
+
 .facebook-login-btn i, .google-login-btn i {
   margin-right: 8px;
 }
@@ -697,4 +701,69 @@ a:hover {
   cursor: pointer;
   vertical-align: sub;
   padding: 5px 10px;
+}
+.img-social {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+.nav-item-name:hover .nav-item-menu {
+  display: block;
+}
+.nav-item-menu {
+  position:absolute;
+  display:none;
+  padding-left: 0;
+  top: calc(80% + 4px);
+  right: 0;
+  width: 160px;
+  border-radius: 1px;
+  background-color: black;
+  list-style: none;
+  z-index: 9;
+  box-shadow: 0 2px 4px #e0e0e0;
+}
+.nav-item-menu::before {
+  content: "";
+  border-width: 17px 23px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+  position: absolute;
+  right: 0px;
+  top: -26px;
+}
+.nav-item-menu::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -8px;
+  right: 0;
+  width: 65%;
+  height: 8px;
+  /* background-color: var(--hover-color); */
+}
+.nav-item a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.4rem;
+  display:block;
+  padding:4px 16px;
+}
+.nav-item a:first-child {
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+}
+.nav-item a:first-child {
+  border-bottom-left-radius: 1px;
+  border-bottom-right-radius: 1px;
+}
+.nav-item a:hover {
+  /* background-color: #fafafa; */
+  color: #00BFFF;
+}
+.nav-item-name {
+  margin-right: 20px;
+}
+.nav-item a {
+  font-size: 16px;
 }

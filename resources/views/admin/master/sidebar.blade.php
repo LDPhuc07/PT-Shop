@@ -1,6 +1,6 @@
 <div id="mySidebar" class="main-sidebar">
     <a class="brand-link" href="">
-    <img class ="logo" src="https://banner2.cleanpng.com/20190417/fw/kisspng-adidas-run-waist-bag-black-mens-logo-image-thr-adidas-deerupt-bea-world-festival-5cb752a7e7db73.0092557415555181199497.jpg" alt="">
+    <img class ="logo" src="{{asset('img/logo/logomain.png')}}" alt="">
     <span class="brand-text">P&T Sport</span>
     </a>
     <div class="sidebar">
