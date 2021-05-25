@@ -53,6 +53,11 @@
 .cart-name {
     color: var(--black-color);
 }
+.cart-name span{
+    font-size: 12px;
+    color: #808080;
+    
+}
 .cart-name:hover {
     text-decoration: none;
     color: var(--black-color);
@@ -127,13 +132,19 @@
     color: var(--white-color);
     font-size: 20px;
     font-weight: 500;
-    position: relative;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+.chekout:hover {
+    text-decoration: none;
+    color: var(--white-color);
 }
 .center {
     text-align: center;
 }
 .fa-trash {
     font-size: 16px;
-    color: red;
+    color: var(--hover-color);
     vertical-align: middle;
 }

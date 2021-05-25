@@ -29,10 +29,16 @@
                               <div class="col-11">
                                   <div class="row">
                                       <div class="col-2 center">
-                                          <a href=""><img class="cart-img" src="img/product/addidas1.jpg" alt=""></a>
+                                          <a href=""><img class="cart-img" src="img/product/adirunner.jpg" alt=""></a>
                                       </div>
                                       <div class="col-3 center">
-                                          <a href="" class="cart-name" ><h5>ÁO THỦ MÔN ĐTVN 2021 GRAND SPORT - 038-322 - VÀNG CAM</h5></a>
+                                          <a href="" class="cart-name" >
+                                              <h5>ÁO THỦ MÔN ĐTVN 2021 GRAND SPORT - 038-322 - VÀNG CAM</h5>
+                                              <div style="display:flex;justify-content: space-between;">
+                                                <span>Màu: Trắng</span>
+                                                <span>Size: xl</span>
+                                              </div>
+                                          </a>
                                       </div>
                                       <div class="col-2 center">
                                           <span>625,000₫</span>
@@ -53,62 +59,7 @@
                                 <span class="delete-btn"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></span> 
                             </div>
                           </div>
-                          <div class="row cart-body-row">
-                            <div class="col-11">
-                                <div class="row">
-                                    <div class="col-2 center">
-                                        <a href=""><img class="cart-img" src="img/product/addidas1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="col-3 center">
-                                        <a href="" class="cart-name" ><h5>ÁO THỦ MÔN ĐTVN 2021 GRAND SPORT - 038-322 - VÀNG CAM</h5></a>
-                                    </div>
-                                    <div class="col-2 center">
-                                        <span>625,000₫</span>
-                                    </div>
-                                    <div class="col-2 center">
-                                      <div class="cart-quantity">
-                                        <input type="button" value="-" class="control" onclick="truSoLuong()">
-                                        <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
-                                        <input type="button" value="+" class="control" onclick="congSoLuong()">
-                                      </div>
-                                    </div>
-                                    <div class="col-3 center">
-                                      <span>625,000₫</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1 center" onclick="xoasanpham()">
-                                <span class="delete-btn"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></span> 
-                            </div>
-                        </div>
-                        <div class="row cart-body-row">
-                            <div class="col-11">
-                                <div class="row">
-                                    <div class="col-2 center">
-                                        <a href=""><img class="cart-img" src="img/product/addidas1.jpg" alt=""></a>
-                                    </div>
-                                    <div class="col-3 center">
-                                        <a href="" class="cart-name" ><h5>ÁO THỦ MÔN ĐTVN 2021 GRAND SPORT - 038-322 - VÀNG CAM</h5></a>
-                                    </div>
-                                    <div class="col-2 center">
-                                        <span>625,000₫</span>
-                                    </div>
-                                    <div class="col-2 center">
-                                      <div class="cart-quantity">
-                                        <input type="button" value="-" class="control" onclick="truSoLuong()">
-                                        <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
-                                        <input type="button" value="+" class="control" onclick="congSoLuong()">
-                                      </div>
-                                    </div>
-                                    <div class="col-3 center">
-                                      <span>625,000₫</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1 center" onclick="xoasanpham()">
-                                <span class="delete-btn"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></span> 
-                            </div>
-                        </div>
+
 
 
                       </div>
@@ -125,13 +76,15 @@
                       </div>
                   </div>
                   <div class="cart-body-right">
-                      <div class="cart-total">
+                      <div class="row">
+                        <div class="cart-total col-12">
                           <label for="">Thành tiền:</label>
                           <span class="total__price">1,415,000₫</span>
                       </div>
-                      <div class="cart-buttons">
-                          <button class="chekout">Thanh toán</button>
+                      <div class="cart-buttons col-12">
+                          <a class="chekout">Thanh toán</a>
                       </div>
+                    </div>
                   </div>
               </form>
           </div>
