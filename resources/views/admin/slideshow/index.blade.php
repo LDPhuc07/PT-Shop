@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Sản phẩm</h3>
+            <a href="{{route('slideshow.index')}}" style="color:black;"><h3>Slideshow</h3></a>
           </div>
           <div class="add-pro">
             <a href="{{ route('slideshow.create') }}">
@@ -18,8 +18,8 @@
                 <div class="ds-sanpham">
                   <div class="head-table">
                     <div class="search">
-                      <form action="">
-                        <input class="search-txt" type="text" placeholder="Search.." name="search">
+                      <form action="{{route('slideshow.index')}}" method="GET">
+                        <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">
                         <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
                       </form>
                     </div>
@@ -28,8 +28,8 @@
                     <table class="table-ds-sanpham">
                       <thead>
                           <tr>
-                              <th>Tên ảnh</th>
-                              <th>Link ảnh</th>
+                              <th>Tên slideshow</th>
+                              <th>Link slideshow</th>
                               <th>Chức năng</th>
                           </tr>
                       </thead>
@@ -40,9 +40,13 @@
                             <td>
                               <img src="{{asset(getLink('slideshow',$ds['link']))}}" alt="anh">
                             </td>
-                            <td>
-                              <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                            <td style="display:flex">
+                              <a href="{{route('slideshow.edit',['id' => $ds['id']])}}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                              <form id="slideshow_{{$ds['id']}}" action="{{route('slideshow.delete',['id' => $ds['id']])}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                              <span class="delete-btn cursor" data-target="#modalSlideShow" data-toggle="modal" data-id="{{$ds['id']}}"><i class="fas fa-trash-alt"></i></span>
+                              </form>
                             </td>
                         </tr>
                         {{-- Không khuyến khích làm cách này nha, kiểm tra đổ ra với edit hơi cưcj --}}
@@ -59,4 +63,41 @@
             </div>
         </div>
     </div>
+    <!-- The Modal -->
+  <div class="modal fade" id="modalSlideShow">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" style="color:red">Cảnh báo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Bạn có chắc muốn xóa
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="slideshow" style="background-color:red;color:white">confirm</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+@endsection
+@section('script')
+    <script>
+        $('.delete-btn').click(function(){
+          let id = $(this).data('id');
+          $('#slideshow').attr('data-id',id);
+        })
+        $('#slideshow').click(function(){
+          let id = $(this).data('id');
+          $('#slideshow_'+id).submit();
+        })
+    </script>
 @endsection
