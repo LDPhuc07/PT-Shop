@@ -60,6 +60,13 @@ Route::group(['prefix' => 'admin'], function() {
     // Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
     // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
     // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
+    // slide show
+    Route::match(['get','post'],'/slideshow',("SlideShowController@index"))->name('slideshow.index');
+    Route::get('/slideshow/create',("SlideShowController@create"))->name('slideshow.create');
+    Route::post('/slideshow/store',("SlideShowController@store"))->name('slideshow.store');
+    Route::get('/slideshow/{id}/edit',("NhaSanXuatController@edit"))->name('slideshow.edit');
+    Route::put('/slideshow/{id}',("NhaSanXuatController@update"))->name('slideshow.update');
+    // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
     
 });
 
