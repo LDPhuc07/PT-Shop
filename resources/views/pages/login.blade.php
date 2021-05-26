@@ -49,6 +49,12 @@
               @endif
             </div>
             <input type="hidden" name="remember">
+            @if(session('thong_bao'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ session('thong_bao') }}
+                            </span>
+                        @endif
             <button class="form-submit">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
             <h4>HOẶC</h4>
             <div class="form-social">
