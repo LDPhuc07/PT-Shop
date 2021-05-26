@@ -49,10 +49,11 @@
                                           <span>{{number_format($content->price,0,',','.').' '.'VNĐ'}}</span>
                                       </div>
                                       <div class="col-2 center">
-                                        <div class="cart-quantity">
-                                            <input type="button" value="-" class="control" onclick="truSoLuong()">
+                                       
+                                        <div class="cart-quantity cart-{{$content->id}}">
+                                            <input type="button" value="-" class="control" onclick="truSoLuong({{$content->id}})">
                                             <input type="text"  value="{{ $content->qty }}" class="text-input" name="quantity" id="textsoluong"> 
-                                            <input type="button" value="+" class="control" onclick="congSoLuong()">
+                                            <input type="button" value="+" class="control" onclick="congSoLuong({{$content->id}})">
                                         </div>
                                       </div>
                                       <div class="col-3 center">
@@ -129,9 +130,9 @@
       }
   </script>
    <script>
-    function congSoLuong(){
-      var result = document.getElementById('textsoluong').value;
-      document.getElementById('textsoluong').value = parseInt(result) + 1;
+    function congSoLuong(id){
+      var result = document.querySelector(`.cart-${id} #textsoluong`).value;
+      document.querySelector(`.cart-${id} #textsoluong`).value = parseInt(result) + 1;
 
       {{--  $.ajax({
         type: 'GET',
@@ -151,10 +152,10 @@
         },
       });  --}}
     }
-    function truSoLuong(){
-      var result = document.getElementById('textsoluong').value;
+    function truSoLuong(id){
+      var result = document.querySelector(`.cart-${id} #textsoluong`).value;
       if(parseInt(result)>1){
-        document.getElementById('textsoluong').value = parseInt(result) - 1;
+        document.querySelector(`.cart-${id} #textsoluong`).value = parseInt(result) - 1;
       }
       
     }
