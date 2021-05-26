@@ -98,4 +98,4 @@ Route::post('/cart/save', 'GioHangController@save')->name('cart.save');
 Route::get('/cart/delete-item/{id}', 'GioHangController@deleteItem')->name('cart.deleteItem');
 Route::get('/cart/update-item', 'GioHangController@updateItem')->name('cart.updateItem');
 Route::get('/checkout', 'ThanhToanController@index')->name('checkout.index');
-Route::post('/checkout/create','HoaDoncontroller@create');
+Route::post('/checkout/create','HoaDoncontroller@create')->name('bill.create');

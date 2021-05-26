@@ -25,7 +25,7 @@
                           </div>
                       </div>
                       <div id="cart-body" class="cart-body">
-                        <?php
+                      <?php
                         $contents = Cart::content();
                         $total = Cart::subtotal();
                       ?>

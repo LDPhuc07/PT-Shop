@@ -28,8 +28,8 @@ class PageController extends Controller
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
 
-        $ctsp = ChiTietHoaDon::select('san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
-                                ->groupBy('san_phams_id')
+        $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
+                                ->groupBy('chi_tiet_san_phams_id')
                                 ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
 
         $sanphamphobiens = SanPham::with(array('anh' => function($query) {

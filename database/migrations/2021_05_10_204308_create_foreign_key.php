@@ -31,7 +31,7 @@ class CreateForeignKey extends Migration
             $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
         });
         Schema::table('chi_tiet_hoa_dons',function (Blueprint $table){
-            $table->foreign('san_phams_id')->references('id')->on('san_phams');
+            $table->foreign('chi_tiet_san_phams_id')->references('id')->on('chi_tiet_san_phams');
             $table->foreign('hoa_dons_id')->references('id')->on('hoa_dons');
         });
     }
