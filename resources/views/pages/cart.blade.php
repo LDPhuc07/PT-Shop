@@ -24,42 +24,47 @@
                               <div class="col-1"></div>
                           </div>
                       </div>
-                      <div class="cart-body">
+                      <div id="cart-body" class="cart-body">
+                        <?php
+                        $contents = Cart::content();
+                        $total = Cart::subtotal();
+                      ?>
+                      @foreach($contents as $content)
                           <div class="row cart-body-row">
                               <div class="col-11">
                                   <div class="row">
                                       <div class="col-2 center">
-                                          <a href=""><img class="cart-img" src="img/product/adirunner.jpg" alt=""></a>
+                                          <a href=""><img class="cart-img" src="{{asset(getLink('product',$content->options->image))}}" alt=""></a>
                                       </div>
                                       <div class="col-3 center">
                                           <a href="" class="cart-name" >
-                                              <h5>ÁO THỦ MÔN ĐTVN 2021 GRAND SPORT - 038-322 - VÀNG CAM</h5>
+                                              <h5>{{ $content->name }}</h5>
                                               <div style="display:flex;justify-content: space-between;">
-                                                <span>Màu: Trắng</span>
-                                                <span>Size: xl</span>
+                                                <span>Màu: {{ $content->options->color }}</span>
+                                                <span>Size: {{ $content->options->size }}</span>
                                               </div>
                                           </a>
                                       </div>
                                       <div class="col-2 center">
-                                          <span>625,000₫</span>
+                                          <span>{{number_format($content->price,0,',','.').' '.'VNĐ'}}</span>
                                       </div>
                                       <div class="col-2 center">
                                         <div class="cart-quantity">
                                             <input type="button" value="-" class="control" onclick="truSoLuong()">
-                                            <input type="text" value="1" class="text-input" name="quantity" id="textsoluong"> 
+                                            <input type="text"  value="{{ $content->qty }}" class="text-input" name="quantity" id="textsoluong"> 
                                             <input type="button" value="+" class="control" onclick="congSoLuong()">
                                         </div>
                                       </div>
                                       <div class="col-3 center">
-                                        <span>625,000₫</span>
+                                        <span>{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</span>
                                       </div>
                                   </div>
                               </div>
                               <div class="col-1 center" onclick="xoasanpham()">
-                                <span class="delete-btn"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></span> 
+                                <span class="delete-btn"><a href="{{ route('cart.deleteItem',$content->rowId) }}"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                             </div>
                           </div>
-
+                          @endforeach
 
 
                       </div>
@@ -79,10 +84,10 @@
                       <div class="row">
                         <div class="cart-total col-12">
                           <label for="">Thành tiền:</label>
-                          <span class="total__price">1,415,000₫</span>
+                          <span class="total__price">{{$total.' VNĐ'}}</span>
                       </div>
                       <div class="cart-buttons col-12">
-                          <a class="chekout">Thanh toán</a>
+                          <a href="{{ route('checkout.index') }}" class="chekout">Thanh toán</a>
                       </div>
                     </div>
                   </div>
@@ -127,6 +132,24 @@
     function congSoLuong(){
       var result = document.getElementById('textsoluong').value;
       document.getElementById('textsoluong').value = parseInt(result) + 1;
+
+      {{--  $.ajax({
+        type: 'GET',
+        cache: false,
+        url: "{{ route('cart.updateItem') }}",
+        data: {
+          "id":$("#inputId").val(),
+          "qty":$("inputQty").val(),
+        },
+        success: function(data) {
+          $('#cart-body').html(data);
+          console.log('Cập nhật thành công')
+        },
+        error: function(data) {
+          console.log('Lỗi rồi');
+          console.log(data);
+        },
+      });  --}}
     }
     function truSoLuong(){
       var result = document.getElementById('textsoluong').value;

@@ -61,7 +61,7 @@
           <a href="" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
         </div>
         <div class="header__second__cart">
-          <a href="" class="header__second__cart--icon">
+          <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
             <i class="fi-rs-shopping-bag"></i>
             <span class="header__second__cart--notice">3</span>
           </a>
