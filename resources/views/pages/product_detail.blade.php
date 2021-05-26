@@ -36,71 +36,86 @@
           @endforeach
         </div>
       </div>
-      <div class="col-6">
-        <div class="product__name">
-          <h2>{{$sanpham->ten_san_pham}}</h2>
-        </div>
-        <div class="product__price">
-          <h2>{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</h2>
-        </div>
-        <div class="product__color">
-          <div class="select-swap">
-            @foreach($color as $i)
-              @if($i->mau == 'xanh la')
-                <button class="product__color-item green"></button>
-              @endif
-              @if($i->mau == 'trang')
-                <button class="product__color-item white"></button>
-              @endif
-              @if($i->mau == 'den')
-                <button class="product__color-item black"></button>
-              @endif
-              @if($i->mau == 'xanh duong')
-                <button class="product__color-item blue"></button>
-              @endif
-              @if($i->mau == 'xam')
-                <button class="product__color-item gray"></button>
-              @endif
-              @if($i->mau == 'vang')
-                <button class="product__color-item yellow"></button>
-              @endif
-              @if($i->mau == 'do')
-                <button class="product__color-item red"></button>
-              @endif
-              @if($i->mau == 'cam')
-                <button class="product__color-item orange"></button>
-              @endif
-              @if($i->mau == 'tim')
-                <button class="product__color-item violet"></button>
-              @endif
-            @endforeach
+      <form action="{{ route('cart.save') }}" method="POST">
+        @csrf
+        <div class="col-6">
+          <div class="product__name">
+            <h2>{{$sanpham->ten_san_pham}}</h2>
+            <input type="hidden" name="id" value="{{ $sanpham->id }}">
+          </div>
+          <div class="product__price">
+            <h2>{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</h2>
+          </div>
+          <div class="product__color">
+            <div class="select-swap">
+              @foreach($color as $i)
+                @if($i->mau == 'xanh la')
+                  <input type="radio" name="mau" class="product__color-item green" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item green"></button>  --}}
+                @endif
+                @if($i->mau == 'trang')
+                  <input type="radio" name="mau" class="product__color-item white" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item white"></button>  --}}
+                @endif
+                @if($i->mau == 'den')
+                  <input type="radio" name="mau" class="product__color-item black" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item black"></button>  --}}
+                @endif
+                @if($i->mau == 'xanh duong')
+                  <input type="radio" name="mau" class="product__color-item blue" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item blue"></button>  --}}
+                @endif
+                @if($i->mau == 'xam')
+                <input type="radio" name="mau" class="product__color-item gray" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item gray"></button>  --}}
+                @endif
+                @if($i->mau == 'vang')
+                <input type="radio" name="mau" class="product__color-item yellow" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item yellow"></button>  --}}
+                @endif
+                @if($i->mau == 'do')
+                <input type="radio" name="mau" class="product__color-item red" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item red"></button>  --}}
+                @endif
+                @if($i->mau == 'cam')
+                <input type="radio" name="mau" class="product__color-item orange" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item orange"></button>  --}}
+                @endif
+                @if($i->mau == 'tim')
+                <input type="radio" name="mau" class="product__color-item violet" value="{{ $i->mau }}">{{ $i->mau }}
+                  {{--  <button class="product__color-item violet"></button>  --}}
+                @endif
+              @endforeach
+            </div>
+          </div>
+          <div class="product__size">
+            <div class="select-swap">
+              @foreach($size as $i)
+                <button type="button" name="kich_thuoc" value="{{ $i->kich_thuoc }}" class="option-swap">{{$i->kich_thuoc}}</button>
+                {{--  <input type="radio" name="kich_thuoc" value="{{ $i->kich_thuoc }}">{{ $i->kich_thuoc }}  --}}
+                {{--  <div class="option-swap" name="kich_thuoc" value="{{ $i->kich_thuoc }}">{{ $i->kich_thuoc }}</div>  --}}
+              @endforeach
+            </div>
+          </div>
+          <div class="product__wrap">
+            <div class="product__amount">
+              <label for="">Số lượng: </label>
+              <input type="button" value="-" class="control">
+              <input type="text" name="so_luong" value="1" class="text-input"> 
+              <input type="button" value="+" class="control">
+            </div>
+            <a class="likenow">Thêm vào danh sách thích</a>
+            
+          </div>
+          <div class="product__shopnow">
+            <button type="button" class="shopnow">Mua ngay</button>
+            <button type="submit" class="add-cart">Thêm vào giỏ</button>
+          </div>
+          <div>
+            
           </div>
         </div>
-        <div class="product__size">
-          <div class="select-swap">
-            @foreach($size as $i)
-              <button class="option-swap">{{$i->kich_thuoc}}</button>
-            @endforeach
-          </div>
-        </div>
-        <div class="product__wrap">
-          <div class="product__amount">
-            <label for="">Số lượng: </label>
-            <input type="button" value="-" class="control">
-            <input type="text" value="1" class="text-input"> 
-            <input type="button" value="+" class="control">
-          </div>
-          <button class="likenow">Thêm vào danh sách thích</button>
-          
-        </div>
-        <div class="product__shopnow">
-          <button class="shopnow">Mua ngay</button>
-          <button class="add-cart">Thêm vào giỏ</button>
-        </div>
-        <div>
-          
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
