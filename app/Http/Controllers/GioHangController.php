@@ -14,10 +14,10 @@ class GioHangController extends Controller
         return view('pages.cart');
     }
     public function save(Request $request) {
-        $sanpham = SanPham::where('id',10)->first();
+        $sanpham = SanPham::where('id',$request->id)->first();
         $anh = Anh::select('anhchitiet')->where('san_phams_id', $request->id)->where('anhchinh',true)->first();
 
-        $data['id'] = 10;
+        $data['id'] = $sanpham->id;
         $data['qty'] = $request->so_luong;
         $data['name'] = $sanpham->ten_san_pham;
         $data['price'] = $sanpham->gia_ban;
@@ -32,6 +32,11 @@ class GioHangController extends Controller
     }
     public function deleteItem($id) {
         Cart::update($id,0);
+
+        return redirect()->route('cart.index');
+    }
+    public function updateItem(Request $request) {
+        Cart::update($request->id,$request->qty);
 
         return redirect()->route('cart.index');
     }

@@ -26,8 +26,11 @@
         </div>
       </div>
       <div class="col-6">
+        <form action="{{ route('cart.save') }}" method="POST">
+        @csrf
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
+          <input type="hidden" name="id" value="{{ $sanpham->id }}">
         </div>
         <div class="product__price">
           <h2>{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</h2>
@@ -123,7 +126,7 @@
             @foreach($size as $i)
             
               <div class="swatch-element">
-                <input type="radio" class="variant-1" id="swatch-{{$i['kich_thuoc']}}" name="kichthuoc" value="{{$i['kich_thuoc']}}">
+                <input type="radio" class="variant-1" id="swatch-{{$i['kich_thuoc']}}" name="kich_thuoc" value="{{$i['kich_thuoc']}}">
                 <label for="swatch-{{$i['kich_thuoc']}}" class="sd"><span>{{$i->kich_thuoc}}</span></label>
               </div> 
             @endforeach
@@ -133,7 +136,7 @@
           <div class="product__amount">
             <label for="">Số lượng: </label>
             <input type="button" value="-" class="control" onclick="truSoLuong()">
-            <input type="text" value="1" class="text-input" onkeypress='validate(event)' name="quantity" id="textsoluong"> 
+            <input type="text" name="so_luong" value="1" class="text-input" onkeypress='validate(event)' name="quantity" id="textsoluong"> 
             <input type="button" value="+" class="control" onclick="congSoLuong()">
           </div>
           <button class="likenow">Thêm vào danh sách thích</button>
@@ -144,7 +147,7 @@
           <button class="add-cart">Thêm vào giỏ</button>
         </div>
         <div>
-          
+        </form>
         </div>
       </div>
     </div>
