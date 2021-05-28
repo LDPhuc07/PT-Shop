@@ -60,6 +60,9 @@ Route::group(['prefix' => 'admin'], function() {
     // Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
     // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
     // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
+
+    // hóa đơn
+    Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
     
 });
 
@@ -98,4 +101,5 @@ Route::post('/cart/save', 'GioHangController@save')->name('cart.save');
 Route::get('/cart/delete-item/{id}', 'GioHangController@deleteItem')->name('cart.deleteItem');
 Route::get('/cart/update-item', 'GioHangController@updateItem')->name('cart.updateItem');
 Route::get('/checkout', 'ThanhToanController@index')->name('checkout.index');
-Route::post('/checkout/create','HoaDoncontroller@create')->name('bill.create');
+Route::post('/checkout', 'ThanhToanController@postIndex')->name('checkout.create');
+Route::post('/bill/create','HoaDoncontroller@create')->name('bill.create');

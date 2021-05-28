@@ -43,7 +43,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('admin.bill.index') }}">
             <i class="nav-icon fas fa-file-invoice-dollar"></i>
             <p class="nav-text">Hóa Đơn</p>
             </a>

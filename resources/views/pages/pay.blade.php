@@ -28,25 +28,101 @@
                                 <div class="main-customer-info-img">
                                     <img src="img/product/noavatar.png" alt="" width="60px" height="60px">
                                 </div>
+                                @if(Auth::check() and Auth::user()->admin != 1)
                                 <div class="main-customer-info-logged">
-                                    <p class="main-customer-info-logged-paragraph">Quốc Trung (nguyenquoctrung@gmail.com)</p>
-                                    <a href="">Đăng xuất</a>
+                                    <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
+                                    <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
                                 </div>
                             </div>
                             <div class="fieldset">
+                                @if(Auth::user()->dia_chi == null)
                                 <div class="fieldset-address">
                                     <label class="form-label" for="">Địa chỉ</label>
                                     <input type="text" class="form-control">
+                                    @if($errors->has('dia_chi'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('dia_chi') }}
+                            </span>
+                            <style>
+                                input[name = 'dia_chi'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
                                 </div>
-                                <div class="fieldset-name">
-                                    <label class="form-label" for="">Họ tên</label>
-                                    <input type="text" class="form-control">
-                                </div>
+                                @endif
+                                @if(Auth::user()->so_dien_thoai == null)
                                 <div class="fieldset-phone">
                                     <label class="form-label" for="">Số điện thoại</label>
                                     <input type="text" class="form-control">
+                                    @if($errors->has('so_dien_thoai'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('so_dien_thoai') }}
+                            </span>
+                            <style>
+                                input[name = 'so_dien_thoai'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
+                                </div>
+                                @endif
+                            </div>
+                                @else
+                                <div class="main-customer-info-logged">
+                                    <a href="{{ route('accounts.login') }}">Đăng nhập</a>
                                 </div>
                             </div>
+                            <div class="fieldset">
+                                <div class="fieldset-name">
+                                    <label class="form-label" for="">Họ tên</label>
+                                    <input type="text" name="ho_ten" class="form-control">
+                                    @if($errors->has('ho_ten'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('ho_ten') }}
+                            </span>
+                            <style>
+                                input[name = 'ho_ten'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
+                                </div>
+                                <div class="fieldset-address">
+                                    <label class="form-label" for="">Địa chỉ</label>
+                                    <input type="text" name="dia_chi" class="form-control">
+                                    @if($errors->has('dia_chi'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('dia_chi') }}
+                            </span>
+                            <style>
+                                input[name = 'dia_chi'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
+                                </div>
+                                <div class="fieldset-phone">
+                                    <label class="form-label" for="">Số điện thoại</label>
+                                    <input type="text" name="so_dien_thoai" class="form-control">
+                                    @if($errors->has('so_dien_thoai'))
+                            <span style="font-size: 13px; color:red">
+                                <i class="fas fa-times"></i>
+                                {{ $errors->first('so_dien_thoai') }}
+                            </span>
+                            <style>
+                                input[name = 'so_dien_thoai'] {
+                                    border: 1px solid red;
+                                }
+                            </style>
+              @endif
+                                </div>
+                            </div>
+                                @endif
                         </div>
                         <div class="main-footer">
                             <div class="continue">

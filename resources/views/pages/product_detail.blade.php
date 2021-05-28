@@ -143,8 +143,8 @@
           
         </div>
         <div class="product__shopnow">
-          <button class="shopnow">Mua ngay</button>
-          <button class="add-cart">Thêm vào giỏ</button>
+          <button type="submit" class="shopnow">Mua ngay</button>
+          <button type="submit" class="add-cart">Thêm vào giỏ</button>
         </div>
         <div>
         </form>

@@ -12,7 +12,7 @@
           <div class="col-4">
               <div class="heading">
                   <img src="{{asset('img/product/noavatar.png')}}" alt="" class="heading-img">
-                  <span class="heading-name_acc">{{ Auth::user()->ho_ten }}</span>
+                  <span class="heading-name_acc"></span>
               </div>
               <div class="menu-manager">
                   <div class="my-profile" onclick="hienThiDoiThongTin()">
