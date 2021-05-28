@@ -67,6 +67,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/slideshow/{id}/edit',("SlideShowController@edit"))->name('slideshow.edit');
     Route::put('/slideshow/{id}',("SlideShowController@update"))->name('slideshow.update');
     Route::delete('/slideshow/delete/{id}',("SlideShowController@delete"))->name('slideshow.delete');
+
+    // hóa đơn
+    Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
     
 });
 
