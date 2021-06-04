@@ -12,5 +12,8 @@ class TaiKhoan extends Model
     // {
     //     return this->hasMany('App\HoaDon', 'tai_khoans_id', 'id');
     // }
-
+    public function taiKhoanYeuThich()
+    {
+        return $this->hasMany('App\YeuThich', 'tai_khoans_id', 'id');
+    }
 }

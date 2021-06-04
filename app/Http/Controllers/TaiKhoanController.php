@@ -91,13 +91,15 @@ class TaiKhoanController extends Controller
         $new = TaiKhoan::find($id);
         $new->trang_thai = false;
         $new->save();
-        return redirect()->route('admin.accounts');
+        $array = ['arrays'=>TaiKhoan::all()];
+        return view('admin.account.lock_account_ajax', $array);
     }
     public function unlock($id) {
         $new = TaiKhoan::find($id);
         $new->trang_thai = true;
         $new->save();
-        return redirect()->route('admin.accounts');
+        $array = ['arrays'=>TaiKhoan::all()];
+        return view('admin.account.lock_account_ajax', $array);
     }
     public function getDoiMatKhauAdmin() {
         return view('admin.account.change_password');

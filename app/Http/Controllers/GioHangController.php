@@ -27,19 +27,20 @@ class GioHangController extends Controller
         $data['options']['image'] = $anh->anhchitiet;
         $data['options']['size'] = $ctsp->kich_thuoc;
         $data['options']['color'] = $ctsp->mau;
+        $data['options']['qty_original'] = $ctsp->so_luong;
         Cart::add($data);
         // Cart::destroy();
 
         return redirect()->route('cart.index');
     }
-    public function deleteItem($id) {
+    public function deleteItemAjax($id) {
         Cart::update($id,0);
 
-        return redirect()->route('cart.index');
+        return view('pages.ajax_delete_item_cart');
     }
-    public function updateItem(Request $request) {
-        Cart::update($request->id,$request->qty);
+    public function updateItem($id, $qty) {
+        Cart::update($id,['qty' => $qty]);
 
-        return redirect()->route('cart.index');
+        return view('pages.ajax_delete_item_cart');
     }
 }
