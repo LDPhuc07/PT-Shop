@@ -68,6 +68,9 @@
 .dropdown-item {
     font-size: 14px;
 }
+.dropdown-item:hover {
+    background-color: var(--hover-color);
+}
 .row {
     margin-bottom: 20px;
 }

@@ -157,19 +157,6 @@
 <script src="js/main.js"></script>
 <script src="js/product.js"></script>
 <script>
-  $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
-    $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
-      if(!Number($(v).attr('data-id')) || ($(v).attr('data-id') === 'null'))
-      {
-        $(v).css('display','none');
-      }
-    });
-  });
-</script>
-<script>
     var role = 'all'; 
    var loardmore = 0;
    var productFetching =false;
@@ -224,16 +211,7 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
-              html+='<div style="display:flex;justify-content: space-between;';
-              html+='align-items: center;">';
               html+='<p class="card-text price-color">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
-              html+='    <a href="" class="icon-like" style="color: #000;';
-              html+='   font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
-              html+='  </div>';
-              html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
-                html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
-                html+='<span class="sale-off-label">GIẢM</span>';
-                html+='</div>';
               html+='</div>';
               html+='</div>';
               html+='</a>';
@@ -241,17 +219,6 @@
               
     });
     $('#tatcasanpham').append(html);
-    $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
-    $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
-      if(!Number($(v).attr('data-id')))
-      {
-        $(v).css('display','none');
-      }
-    });
-  });
   }
 
   // moi new
@@ -304,16 +271,7 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
-              html+='<div style="display:flex;justify-content: space-between;';
-              html+='align-items: center;">';
               html+='<p class="card-text price-color">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
-              html+='    <a href="" class="icon-like" style="color: #000;';
-              html+='   font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
-              html+='  </div>';
-              html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
-                html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
-                html+='<span class="sale-off-label">GIẢM</span>';
-              html+='</div>';
               html+='</div>';
               html+='</div>';
               html+='</a>';
@@ -321,24 +279,14 @@
               
     });
     $('#tatcasanpham').html(html);
-    $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
-    $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
-      if(!Number($(v).attr('data-id')) )
-      {
-        $(v).css('display','none');
-      }
-    });
-  });
   }
   $('.dropdown-item').on("click",function(x){
     console.log($( x['currentTarget']).text());
     $('.bbc').html($(x['currentTarget']).text());
 });
 </script>
-
-
+<script>
+    
+</script>
 
 @endsection

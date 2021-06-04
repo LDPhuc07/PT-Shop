@@ -58,3 +58,25 @@
 .my-password-title {
     display: inline-flex;
 }
+/* input[type="file"]{
+    display: none;
+}
+.abc {
+    position: relative;
+} */
+/* .file-avatar {
+    color: var(--white-color);
+    height: 30px;
+    width: 150px;
+    background-color: #333;
+    position: absolute;
+    margin:auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */

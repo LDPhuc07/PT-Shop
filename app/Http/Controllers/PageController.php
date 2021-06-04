@@ -13,6 +13,11 @@ use DB;
 class PageController extends Controller
 {
     //
+    public function tatcasanpham(){
+
+        return view('pages.product');
+        
+    }
     public function index() {
         $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
         $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
@@ -30,19 +35,15 @@ class PageController extends Controller
 
         $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
                                 ->groupBy('chi_tiet_san_phams_id')
-                                ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
+                                ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('chi_tiet_san_phams_id');
 
-        $sanphamphobiens = SanPham::with(array('anh' => function($query) {
+        $sanphamphobiens = SanPham::whereIn('id',$ctsp)
+                                    ->with(array('anh' => function($query) {
                                         $query->where('anhchinh',1);
-                                    })) 
-                                    ->whereIn('id',$ctsp)
-                                    ->get();
-
-        // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
-        //                     $query->where('anhchinh',1);
-        //                 }))->offset(0)->limit(2)->get();
-        // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
-        // dd($sanphamphobiens);
+                                    }))->get();
+                                    
+                                    
+            // dd($sanphamphobiens);
         return view('pages.index', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
        
     }
@@ -58,10 +59,15 @@ class PageController extends Controller
         // dd($size);
         $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
         // sản phẩm liên quan lấy chung loại
-        $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->orderby('id', 'desc')->with('loaiSanPham') 
+        $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->where('id','<>',$sanpham->id)->orderby('id', 'desc')->with('loaiSanPham') 
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
         return view('pages.product_detail',compact('sanpham','anhchinh','size','color','sanphamlienquans'));
     }
+    public function menu(Request $request){
+        
+    }
+    
+    
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MonTheThao;
+use App\SanPham;
 use Illuminate\Support\Facades\Validator;
 class MonTheThaoController extends Controller
 {
@@ -29,7 +30,6 @@ class MonTheThaoController extends Controller
         $dsMonTheThao = ['dsMonTheThao'=>$timkiem];
         return view('admin.sport.index',$dsMonTheThao); 
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -52,17 +52,9 @@ class MonTheThaoController extends Controller
         //
         $rule = [
             'tenthethao' => 'required',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
             'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
         ];
         $customName = [
@@ -96,8 +88,6 @@ class MonTheThaoController extends Controller
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
         dd($dsMonTheThao);
         $dsMonTheThao->save();
-        
-        // return redirect('admin.sport.index',$dsMonTheThao); 
         return redirect()->route('monthethao.index')->with('success', 'Tao thanh cong');
     }
 
@@ -138,17 +128,9 @@ class MonTheThaoController extends Controller
         //
         $rule = [
             'tenthethao' => 'required',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
             'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
         ];
         $customName = [
@@ -170,8 +152,6 @@ class MonTheThaoController extends Controller
         $dsMonTheThao = MonTheThao::find($id);
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
         $dsMonTheThao->save();
-        
-        // return redirect('admin.sport.index',$dsMonTheThao); 
         return redirect()->route('monthethao.index')->with('success', 'Cập nhật môn thể thao thành công');
     }
 
@@ -192,11 +172,11 @@ class MonTheThaoController extends Controller
             // }
         }
         $dsMonTheThao = MonTheThao::find($id);
+        $dsSanPham = SanPham::where('mon_the_thaos_id')->get();
+        if(!empty($dsSanPham)){
+            return redirect()->route('monthethao.index')->with('error', 'Môn thể thao đang được dùng không được xóa');
+        }
         $dsMonTheThao->delete();
         return redirect()->route('monthethao.index')->with('success', 'xóa môn thể thao thành công');
-    }
-    public function search(Request $request)
-    {
-        
     }
 }

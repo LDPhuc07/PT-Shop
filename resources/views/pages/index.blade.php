@@ -52,12 +52,22 @@
             <div class="col-6">
               <div class="card" style="width: 100%;">
                 @foreach($sanphamphobien->anh as $anh)
-                <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image" style="width:100%">
+                <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image" style="width:100%">
                 @endforeach
                 <div class="card-body">
                   <h4 class="card-title">{{$sanphamphobien['ten_san_pham']}}</h4>
                   <p class="card-text custom__name-product" style="font-weight: 400;">{{$sanphamphobien['mo_ta']}}</p>
-                  <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
+                  <div style="display:flex;justify-content: space-between;
+                    align-items: center;">
+                      <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
+                      <a href="" class="icon-like" style="color: #000;
+                      font-size: 30px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                    </div>
+                  
+                  <div class="sale-off" data-id="{{$sanphamphobien['giam_gia']}}">
+                    <span class="sale-off-percent">{{$sanphamphobien['giam_gia']}}%</span>
+                    <span class="sale-off-label">GIẢM</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,11 +82,20 @@
                 <a href="{{route('product_detail',['id'=>$sanphammoinhat->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanphammoinhat->anh as $anh)
-                    <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
-                    <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    <div style="display:flex;justify-content: space-between;
+                    align-items: center;">
+                      <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                      <a href="" class="icon-like" style="color: #000;
+                      font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                    </div>
+                    <div class="sale-off" data-id="{{$sanphammoinhat['giam_gia']}}">
+                      <span class="sale-off-percent">{{$sanphammoinhat['giam_gia']}}%</span>
+                      <span class="sale-off-label">GIẢM</span>
+                    </div>
                   </div>
                 </div>
                 </a>
@@ -92,7 +111,7 @@
               <a href="{{route('product_detail',['id'=>$sanphamhot->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanphamhot->anh as $anh)
-                  <img class="card-img-top" src="{{asset(getlink('product',$anh->link))}}" alt="Card image cap">
+                  <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title custom__name-product">
@@ -102,8 +121,13 @@
                       <p class="card-text price-color product__price-old">1,000,000 đ</p>
                       <p class="card-text price-color product__price-new">1,000,000 đ</p>
                     </div> --}}
-                    <p class="card-text price-color">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
-                    <div class="sale-off">
+                    <div style="display:flex;justify-content: space-between;
+                    align-items: center;">
+                      <p class="card-text price-color">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                      <a href="" class="icon-like" style="color: #000;
+                      font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                    </div>
+                    <div class="sale-off" data-id="{{$sanphamhot['giam_gia']}}">
                       <span class="sale-off-percent">{{$sanphamhot['giam_gia']}}%</span>
                       <span class="sale-off-label">GIẢM</span>
                     </div>
@@ -122,11 +146,20 @@
               <a href="{{route('product_detail',['id'=>$sanpham->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanpham->anh as $anh)
-                    <img class="card-img-top" src="{{asset(getlink('product',$anh->link))}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
-                    <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    <div style="display:flex;justify-content: space-between;
+                    align-items: center;">
+                      <p class="card-text price-color" style="font-size:14px">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                      <a href="" class="icon-like" style="color: #000;
+                      font-size: 10px;"><i class="far fa-heart"></i> <i class="fas fa-heart"></i></a>
+                    </div>
+                    <div class="sale-off" data-id="{{$sanpham['giam_gia']}}">
+                      <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
+                      <span class="sale-off-label">GIẢM</span>
+                    </div>
                   </div>
                 </div>
               </a>
@@ -181,4 +214,16 @@
 @endsection
 @section('js')
 <script src="js/main.js"></script>
+<script>
+    $(document).ready(function() {
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        console.log($(v).attr('data-id'));
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+</script>
 @endsection

@@ -112,6 +112,9 @@
                     <input id="avatar" name="avatar" type="file" class="form-control">
                     <span class="form-message"></span>
                   </div>
+                  <div class="form-group">
+                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                </div>
                   <button class="form-submit">Lưu</button>
                 </form>
               </div>
@@ -187,6 +190,12 @@
           </div>
         </div>
     </div>
+    <script>
+      var loadfile = function(event){
+        var img = document.getElementById('imgsp');
+        img.src = URL.createObjectURL(event.target.files[0]);
+    }
+    </script>
 @endsection
 @section('js')
 <script>

@@ -57,8 +57,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::match(['get','post'],'/sanpham',("SanPhamController@indexAdmin"))->name('sanpham.indexAdmin');
     Route::get('/sanpham/create',("SanPhamController@create"))->name('sanpham.create');
     Route::post('/sanpham/store',("SanPhamController@storeAdmin"))->name('sanpham.storeAdmin');
-    // Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
-    // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
+    Route::get('/sanpham/{id}/edit',("SanPhamController@edit"))->name('sanpham.edit');
+    Route::put('/sanpham/{id}',("SanPhamController@update"))->name('sanpham.update');
     // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
     // slide show
     Route::match(['get','post'],'/slideshow',("SlideShowController@index"))->name('slideshow.index');
@@ -67,6 +67,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/slideshow/{id}/edit',("SlideShowController@edit"))->name('slideshow.edit');
     Route::put('/slideshow/{id}',("SlideShowController@update"))->name('slideshow.update');
     Route::delete('/slideshow/delete/{id}',("SlideShowController@delete"))->name('slideshow.delete');
+
     
 });
 
@@ -79,7 +80,8 @@ Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
-Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
+Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
+// Route::get('/products/shoes','PageController@hienthigiay');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
 Route::get('/carts', function () {
     return view('pages.cart');
@@ -92,6 +94,9 @@ Route::get('/pay', function () {
 });
 Route::get('/news', function () {
     return view('pages.news');
+});
+Route::get('/listlike', function () {
+    return view('pages.listlike');
 });
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');

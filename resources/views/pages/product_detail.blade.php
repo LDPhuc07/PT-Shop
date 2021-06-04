@@ -14,14 +14,18 @@
           <ul class="all-img">
               @foreach($sanpham->anh as $anh)
                 <li class="img-item">
-                  <img src="{{asset(getLink('product',$anh->link))}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
+                  <img src="{{asset($anh->link)}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
+                  <div class="sale-off" data-id="{{$sanpham['giam_gia']}}" style="top:15px;right:15px">
+                    <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
+                    <span class="sale-off-label">GIẢM</span>
+                  </div>
                 </li>
               @endforeach
           </ul>
         </div>
         <div id="main-img" style="cursor: pointer;">
           @foreach($anhchinh->anh as $anh)
-            <img src="{{asset(getLink('product',$anh->link))}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset(getLink('product',$anh->link))}}">
+            <img src="{{asset($anh->link)}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset(getLink('product',$anh->link))}}">
           @endforeach
         </div>
       </div>
@@ -176,11 +180,15 @@
         <div class="col-3">
           <div class="card" style="width: 100%">
             @foreach($sanphamlienquan->anh as $anh)
-              <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image cap">
+              <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
             @endforeach
             <div class="card-body">
               <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>
               <p class="card-text price-color">{{$sanphamlienquan['gia_ban']}}</p>
+              <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
+                <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
+                <span class="sale-off-label">GIẢM</span>
+              </div>
             </div>
           </div>
         </div>
@@ -217,7 +225,7 @@
           
         }
   </script>
-  <script>
+<script>
     function validate(evt) {
   var theEvent = evt || window.event;
 
@@ -236,4 +244,16 @@
   }
 }
   </script>
+  <script>
+    $(document).ready(function() {
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        console.log($(v).attr('data-id'));
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+</script>
 @endsection
