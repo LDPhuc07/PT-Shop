@@ -37,12 +37,13 @@
           </div>
           <div class="col-8">
             <div class="detial__my-profile ">
-              <div class="heading-edit-account">
+              <div id="heading-edit-account" class="heading-edit-account">
                 <h2>Hồ sơ của tôi</h2>
                 @foreach($arrays as $account)
-                <form action="{{ route('accounts.update',$account->id) }}" method="POST">
+                <form action="accounts/{{ $account->id }}" id="editProfile" data-parsley-validate method="POST">
                   @method('PUT')
                   @csrf
+                  <input type="hidden" id="user_id" value="{{ $account->id }}">
                   <div class="form-group">
                     <label for="fullname" class="form-label">Tên đầy đủ</label>
                     <input id="fullname" name="ho_ten" type="text" placeholder="VD: Quốc Trung" class="form-control" value="{{ $account->ho_ten }}">
@@ -112,11 +113,13 @@
                     <input id="avatar" name="avatar" type="file" class="form-control">
                     <span class="form-message"></span>
                   </div>
-                  <button class="form-submit">Lưu</button>
+                  <button type="submit" class="form-submit">Lưu</button>
                 </form>
+                @endforeach
               </div>
             </div>
             <div class="detail__confirm-password undisplay">
+              @foreach($arrays as $account)
               <div class="heading-edit-password">
                 <h2>Đổi lại mật khẩu</h2>
               </div>
@@ -248,29 +251,26 @@
   </script>
   {{--  <script type="text/javascript">
     $(document).ready(function() {
-      $(".submit-change-pass").ckick(function(e) {
+
+      $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $("#editProfile").on('submit', function(e){
         e.preventDefault();
 
-        var _token = $("input[name='_token']").val();
-        var mat_khau_cu = $("input[name='mat_khau_cu']").val();
-        var mat_khau_moi = $("input[name='mat_khau_moi']").val();
-        var nhap_lai_mat_khau = $("input[name='nhap_lai_mat_khau']").val();
+        var usr_id = $('#user_id').val();
 
         $.ajax({
-          url: "{{ route('account.changePassword',Auth::user()->id) }}",
+          url: "accounts/" + usr_id,
           type: 'PUT',
-          data: {_token:_token,
-            mat_khau_cu:mat_khau_cu,
-            mat_khau_moi:mat_khau_moi,
-            nhap_lai_mat_khau:nhap_lai_mat_khau},
-          success: function(data) {
-            if($.isEmptyObject(data.error)) {
-              alert(data.success);
-            }
-            
-          }
+        }).done(function(response) {
+          $("#heading-edit-account").empty();
+          $("#heading-edit-account").html(response);
         });
-      });
-    };
+      })
+    })
   </script>  --}}
 @endsection

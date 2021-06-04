@@ -43,7 +43,7 @@
       </div>
     </div>
     <!-- end slide show -->
-    <div class="product">
+    <div id="product" class="product">
       <div class="container">
         <div class="product_popular">
           <h3 class="product__popular title-product">Sản phẩm phổ biến</h3>
@@ -76,6 +76,28 @@
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
+                    <div class="header__second__like">
+                      @if(Auth::check() and Auth::user()->admin != 1)
+                      <?php
+                        $is_liked = false;
+                      ?>
+                        @foreach($is_like as $like)
+                          @if($like->san_phams_id == $sanphammoinhat->id)
+                            <?php
+                            $is_liked = true;
+                            ?>
+                            @break
+                          @endif
+                        @endforeach
+                        @if($is_liked == true)
+                          <a onclick="dislike({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @else
+                          <a onclick="like({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                        @endif
+                      @else
+                        <a href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                      @endif
+                    </div>
                     <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                   </div>
                 </div>
@@ -98,6 +120,28 @@
                     <h5 class="card-title custom__name-product">
                       {{$sanphamhot['ten_san_pham']}}
                     </h5>
+                    <div class="header__second__like">
+                      @if(Auth::check() and Auth::user()->admin != 1)
+                      <?php
+                        $is_liked = false;
+                      ?>
+                        @foreach($is_like as $like)
+                          @if($like->san_phams_id == $sanphamhot->id)
+                            <?php
+                            $is_liked = true;
+                            ?>
+                            @break
+                          @endif
+                        @endforeach
+                        @if($is_liked == true)
+                          <a onclick="dislike({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @else
+                          <a onclick="like({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                        @endif
+                      @else
+                        <a href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                      @endif
+                    </div>
                     {{-- <div class="product__price">
                       <p class="card-text price-color product__price-old">1,000,000 đ</p>
                       <p class="card-text price-color product__price-new">1,000,000 đ</p>
@@ -126,6 +170,28 @@
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
+                    <div class="header__second__like">
+                      @if(Auth::check() and Auth::user()->admin != 1)
+                      <?php
+                        $is_liked = false;
+                      ?>
+                        @foreach($is_like as $like)
+                          @if($like->san_phams_id == $sanpham->id)
+                            <?php
+                            $is_liked = true;
+                            ?>
+                            @break
+                          @endif
+                        @endforeach
+                        @if($is_liked == true)
+                          <a onclick="dislike({{ Auth::user()->id }},{{ $sanpham->id }})" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @else
+                          <a onclick="like({{ Auth::user()->id }},{{ $sanpham->id }})" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                        @endif
+                      @else
+                        <a href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="far fa-heart"></i></a>
+                      @endif
+                    </div>
                     <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                   </div>
                 </div>
@@ -181,4 +247,29 @@
 @endsection
 @section('js')
 <script src="js/main.js"></script>
+  <script>
+    function like(tk_id, sp_id){
+      console.log(sp_id);
+      console.log(tk_id);
+      $.ajax({
+        url: 'like/'+sp_id+"/"+tk_id,
+        type: 'GET',
+      }).done(function(response) {
+        $("#product").empty();
+        $("#product").html(response);
+      });
+    }
+
+    function dislike(tk_id, sp_id){
+      console.log(sp_id);
+      console.log(tk_id);
+      $.ajax({
+        url: 'dislike/'+sp_id+"/"+tk_id,
+        type: 'GET',
+      }).done(function(response) {
+        $("#product").empty();
+        $("#product").html(response);
+      });
+    }
+  </script>
 @endsection

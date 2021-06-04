@@ -13,9 +13,9 @@ class ChiTietHoaDon extends Model
         return $this->belongsTo('App\HoaDon', 'hoa_dons_id', 'id');
     }
 
-    public function sanPham()
+    public function chiTietSanPham()
     {
-        return $this->belongsTo('App\SanPham', 'san_phams_id', 'id');
+        return $this->belongsTo('App\ChiTietSanPham', 'chi_tiet_san_phams_id', 'id');
     }
 
 }
