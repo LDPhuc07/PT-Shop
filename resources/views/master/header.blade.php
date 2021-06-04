@@ -73,101 +73,64 @@
             <a class="nav-link nav-link__third" href="#">Trang chủ</a>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="./Product.html">Tất cả sản phẩm</a>
+            <a class="nav-link nav-link__third" href="{{route('product.products')}}">Tất cả sản phẩm</a>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Nam <i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="#">Giày<i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me">  <a href="" class="sub-menu-1--link">Tất cả</a>
-              </li>
-                <li class="hover-me">  <a href="" class="sub-menu-1--link">Giày</a><i class="fi-rr-caret-right"></i>
-                    <div class="sub-menu-2">
-                      <ul>
-                        <li><a href="" class="sub-menu-1--link">Bóng đá</a></li>
-                        <li><a href="" class="sub-menu-1--link">Chạy</a></li>
-                        <li><a href="" class="sub-menu-1--link">Bóng rỗ</a></li>
-                        <li><a href="" class="sub-menu-1--link">dep</a></li>
-                        <li><a href="" class="sub-menu-1--link">Cầu lông</a></li>
-                        <li><a href="" class="sub-menu-1--link">Quần vợt</a></li>
-                      </ul>
-                    </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần áo</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Áo phông & Áo pholo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo hoodie & Áo khoác</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo nỉ và bộ đồ thể thao</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần bó</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo thun</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo sort</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Phụ kiện</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Tất cả túi</a></li>
-                      <li><a href="" class="sub-menu-1--link">Ba lô</a></li>
-                      <li><a href="" class="sub-menu-1--link">Tất</a></li>
-                      <li><a href="" class="sub-menu-1--link">Túi tập luyện</a></li>
-                      <li><a href="" class="sub-menu-1--link">Găng tay</a></li>
-                      <li><a href="" class="sub-menu-1--link">Bóng</a></li>
-                      <li><a href="" class="sub-menu-1--link">Khẩu trang</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
               </ul>
             </div>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Nữ <i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="#">Quần áo <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me"> <a href="" class="sub-menu-1--link">Tất cả</a>
+                <li class="hover-me">  <a href="" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Giày</a><i class="fi-rr-caret-right"></i>
-                    <div class="sub-menu-2">
-                      <ul>
-                        <li><a href="" class="sub-menu-1--link">Chạy</a></li>
-                        <li><a href="" class="sub-menu-1--link">Cầu lông</a></li>
-                        <li><a href="" class="sub-menu-1--link">Quần vợt</a></li>
-                        <li><a href="" class="sub-menu-1--link">dep</a></li>
-                        <li><a href="" class="sub-menu-1--link">Tập luyện</a></li>
-
-                      </ul>
-                    </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần áo</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Áo phông & Áo không tay</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo nỉ & bộ đồ thể thao</a></li>
-                      <li><a href="" class="sub-menu-1--link">Áo ngực thể thao</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần bó</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần sort</a></li>
-                      <li><a href="" class="sub-menu-1--link">Váy</a></li>
-                      <li><a href="" class="sub-menu-1--link">Đồ bầu</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Phụ kiện</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Túi</a></li>
-                      <li><a href="" class="sub-menu-1--link">Ba lô</a></li>
-                      <li><a href="" class="sub-menu-1--link">Tất</a></li>
-                      <li><a href="" class="sub-menu-1--link">Mũ</a></li>
-                      <li><a href="" class="sub-menu-1--link">Găng tay</a></li>
-                      <li><a href="" class="sub-menu-1--link">Khẩu trang</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
               </ul>
             </div>
           </li>
           <li class="nav-item nav-item__third">
+            <a class="nav-link nav-link__third" href="#">Phụ kiện<i class="fi-rs-caret-down"></i></a>
+            <div class="sub-menu-1">
+              <ul>
+                <li class="hover-me">  <a href="" class="sub-menu-1--link">Bóng đá</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Bơi lội</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Golf</a></i>
+                </li>
+              </ul>
+            </div>
+          </li>
+          {{-- <li class="nav-item nav-item__third">
             <a class="nav-link nav-link__third" href="#">Thể thao <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
@@ -221,48 +184,22 @@
                 </li>
               </ul>
             </div>
-          </li>
+          </li> --}}
           <li class="nav-item nav-item__third">
             <a class="nav-link nav-link__third" href="#">Các nhãn hiệu <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
                 <!-- <li class="hover-me"> <a href="" class="sub-menu-1--link">Tất cả</a>
                 </li> -->
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Adidas</a><i class="fi-rr-caret-right"></i>
-                    <div class="sub-menu-2">
-                      <ul>
-                        <li><a href="" class="sub-menu-1--link">Giày ống</a></li>
-                        <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                        <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                      </ul>
-                    </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Adidas</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Nike</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Giày</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Nike</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Puma</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Giày</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">Puma</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">GRAND SPORT</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Giày</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                    </ul>
-                  </div>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">GRAND SPORT</a></i>
+                </li>
+                <li class="hover-me"><a href="" class="sub-menu-1--link">X-MUNICH</a></i>
                 </li>
               </ul>
             </div>

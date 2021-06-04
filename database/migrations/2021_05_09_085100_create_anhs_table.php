@@ -22,6 +22,7 @@ class CreateAnhsTable extends Migration
             $table->char('link')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

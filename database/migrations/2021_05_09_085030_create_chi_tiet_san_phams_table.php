@@ -21,6 +21,7 @@ class CreateChiTietSanPhamsTable extends Migration
             $table->char('kich_thuoc', 50)->nullable();
             $table->unsignedInteger('so_luong');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

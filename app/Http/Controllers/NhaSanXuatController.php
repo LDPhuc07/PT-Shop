@@ -29,8 +29,6 @@ class NhaSanXuatController extends Controller
         }
         $dsNhaSanXuat = ['dsNhaSanXuat'=>$timkiem];
         return view('admin.producer.index',$dsNhaSanXuat); 
-        // $dsNhaSanXuat = ['dsNhaSanXuat'=>NhaSanXuat::paginate(4)];
-        // return view('admin.producer.index',$dsNhaSanXuat);
     }
 
     /**
@@ -55,17 +53,9 @@ class NhaSanXuatController extends Controller
         //
         $rule = [
             'tennhasanxuat' => 'required',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
             'tennhasanxuat.required' => 'Bạn chưa nhập tên nhà sản xuất',
         ];
         $customName = [
@@ -140,17 +130,9 @@ class NhaSanXuatController extends Controller
         //
         $rule = [
             'tennhasanxuat' => 'required',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
             'tennhasanxuat.required' => 'Bạn chưa nhập tên nhà sản xuất',
         ];
         $customName = [

@@ -114,7 +114,6 @@ class SlideShowController extends Controller
     {
         //
         $dsSlideShow = ["dsSlideShow"=>Slideshow::find($id)];
-        
         return view('admin.slideshow.edit_slideshow',$dsSlideShow);
     }
 

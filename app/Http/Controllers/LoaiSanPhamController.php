@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LoaiSanPham;
+use App\SanPham;
 use Illuminate\Support\Facades\Validator;
 class LoaiSanPhamController extends Controller
 {
@@ -194,13 +195,11 @@ class LoaiSanPhamController extends Controller
             // }
         }
         $dsLoaiSanPham = LoaiSanPham::find($id);
+        $dsSanPham = SanPham::where('loai_san_phams_id')->get();
+        if(!empty($dsSanPham)){
+            return redirect()->route('loaisanpham.index')->with('error', 'loại sản phẩm đang được dùng không được xóa');
+        }
         $dsLoaiSanPham->delete();
         return redirect()->route('loaisanpham.index')->with('success', 'xóa loại sản phẩm thành công');
     }
-    // public function search(Request $request)
-    // {
-    //     $search_text = $_GET['query'];
-    //     $dsLoaiSanPham =["dsLoaiSanPham"=>LoaiSanPham::where('ten_loai_san_pham','LIKE','%'.$search_text.'%')->paginate(4)];
-    //     return view('admin.product_type.index',$dsLoaiSanPham);
-    // }
 }
