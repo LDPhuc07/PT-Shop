@@ -8,22 +8,23 @@
 <div class="content" style="margin-top: 160px;">
     <div class="wrap">
         <div class="container">
+            <form action="{{ route('bill.create') }}" method="POST">
+                @csrf
             <div class="row">
-                <?php
+                    <?php
                         $contents = Cart::content();
                         $total = Cart::subtotal();
-                      ?>
-                <form action="{{ route('bill.create') }}" method="POST">
-                    @csrf
-                <div class="col-6">
-                    <div class="main">
-                        <div class="main-header">
-                            <a href=""><h1>P&T SHOP</h1></a>
-                        </div>
-                        <div class="main-content">
-                            <div class="main-title">
-                                <h2>Thông tin giao hàng</h2>
+                    ?>
+               
+                    <div class="col-6">
+                        <div class="main">
+                            <div class="main-header">
+                                <a href=""><h1>P&T SHOP</h1></a>
                             </div>
+                            <div class="main-content">
+                                <div class="main-title">
+                                    <h2>Thông tin giao hàng</h2>
+                                </div>
                             <div class="main-customer-info">
                                 <div class="main-customer-info-img">
                                     <img src="img/product/noavatar.png" alt="" width="60px" height="60px">
@@ -39,17 +40,17 @@
                                 <div class="fieldset-address">
                                     <label class="form-label" for="">Địa chỉ</label>
                                     <input type="text" class="form-control">
-                                    @if($errors->has('dia_chi'))
-                            <span style="font-size: 13px; color:red">
-                                <i class="fas fa-times"></i>
-                                {{ $errors->first('dia_chi') }}
-                            </span>
-                            <style>
-                                input[name = 'dia_chi'] {
-                                    border: 1px solid red;
-                                }
-                            </style>
-              @endif
+                                @if($errors->has('dia_chi'))
+                                    <span style="font-size: 13px; color:red">
+                                    <i class="fas fa-times"></i>
+                                    {{ $errors->first('dia_chi') }}
+                                    </span>
+                                <style>
+                                    input[name = 'dia_chi'] {
+                                        border: 1px solid red;
+                                    }
+                                </style>
+                                @endif
                                 </div>
                                 @endif
                                 @if(Auth::user()->so_dien_thoai == null)
@@ -80,15 +81,15 @@
                                     <label class="form-label" for="">Họ tên</label>
                                     <input type="text" name="ho_ten" class="form-control">
                                     @if($errors->has('ho_ten'))
-                            <span style="font-size: 13px; color:red">
+                                <span  style="font-size: 13px; color:red">
                                 <i class="fas fa-times"></i>
                                 {{ $errors->first('ho_ten') }}
-                            </span>
-                            <style>
-                                input[name = 'ho_ten'] {
-                                    border: 1px solid red;
-                                }
-                            </style>
+                                </span>
+                                <style>
+                                    input[name = 'ho_ten'] {
+                                        border: 1px solid red;
+                                    }
+                                </style>
               @endif
                                 </div>
                                 <div class="fieldset-address">
@@ -149,11 +150,11 @@
                                     <img src="{{asset(getLink('product',$content->options->image))}}" alt="" width="80%">
                                     <span class="notice">{{ $content->qty }}</span>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <h5>{{ $content->name }}</h5>
                                 </div>
-                                <div class="col-2">
-                                    <span>{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</span>
+                                <div class="col-3">
+                                    <h4 style="font-size:12px">{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +179,7 @@
                         @endforeach
                     </div>
                 </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>

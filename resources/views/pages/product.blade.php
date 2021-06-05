@@ -224,16 +224,19 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
+              html+='<div class="product__price" id="price">';
+                html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
-              html+='<p class="card-text price-color">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
-              html+='    <a href="" class="icon-like" style="color: #000;';
-              html+='   font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
+              html+='<a href="" class="icon-like" style="color: #000;';
+              html+='font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
               html+='  </div>';
               html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
                 html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
                 html+='<span class="sale-off-label">GIẢM</span>';
-                html+='</div>';
+              html+='</div>';
               html+='</div>';
               html+='</div>';
               html+='</a>';
@@ -304,11 +307,14 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
+              html+='<div class="product__price" id="price">';
+                html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
-              html+='<p class="card-text price-color">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
-              html+='    <a href="" class="icon-like" style="color: #000;';
-              html+='   font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
+              html+='<a href="" class="icon-like" style="color: #000;';
+              html+='font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
               html+='  </div>';
               html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
                 html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
@@ -338,7 +344,28 @@
     $('.bbc').html($(x['currentTarget']).text());
 });
 </script>
-
-
-
+<script>
+  $(document).ready(function() {
+    var divGiamGia = $('.card-body').children('.sale-off');
+    console.log(divGiamGia);
+    $.each(divGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
+      {
+        $(v).css('display','none');
+      }
+    });
+  });
+</script>
+<script>
+$(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    console.log(pGiamGia);
+    $.each(pGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
+      {
+        $(v).css('display','none');
+      }
+    });
+  });
+</script>
 @endsection

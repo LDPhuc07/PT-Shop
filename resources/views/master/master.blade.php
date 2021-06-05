@@ -46,7 +46,7 @@
     @yield('content')
     <!-- end content -->
     @include('master.footer')
-    <!-- Messenger Plugin chat Code -->
+    {{-- <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
     <!-- Your Plugin chat code -->
@@ -71,7 +71,7 @@
         js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
-    </script>
+    </script> --}}
 </body>
 
   {{-- <script src="js/main.js"></script> --}}
