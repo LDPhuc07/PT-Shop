@@ -40,11 +40,11 @@ class PageController extends Controller
         $sanphamphobiens = SanPham::whereIn('id',$ctsp)
                                     ->with(array('anh' => function($query) {
                                         $query->where('anhchinh',1);
-<<<<<<< HEAD
                                     }))->get();
                                     
                                     
             // dd($sanphamphobiens);
+<<<<<<< HEAD
 =======
                                     })) 
                                     ->whereIn('id',$ctsp)
@@ -59,6 +59,8 @@ class PageController extends Controller
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
         return view('pages.index', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
        
     }
@@ -81,6 +83,7 @@ class PageController extends Controller
         return view('pages.product_detail',compact('sanpham','anhchinh','size','color','sanphamlienquans'));
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
     public function menu(Request $request){
         
@@ -88,6 +91,11 @@ class PageController extends Controller
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
+=======
+    }
+    public function menu(Request $request){
+        
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
     }
     
     

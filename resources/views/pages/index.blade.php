@@ -88,6 +88,9 @@
                     <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
                     <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -98,11 +101,14 @@
                       <span class="sale-off-percent">{{$sanphammoinhat['giam_gia']}}%</span>
                       <span class="sale-off-label">GIẢM</span>
                     </div>
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
                   </div>
                 </div>
                 </a>
@@ -159,6 +165,9 @@
                     <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
                     <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <p class="card-text price-color" style="font-size:14px">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -169,11 +178,14 @@
                       <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
                       <span class="sale-off-label">GIẢM</span>
                     </div>
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
                   </div>
                 </div>
               </a>
@@ -230,6 +242,9 @@
 <script src="js/main.js"></script>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
 <script>
     $(document).ready(function() {
       var divGiamGia = $('.card-body').children('.sale-off');
@@ -242,8 +257,11 @@
       });
     });
 </script>
+<<<<<<< HEAD
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
+=======
+>>>>>>> parent of 5409a4e (new Like_ThanhToan)
 @endsection
