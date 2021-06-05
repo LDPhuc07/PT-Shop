@@ -63,7 +63,15 @@
         <div class="header__second__cart">
           <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
             <i class="fi-rs-shopping-bag"></i>
-            <span class="header__second__cart--notice">3</span>
+            <span class="header__second__cart--notice"><?php
+              $contents = Cart::content();
+              $i = 0;
+            ?>
+            @foreach($contents as $content)
+              <?php $i++ ?>
+            @endforeach
+            {{ $i }}
+          </span>
           </a>
         </div>
       </div>

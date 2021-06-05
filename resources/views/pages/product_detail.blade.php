@@ -14,14 +14,14 @@
           <ul class="all-img">
               @foreach($sanpham->anh as $anh)
                 <li class="img-item">
-                  <img src="{{asset(getLink('product',$anh->link))}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
+                  <img src="{{asset($anh->link)}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
                 </li>
               @endforeach
           </ul>
         </div>
         <div id="main-img" style="cursor: pointer;">
           @foreach($anhchinh->anh as $anh)
-            <img src="{{asset(getLink('product',$anh->link))}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset(getLink('product',$anh->link))}}">
+            <img src="{{asset($anh->link)}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset($anh->link)}}">
           @endforeach
         </div>
       </div>
@@ -281,7 +281,7 @@
         <div class="col-3">
           <div class="card" style="width: 100%">
             @foreach($sanphamlienquan->anh as $anh)
-              <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image cap">
+              <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
             @endforeach
             <div class="card-body">
               <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>

@@ -84,7 +84,7 @@ Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
-Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
+Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
 Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
 Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
@@ -99,6 +99,9 @@ Route::get('/pay', function () {
 });
 Route::get('/news', function () {
     return view('pages.news');
+});
+Route::get('/list-like', function () {
+    return view('pages.listlike');
 });
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
