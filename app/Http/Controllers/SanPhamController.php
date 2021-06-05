@@ -7,7 +7,6 @@ use App\SanPham;
 use App\Anh;
 use App\Slideshow;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 // use Input;
 use Illuminate\Support\Facades\Input;
 class SanPhamController extends Controller

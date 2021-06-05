@@ -89,6 +89,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 5409a4e (new Like_ThanhToan)
                     <div style="display:flex;justify-content: space-between;
@@ -103,6 +104,8 @@
                     </div>
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -166,6 +169,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 5409a4e (new Like_ThanhToan)
                     <div style="display:flex;justify-content: space-between;
@@ -180,6 +184,8 @@
                     </div>
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -243,6 +249,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 5409a4e (new Like_ThanhToan)
 <script>
@@ -264,4 +271,6 @@
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of 5409a4e (new Like_ThanhToan)
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 @endsection

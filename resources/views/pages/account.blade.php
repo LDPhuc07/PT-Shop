@@ -115,6 +115,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <div class="form-group">
                     <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                 </div>
@@ -127,6 +128,8 @@
                     <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                 </div>
 >>>>>>> parent of 5409a4e (new Like_ThanhToan)
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                   <button class="form-submit">Lưu</button>
                 </form>
               </div>
