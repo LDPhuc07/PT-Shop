@@ -14,14 +14,18 @@
           <ul class="all-img">
               @foreach($sanpham->anh as $anh)
                 <li class="img-item">
-                  <img src="{{asset(getLink('product',$anh->link))}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
+                  <img src="{{asset($anh->link)}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
+                  <div class="sale-off" style="top:14px;right:14px" data-id="{{$sanpham['giam_gia']}}">
+                    <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
+                    <span class="sale-off-label">GIẢM</span>
+                  </div>
                 </li>
               @endforeach
           </ul>
         </div>
         <div id="main-img" style="cursor: pointer;">
           @foreach($anhchinh->anh as $anh)
-            <img src="{{asset(getLink('product',$anh->link))}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset(getLink('product',$anh->link))}}">
+            <img src="{{asset($anh->link)}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset(getLink('product',$anh->link))}}">
           @endforeach
         </div>
       </div>
@@ -54,9 +58,11 @@
           </div>
           <input type="hidden" name="id" value="{{ $sanpham->id }}">
         </div>
-        <div class="product__price">
-          <h2>{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</h2>
+        <div class="product__price" style="justify-content:unset" id="price">
+          <p style="margin-right: 15px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+          <p  data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
         </div>
+        
         <div class="product__color">
           <div class="select-swap">
             @foreach($color as $i)
@@ -279,15 +285,29 @@
     <div class="row">
       @foreach($sanphamlienquans as $sanphamlienquan)
         <div class="col-3">
-          <div class="card" style="width: 100%">
-            @foreach($sanphamlienquan->anh as $anh)
-              <img class="card-img-top" src="{{asset(getLink('product',$anh->link))}}" alt="Card image cap">
-            @endforeach
-            <div class="card-body">
-              <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>
-              <p class="card-text price-color">{{$sanphamlienquan['gia_ban']}}</p>
+          <a href="{{route('product_detail',['id'=>$sanphamlienquan->id])}}" class="product__new-item">
+            <div class="card" style="width: 100%">
+              @foreach($sanphamlienquan->anh as $anh)
+              <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
+              @endforeach
+              <div class="card-body">
+                <h5 class="card-title custom__name-product">
+                  {{$sanphamlienquan['ten_san_pham']}}
+                </h5>
+                <div class="product__price" id="price">
+                  <p class="card-text price-color product__price-new">{{number_format($sanphamlienquan['gia_ban']*(100-$sanphamlienquan['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                  <p  data-id="{{$sanphamlienquan['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamlienquan['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                </div>
+                <div style="display:flex;justify-content: space-between;align-items: center;">
+                  <a href="" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                </div>
+                <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
+                  <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
+                  <span class="sale-off-label">GIẢM</span>
+                </div>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       @endforeach
     </div>
@@ -347,7 +367,7 @@
     function myColor(mau, id) {
       $.ajax({
         type: 'GET',
-        url: "product-details/get-size/"+id+"/"+$(`#option-${mau}`).val(),
+        url: "product-details/get-size/"+id+"/"+mau,
       }).done(function(response) {
         $("#product__size").empty();
         $("#product__size").html(response);
@@ -357,7 +377,7 @@
     function myKichThuoc(mau, id, kichthuoc) {
       $.ajax({
         type: 'GET',
-        url: "product-details/get-qty/"+id+"/"+mau+"/"+kichthuoc,
+        url: "product-details/get-qty/"+id+"/" +mau+"/"+kichthuoc,
       }).done(function(response) {
         $("#product__amount").empty();
         $("#product__amount").html(response);
@@ -390,4 +410,29 @@
       });
     }
   </script>
+  <script>
+    $(document).ready(function() {
+      var divGiamGia = $('.sale-off');
+      console.log(divGiamGia);
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+</script>
+<script>
+  $(document).ready(function() {
+      var pGiamGia = $('.product__price').children('.product__price-old');
+      console.log(pGiamGia);
+      $.each(pGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+
+</script>
 @endsection

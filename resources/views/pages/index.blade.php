@@ -86,11 +86,12 @@
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
-                    <div style="display:flex;justify-content: space-between;
-                    align-items: center;">
-                      <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
-                      <a href="" class="icon-like" style="color: #000;
-                      font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                    <div class="product__price" id="price">
+                      <p class="card-text price-color product__price-new">{{number_format($sanphammoinhat['gia_ban']*(100-$sanphammoinhat['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                      <p  data-id="{{$sanphammoinhat['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    </div>
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                      <a href="" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
                     </div>
                     <div class="sale-off" data-id="{{$sanphammoinhat['giam_gia']}}">
                       <span class="sale-off-percent">{{$sanphammoinhat['giam_gia']}}%</span>
@@ -117,15 +118,12 @@
                     <h5 class="card-title custom__name-product">
                       {{$sanphamhot['ten_san_pham']}}
                     </h5>
-                    {{-- <div class="product__price">
-                      <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                      <p class="card-text price-color product__price-new">1,000,000 đ</p>
-                    </div> --}}
-                    <div style="display:flex;justify-content: space-between;
-                    align-items: center;">
-                      <p class="card-text price-color">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
-                      <a href="" class="icon-like" style="color: #000;
-                      font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                    <div class="product__price" id="price">
+                      <p class="card-text price-color product__price-new">{{number_format($sanphamhot['gia_ban']*(100-$sanphamhot['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                      <p  data-id="{{$sanphamhot['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    </div>
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                      <a href="" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
                     </div>
                     <div class="sale-off" data-id="{{$sanphamhot['giam_gia']}}">
                       <span class="sale-off-percent">{{$sanphamhot['giam_gia']}}%</span>
@@ -150,11 +148,12 @@
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
-                    <div style="display:flex;justify-content: space-between;
-                    align-items: center;">
-                      <p class="card-text price-color" style="font-size:14px">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
-                      <a href="" class="icon-like" style="color: #000;
-                      font-size: 10px;"><i class="far fa-heart"></i> <i class="fas fa-heart"></i></a>
+                    <div class="product__price" id="price">
+                      <p style="font-size: 9px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                      <p  style="font-size: 9px" data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    </div>
+                    <div style="display:flex;justify-content: space-between;align-items: center;">
+                      <a href="" class="icon-like" style="color: #000;font-size: 10px;"><i class="far fa-heart"></i> <i class="fas fa-heart"></i></a>
                     </div>
                     <div class="sale-off" data-id="{{$sanpham['giam_gia']}}">
                       <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
@@ -170,7 +169,7 @@
       </div>
     </div>
     <div class="shoesnews">
-    <div class="container">
+    {{-- <div class="container">
       <h3 class="shoesnews__title">Tin tức</h3>
       <div class="row">
         <div class="col-4">
@@ -207,7 +206,7 @@
       <div class="shoesnews__all">
         <a class="shoesnews__all-tittle">Xem tất cả</a> <i class="fi-rs-angle-right"></i>
       </div>
-    </div>
+    </div> --}}
     </div>
   </div>
 </div>
@@ -217,13 +216,26 @@
 <script>
     $(document).ready(function() {
       var divGiamGia = $('.card-body').children('.sale-off');
+      console.log(divGiamGia);
       $.each(divGiamGia, function(i,v){
-        console.log($(v).attr('data-id'));
         if(!Number($(v).attr('data-id')))
         {
           $(v).css('display','none');
         }
       });
     });
+</script>
+<script>
+  $(document).ready(function() {
+      var pGiamGia = $('.product__price').children('.product__price-old');
+      console.log(pGiamGia);
+      $.each(pGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+
 </script>
 @endsection
