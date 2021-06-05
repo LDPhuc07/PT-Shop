@@ -51,7 +51,7 @@
                       </div>
                     </div>  --}}
                   </div>
-                  <div id="ds-hoa-don-div" class="ds-sanpham-div">
+                  <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">
                       <thead>
                           <tr>
@@ -70,22 +70,28 @@
                             <td>{{ $bill->ngay_lap_hd }}</td>
                             <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                             <td>
-                              <a onclick="deleteBill({{ $bill->id }})" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
-                              <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                              <div class="modal fade" id="form-modal" role="dialog">
+                              <a href="" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                              <a href="" class="view-detail-btn" data-toggle="modal" data-target="#myModal"><i class="fas fa-eye"></i></a>
+                              <div class="modal fade" id="myModal" role="dialog">
                                 <div class="modal-dialog">
-                        
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"></h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div style="padding: 0" class="modal-body">
-                                        </div>
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">Modal Header</h4>
                                     </div>
+                                    <div class="modal-body">
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                  
                                 </div>
                               </div>
+
                             </td>
                         </tr>
                         @endforeach
@@ -96,34 +102,4 @@
             </div>
         </div>
     </div>
-    @endsection
-  @section('script')
-  {{--  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>  --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script>
-    function showModal(url, title) {
-      $.ajax({
-        url: url,
-        type: 'GET',
-      }).done(function(res) {
-        //hiện form create edit
-        $('#form-modal .modal-body').html(res);
-        //hiện tiêu đề
-        $('#form-modal .modal-title').html(title);
-        //hiện modal
-        $('#form-modal').modal('show');
-      });
-    }
-
-    function deleteBill(id) {
-      $.ajax({
-        url: 'admin/bill/delete/' + id,
-        type: 'GET',
-      }).done(function(res) {
-        $("#ds-hoa-don-div").empty();
-        $("#ds-hoa-don-div").html(res);
-      });
-    }
-  </script>
 @endsection

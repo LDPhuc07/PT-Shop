@@ -70,8 +70,6 @@ Route::group(['prefix' => 'admin'], function() {
 
     // hóa đơn
     Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
-    Route::get('/bill/bill-detail/{id}','HoaDonController@billDetail')->name('admin.bill.bill-detail');
-    Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
     
 });
 
@@ -86,8 +84,6 @@ Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'SanPhamController@hienThiTatCaSanPham')->name('products');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
-Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
-Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
 Route::get('/carts', function () {
     return view('pages.cart');
 });
@@ -109,13 +105,7 @@ Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.
 
 Route::get('/cart', 'GioHangController@index')->name('cart.index');
 Route::post('/cart/save', 'GioHangController@save')->name('cart.save');
-Route::get('/cart/delete-item-ajax/{id}', 'GioHangController@deleteItemAjax')->name('cart.deleteItemAjax');
-Route::get('/cart/update-item/{id}/{qty}', 'GioHangController@updateItem')->name('cart.updateItem');
+Route::get('/cart/delete-item/{id}', 'GioHangController@deleteItem')->name('cart.deleteItem');
+Route::get('/cart/update-item', 'GioHangController@updateItem')->name('cart.updateItem');
 Route::get('/checkout', 'ThanhToanController@index')->name('checkout.index');
 Route::post('/checkout/create','HoaDoncontroller@create')->name('bill.create');
-
-//yeu thich
-Route::get('/like/{sp_id}/{tk_id}','PageController@like');
-Route::get('/dislike/{sp_id}/{tk_id}','PageController@dislike');
-Route::get('/like-product-detail/{sp_id}/{tk_id}','PageController@likeProductDetail');
-Route::get('/dislike-product-detail/{sp_id}/{tk_id}','PageController@dislikeProductDetail');

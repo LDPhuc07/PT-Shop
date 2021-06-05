@@ -8,8 +8,8 @@
 <div class="cart" style="margin-top: 160px;">
     <div class="container">
         <div class="cart-wrap">
-          <div id="cart-content" class="cart-content">
-              <form action="" id="form-cart" class="form-cart">
+          <div class="cart-content">
+              <form action="" class="form-cart">
                   <div class="cart-body-left">
                       <div class="cart-heding">
                           <div class="row cart-row">
@@ -30,7 +30,7 @@
                         $total = Cart::subtotal();
                       ?>
                       @foreach($contents as $content)
-                          <div id="cart-body-row" class="row cart-body-row">
+                          <div class="row cart-body-row">
                               <div class="col-11">
                                   <div class="row">
                                       <div class="col-2 center">
@@ -50,10 +50,10 @@
                                       </div>
                                       <div class="col-2 center">
                                        
-                                        <div class="cart-quantity cart-{{$content->rowId}}">
-                                            <input type="button" value="-" class="control" onclick="truSoLuong(`{{ $content->rowId }}`)">
+                                        <div class="cart-quantity cart-{{$content->id}}">
+                                            <input type="button" value="-" class="control" onclick="truSoLuong({{$content->id}})">
                                             <input type="text"  value="{{ $content->qty }}" class="text-input" name="quantity" id="textsoluong"> 
-                                            <input type="button" value="+" class="control" onclick="congSoLuong(`{{ $content->rowId }}`,{{ $content->options->qty_original }})">
+                                            <input type="button" value="+" class="control" onclick="congSoLuong({{$content->id}})">
                                         </div>
                                       </div>
                                       <div class="col-3 center">
@@ -61,8 +61,8 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="col-1 center" onclick="xoasanpham(`{{ $content->rowId }}`)">
-                                <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
+                              <div class="col-1 center" onclick="xoasanpham()">
+                                <span class="delete-btn"><a href="{{ route('cart.deleteItem',$content->rowId) }}"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                             </div>
                           </div>
                           @endforeach
@@ -85,7 +85,7 @@
                       <div class="row">
                         <div class="cart-total col-12">
                           <label for="">Thành tiền:</label>
-                          <span class="total__price">{{number_format((int)$total * 1000000,0,',','.').' '.'VNĐ'}}</span>
+                          <span class="total__price">{{$total.' VNĐ'}}</span>
                       </div>
                       <div class="cart-buttons col-12">
                           <a href="{{ route('checkout.index') }}" class="chekout">Thanh toán</a>
@@ -124,44 +124,38 @@
       </div>
 @endsection
 @section('js')
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
   <script>
-      function xoasanpham(id){
-        $.ajax({
-          url: 'cart/delete-item-ajax/'+id,
-          type: 'GET',
-        }).done(function(response) {
-          $("#cart-content").empty();
-          $("#cart-content").html(response);
-        });
+      function xoasanpham(){
+
       }
   </script>
    <script>
-    function congSoLuong(id, sl){
-      if(document.querySelector(`.cart-${id} #textsoluong`).value < sl) {
-        var result = document.querySelector(`.cart-${id} #textsoluong`).value;
-        document.querySelector(`.cart-${id} #textsoluong`).value = parseInt(result) + 1;
+    function congSoLuong(id){
+      var result = document.querySelector(`.cart-${id} #textsoluong`).value;
+      document.querySelector(`.cart-${id} #textsoluong`).value = parseInt(result) + 1;
 
-        $.ajax({
-          type: 'GET',
-          url: "cart/update-item/"+id+"/"+document.querySelector(`.cart-${id} #textsoluong`).value,
-        }).done(function(response) {
-          $("#cart-content").empty();
-          $("#cart-content").html(response);
-        }); 
-      }
+      {{--  $.ajax({
+        type: 'GET',
+        cache: false,
+        url: "{{ route('cart.updateItem') }}",
+        data: {
+          "id":$("#inputId").val(),
+          "qty":$("inputQty").val(),
+        },
+        success: function(data) {
+          $('#cart-body').html(data);
+          console.log('Cập nhật thành công')
+        },
+        error: function(data) {
+          console.log('Lỗi rồi');
+          console.log(data);
+        },
+      });  --}}
     }
     function truSoLuong(id){
       var result = document.querySelector(`.cart-${id} #textsoluong`).value;
       if(parseInt(result)>1){
         document.querySelector(`.cart-${id} #textsoluong`).value = parseInt(result) - 1;
-        $.ajax({
-          type: 'GET',
-          url: "cart/update-item/"+id+"/"+document.querySelector(`.cart-${id} #textsoluong`).value,
-        }).done(function(response) {
-          $("#cart-content").empty();
-          $("#cart-content").html(response);
-        }); 
       }
       
     }

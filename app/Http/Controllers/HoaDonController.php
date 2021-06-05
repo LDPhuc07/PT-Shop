@@ -19,10 +19,6 @@ class HoaDonController extends Controller
         $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
         return view('admin.bill.index',$array);
     }
-    public function billDetail($id) {
-        $array = ['arrays'=>ChiTietHoaDon::where('hoa_dons_id',$id)->get()];
-        return view('admin.bill.product_detail_modal_bootstrap',$array);
-    }
     public function create(Request $request){
         if(Auth::check()) {
             if(Auth::user()->dia_chi == null) {
@@ -64,6 +60,8 @@ class HoaDonController extends Controller
                 $update_ctsp->so_luong -= $content->qty;
                 $update_ctsp->save();
             }
+            Cart::destroy();
+            echo 'Thanh toán thành công';
         }
         else {
             $request->validate([
@@ -76,34 +74,20 @@ class HoaDonController extends Controller
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
             ]);
-            $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
-            if(empty($check_account)) {
-                $account = array();
-                $account['ho_ten'] = $request->ho_ten;
-                $account['dia_chi'] = $request->dia_chi;
-                $account['so_dien_thoai'] = $request->so_dien_thoai;
-                $account['admin'] = false;
-                $account_id = TaiKhoan::insertGetId($account);
+            $account = array();
+            $account['ho_ten'] = $request->ho_ten;
+            $account['dia_chi'] = $request->dia_chi;
+            $account['so_dien_thoai'] = $request->so_dien_thoai;
+            $account['admin'] = false;
+            $account_id = TaiKhoan::insertGetId($account);
 
-                $total = Cart::subtotal();
-                $bill = array();
-                $bill['tai_khoans_id'] = $account_id;
-                $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['tong_tien'] = (int)$total * 1000000;
-                $bill['trang_thai'] = true;
-                $bill_id = HoaDon::insertGetId($bill);
-            }
-
-
-            else { 
-                $total = Cart::subtotal();
+            $total = Cart::subtotal();
             $bill = array();
-            $bill['tai_khoans_id'] = $check_account->id;
+            $bill['tai_khoans_id'] = $account_id;
             $bill['ngay_lap_hd'] = Carbon::now();
             $bill['tong_tien'] = (int)$total * 1000000;
             $bill['trang_thai'] = true;
             $bill_id = HoaDon::insertGetId($bill);
-            }   
 
             $contents = Cart::content();
             foreach($contents as $content) {
@@ -116,15 +100,8 @@ class HoaDonController extends Controller
                 $update_ctsp->so_luong -= $content->qty;
                 $update_ctsp->save();
             }
+            Cart::destroy();
+            echo 'Thanh toán thành công';
         }
-        Cart::destroy();
-        echo 'Thanh toán thành công';
-    }
-    public function delete($id) {
-        $new = HoaDon::find($id);
-        $new->trang_thai = false;
-        $new->save();
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
-        return view('admin.bill.delete_bill_ajax',$array);
     }
 }

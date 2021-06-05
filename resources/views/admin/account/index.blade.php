@@ -51,7 +51,7 @@
                       </div>
                     </div>  --}}
                   </div>
-                  <div id="ds-taikhoan" class="ds-sanpham-div">
+                  <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">
                       <thead>
                           <tr>
@@ -85,9 +85,9 @@
                             </td>
                             <td>
                               @if($account->trang_thai == true )
-                                <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="fas fa-lock"></i></a>
+                                <a href="{{ route('admin.lockAccounts',$account->id) }}" class="delete-btn"><i class="fas fa-lock"></i></a>
                               @else
-                                <a onclick="unlock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="fas fa-lock-open"></i></a>
+                                <a href="{{ route('admin.unlockAccounts',$account->id) }}" class="delete-btn"><i class="fas fa-lock-open"></i></a>
                               @endif
                             </td>
                         </tr>
@@ -99,38 +99,4 @@
             </div>
         </div>
     </div>
-  {{-- <script>
-    function xoasanpham(id){
-      $.ajax({
-        url: 'cart/delete-item-ajax/'+id,
-        type: 'GET',
-      }).done(function(response) {
-        $("#cart-content").empty();
-        $("#cart-content").html(response);
-      });
-    }
-</script> --}}
-@endsection
-@section('script')
-  <script>
-    function lock(id) {
-      $.ajax({
-        url: 'admin/accounts/lock/'+id,
-        type: 'GET',
-      }).done(function(response) {
-        $("#ds-taikhoan").empty();
-        $("#ds-taikhoan").html(response);
-      });
-    }
-    
-    function unlock(id) {
-      $.ajax({
-        url: 'admin/accounts/unlock/'+id,
-        type: 'GET',
-      }).done(function(response) {
-        $("#ds-taikhoan").empty();
-        $("#ds-taikhoan").html(response);
-      });
-    }
-  </script>
 @endsection

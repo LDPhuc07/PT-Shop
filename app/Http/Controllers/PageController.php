@@ -40,10 +40,22 @@ class PageController extends Controller
         $sanphamphobiens = SanPham::whereIn('id',$ctsp)
                                     ->with(array('anh' => function($query) {
                                         $query->where('anhchinh',1);
+<<<<<<< HEAD
                                     }))->get();
                                     
                                     
             // dd($sanphamphobiens);
+=======
+                                    })) 
+                                    ->whereIn('id',$ctsp)
+                                    ->get();
+
+        // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
+        //                     $query->where('anhchinh',1);
+        //                 }))->offset(0)->limit(2)->get();
+        // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
+        // dd($sanphamphobiens);
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
         return view('pages.index', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
        
     }
@@ -64,9 +76,12 @@ class PageController extends Controller
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
         return view('pages.product_detail',compact('sanpham','anhchinh','size','color','sanphamlienquans'));
+<<<<<<< HEAD
     }
     public function menu(Request $request){
         
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
     }
     
     
