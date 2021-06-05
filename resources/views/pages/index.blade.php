@@ -87,6 +87,7 @@
                   <div class="card-body">
                     <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -98,6 +99,8 @@
                       <span class="sale-off-label">GIẢM</span>
                     </div>
 =======
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                   </div>
@@ -155,6 +158,7 @@
                   <div class="card-body">
                     <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <p class="card-text price-color" style="font-size:14px">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -166,6 +170,8 @@
                       <span class="sale-off-label">GIẢM</span>
                     </div>
 =======
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                     <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
                   </div>
@@ -223,6 +229,7 @@
 @section('js')
 <script src="js/main.js"></script>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <script>
     $(document).ready(function() {
       var divGiamGia = $('.card-body').children('.sale-off');
@@ -235,6 +242,8 @@
       });
     });
 </script>
+=======
+>>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 =======
 >>>>>>> parent of cc9a3d8 (Like_ThanhToanUpdate)
 @endsection
