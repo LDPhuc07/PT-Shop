@@ -86,7 +86,6 @@ class MonTheThaoController extends Controller
         }
         $dsMonTheThao = new MonTheThao();
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
-        dd($dsMonTheThao);
         $dsMonTheThao->save();
         return redirect()->route('monthethao.index')->with('success', 'Tao thanh cong');
     }
@@ -172,11 +171,15 @@ class MonTheThaoController extends Controller
             // }
         }
         $dsMonTheThao = MonTheThao::find($id);
-        $dsSanPham = SanPham::where('mon_the_thaos_id')->get();
-        if(!empty($dsSanPham)){
+        $dsSanPham = SanPham::where('mon_the_thaos_id', '=', $id)->get();
+        if(count($dsSanPham) != 0){
             return redirect()->route('monthethao.index')->with('error', 'Môn thể thao đang được dùng không được xóa');
         }
-        $dsMonTheThao->delete();
-        return redirect()->route('monthethao.index')->with('success', 'xóa môn thể thao thành công');
+        else
+        {
+            $dsMonTheThao->delete();
+            return redirect()->route('monthethao.index')->with('success', 'xóa môn thể thao thành công');
+        }
+       
     }
 }

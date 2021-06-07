@@ -57,9 +57,16 @@ Route::group(['prefix' => 'admin'], function() {
     Route::match(['get','post'],'/sanpham',("SanPhamController@indexAdmin"))->name('sanpham.indexAdmin');
     Route::get('/sanpham/create',("SanPhamController@create"))->name('sanpham.create');
     Route::post('/sanpham/store',("SanPhamController@storeAdmin"))->name('sanpham.storeAdmin');
-    // Route::get('/nhasanxuat/{id}/edit',("NhaSanXuatController@edit"))->name('nhasanxuat.edit');
+    Route::get('/sanpham/{id}/edit',("SanPhamController@edit"))->name('sanpham.edit');
     // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
-    // Route::delete('/nhasanxuat/delete/{id}',("NhaSanXuatController@delete"))->name('nhasanxuat.delete');
+    Route::delete('/sanpham/delete/{id}',("SanPhamController@delete"))->name('sanpham.delete');
+    // chi tiết sản phẩm
+    Route::match(['get','post'],'sanpham/{id}/chitietsanpham',("ChiTietSanPhamController@index"))->name('chitietsanpham.index');
+    Route::get('sanpham/{id}/chitietsanpham/create',("ChiTietSanPhamController@create"))->name('chitietsanpham.create');
+    Route::post('sanpham/{id}/chitietsanpham/store',("ChiTietSanPhamController@store"))->name('chitietsanpham.store');
+    Route::get('sanpham/{id}/chitietsanpham/{idct}/edit',("ChiTietSanPhamController@edit"))->name('chitietsanpham.edit');
+    Route::put('/sanpham/{id}/chitietsanpham/{idct}',("ChiTietSanPhamController@update"))->name('chitietsanpham.update');
+    Route::delete('/sanpham/{id}/chitietsanpham/delete/{idct}',("ChiTietSanPhamController@delete"))->name('chitietsanpham.delete');
     // slide show
     Route::match(['get','post'],'/slideshow',("SlideShowController@index"))->name('slideshow.index');
     Route::get('/slideshow/create',("SlideShowController@create"))->name('slideshow.create');
