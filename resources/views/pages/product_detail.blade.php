@@ -280,7 +280,7 @@
 <div class="product__relateto">
   <div class="container">
     <h3 class="product__relateto-heading">Sản phẩm liên quan</h3>
-    <div class="row">
+    <div id="like_splq" class="row">
       @foreach($sanphamlienquans as $sanphamlienquan)
         <div class="col-3">
           <div class="card" style="width: 100%">
@@ -294,7 +294,26 @@
                 <p  data-id="{{$sanphamlienquan['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamlienquan['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
               </div>
               <div style="display:flex;justify-content: space-between;align-items: center;">
-                <a href="" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
+                @if(Auth::check() and Auth::user()->admin != 1)
+            <?php
+              $is_liked = false;
+            ?>
+              @foreach($is_like as $like)
+                @if($like->san_phams_id == $sanphamlienquan->id)
+                  <?php
+                  $is_liked = true;
+                  ?>
+                  @break
+                @endif
+              @endforeach
+              @if($is_liked == true)
+                <a onclick="dislike_splq({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like" style="color: #000;font-size: 20px;"><i class="fas fa-heart"></i></a>
+              @else
+                <a onclick="like_splq({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i></a>
+              @endif
+            @else
+              <a href="{{ route('accounts.logout') }}" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i></a>
+            @endif
               </div>
               <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
                 <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
@@ -403,6 +422,28 @@
       }).done(function(response) {
         $("#header__second__like").empty();
         $("#header__second__like").html(response);
+      });
+    }
+    function like_splq(tk_id, sp_id){
+      console.log(sp_id);
+      console.log(tk_id);
+      $.ajax({
+        url: 'like-product-detail-splq/'+sp_id+"/"+tk_id,
+        type: 'GET',
+      }).done(function(response) {
+        $("#like_splq").empty();
+        $("#like_splq").html(response);
+      });
+    }
+    function dislike_splq(tk_id, sp_id){
+      console.log(sp_id);
+      console.log(tk_id);
+      $.ajax({
+        url: 'dislike-product-detail-splq/'+sp_id+"/"+tk_id,
+        type: 'GET',
+      }).done(function(response) {
+        $("#like_splq").empty();
+        $("#like_splq").html(response);
       });
     }
   </script>

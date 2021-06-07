@@ -61,9 +61,13 @@
             @endforeach
             <div class="card-body">
               <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
+              <div class="product__price" id="price">
+                <p class="card-text price-color product__price-new">{{number_format($sanphammoinhat['gia_ban']*(100-$sanphammoinhat['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                <p  data-id="{{$sanphammoinhat['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+              </div>
               <div style="display:flex;justify-content: space-between;
               align-items: center;">
-                <p class="card-text price-color">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                
                 @if(Auth::check() and Auth::user()->admin != 1)
                 <?php
                   $is_liked = false;
@@ -113,13 +117,12 @@
               <h5 class="card-title custom__name-product">
                 {{$sanphamhot['ten_san_pham']}}
               </h5>
-              {{-- <div class="product__price">
-                <p class="card-text price-color product__price-old">1,000,000 đ</p>
-                <p class="card-text price-color product__price-new">1,000,000 đ</p>
-              </div> --}}
+              <div class="product__price" id="price">
+                <p class="card-text price-color product__price-new">{{number_format($sanphamhot['gia_ban']*(100-$sanphamhot['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                <p  data-id="{{$sanphamhot['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+              </div>
               <div style="display:flex;justify-content: space-between;
               align-items: center;">
-                <p class="card-text price-color">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                 @if(Auth::check() and Auth::user()->admin != 1)
                 <?php
                   $is_liked = false;
@@ -167,9 +170,12 @@
             @endforeach
             <div class="card-body">
               <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
+              <div class="product__price" id="price">
+                <p style="font-size: 9px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                <p  style="font-size: 9px" data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+              </div>
               <div style="display:flex;justify-content: space-between;
               align-items: center;">
-                <p class="card-text price-color" style="font-size:14px">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                 @if(Auth::check() and Auth::user()->admin != 1)
                 <?php
                   $is_liked = false;
@@ -198,7 +204,6 @@
                 <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
                 <span class="sale-off-label">GIẢM</span>
               </div>
-              <p class="card-text price-color">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
             </div>
           </div>
         </a>

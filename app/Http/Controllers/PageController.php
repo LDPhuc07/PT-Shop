@@ -154,6 +154,39 @@ class PageController extends Controller
             return view('pages.like_product_detail_ajax', compact('sanpham'));
         }
     }
+    public function likeProductDetailSPLQ($sp_id, $tk_id) {
+        $new = new YeuThich();
+        $new->san_phams_id = $sp_id;
+        $new->tai_khoans_id = $tk_id;
+        $new->save();
+        $sanpham = SanPham::where('id',$sp_id)->first();
+        $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->where('id','<>',$sanpham->id)->orderby('id', 'desc')->with('loaiSanPham') 
+                                ->with(array('anh' => function($query) {
+                                    $query->where('anhchinh',1);
+                                }))->offset(0)->limit(4)->get();
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+            return view('pages.like_product_detail_splq', compact('is_like','sanphamlienquans','sanpham'));
+        }
+        else {
+            return view('pages.like_product_detail_splq', compact('sanphamlienquans','sanpham'));
+        }
+    }
+    public function dislikeProductDetailSPLQ($sp_id, $tk_id) {
+        $new = YeuThich::where('tai_khoans_id',$tk_id)->where('san_phams_id',$sp_id)->delete();
+        $sanpham = SanPham::where('id',$sp_id)->first();
+        $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->where('id','<>',$sanpham->id)->orderby('id', 'desc')->with('loaiSanPham') 
+                                ->with(array('anh' => function($query) {
+                                    $query->where('anhchinh',1);
+                                }))->offset(0)->limit(4)->get();
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+            return view('pages.like_product_detail_splq', compact('is_like','sanphamlienquans','sanpham'));
+        }
+        else {
+            return view('pages.like_product_detail_splq', compact('sanphamlienquans','sanpham'));
+        }
+    }
     public function dislike($sp_id, $tk_id) {
         $new = YeuThich::where('tai_khoans_id',$tk_id)->where('san_phams_id',$sp_id)->delete();
         $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();

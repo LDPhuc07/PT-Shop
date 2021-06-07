@@ -123,3 +123,5 @@ Route::get('/like/{sp_id}/{tk_id}','PageController@like');
 Route::get('/dislike/{sp_id}/{tk_id}','PageController@dislike');
 Route::get('/like-product-detail/{sp_id}/{tk_id}','PageController@likeProductDetail');
 Route::get('/dislike-product-detail/{sp_id}/{tk_id}','PageController@dislikeProductDetail');
+Route::get('/like-product-detail-splq/{sp_id}/{tk_id}','PageController@likeProductDetailSPLQ');
+Route::get('/dislike-product-detail-splq/{sp_id}/{tk_id}','PageController@dislikeProductDetailSPLQ');
