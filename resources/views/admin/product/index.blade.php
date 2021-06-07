@@ -87,11 +87,11 @@
                             <td>{{$ds['mo_ta']}}</td>
                             <td style="display:flex">
                               <a href="{{route('sanpham.edit',['id' => $ds['id']])}}" class="edit-btn"><i class="fas fa-edit"></i></a>
-                              <form id="slideshow_{{$ds['id']}}" action="{{route('slideshow.delete',['id' => $ds['id']])}}" method="POST">
+                              <form id="sanpham_{{$ds['id']}}" action="{{route('sanpham.delete',['id' => $ds['id']])}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                              <span class="delete-btn cursor" data-target="#modalSlideShow" data-toggle="modal" data-id="{{$ds['id']}}"><i class="fas fa-trash-alt"></i></span>
-                              <a href="" class="view-detail-btn"><i class="fas fa-eye"></i></a>
+                              <span class="delete-btn cursor" data-target="#modalSanPham" data-toggle="modal" data-id="{{$ds['id']}}"><i class="fas fa-trash-alt"></i></span>
+                              <a href="{{route('chitietsanpham.index',['id' => $ds['id']])}}" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               </form>
                             </td>
                         </tr>
@@ -108,4 +108,39 @@
             </div>
         </div>
     </div>
+         <!-- The Modal -->
+  <div class="modal fade" id="modalSanPham">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" style="color:red">Cảnh báo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          Bạn có chắc muốn xóa
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="sanpham" style="background-color:red;color:white">confirm</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+@endsection
+@section('script')
+    <script>
+        $('.delete-btn').click(function(){
+          let id = $(this).data('id');
+          $('#sanpham').attr('data-id',id);
+        })
+        $('#sanpham').click(function(){
+          let id = $(this).data('id');
+          $('#sanpham_'+id).submit();
+        })
+    </script>
 @endsection

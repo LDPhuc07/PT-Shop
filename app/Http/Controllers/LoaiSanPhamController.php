@@ -189,17 +189,17 @@ class LoaiSanPhamController extends Controller
         //
         if(empty($id))
         {
-            // $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
-            // if(!empty($dsMonTheThao_check)){
-                return redirect()->route('loaisanpham.index')->with('error', 'không tìm thấy loại sản phẩm');
-            // }
+            return redirect()->route('loaisanpham.index')->with('error', 'không tìm thấy loại sản phẩm');
         }
         $dsLoaiSanPham = LoaiSanPham::find($id);
-        $dsSanPham = SanPham::where('loai_san_phams_id')->get();
-        if(!empty($dsSanPham)){
+        $dsSanPham = SanPham::where('loai_san_phams_id', '=', $id)->get();
+        if(count($dsSanPham) != 0){
             return redirect()->route('loaisanpham.index')->with('error', 'loại sản phẩm đang được dùng không được xóa');
         }
-        $dsLoaiSanPham->delete();
-        return redirect()->route('loaisanpham.index')->with('success', 'xóa loại sản phẩm thành công');
+        else
+        {
+            $dsLoaiSanPham->delete();
+            return redirect()->route('loaisanpham.index')->with('success', 'xóa loại sản phẩm thành công');
+        }
     }
 }

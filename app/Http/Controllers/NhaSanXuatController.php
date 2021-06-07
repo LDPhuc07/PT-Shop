@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NhaSanXuat;
+use App\SanPham;
 use Illuminate\Support\Facades\Validator;
 class NhaSanXuatController extends Controller
 {
@@ -176,13 +177,14 @@ class NhaSanXuatController extends Controller
             // }
         }
         $dsNhaSanXuat = NhaSanXuat::find($id);
-        $dsNhaSanXuat->delete();
-        return redirect()->route('nhasanxuat.index')->with('success', 'xóa nhà sản xuất thành công');
+        $dsSanPham = SanPham::where('nha_san_xuats_id', '=', $id)->get();
+        if(count($dsSanPham) != 0){
+            return redirect()->route('loaisanpham.index')->with('error', 'Nhà sản xuất đang được dùng không được xóa');
+        }
+        else {
+            $dsNhaSanXuat->delete();
+            return redirect()->route('nhasanxuat.index')->with('success', 'xóa nhà sản xuất thành công');
+        }
+       
     }
-    // public function search(Request $request)
-    // {
-    //     $search_text = $_GET['query'];
-    //     $dsLoaiSanPham =["dsLoaiSanPham"=>LoaiSanPham::where('ten_loai_san_pham','LIKE','%'.$search_text.'%')->paginate(4)];
-    //     return view('admin.product_type.index',$dsLoaiSanPham);
-    // }
 }

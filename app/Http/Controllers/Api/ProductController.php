@@ -51,6 +51,10 @@ class ProductController extends Controller
 
         return $data;
     }
+    // public function menu(Request $request, $a, $b){
+    //     $data = SanPham::whereNull('deleted_at')
+    //                     ->orderBy('id','asc')
+    // }
     public function giatangdan(Request $request)
     {
 
@@ -119,6 +123,7 @@ class ProductController extends Controller
                                     
         return $data;
     }
+   
     /**
      * Store a newly created resource in storage.
      *
