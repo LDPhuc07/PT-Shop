@@ -72,6 +72,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
     Route::get('/bill/bill-detail/{id}','HoaDonController@billDetail')->name('admin.bill.bill-detail');
     Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
+    Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
     
 });
 
