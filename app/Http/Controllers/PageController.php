@@ -80,8 +80,8 @@ class PageController extends Controller
     public function getSize($id, $mau) {
         $id_sp = $id;
         $mau_sp = $mau;
-        $size = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$id)->where('mau',$mau)->distinct()->get();
-        return view('pages.get_size_ajax',compact('size','id_sp','mau_sp'));
+        $size_by_first_color = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$id)->where('mau',$mau)->distinct()->get();
+        return view('pages.get_size_ajax',compact('size_by_first_color','id_sp','mau_sp'));
     }
     public function getQty($id, $mau, $kichthuoc) {
         $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$id)->where('mau',$mau)->where('kich_thuoc',$kichthuoc)->first();

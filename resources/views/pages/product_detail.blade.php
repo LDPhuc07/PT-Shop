@@ -359,6 +359,8 @@
   </script>
    <script>
     function myColor(mau, id) {
+      console.log(mau);
+      console.log(id);
       $.ajax({
         type: 'GET',
         url: "product-details/get-size/"+id+"/"+mau,
