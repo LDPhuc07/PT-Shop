@@ -199,4 +199,16 @@ class SanPhamController extends Controller
         }
         //  return redirect()->route('sanpham.indexAdmin')->with('success', 'Cập nhật thành công');
     }
+    public function delete(Request $request, $id){
+        if(empty($id))
+        {
+            // $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+            // if(!empty($dsMonTheThao_check)){
+                return redirect()->route('sanpham.indexAdmin')->with('error', 'không tìm thấy sản phẩm');
+            // }
+        }
+        $dsSanPham = SanPham::find($id);
+        $dsSanPham->delete();
+        return redirect()->route('sanpham.indexAdmin')->with('success', 'xóa sản phẩm thành công');
+    }
 }

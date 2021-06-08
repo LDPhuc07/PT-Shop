@@ -18,8 +18,8 @@ class CreateChiTietHoaDonsTable extends Migration
             $table->unsignedInteger('chi_tiet_san_phams_id');
             // $table->foreign('san_phams_id')->references('id')->on('san_phams');
             $table->unsignedInteger('hoa_dons_id');
-            $table->unsignedBigInteger('gia_goc');
-            $table->unsignedBigInteger('gia_ban');
+            $table->unsignedBigInteger('gia_goc')->nullable();
+            $table->unsignedBigInteger('gia_ban')->nullable();
             // $table->foreign('hoa_dons_id')->references('id')->on('hoa_dons');
             $table->unsignedInteger('so_luong');
             $table->timestamps();
