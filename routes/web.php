@@ -13,6 +13,7 @@
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
+    Route::post('/dashboards/filter-by-date','DashboardController@filterByDate')
     Route::get('/products', 'SanPhamController@indexAdmin')->name('admin.products');
     Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
     Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');

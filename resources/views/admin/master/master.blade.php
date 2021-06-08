@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <base href="{{asset('')}}">
     <link rel="stylesheet" href="admin/css/style.css">
+    @yield('css')
     <title>Document</title>
 </head>
 <body>

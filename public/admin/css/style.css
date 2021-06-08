@@ -778,3 +778,8 @@ a:hover {
 .nav-item a {
   font-size: 16px;
 }
+.title_thongke {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
