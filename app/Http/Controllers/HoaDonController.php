@@ -140,6 +140,13 @@ class HoaDonController extends Controller
         $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
         return view('admin.bill.delete_bill_ajax',$array);
     }
+    public function checkBill($id) {
+        $new = HoaDon::find($id);
+        $new->chot_don = true;
+        $new->save();
+        $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
+        return view('admin.bill.delete_bill_ajax',$array);
+    }
     public function printBill($id) {
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($this->print_order_convert($id));
@@ -149,5 +156,17 @@ class HoaDonController extends Controller
         $bill = HoaDon::find($id);
         $bill_detail = ChiTietHoaDon::where('hoa_dons_id', $id)->get();
         return view('admin.bill.form_print',array('bill' => $bill,'bill_detail' => $bill_detail));
+    }
+    public function search(Request $request) {
+        $key = $request->key_search;
+        // $key_from_day = $request->$key_from_day;
+        // $key_to_day = $request->$key_to_day;
+        $array = ['arrays'=>HoaDon::select('hoa_dons.id as id','tai_khoans.ho_ten as ten_khach_hang','ngay_lap_hd','tong_tien','chot_don')
+                                    ->join('tai_khoans','tai_khoans.id','=','tai_khoans_id')
+                                    ->where('hoa_dons.trang_thai',1)
+                                    ->where('hoa_dons.id','LIKE','%' .$key. '%')
+                                    ->orWhere('tai_khoans.ho_ten','LIKE','%' .$key. '%')
+                                    ->get()];
+        return view('admin.bill.search',$array);
     }
 }

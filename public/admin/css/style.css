@@ -438,6 +438,29 @@ textarea.textbox {
   border-radius: 3px;
   margin-left: 4px;
 }
+.checked {
+  background: linear-gradient( 
+  180deg
+ ,#33CC66,#33CC33)!important;
+  border-color: #33CC66;
+  box-shadow: inset 0 1px 0 0 #33CC33;
+  color: #fff!important;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+.not-check-btn {
+  background: linear-gradient( 
+  180deg
+ ,#C2C2C2,#B7B7B7)!important;
+  border-color: #C2C2C2;
+  box-shadow: inset 0 1px 0 0 #B7B7B7;
+  color: #fff!important;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-left: 4px;
+  cursor: pointer;
+}
 .print-bill-btn {
   background: linear-gradient( 
   180deg

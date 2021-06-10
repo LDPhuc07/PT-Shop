@@ -13,7 +13,9 @@
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
-    Route::post('/dashboards/filter-by-date','DashboardController@filterByDate')
+    Route::post('/dashboards/filter-by-date','DashboardController@filterByDate');
+    Route::post('/dashboards/filter','DashboardController@filter');
+    Route::post('/dashboards/filter-30-days','DashboardController@filter30Days');
     Route::get('/products', 'SanPhamController@indexAdmin')->name('admin.products');
     Route::get('/products/create', 'SanPhamController@create')->name('admin.products.create');
     Route::get('/producers', 'NhaSanXuatController@index')->name('admin.producers');
@@ -80,7 +82,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
     Route::get('/bill/bill-detail/{id}','HoaDonController@billDetail')->name('admin.bill.bill-detail');
     Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
+    Route::get('bill/check-bill/{id}','HoaDonController@checkBill')->name('admin.bill.check-bill');
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
+    Route::post('bill/search','HoaDonController@search')->name('admin.bill.search');
     
 });
 
@@ -133,3 +137,4 @@ Route::get('/like-product-detail/{sp_id}/{tk_id}','PageController@likeProductDet
 Route::get('/dislike-product-detail/{sp_id}/{tk_id}','PageController@dislikeProductDetail');
 Route::get('/like-product-detail-splq/{sp_id}/{tk_id}','PageController@likeProductDetailSPLQ');
 Route::get('/dislike-product-detail-splq/{sp_id}/{tk_id}','PageController@dislikeProductDetailSPLQ');
+

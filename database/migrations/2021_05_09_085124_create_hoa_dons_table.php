@@ -21,6 +21,7 @@ class CreateHoaDonsTable extends Migration
             $table->unsignedBigInteger('tong_tien');
             $table->unsignedBigInteger('loi_nhuan')->nullable();
             $table->boolean('trang_thai')->default(true);
+            $table->boolean('chot_don')->default(false);
             $table->timestamps();
         });
 

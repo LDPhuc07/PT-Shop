@@ -50,7 +50,7 @@
                         @foreach($arrays as $bill)
                         <tr>
                             <td>{{ $bill->id }}</td>
-                            <td>{{ $bill->taiKhoan->ho_ten}}</td>
+                            <td>{{ $bill->ten_khach_hang}}</td>
                             <td>{{ $bill->ngay_lap_hd }}</td>
                             <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                             @if ($bill->chot_don == true)
