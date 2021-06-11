@@ -158,16 +158,66 @@ class HoaDonController extends Controller
         return view('admin.bill.form_print',array('bill' => $bill,'bill_detail' => $bill_detail));
     }
     public function search(Request $request) {
+        // dd($request->all());
         $key = $request->key_search;
         $key_from_day = $request->key_from_day;
+        // dd($key_from_day);
         $key_to_day = $request->key_to_day;
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)
-                        ->where('id','LIKE','%' .$key. '%')
-                        ->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        })
-                        ->whereBetween('ngay_lap_hd',[$key_from_day, $key_to_day])->orderBy('ngay_lap_hd','ASC')
-                        ->get()];
+
+        $query = HoaDon::where('trang_thai',1)
+        ->where('id','LIKE','%' .$key. '%');
+
+        if(!empty($key)){
+            $query->orWhereHas('taiKhoan', function($query) use ($key) {
+                $query->where('ho_ten','LIKE','%'.$key.'%');
+            });
+        }
+        if(!empty($key_from_day) && !empty($key_to_day)){
+            $query->whereBetween('ngay_lap_hd',[$key_from_day, $key_to_day])
+            ->orderBy('ngay_lap_hd','ASC');
+        }
+        
+        $array = ['arrays'=> $query->get()];
+
+        // if(!empty($key)){
+        //     if(!empty($key_from_day)){
+        //         if(!empty($key_to_day)){
+        //             $array = ['arrays'=>HoaDon::where('trang_thai',1)
+        //             ->where('id','LIKE','%' .$key. '%')
+        //             ->orWhereHas('taiKhoan', function($query) use ($key) {
+        //                 $query->where('ho_ten','LIKE','%'.$key.'%');
+        //             })
+        //             ->whereBetween('ngay_lap_hd',[$key_from_day, $key_to_day])->orderBy('ngay_lap_hd','ASC')
+        //                     ->get()];
+        //         }
+        //         else
+        //         {
+        //             $array = ['arrays'=>HoaDon::where('trang_thai',1)
+        //             ->where('id','LIKE','%' .$key. '%')
+        //             ->orWhereHas('taiKhoan', function($query) use ($key) {
+        //                 $query->where('ho_ten','LIKE','%'.$key.'%');
+        //             })
+        //             ->get()];
+        //         }
+        //     }
+        //     else
+        //     {
+        //         $array = ['arrays'=>HoaDon::where('trang_thai',1)
+        //             ->where('id','LIKE','%' .$key. '%')
+        //             ->orWhereHas('taiKhoan', function($query) use ($key) {
+        //                 $query->where('ho_ten','LIKE','%'.$key.'%');
+        //             })
+        //             ->get()];
+        //     }
+            
+        // }
+        // else
+        // {
+        //     return 'ok';
+        // }
+                        //  ->whereBetween('ngay_lap_hd',[$key_from_day, $key_to_day])->orderBy('ngay_lap_hd','ASC')
+                        //     ->get()];
+       
         return view('admin.bill.index',$array);
     }
 }

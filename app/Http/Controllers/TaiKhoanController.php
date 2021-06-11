@@ -199,7 +199,8 @@ class TaiKhoanController extends Controller
     }
     public function search(Request $requests) {
         $key = $requests->search;
-        // $key_admin = $requests->admin;
+        $key_admin = $requests->admin;
+        // dd($requests->all());
         
         // if($key_admin != null) {
         //     if($key_admin == 1) {
@@ -217,12 +218,75 @@ class TaiKhoanController extends Controller
         //                             ->get()];
         //     }
         // }
-        // else {
-            $array = ['arrays'=>TaiKhoan::where('ho_ten','LIKE','%'.$key.'%')
-                                    ->orWhere('email','LIKE',$key)
-                                    ->orWhere('so_dien_thoai','LIKE',$key)
-                                    ->get()];
-        // }
+        // else {\
+        $query = TaiKhoan::Where(function ($a) use ($key, $key_admin)
+         {
+            
+                                    if($key_admin != 'null')
+                                    {
+                                        $a->where('ho_ten','LIKE','%'.$key.'%');
+                                        // dd(!empty($key_admin));
+                                        if($key_admin == '1')
+                                        {
+                                            $a->where('admin',true);  
+                                        }
+                                        if($key_admin == '0')
+                                        {
+                                            $a->where('admin',false);
+                                        }
+                       
+                                    }
+                                    if($key_admin == 'null')
+                                    {
+                                        $a->where('ho_ten','LIKE','%'.$key.'%');
+                                    }
+                                   
+        })          
+        ->orWhere(function ($a) use ($key, $key_admin)
+        {
+                                if($key_admin != 'null')
+                                    {
+                                        $a->where('email',$key);
+                                        // dd(!empty($key_admin));
+                                        if($key_admin == '1')
+                                        {
+                                            $a->where('admin',true);  
+                                        }
+                                        if($key_admin == '0')
+                                        {
+                                            $a->where('admin',false);
+                                        }
+                       
+                                    }
+                                if($key_admin == 'null')
+                                {
+                                    $a->where('email','LIKE',$key);
+                                } 
+        })
+        ->orWhere(function ($a) use ($key, $key_admin)
+         {
+                                    if($key_admin != 'null')
+                                    {
+                                        $a->where('so_dien_thoai','LIKE','%'.$key.'%');
+                                        // dd(!empty($key_admin));
+                                        if($key_admin == '1')
+                                        {
+                                            $a->where('admin',true);  
+                                        }
+                                        if($key_admin == '0')
+                                        {
+                                            $a->where('admin',false);
+                                        }
+
+                                    }
+                                    if($key_admin == 'null')
+                                    {
+                                            $a->where('so_dien_thoai','LIKE','%'.$key.'%');
+                                    } 
+                                     
+        });
+        $array = ['arrays'=> $query->get()];
+        // dd($array);
         return view('admin.account.index', $array);
     }
 }
