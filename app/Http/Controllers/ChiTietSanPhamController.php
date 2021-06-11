@@ -13,13 +13,26 @@ class ChiTietSanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request,$id)
     {
         //
-        
+        if(!empty($request->search))
+        {
+            $timkiem = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')
+                                        ->where('mau','LIKE','%'.$request->search.'%')
+                                        ->orWhere('kich_thuoc','LIKE','%'.$request->search.'%')  
+                                        ->orWhere('so_luong',$request->search)
+                                        ->paginate(4);
+                                        // dd($timkiem);
+        }
+        else
+        {
+            $timkiem = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')->paginate(4);
+            // dd($timkiem);
+        }
         // ["dsMonTheThao"=>MonTheThao::find($id)]
         $dsChiTietSanPham = [
-            'dsChiTietSanPham'=>ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')->paginate(4),
+            'dsChiTietSanPham'=>$timkiem,
             'id'=>$id
         ];
         // dd($dsChiTietSanPham['dsChiTietSanPham'][0]->sanPham->id);
@@ -149,11 +162,19 @@ class ChiTietSanPhamController extends Controller
         {
             return redirect()->back()->withErrors($validator);
         }
+
         $dsChiTietSanPham = ChiTietSanPham::find($idct);
         $dsChiTietSanPham->san_phams_id=$id;
         $dsChiTietSanPham->mau=$request->mau;
         $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
         $dsChiTietSanPham->so_luong=$request->soluong;
+        if(!empty($id))
+        {
+            $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
+            if(!empty($dsChiTietSanPham_check)){
+                return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
+            }
+        }
         $dsChiTietSanPham->save();
         return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Tao thanh cong');
     }

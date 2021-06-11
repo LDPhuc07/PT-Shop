@@ -11,9 +11,11 @@ class CategloryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idlsp, $idmtt)
     {
         //
+        return view('pages.product',['idlsp' =>$idlsp, 'idmtt' =>$idmtt]);
+        
     }
 
     /**

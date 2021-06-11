@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-           <a href="{{route('monthethao.index')}}" style="color:black;"><h3>Môn thể thao</h3></a> 
+           <a href="{{route('monthethao.index')}}" style="color:black;"><h3>MÔN THỂ THAO</h3></a> 
           </div>
           
           <div class="add-pro">

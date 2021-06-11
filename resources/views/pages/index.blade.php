@@ -259,7 +259,7 @@
         </div>
       </div>
     </div>
-    <div class="shoesnews">
+    {{-- <div class="shoesnews">
     <div class="container">
       <h3 class="shoesnews__title">Tin tức</h3>
       <div class="row">
@@ -298,7 +298,7 @@
         <a class="shoesnews__all-tittle">Xem tất cả</a> <i class="fi-rs-angle-right"></i>
       </div>
     </div>
-    </div>
+    </div> --}}
   </div>
 </div>
 @endsection

@@ -2,7 +2,7 @@
 @section('content')
     <div class="product-container">
       <div class="head-title head-add-pro">
-        <a href="">
+        <a href="{{route('chitietsanpham.index',['id' =>$id])}}">
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách chi tiết sản phẩm</span>
         </a>
@@ -18,7 +18,7 @@
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Màu<span class="repuired"> *</span></label>
                 <i class="fas fa-info"></i>
-                <input class="textbox" type="text" name="mau">
+                <input class="textbox" type="text" name="mau" required pattern="[A-Za-z]+">
                 <div class="error error-name" 	@if($errors->has('mau')) style="display:block;color:red" @endif>{{$errors->first('mau')}}</div>
               </div>
               <div class="product-info-item">

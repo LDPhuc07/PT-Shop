@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Chi tiết Sản phẩm</h3>
+            <a href="{{route('chitietsanpham.index',['id' =>$id])}}" style="color:black;"><h3>CHI TIẾT SẢN PHẨM</h3></a> 
           </div>
           <div class="add-pro">
             <a href="{{route('chitietsanpham.create',['id' =>$id])}}">
@@ -16,6 +16,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
+                  <div class="head-table">
+                    <div class="search">
+                      <form action="{{route('chitietsanpham.index',['id' =>$id])}}" method="GET">
+                        <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">
+                        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                      </form>
+                    </div>
+                  </div>
                   </div>
                   <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">

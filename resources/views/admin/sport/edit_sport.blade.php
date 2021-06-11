@@ -2,7 +2,7 @@
 @section('content')
     <div class="product-container">
       <div class="head-title head-add-pro">
-        <a href="{{ route('admin.products') }}">
+        <a href="{{ route('monthethao.index')}}">
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách môn thể thao</span>
         </a>

@@ -91,7 +91,7 @@ class NhaSanXuatController extends Controller
         $dsNhaSanXuat->save();
         
         // return redirect('admin.sport.index',$dsMonTheThao); 
-        return redirect()->route('nhasanxuat.index')->with('success', 'Tạo thành công');
+        return redirect()->route('nhasanxuat.index')->with('success', 'Tạo nhà sản xuất thành công');
     }
 
     /**
@@ -145,7 +145,7 @@ class NhaSanXuatController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         
-        if(empty($request->id))
+        if(!empty($request->id))
         {
             $dsNhaSanXuat_check = NhaSanXuat::whereNull('deleted_at')->where('ten_nha_san_xuat',$request->tennhasanxuat)->first();
             if(!empty($dsNhaSanXuat_check)){

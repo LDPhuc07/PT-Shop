@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Sản phẩm</h3>
+            <a href="{{route('sanpham.indexAdmin')}}" style="color:black;"><h3>SẢN PHẨM</h3></a>
           </div>
           <div class="add-pro">
             <a href="{{ route('sanpham.create') }}">
@@ -62,6 +62,7 @@
                               <th>Loại sản phẩm</th>
                               <th>BM thể thao</th>
                               <th>Giá bán</th>
+                              <th>Giá gốc</th>
                               <th>Giảm giá</th>
                               <th>Hình ảnh</th>
                               <th>Mô tả</th>
@@ -76,6 +77,7 @@
                             <td>{{$ds->loaiSanPham->ten_loai_san_pham}}</td>
                             <td>{{$ds->monTheThao->ten_the_thao}}</td>
                             <td>{{$ds['gia_ban']}}</td>
+                            <td>{{$ds['gia_goc']}}</td>
                             <td>{{$ds['giam_gia']}}</td>
                             <td>
                               @foreach($ds->anh as $anh)

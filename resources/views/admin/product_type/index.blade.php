@@ -3,11 +3,9 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Loại sản phẩm</h3>
+            <a href="{{route('loaisanpham.index')}}" style="color:black;"><h3>LOẠI SẢN PHẨM</h3></a>
           </div>
-          
           <div class="add-pro">
-             
               <a href="{{route('loaisanpham.create')}}"> <i class="fas fa-plus" style="margin-right:5px"></i>Thêm loại sản phẩm</a>
           </div>
         </div>

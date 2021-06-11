@@ -120,7 +120,7 @@
             <div class="col-9">
               <div class="sort-wrap">
                 <div class="sort-left">
-                  <h1 class="coll-name">Tất cả sản phẩm</h1>
+                  <h1 class="coll-name">Sản phẩm</h1>
                 </div>
                 <div class="sort-right">
                   <div class="sortby">
@@ -156,6 +156,7 @@
 @section('js')
 <script src="js/main.js"></script>
 <script src="js/product.js"></script>
+
 <script>
   $(document).ready(function() {
     var divGiamGia = $('.card-body').children('.sale-off');
@@ -170,12 +171,14 @@
   });
 </script>
 <script>
-    var role = 'all'; 
-   var loardmore = 0;
-   var productFetching =false;
-  $(function(){
-    getSanPham();
-  });
+  var idlsp = {{$idlsp}};
+  var idmtt = {{$idmtt}};
+  var role = 'all'; 
+  var loardmore = 0;
+  var productFetching =false;
+      $(function(){
+        getSanPham();
+      });
   $('.loadmore-btn').click(function(){
     // if(productFetching) return;
     if(role=='all'){
@@ -200,15 +203,15 @@
 
     $.ajax({
       type:'get',
-    url:'/api/product?page=' + page,
-    success: function(products){
-     
-      if(products.length == 0){
-        loardMoreBtn.fadeOut();
-      }
-      appendSanPham(products);
-      loardMoreBtn.text(prevText);
-      productFetching = false;
+      url:'/api/product?page=' + page+'&idlsp='+idlsp+'&idmtt='+idmtt,
+      success: function(products){
+      
+        if(products.length == 0){
+          loardMoreBtn.fadeOut();
+        }
+        appendSanPham(products);
+        loardMoreBtn.text(prevText);
+        productFetching = false;
       // console.log(products);
     }
     });
@@ -266,7 +269,7 @@
 
     $.ajax({
     type:'get',
-    url:'/api/' + name +'?page='+loardmore,
+    url:'/api/' + name +'?page='+loardmore+'&idlsp='+idlsp+'&idmtt='+idmtt,
     success: function(products){
       if(products.length == 0){
         loardMoreBtn.fadeOut();
@@ -278,13 +281,13 @@
     }
 
     function Filter(){
-      var loardMoreBtn = $('.loadmore-btn');
+    var loardMoreBtn = $('.loadmore-btn');
     var prevText = loardMoreBtn.text();
     loardMoreBtn.text('Đang tải...');
     productFetching = true;
     $.ajax({
     type:'get',
-    url:'/api/' + role +'?page='+loardmore,
+    url:'/api/' + role +'?page='+loardmore+'&idlsp='+idlsp+'&idmtt='+idmtt,
     success: function(products){
       if(products.length == 0){
         loardMoreBtn.fadeOut();
