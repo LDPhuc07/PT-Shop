@@ -159,14 +159,15 @@ class HoaDonController extends Controller
     }
     public function search(Request $request) {
         $key = $request->key_search;
-        // $key_from_day = $request->$key_from_day;
-        // $key_to_day = $request->$key_to_day;
-        $array = ['arrays'=>HoaDon::select('hoa_dons.id as id','tai_khoans.ho_ten as ten_khach_hang','ngay_lap_hd','tong_tien','chot_don')
-                                    ->join('tai_khoans','tai_khoans.id','=','tai_khoans_id')
-                                    ->where('hoa_dons.trang_thai',1)
-                                    ->where('hoa_dons.id','LIKE','%' .$key. '%')
-                                    ->orWhere('tai_khoans.ho_ten','LIKE','%' .$key. '%')
-                                    ->get()];
-        return view('admin.bill.search',$array);
+        $key_from_day = $request->key_from_day;
+        $key_to_day = $request->key_to_day;
+        $array = ['arrays'=>HoaDon::where('trang_thai',1)
+                        ->where('id','LIKE','%' .$key. '%')
+                        ->orWhereHas('taiKhoan', function($query) use ($key) {
+                            $query->where('ho_ten','LIKE','%'.$key.'%');
+                        })
+                        ->whereBetween('ngay_lap_hd',[$key_from_day, $key_to_day])->orderBy('ngay_lap_hd','ASC')
+                        ->get()];
+        return view('admin.bill.index',$array);
     }
 }

@@ -197,4 +197,32 @@ class TaiKhoanController extends Controller
         $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
         return view('pages.account',$array);
     }
+    public function search(Request $requests) {
+        $key = $requests->search;
+        // $key_admin = $requests->admin;
+        
+        // if($key_admin != null) {
+        //     if($key_admin == 1) {
+        //         $array = ['arrays'=>TaiKhoan::where('admin','=',true)
+        //         ->where('ho_ten','LIKE','%'.$key.'%')
+                                    
+        //                             ->orWhere('email','LIKE',$key)
+        //                             ->orWhere('so_dien_thoai','LIKE',$key)
+        //                             ->get()];
+        //     } else {
+        //         $array = ['arrays'=>TaiKhoan::where('ho_ten','LIKE','%'.$key.'%')
+        //                             ->orWhere('email','LIKE',$key)
+        //                             ->orWhere('so_dien_thoai','LIKE',$key)
+        //                             ->where('admin','=',false)
+        //                             ->get()];
+        //     }
+        // }
+        // else {
+            $array = ['arrays'=>TaiKhoan::where('ho_ten','LIKE','%'.$key.'%')
+                                    ->orWhere('email','LIKE',$key)
+                                    ->orWhere('so_dien_thoai','LIKE',$key)
+                                    ->get()];
+        // }
+        return view('admin.account.index', $array);
+    }
 }

@@ -16,40 +16,22 @@
                 <div class="ds-sanpham">
                   <div class="head-table">
                     <div class="search">
-                      <form action="">
+                      <form action="{{ route('admin.accounts.search') }}" method="POST">
+                        @csrf
                         <input class="search-txt" type="text" placeholder="Search.." name="search">
                         <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
-                      </form>
                     </div>
-                    {{--  <div class="group-filter-btn">
-                      <div class="filter-catagories-wrap">
-                        <button id="filter-catagories-wrap-id" class="filter-catagories-btn btn">
-                          <span>Loại sản phẩm</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-catagories" class="popover">
-                          <div class="arrow"></div>
-                        </div>
-                      </div>
-                      <div class="filter-catagories-sport-wrap">
-                        <button id="filter-catagories-sport-wrap-id" class="filter-catagories-sport-btn btn">
-                          <span>BM thể thao</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-catagories-sport" class="popover">
-                          <div class="arrow"></div>
-                        </div>
-                      </div>
-                      <div class="filter-producer-wrap">
-                        <button id="filter-producer-wrap-id" class="filter-producer-btn btn">
-                          <span>Nhà sản xuất</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-producer" class="popover">
-                          <div class="arrow"></div>
-                        </div>
-                      </div>
-                    </div>  --}}
+                    <div class="group-filter-btn">
+                      <label style="width: 120px;
+                      position: relative;
+                      top: 6px;">Loại tài khoản: </label>
+                      <select style="width: 170px;" name="admin">
+                        <option value="">--Chọn--</option>
+                        <option value="1">Admin</option>
+                        <option value="0">Người dùng</option>
+                      </select>
+                    </div>
+                  </form>
                   </div>
                   <div id="ds-taikhoan" class="ds-sanpham-div">
                     <table class="table-ds-sanpham">

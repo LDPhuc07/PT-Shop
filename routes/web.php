@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
     Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
     Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
+    Route::post('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
     Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
