@@ -11,6 +11,7 @@ use App\ChiTietHoaDon;
 use App\ChiTietSanPham;
 use App\MonTheThao;
 use App\LoaiSanPham;
+use App\NhaSanXuat;
 use DB;
 class ProductController extends Controller
 {
@@ -334,7 +335,53 @@ class ProductController extends Controller
 
         return $data;
     }
-   
+    public function khoanggia(Request $request){
+        // [$pricefrom, $priceto]
+        // dd($request->priceFrom);
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                        $query->where('anhchinh',1);
+                        }))->get();
+                        // dd($data);
+        return $data;
+
+    }
+    public function thuonghieu(Request $request)
+    {
+        // use ($search)
+        $tradeMark = $request->tradeMark;
+        // dd($key);
+        $nhasanxuat = SanPham::whereIn('nha_san_xuats_id',array('1','2'))->get();
+        dd($nhasanxuat);
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereHas('nhaSanXuat', function($query) use ($tradeMark){
+                            $query->where('ten_nha_san_xuat',$tradeMark);
+                        })
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+                        // dd($data);
+        return $data;
+    }
+    public function kichthuoc(Request $request)
+    {
+        $key = $request->kichthuoc;
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereHas('chiTietSanPham', function($query) use ($key) {
+                            $query->where('kich_thuoc',$key);
+                        })
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+        return $data;
+    }
     /**
      * Store a newly created resource in storage.
      *

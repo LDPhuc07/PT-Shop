@@ -15,32 +15,27 @@
                         <ul id = "khoanggia" class="product__filter-ckeckbox">
                             <li class="product__filter-item">
                                 <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>Tất cả</span>
+                                    <input type="radio" class="form-check-input checkGia" id="radio2" name="optradio" value="0-1000000"><span>Dưới 1,000,000đ</span>
                                   </label>
                             </li>
                             <li class="product__filter-item">
                                 <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>Dưới 1,000,000đ</span>
+                                    <input type="radio" class="form-check-input checkGia" id="radio2" name="optradio" value="1000000-2000000"><span>1,000,000đ->2,000,000đ</span>
                                   </label>
                             </li>
                             <li class="product__filter-item">
                                 <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>1,000,000đ->2,000,000đ</span>
+                                    <input type="radio" class="form-check-input checkGia" id="radio2" name="optradio" value="2000000-3000000"><span>2,000,000đ->3,000,000đ</span>
                                   </label>
                             </li>
                             <li class="product__filter-item">
                                 <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>2,000,000đ->3,000,000đ</span>
+                                    <input type="radio" class="form-check-input checkGia" id="radio2" name="optradio" value="3000000-4000000"><span>3,000,000đ->4,000,000đ</span>
                                   </label>
                             </li>
                             <li class="product__filter-item">
                                 <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>3,000,000đ->4,000,000đ</span>
-                                  </label>
-                            </li>
-                            <li class="product__filter-item">
-                                <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"><span>Trên 4,000,000đ</span>
+                                    <input type="radio" class="form-check-input checkGia" id="radio2" name="optradio" value="4000000-100000000"><span>Trên 4,000,000đ</span>
                                   </label>
                             </li>
                         </ul>
@@ -49,33 +44,33 @@
                       <h4 class="product__filter-heading">Thương hiệu <i class="fi-rs-minus" onclick="khonghienthidanhsach(2,`thuonghieu`)" id="minus-2"></i> <i class="fi-rs-plus undisplay" onclick="khonghienthidanhsach(2,`thuonghieu`)" id="plus-2"></i></h4>
                       <ul id="thuonghieu" class="product__filter-ckeckbox">
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>Adidas</span>
+                          <label class="form-check-label" for="2">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(2)" id="cc2" name="option" value="adidas"><span>Adidas</span>
                           </label>
                         </li>
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>Nike</span>
+                          <label class="form-check-label" for="1">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(1)" id="cc1" name="option" value="nike"><span>Nike</span>
                           </label>
                         </li>
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>Puma</span>
+                          <label class="form-check-label" for="3">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(3)" id="cc3" name="option" value="puma"><span>Puma</span>
                           </label>
                         </li>
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>DESPORTE</span>
+                          <label class="form-check-label" for="5">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(5)" id="cc5" name="option" value="kappa"><span>KAPPA</span>
                           </label>
                         </li>
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>X-MUNICH</span>
+                          <label class="form-check-label" for="9">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(9)" id="cc9" name="option" value="x-storm"><span>X-storm</span>
                           </label>
                         </li>
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="check2">
-                            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>GRAND SPORT</span>
+                          <label class="form-check-label" for="6">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(6)" id="cc6" name="option" value="fila"><span>FILA</span>
                           </label>
                         </li>
                       </ul>
@@ -160,9 +155,7 @@
 <script>
   $(document).ready(function() {
     var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
     $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
       if(!Number($(v).attr('data-id')) || ($(v).attr('data-id') === 'null'))
       {
         $(v).css('display','none');
@@ -171,6 +164,44 @@
   });
 </script>
 <script>
+  var trang= 0;
+  $('.checkGia').click(function(){
+    var price = $(this).attr('value');
+    var priceFrom = price.split("-")[0];
+    var priceTo = price.split("-")[1];
+    $.ajax({
+      type:'get',
+      url: '/api/priceRange?page='+trang+'&priceFrom='+priceFrom+'&priceTo='+priceTo,
+      success: function(products){
+        render(products);
+      }
+    });
+  });
+  var arrayThuongHieu = [];
+  function chon(id){
+    var tradeMark = $(this).attr('value');
+    var idTradeMark = document.getElementById('cc'+id);
+    if(idTradeMark.checked){
+      arrayThuongHieu.push(id);
+    }else{
+      
+    }
+    console.log(arrayThuongHieu);
+  }
+  // $('.checkThuongHieu').click(function(){
+    
+  //   var idTradeMark = $(this).attr('id');
+  //   $.ajax({
+  //     type:'get',
+  //     url: '/api/trademark?page='+trang+'&tradeMark='+tradeMark,
+  //     success: function(products){
+  //       render(products);
+  //     }
+  //   });
+  // });
+
+
+
   var idlsp = {{$idlsp}};
   var idmtt = {{$idmtt}};
   var role = 'all'; 
@@ -203,7 +234,7 @@
 
     $.ajax({
       type:'get',
-      url:'/api/product?page=' + page+'&idlsp='+idlsp+'&idmtt='+idmtt,
+      url:'/api/product?page='+page+'&idlsp='+idlsp+'&idmtt='+idmtt,
       success: function(products){
       
         if(products.length == 0){
@@ -212,7 +243,6 @@
         appendSanPham(products);
         loardMoreBtn.text(prevText);
         productFetching = false;
-      // console.log(products);
     }
     });
     
@@ -249,9 +279,7 @@
     $('#tatcasanpham').append(html);
     $(document).ready(function() {
     var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
     $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
       if(!Number($(v).attr('data-id')))
       {
         $(v).css('display','none');
@@ -332,9 +360,7 @@
     $('#tatcasanpham').html(html);
     $(document).ready(function() {
     var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
     $.each(divGiamGia, function(i,v){
-      console.log($(v).attr('data-id'));
       if(!Number($(v).attr('data-id')) )
       {
         $(v).css('display','none');
@@ -346,11 +372,11 @@
     console.log($( x['currentTarget']).text());
     $('.bbc').html($(x['currentTarget']).text());
 });
+  
 </script>
 <script>
   $(document).ready(function() {
     var divGiamGia = $('.card-body').children('.sale-off');
-    console.log(divGiamGia);
     $.each(divGiamGia, function(i,v){
       if(!Number($(v).attr('data-id')))
       {
@@ -362,7 +388,6 @@
 <script>
 $(document).ready(function() {
     var pGiamGia = $('.product__price').children('.product__price-old');
-    console.log(pGiamGia);
     $.each(pGiamGia, function(i,v){
       if(!Number($(v).attr('data-id')))
       {
@@ -371,4 +396,5 @@ $(document).ready(function() {
     });
   });
 </script>
+
 @endsection

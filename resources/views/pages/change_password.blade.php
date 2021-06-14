@@ -8,6 +8,7 @@
 @section('content')
 <div class="cart" style="margin-top: 160px;">
     <div class="container" style="margin-top: 180px;">
+        @include('admin.mess.message')
         <div class="row">
           <div class="col-4">
               <div class="heading">
@@ -16,7 +17,7 @@
               </div>
               <div class="menu-manager">
                   <div class="my-profile" onclick="hienThiDoiThongTin()">
-                      <div class="my-profile-title active">
+                      <div class="my-profile-title ">
                         <div class="my-profile-icon"><i class="fas fa-user"></i></div>
                         <div class="my-profile-name">Hồ sơ của tôi</div>
                       </div>
@@ -28,7 +29,7 @@
                     </div>
                   </div>
                   <div class="my-password" onclick="hienThiDoiMatKhau()">
-                    <div class="my-password-title">
+                    <div class="my-password-title active">
                       <div class="my-password-icon"><i class="fas fa-key"></i></div>
                       <div class="my-password-name">Đổi mật khẩu</div>
                     </div>
@@ -36,95 +37,74 @@
               </div>
           </div>
           <div class="col-8">
-            <div class="detial__my-profile ">
-              <div class="heading-edit-account">
-                <h2>Hồ sơ của tôi</h2>
-                @foreach($arrays as $account)
-                <form action="{{ route('accounts.update',$account->id) }}" method="POST">
-                  @method('PUT')
-                  @csrf
-                  <div class="form-group">
-                    <label for="fullname" class="form-label">Tên đầy đủ</label>
-                    <input id="fullname" name="ho_ten" type="text" placeholder="VD: Quốc Trung" class="form-control" value="{{ $account->ho_ten }}">
-                    <span class="form-message"></span>
-                    @if($errors->has('ho_ten'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('ho_ten') }}
-                      </span>
-                      <style>
-                          input[name='ho_ten'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control" value="{{ $account->email }}" >
-                    <span class="form-message"></span>
-                    @if($errors->has('email'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('email') }}
-                      </span>
-                      <style>
-                          input[name='email'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label for="email" class="form-label">Địa chỉ</label>
-                    <input id="email" name="dia_chi" type="text" placeholder="VD: 86/2/3 Bình Thạnh TP HCM" class="form-control" value="{{ $account->dia_chi }}" >
-                    <span class="form-message"></span>
-                    @if($errors->has('dia_chi'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('dia_chi') }}
-                      </span>
-                      <style>
-                          input[name='dia_chi'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label for="sdt" class="form-label">Số điện thoại</label>
-                    <input id="sdt" name="so_dien_thoai" type="number" placeholder="VD: 089" class="form-control" value="{{ $account->so_dien_thoai }}">
-                    <span class="form-message"></span>
-                    @if($errors->has('so_dien_thoai'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('so_dien_thoai') }}
-                      </span>
-                      <style>
-                          input[name='so_dien_thoai'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label for="avatar" class="form-label">Cập nhật avatar</label>
-                    <input id="avatar" name="avatar" type="file" class="form-control">
-                    <span class="form-message"></span>
-                  </div>
-                  <div class="form-group">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
-                  <div class="form-group">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
-                  <div class="form-group">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
-                  <button class="form-submit">Lưu</button>
-                </form>
-                @endforeach
+            <div class="detail__confirm-password">
+              <div class="heading-edit-password">
+                <h2>Đổi lại mật khẩu</h2>
               </div>
+              @foreach($arrays as $account)
+              <form action="{{ route('account.changePassword',$account->id) }}" method="POST">
+                @method('PUT')
+                @csrf
+                <div class="form-group form-group-old-password">
+                  <div style="display:flex;justify-content: space-between;">
+                    <label for="password" class="form-label">Mật khẩu cũ</label>
+                    <span class="show-hide"><i class="fas fa-eye"></i></span>
+                  </div>
+                  <input id="password" name="mat_khau_cu" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <span class="form-message"></span>
+                  @if($errors->has('mat_khau_cu'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('mat_khau_cu') }}
+                      </span>
+                      <style>
+                          input[name='mat_khau_cu'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
+                </div>
+                <div class="form-group form-group-new-password">
+                  <div style="display:flex;justify-content: space-between;">
+                    <label for="password-new" class="form-label">Mật khẩu mới</label>
+                    <span class="show-hide-two"><i class="fas fa-eye fa-eye-2"></i></span>
+                  </div>
+                  <input id="password-new" name="mat_khau_moi" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <span class="form-message"></span>
+                  @if($errors->has('mat_khau_moi'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('mat_khau_moi') }}
+                      </span>
+                      <style>
+                          input[name='mat_khau_moi'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
+                </div>
+                <div class="form-group form-group-confirm-password">
+                  <div style="display:flex;justify-content: space-between;">
+                    <label for="password-confirm" class="form-label">Nhập lại mật khẩu</label>
+                    <span class="show-hide-three"><i class="fas fa-eye fa-eye-3"></i></span>
+                  </div>
+                  <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <span class="form-message"></span>
+                  @if($errors->has('nhap_lai_mat_khau'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('nhap_lai_mat_khau') }}
+                      </span>
+                      <style>
+                          input[name='nhap_lai_mat_khau'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
+                </div>
+                <button class="form-submit submit-change-pass">Lưu</button>
+              </form>
+              @endforeach
             </div>
           </div>
         </div>
@@ -176,7 +156,24 @@
       }
     });
   </script>
-
+  {{-- <script>
+    function hienThiDoiMatKhau(){
+      $(".detail__confirm-password").removeClass("undisplay");
+      $(".detail__confirm-password").addClass("display");
+      $(".my-password-title").addClass("active");
+      $(".my-profile-title").removeClass("active");
+      $(".detial__my-profile").addClass("undisplay");
+      $(".detial__my-profile").removeClass("display");
+    }
+    function hienThiDoiThongTin(){
+      $(".detial__my-profile").removeClass("undisplay");
+      $(".detial__my-profile").addClass("display");
+      $(".my-profile-title").addClass("active");
+      $(".my-password-title").removeClass("active");
+      $(".detail__confirm-password").addClass("undisplay");
+      $(".detail__confirm-password").removeClass("display");
+    }
+  </script> --}}
   {{--  <script type="text/javascript">
     $(document).ready(function() {
       $(".submit-change-pass").ckick(function(e) {

@@ -120,6 +120,7 @@ Route::get('/list-like', function () {
     return view('pages.listlike');
 });
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
+Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 // Auth::routes();

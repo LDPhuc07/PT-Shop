@@ -124,9 +124,9 @@ class TaiKhoanController extends Controller
                 $new = TaiKhoan::find($id);
                 $new->password = Hash::make($requests->mat_khau_moi);
                 $new->save();
-                return redirect()->route('index');
+                return redirect()->route('accounts.getChangePassword',$id)->with('success', 'Cập nhật mật khẩu thành công');
         } else {
-            return redirect()->back()->with('thong_bao','Mật khẩu không hợp lệ');
+            return redirect()->route('accounts.getChangePassword',$id)->with('error', 'Cập nhật mật khẩu không thành công');;
         }
     }
     public function editAccountAdmin($id) {
@@ -197,28 +197,13 @@ class TaiKhoanController extends Controller
         $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
         return view('pages.account',$array);
     }
+    public function DoiMatKhau($id) {
+        $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
+        return view('pages.change_password',$array);
+    }
     public function search(Request $requests) {
         $key = $requests->search;
         $key_admin = $requests->admin;
-        // dd($requests->all());
-        
-        // if($key_admin != null) {
-        //     if($key_admin == 1) {
-        //         $array = ['arrays'=>TaiKhoan::where('admin','=',true)
-        //         ->where('ho_ten','LIKE','%'.$key.'%')
-                                    
-        //                             ->orWhere('email','LIKE',$key)
-        //                             ->orWhere('so_dien_thoai','LIKE',$key)
-        //                             ->get()];
-        //     } else {
-        //         $array = ['arrays'=>TaiKhoan::where('ho_ten','LIKE','%'.$key.'%')
-        //                             ->orWhere('email','LIKE',$key)
-        //                             ->orWhere('so_dien_thoai','LIKE',$key)
-        //                             ->where('admin','=',false)
-        //                             ->get()];
-        //     }
-        // }
-        // else {\
         $query = TaiKhoan::Where(function ($a) use ($key, $key_admin)
          {
             
