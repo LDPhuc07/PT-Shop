@@ -46,16 +46,15 @@ class HoaDonController extends Controller
                 $new_update->so_dien_thoai = $request->so_dien_thoai;
                 $new_update->save();
             }
-            $total = Cart::subtotal();
             $bill = array();
             $bill['tai_khoans_id'] = Auth::user()->id;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['tong_tien'] = (int)$total * 1000000;
             $bill['trang_thai'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $contents = Cart::content();
             $loi_nhuan = 0;
+            $tongtien = 0;
             foreach($contents as $content) {
                 $bill_detail = new ChiTietHoaDon();
                 $bill_detail->hoa_dons_id = $bill_id;
@@ -64,13 +63,16 @@ class HoaDonController extends Controller
                 $update_ctsp = ChiTietSanPham::find($content->id);
                 $update_ctsp->so_luong -= $content->qty;
                 $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
-                $bill_detail->gia_ban = $update_ctsp->sanPham->gia_ban;
-                $loi_nhuan += (($update_ctsp->gia_ban - $update_ctsp->gia_goc)*$content->qty);
+                $bill_detail->gia_ban = $content->price;
+                $tongtien += ($content->price*$content->qty);
+                $loi_nhuan += (($content->price - $update_ctsp->sanPham->gia_goc)*$content->qty);
                 $update_ctsp->save();
                 $bill_detail->save();
             }
             $add_loi_nhuan = HoaDon::find($bill_id);
             $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+            $add_loi_nhuan->tong_tien = $tongtien;
+            $add_loi_nhuan->save();
         }
         else {
             $request->validate([
@@ -96,39 +98,41 @@ class HoaDonController extends Controller
                 $bill = array();
                 $bill['tai_khoans_id'] = $account_id;
                 $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['tong_tien'] = (int)$total * 1000000;
+                $bill['tong_tien'] = $total;
                 $bill['trang_thai'] = true;
                 $bill_id = HoaDon::insertGetId($bill);
             }
 
 
             else { 
-                $total = Cart::subtotal();
                 $bill = array();
                 $bill['tai_khoans_id'] = $check_account->id;
                 $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['tong_tien'] = (int)$total * 1000000;
                 $bill['trang_thai'] = true;
                 $bill_id = HoaDon::insertGetId($bill);
             }   
 
             $contents = Cart::content();
             $loi_nhuan = 0;
+            $tongtien = 0;
             foreach($contents as $content) {
                 $bill_detail = new ChiTietHoaDon();
                 $bill_detail->hoa_dons_id = $bill_id;
                 $bill_detail->chi_tiet_san_phams_id = $content->id;
-                $bill_detail->so_luong = $content->qty;
+                $bill_detail->so_luong = $content->qty; 
                 $update_ctsp = ChiTietSanPham::find($content->id);
                 $update_ctsp->so_luong -= $content->qty;
                 $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
-                $bill_detail->gia_ban = $update_ctsp->sanPham->gia_ban;
-                $loi_nhuan += (($update_ctsp->sanPham->gia_ban - $update_ctsp->sanPham->gia_goc)*$content->qty);
+                $bill_detail->gia_ban = $content->price;
+                $tongtien += ($content->price*$content->qty);
+                $loi_nhuan += (($content->price - $update_ctsp->sanPham->gia_goc)*$content->qty);
                 $update_ctsp->save();
                 $bill_detail->save();
             }
             $add_loi_nhuan = HoaDon::find($bill_id);
             $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+            $add_loi_nhuan->tong_tien = $tongtien;
+            $add_loi_nhuan->save();
         }
         Cart::destroy();
         echo 'Thanh toán thành công';

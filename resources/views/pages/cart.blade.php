@@ -26,10 +26,13 @@
                       </div>
                       <div id="cart-body" class="cart-body">
                       <?php
+                      $tongtien = 0;
                         $contents = Cart::content();
-                        $total = Cart::subtotal();
                       ?>
                       @foreach($contents as $content)
+                      <?php
+                        $tongtien +=($content->price * $content->qty);
+                       ?>
                           <div id="cart-body-row" class="row cart-body-row">
                               <div class="col-11">
                                   <div class="row">
@@ -85,7 +88,7 @@
                       <div class="row">
                         <div class="cart-total col-12">
                           <label for="">Thành tiền:</label>
-                          <span class="total__price">{{number_format((int)$total * 1000000,0,',','.').' '.'VNĐ'}}</span>
+                          <span class="total__price">{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span>
                       </div>
                       <div class="cart-buttons col-12">
                           <a href="{{ route('checkout.index') }}" class="chekout">Thanh toán</a>

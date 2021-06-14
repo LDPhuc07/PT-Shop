@@ -22,7 +22,7 @@ class GioHangController extends Controller
         $data['id'] = $ctsp->id;
         $data['qty'] = $request->so_luong;
         $data['name'] = $sanpham->ten_san_pham;
-        $data['price'] = $sanpham->gia_ban;
+        $data['price'] = $sanpham->gia_ban*(100-$sanpham->giam_gia)/100;
         $data['weight'] = 132;
         $data['options']['image'] = $anh->anhchitiet;
         $data['options']['size'] = $ctsp->kich_thuoc;

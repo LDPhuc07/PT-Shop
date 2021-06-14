@@ -8,12 +8,14 @@
 <div class="content" style="margin-top: 160px;">
     <div class="wrap">
         <div class="container">
+            <?php
+            $tongtien = 0;
+            ?>
             <form action="{{ route('bill.create') }}" method="POST">
                 @csrf
             <div class="row">
                     <?php
                         $contents = Cart::content();
-                        $total = Cart::subtotal();
                     ?>
                
                     <div class="col-6">
@@ -141,6 +143,9 @@
                 <div class="col-6" style="background-color:#f3f3f3;">
                     <div class="sliderbar">
                         @foreach($contents as $content)
+                        <?php
+                        $tongtien +=($content->price * $content->qty);
+                       ?>
                         <div class="sliderbar-header">
                             <h2>Thông tin đơn hàng</h2>
                         </div>
@@ -158,11 +163,12 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                         <div class="slider-footer">
                             <div class="subtotal">
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Tạm tính:</span></div>
-                                    <div class="col-6 text-right"><span>{{$total.' VNĐ'}}</span></div>
+                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Phí vận chuyển</span></div>
@@ -172,11 +178,10 @@
                             <div class="total">
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Tổng cộng:</span></div>
-                                    <div class="col-6 text-right"><span>{{$total.' VNĐ'}}</span></div>
+                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
                     </div>
                 </div>
                 </form>

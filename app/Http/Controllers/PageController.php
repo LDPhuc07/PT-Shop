@@ -64,6 +64,8 @@ class PageController extends Controller
         $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
         $first_color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->first();
         $size_by_first_color = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->get();
+        $size_by_first_color_set_qty = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->first();
+        $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->where('kich_thuoc',$size_by_first_color_set_qty->kich_thuoc)->first();
         // sản phẩm liên quan lấy chung loại
         $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->where('id','<>',$sanpham->id)->orderby('id', 'desc')->with('loaiSanPham') 
                                 ->with(array('anh' => function($query) {
@@ -71,17 +73,19 @@ class PageController extends Controller
                                 }))->offset(0)->limit(4)->get();
         if(Auth::check() and Auth::user()->admin != 1) {
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.product_detail',compact('sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like'));
+            return view('pages.product_detail',compact('qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like'));
         }
         else {
-            return view('pages.product_detail',compact('sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color'));
+            return view('pages.product_detail',compact('qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color'));
         }
     }
     public function getSize($id, $mau) {
         $id_sp = $id;
         $mau_sp = $mau;
         $size_by_first_color = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$id)->where('mau',$mau)->distinct()->get();
-        return view('pages.get_size_ajax',compact('size_by_first_color','id_sp','mau_sp'));
+        $size_by_first_color_set_qty = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$id)->where('mau',$mau)->distinct()->first();
+        $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$id)->where('mau',$mau)->where('kich_thuoc',$size_by_first_color_set_qty->kich_thuoc)->first();
+        return view('pages.get_size_ajax',compact('qty','size_by_first_color','id_sp','mau_sp'));
     }
     public function getQty($id, $mau, $kichthuoc) {
         $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$id)->where('mau',$mau)->where('kich_thuoc',$kichthuoc)->first();
