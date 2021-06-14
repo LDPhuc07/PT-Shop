@@ -4,9 +4,9 @@
       <div class="head-title head-add-pro">
         <a href="{{ route('loaisanpham.index')}}">
           <i class="fas fa-chevron-left"></i>
-          <span>Quay lại danh sách môn thể thao</span>
+          <span>Quay lại danh sách loại sản phẩm</span>
         </a>
-        <h3>Chỉnh sửa môn thể thao</h3>
+        <h3>Chỉnh sửa loại sản phẩm</h3>
       </div>
       <form action="{{route('loaisanpham.update',$dsLoaiSanPham['id'])}}" method="POST">
         @method('PUT')

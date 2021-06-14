@@ -9,7 +9,9 @@ use App\SanPham;
 use App\Anh;
 use App\ChiTietHoaDon;
 use App\ChiTietSanPham;
+use App\MonTheThao;
 use App\LoaiSanPham;
+use App\NhaSanXuat;
 use DB;
 class ProductController extends Controller
 {
@@ -20,34 +22,134 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $data = SanPham::whereNull('deleted_at')
+        // dd($request->idmtt);
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('id','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('id','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('id','asc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
-
+        }
+        
         return $data;
     }
     public function sanphammoi(Request $request){
-        return SanPham::whereNull('deleted_at')
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('id','desc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('id','desc')
+                                ->offset($request->page*4)
+                                ->limit(4)
+                                ->with(array('anh' => function($query) {
+                                    $query->where('anhchinh',1);
+                                }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                                 ->orderBy('id','desc')
                                 ->offset($request->page*4)
                                 ->limit(4)
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->get();
+        }
+
+        return $data;
     }
     public function sanphamcu(Request $request)
     {
-        $data = SanPham::whereNull('deleted_at')
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('id','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('id','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('id','asc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
+        }
+        
 
         return $data;
     }
@@ -57,73 +159,229 @@ class ProductController extends Controller
     // }
     public function giatangdan(Request $request)
     {
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('gia_ban','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
 
-        $data = SanPham::whereNull('deleted_at')
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('gia_ban','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('gia_ban','asc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
-
+        }
         return $data;
     }
     public function giagiamdan(Request $request)
     {
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('gia_ban','desc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
 
-        $data = SanPham::whereNull('deleted_at')
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('gia_ban','desc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('gia_ban','desc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
+        }
+        
 
         return $data;
     }
     public function tenbatdau(Request $request)
     {
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('ten_san_pham','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
 
-        $data = SanPham::whereNull('deleted_at')
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('ten_san_pham','asc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('ten_san_pham','asc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
+        }
+        
 
         return $data;
     }
     public function tenketthuc(Request $request)
     {
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+                //  dd($request->idmtt);
+                $data = SanPham::whereNull('deleted_at')
+                        // ->where('loai_san_phams_id',$request->idlsp)
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ])
+                        // ->where('mon_the_thaos_id ',$request->idmtt)    
+                        ->orderBy('ten_san_pham','desc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
 
-        $data = SanPham::whereNull('deleted_at')
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->orderBy('ten_san_pham','desc')
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
                     ->orderBy('ten_san_pham','desc')
                     ->offset($request->page*4)
                     ->limit(4)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
+        }
+        
 
         return $data;
     }
-    public function banchay(Request $request)
+    public function khoanggia(Request $request){
+        // [$pricefrom, $priceto]
+        // dd($request->priceFrom);
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                        $query->where('anhchinh',1);
+                        }))->get();
+                        // dd($data);
+        return $data;
+
+    }
+    public function thuonghieu(Request $request)
     {
-        $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
-                                ->groupBy('chi_tiet_san_phams_id')
-                                ->orderBy('so_luong','desc')->get()->pluck('chi_tiet_san_phams_id');
-
-        $data = SanPham::with(array('anh' => function($query) {
-                                    $query->where('anhchinh',1);
-                                })) 
-                                ->whereIn('id',$ctsp)
-                                ->offset($request->page*4)
-                                ->limit(4)
-                                ->get();
-                                    
+        // use ($search)
+        $tradeMark = $request->tradeMark;
+        // dd($key);
+        $nhasanxuat = SanPham::whereIn('nha_san_xuats_id',array('1','2'))->get();
+        dd($nhasanxuat);
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereHas('nhaSanXuat', function($query) use ($tradeMark){
+                            $query->where('ten_nha_san_xuat',$tradeMark);
+                        })
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+                        // dd($data);
         return $data;
     }
-   
+    public function kichthuoc(Request $request)
+    {
+        $key = $request->kichthuoc;
+        $data = SanPham::whereNull('deleted_at')
+                        ->whereHas('chiTietSanPham', function($query) use ($key) {
+                            $query->where('kich_thuoc',$key);
+                        })
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                            $query->where('anhchinh',1);
+                        }))->get();
+        return $data;
+    }
     /**
      * Store a newly created resource in storage.
      *

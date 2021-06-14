@@ -24,3 +24,6 @@ Route::get('priceDecrease','Api\ProductController@giagiamdan');
 Route::get('nameBegin','Api\ProductController@tenbatdau');
 Route::get('nameEnd','Api\ProductController@tenketthuc');
 Route::get('bestseller','Api\ProductController@banchay');
+Route::get('priceRange','Api\ProductController@khoanggia');
+Route::get('trademark','Api\ProductController@thuonghieu');
+Route::get('size','Api\ProductController@kichthuoc');

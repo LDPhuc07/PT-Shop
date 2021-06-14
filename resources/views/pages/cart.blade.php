@@ -68,10 +68,15 @@
                                 <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                             </div>
                           </div>
+                          
                           @endforeach
 
 
                       </div>
+                      {{-- layout chưa có sản phẩm --}}
+                      {{-- <div class="cart-body">
+                        <h3 style="text-align:center;font-size: 20px; padding:25px 0">Giỏ hàng của bạn đang trống</h3>
+                      </div> --}}
                       <div class="cart-footer">
                           <div class="row cart-footer-row">
                               <div class="col-1"></div>

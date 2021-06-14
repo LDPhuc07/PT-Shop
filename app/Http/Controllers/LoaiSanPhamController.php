@@ -77,18 +77,6 @@ class LoaiSanPhamController extends Controller
         {
             return redirect()->back()->withErrors($validator);
         }
-      
-        // $count =sizeof(MonTheThao::all());
-        // if($count%4!=0)
-        // {
-        //     $count = floor( $count/4);
-        //     $count+=1;
-        // }
-        // else
-        //     $count/=4;
-        
-        // return redirect('/monthethao);
-        // dd($request->tenthethao);
         if(empty($request->id))
         {
             $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
@@ -101,7 +89,7 @@ class LoaiSanPhamController extends Controller
         $dsLoaiSanPham->save();
         
         // return redirect('admin.sport.index',$dsMonTheThao); 
-        return redirect()->route('loaisanpham.index')->with('success', 'Tạo thành công');
+        return redirect()->route('loaisanpham.index')->with('success', 'Thêm loại sản phẩm thành công');
     }
 
     /**
@@ -141,17 +129,9 @@ class LoaiSanPhamController extends Controller
         //
         $rule = [
             'tenloaisanpham' => 'required',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
             'tenloaisanpham.required' => 'Bạn chưa nhập tên loại sản phẩm',
         ];
         $customName = [
@@ -162,8 +142,7 @@ class LoaiSanPhamController extends Controller
         {
             return redirect()->back()->withErrors($validator);
         }
-        
-        if(empty($request->id))
+        if(!empty($request->id))
         {
             $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
             if(!empty($dsLoaiSanPham_check)){
@@ -173,8 +152,6 @@ class LoaiSanPhamController extends Controller
         $dsLoaiSanPham = LoaiSanPham::find($id);
         $dsLoaiSanPham->ten_loai_san_pham=$request->tenloaisanpham;
         $dsLoaiSanPham->save();
-        
-        // return redirect('admin.sport.index',$dsMonTheThao); 
         return redirect()->route('loaisanpham.index')->with('success', 'Cập nhật loại sản phẩm thành công');
     }
 

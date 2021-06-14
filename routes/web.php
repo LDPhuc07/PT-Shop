@@ -62,8 +62,9 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/sanpham/create',("SanPhamController@create"))->name('sanpham.create');
     Route::post('/sanpham/store',("SanPhamController@storeAdmin"))->name('sanpham.storeAdmin');
     Route::get('/sanpham/{id}/edit',("SanPhamController@edit"))->name('sanpham.edit');
-    // Route::put('/nhasanxuat/{id}',("NhaSanXuatController@update"))->name('nhasanxuat.update');
+    Route::put('/nhasanxuat/{id}',("SanPhamController@update"))->name('sanpham.update');
     Route::delete('/sanpham/delete/{id}',("SanPhamController@delete"))->name('sanpham.delete');
+    Route::get('/sanpham/delimg/{id}',("SanPhamController@getDelImg"))->name('sanpham.delimg');
     // chi tiết sản phẩm
     Route::match(['get','post'],'sanpham/{id}/chitietsanpham',("ChiTietSanPhamController@index"))->name('chitietsanpham.index');
     Route::get('sanpham/{id}/chitietsanpham/create',("ChiTietSanPhamController@create"))->name('chitietsanpham.create');
@@ -100,6 +101,7 @@ Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
+Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
 Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
 Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
 Route::get('/carts', function () {
@@ -118,6 +120,7 @@ Route::get('/list-like', function () {
     return view('pages.listlike');
 });
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
+Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 // Auth::routes();

@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Nhà sản xuất</h3>
+            <a href="{{route('nhasanxuat.index')}}" style="color:black;"><h3>NHÀ SẢN XUẤT</h3></a> 
           </div>
           <div class="add-pro">
               <a href="{{route('nhasanxuat.create')}}"> <i class="fas fa-plus" style="margin-right:5px"></i>Thêm nhà sản xuất</a>

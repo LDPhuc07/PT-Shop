@@ -87,7 +87,7 @@ class MonTheThaoController extends Controller
         $dsMonTheThao = new MonTheThao();
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
         $dsMonTheThao->save();
-        return redirect()->route('monthethao.index')->with('success', 'Tao thanh cong');
+        return redirect()->route('monthethao.index')->with('success', 'Thêm môn thể thao thành công');
     }
 
     /**
@@ -141,7 +141,7 @@ class MonTheThaoController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         
-        if(empty($request->id))
+        if(!empty($request->id))
         {
             $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
             if(!empty($dsMonTheThao_check)){

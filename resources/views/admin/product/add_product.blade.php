@@ -32,10 +32,11 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
-                    <i class="fas fa-info"></i>
-                    <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
-                    <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
+                    <label class="product-info-item-label" for="">Giảm giá<span class="repuired"> *</span></label>
+                <i class="fas fa-info"></i>
+                <input class="textbox" type="text" placeholder="Nhập giảm giá" name="giamgia">
+                <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
+                    
                   </div>
                 </div>
               </div>
@@ -64,10 +65,16 @@
                 </div>
               </div>
               <div class="product-info-item">
-                <label class="product-info-item-label" for="">Giảm giá<span class="repuired"> *</span></label>
-                <i class="fas fa-info"></i>
-                <input class="textbox" type="text" placeholder="Nhập giảm giá" name="giamgia">
-                <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
+                <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
+                    <i class="fas fa-info"></i>
+                    <input class="textbox" type="text" placeholder="Nhập giá gốc" name="giagoc">
+                    <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
+              </div>
+              <div class="product-info-item">
+                <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
+                    <i class="fas fa-info"></i>
+                    <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
+                    <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
               </div>
               <div class="row">
                 @for($i = 1; $i <=4 ; $i++)

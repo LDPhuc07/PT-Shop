@@ -18,7 +18,7 @@
                   <a href="{{ route('accounts',Auth::user()->id) }}">Tài khoản của tôi</a>
                 </li>
                 <li class="nav-item__first-item">
-                  <a href="{{ route('accounts',Auth::user()->id) }}">Đổi mật khẩu</a>
+                  <a href="{{ route('accounts.getChangePassword',Auth::user()->id) }}">Đổi mật khẩu</a>
                 </li>
                 <li class="nav-item__first-item">
                   <a href="">Đơn mua</a>
@@ -81,38 +81,38 @@
             <a class="nav-link nav-link__third" href="#">Trang chủ</a>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="{{route('product.products')}}">Tất cả sản phẩm</a>
+            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Tất cả sản phẩm</a>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Giày<i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}">Giày<i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng đá</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '9'])}}" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '5'])}}" class="sub-menu-1--link">Cầu lông</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '2'])}}" class="sub-menu-1--link">Bóng rỗ</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '3'])}}" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
               </ul>
             </div>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Quần áo <i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'4','idmtt' => '0'])}}">Quần áo <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me">  <a href="" class="sub-menu-1--link">Bóng đá</a></i>
+                <li class="hover-me">  <a href="{{route('categlory',['idlsp' =>'4','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '9'])}}" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '5'])}}" class="sub-menu-1--link">Cầu lông</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '2'])}}" class="sub-menu-1--link">Bóng rỗ</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '3'])}}" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
               </ul>
             </div>
@@ -121,84 +121,28 @@
             <a class="nav-link nav-link__third" href="#">Phụ kiện<i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me">  <a href="" class="sub-menu-1--link">Bóng đá</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '9'])}}" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Cầu lông</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '5'])}}" class="sub-menu-1--link">Cầu lông</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng rỗ</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '2'])}}" class="sub-menu-1--link">Bóng rỗ</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Quần vợt</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '3'])}}" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bơi lội</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '7'])}}" class="sub-menu-1--link">Bơi lội</a></i>
                 </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Golf</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '6'])}}" class="sub-menu-1--link">Golf</a></i>
                 </li>
               </ul>
             </div>
           </li>
+          
           {{-- <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Thể thao <i class="fi-rs-caret-down"></i></a>
-            <div class="sub-menu-1">
-              <ul>
-                <li class="hover-me"> <a href="" class="sub-menu-1--link">Tất cả</a>
-                </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Bóng đá</a><i class="fi-rr-caret-right"></i>
-                    <div class="sub-menu-2">
-                      <ul>
-                        <li><a href="" class="sub-menu-1--link">Giày ống</a></li>
-                        <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                        <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                        <li><a href="" class="sub-menu-1--link">Giày predator</a></li>
-                        <li><a href="" class="sub-menu-1--link">Giày X</a></li>
-
-                      </ul>
-                    </div>
-                </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Chạy</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Giày</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                      <li><a href="" class="sub-menu-1--link">Ultraboots 21</a></li>
-                      <li><a href="" class="sub-menu-1--link">Adizero</a></li>
-                      <li><a href="" class="sub-menu-1--link">X9000</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Tập luyện</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Giày</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần áo</a></li>
-                      <li><a href="" class="sub-menu-1--link">Phụ kiện</a></li>
-                      <li><a href="" class="sub-menu-1--link">Climacool</a></li>
-                      <li><a href="" class="sub-menu-1--link">Dòng sản phẩm Essentials</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li class="hover-me"><a href="" class="sub-menu-1--link">Khác</a><i class="fi-rr-caret-right"></i>
-                  <div class="sub-menu-2">
-                    <ul>
-                      <li><a href="" class="sub-menu-1--link">Bơi lội</a></li>
-                      <li><a href="" class="sub-menu-1--link">Golf</a></li>
-                      <li><a href="" class="sub-menu-1--link">Quần vợt</a></li>
-                      <li><a href="" class="sub-menu-1--link">Cầu lông</a></li>
-                      <li><a href="" class="sub-menu-1--link">Bóng rỗ</a></li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </li> --}}
-          <li class="nav-item nav-item__third">
             <a class="nav-link nav-link__third" href="#">Các nhãn hiệu <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <!-- <li class="hover-me"> <a href="" class="sub-menu-1--link">Tất cả</a>
-                </li> -->
                 <li class="hover-me"><a href="" class="sub-menu-1--link">Adidas</a></i>
                 </li>
                 <li class="hover-me"><a href="" class="sub-menu-1--link">Nike</a></i>
@@ -211,10 +155,10 @@
                 </li>
               </ul>
             </div>
-          </li>
-          <li class="nav-item nav-item__third">
+          </li> --}}
+          {{-- <li class="nav-item nav-item__third">
             <a class="nav-link nav-link__third" href="#">Tin tức</a>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </div>

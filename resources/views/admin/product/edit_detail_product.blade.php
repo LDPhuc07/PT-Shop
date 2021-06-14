@@ -2,13 +2,13 @@
 @section('content')
     <div class="product-container">
       <div class="head-title head-add-pro">
-        <a href="{{ route('admin.products') }}">
+        <a href="{{route('chitietsanpham.index',['id' =>$id])}}">
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách chi tiết sản phẩm</span>
         </a>
         <h3>Chỉnh sửa chi tiết sản phẩm</h3>
       </div>
-      <form action="{{route('chitietsanpham.update',['id' =>$id,'idct' => $dsChiTietSanPham['id']])}}" method="POST">
+      <form action="{{route('chitietsanpham.update',['id' =>$id,'idct' => $dsChiTietSanPham['id']])}}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="row add-product-form">

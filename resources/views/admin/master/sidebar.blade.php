@@ -19,19 +19,19 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admin/products">
+            <a class="nav-link" href="{{ route('nhasanxuat.index') }}">
             <i class="nav-icon fas fa-home"></i>
             <p class="nav-text">Nhà sản xuất</p>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admin/products">
+            <a class="nav-link" href="{{ route('loaisanpham.index') }}">
             <i class="nav-icon fas fa-tshirt"></i>
             <p class="nav-text">Loại sản phẩm</p>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="admin/products">
+            <a class="nav-link" href="{{ route('monthethao.index')}}">
             <i class="nav-icon far fa-futbol"></i>
             <p class="nav-text">Môn thể thao</p>
             </a>
