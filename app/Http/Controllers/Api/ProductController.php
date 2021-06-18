@@ -336,36 +336,93 @@ class ProductController extends Controller
         return $data;
     }
     public function khoanggia(Request $request){
-        // [$pricefrom, $priceto]
-        // dd($request->priceFrom);
-        $data = SanPham::whereNull('deleted_at')
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+           
+                $data = SanPham::whereNull('deleted_at')
+                        ->where([
+                            ['loai_san_phams_id',$request->idlsp],
+                            ['mon_the_thaos_id',$request->idmtt],
+                            ]) 
                         ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
                         ->offset($request->page*4)
                         ->limit(4)
                         ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                         }))->get();
-                        // dd($data);
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                        $query->where('anhchinh',1);
+                        }))->get();
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
+                        ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
+                        ->offset($request->page*4)
+                        ->limit(4)
+                        ->with(array('anh' => function($query) {
+                        $query->where('anhchinh',1);
+                        }))->get();
+        }
         return $data;
 
     }
     public function thuonghieu(Request $request)
     {
-        // use ($search)
         $tradeMark = $request->tradeMark;
-        // dd($key);
-        $nhasanxuat = SanPham::whereIn('nha_san_xuats_id',array('1','2'))->get();
-        dd($nhasanxuat);
-        $data = SanPham::whereNull('deleted_at')
-                        ->whereHas('nhaSanXuat', function($query) use ($tradeMark){
-                            $query->where('ten_nha_san_xuat',$tradeMark);
+        $arrayThuongHieu = $request->arrayThuongHieu;
+
+        if(!empty($request->idlsp)){
+            if(!empty($request->idmtt)){
+           
+                $data = SanPham::whereNull('deleted_at')
+                            ->where([
+                                ['loai_san_phams_id',$request->idlsp],
+                                ['mon_the_thaos_id',$request->idmtt],
+                            ]) 
+                            ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+                                $query->whereIn('id',$arrayThuongHieu);
+                            })
+                            ->offset($request->page*4)
+                            ->limit(4)
+                            ->with(array('anh' => function($query) {
+                                $query->where('anhchinh',1);
+                            }))->get();
+            }
+            else
+            {
+                $data = SanPham::whereNull('deleted_at')
+                        ->where('loai_san_phams_id',$request->idlsp)
+                        ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+                            $query->whereIn('id',$arrayThuongHieu);
                         })
                         ->offset($request->page*4)
                         ->limit(4)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
-                        // dd($data);
+            }
+        }
+        else{
+            $data = SanPham::whereNull('deleted_at')
+                            ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+                                $query->whereIn('id',$arrayThuongHieu);
+                            })
+                            ->offset($request->page*4)
+                            ->limit(4)
+                            ->with(array('anh' => function($query) {
+                                $query->where('anhchinh',1);
+                            }))->get();
+        }
+        
         return $data;
     }
     public function kichthuoc(Request $request)

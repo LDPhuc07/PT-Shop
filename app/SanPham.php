@@ -40,4 +40,8 @@ class SanPham extends Model
     {
         return $this->hasMany('App\YeuThich', 'san_phams_id', 'id');
     }
+    public function binhLuan()
+    {
+        return $this->hasMany('App\BinhLuan', 'san_phams_id','id');
+    }
 }
