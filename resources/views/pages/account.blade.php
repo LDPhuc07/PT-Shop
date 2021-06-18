@@ -6,6 +6,19 @@
 <link rel="stylesheet" href="css/account.css">
 @endsection
 @section('content')
+<style>
+  .head-product-picture label {
+    font-size: 14px; 
+    cursor: pointer;
+    /* float: right; */
+    color: blue;
+    
+    margin: 0;
+  }
+  .head-product-picture label:hover {
+    border-bottom: 1px solid blue; 
+  }
+</style>
 <div class="cart" style="margin-top: 160px;">
     <div class="container" style="margin-top: 180px;">
         <div class="row">
@@ -107,20 +120,26 @@
                       </style>
                     @endif
                   </div>
-                  <div class="form-group">
-                    <label for="avatar" class="form-label">Cập nhật avatar</label>
-                    <input id="avatar" name="avatar" type="file" class="form-control">
+                  <label for="avatar" class="form-label">Cập nhật avatar</label>
+                  @if($account->anh_dai_dien == null)
+                  <div class="form-group head-product-picture">
+                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
+                    <label for="myFile">Chọn ảnh</label>
                     <span class="form-message"></span>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group ">
                     <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
-                  <div class="form-group">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
-                  <div class="form-group">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                </div>
+                  </div>
+                  @else
+                  <div class="form-group head-product-picture">
+                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
+                    <label for="myFile">Chọn ảnh</label>
+                    <span class="form-message"></span>
+                  </div>
+                  <div class="form-group ">
+                    <img src="{{asset(getLink('anh-dai-dien',$array->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                  </div>
+                  @endif
                   <button class="form-submit">Lưu</button>
                 </form>
                 @endforeach

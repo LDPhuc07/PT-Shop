@@ -70,39 +70,8 @@
         @csrf
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
-          <div id="header__second__like" class="header__second__like">
-            <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="font-size:20px; margin-right: 2px;">
-              @foreach($yeu_thich as $like)
-                @if($sanpham->id == $like->san_phams_id)
-                  {{ $like->yeu_thich }}
-                @endif
-              @endforeach
-            </span>
-            @if(Auth::check() and Auth::user()->admin != 1)
-                    <?php
-                      $is_liked = false;
-                    ?>
-                      @foreach($is_like as $like)
-                        @if($like->san_phams_id == $sanpham->id)
-                          <?php
-                          $is_liked = true;
-                          ?>
-                          @break
-                        @endif
-                      @endforeach
-                      @if($is_liked == true)
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="den icon-like like-{{ $sanpham->id }}" style="color: #ccc;
-                    font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                      @else
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="icon-like like-{{ $sanpham->id }}" style="color: #ccc;
-                    font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                      @endif
-                    @else
-                    <a class="icon-like" style="color: #ccc;
-                    font-size: 20px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                    @endif
-          </div>
-          <div class='rating-stars text-center'>
+      
+          <div class='rating-stars text-center' style="margin-left: 80px">
             <ul id='stars'>
               <li class='star' title='Tệ' data-value='1'>
                 <i class='fa fa-star fa-fw'></i>
@@ -131,7 +100,7 @@
             {{round($rate->danh_gia,1)}}
             @endif
           @endforeach
-        </span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+        
         </div>
         <div class="product__price">
           <h2>{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</h2>
@@ -324,12 +293,46 @@
               <input type="text" name="so_luong"  value="1" class="text-input" onkeypress='validate(event)' name="quantity" id="textsoluong"> 
               <input type="button" value="+" class="control" onclick="congSoLuong({{ $qty->so_luong }})">
             </div>
-            <button class="likenow">Thêm vào danh sách thích</button>
           </div>
         </div>
         <div class="product__shopnow">
           <button type="submit" class="shopnow">Mua ngay</button>
           <button type="submit" class="add-cart">Thêm vào giỏ</button>
+        </div>
+        <div style="display:flex;justify-content: space-between; margin-top:20px">
+          <h3 style="font-size: 20px;">Sản phẩm được đánh giá: <i style="color:#FF912C;" class='fa fa-star fa-fw'></i></h3>
+        <div id="header__second__like" class="header__second__like">
+          <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="font-size:20px; margin-right: 2px;">
+            @foreach($yeu_thich as $like)
+              @if($sanpham->id == $like->san_phams_id)
+                {{ $like->yeu_thich }}
+              @endif
+            @endforeach
+          </span>
+          @if(Auth::check() and Auth::user()->admin != 1)
+                  <?php
+                    $is_liked = false;
+                  ?>
+                    @foreach($is_like as $like)
+                      @if($like->san_phams_id == $sanpham->id)
+                        <?php
+                        $is_liked = true;
+                        ?>
+                        @break
+                      @endif
+                    @endforeach
+                    @if($is_liked == true)
+                      <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="den icon-like like-{{ $sanpham->id }}" style="color: #ccc;
+                  font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    @else
+                      <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="icon-like like-{{ $sanpham->id }}" style="color: #ccc;
+                  font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    @endif
+                  @else
+                  <a class="icon-like" style="color: #ccc;
+                  font-size: 20px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                  @endif
+        </div>
         </div>
         <div>
         </form>

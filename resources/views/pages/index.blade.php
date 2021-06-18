@@ -65,36 +65,38 @@
                   <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
-                      <span id="luot-like-{{ $sanphamphobien->id }}" class="luot-like-{{ $sanphamphobien->id }}" style="margin-right: 2px;">
-                      @foreach($yeu_thich as $like)
-                        @if($sanphamphobien->id == $like->san_phams_id)
-                          {{ $like->yeu_thich }}
-                        @endif
-                      @endforeach
-                    </span>
-                      @if(Auth::check() and Auth::user()->admin != 1)
-                    <?php
-                      $is_liked = false;
-                    ?>
-                      @foreach($is_like as $like)
-                        @if($like->san_phams_id == $sanphamphobien->id)
-                          <?php
-                          $is_liked = true;
-                          ?>
-                          @break
-                        @endif
-                      @endforeach
-                      @if($is_liked == true)
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="den icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                      @else
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                      @endif
-                    @else
-                      <a class="icon-like" style="color: #ccc;
-                    font-size: 30px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                    @endif 
+                      <div>
+                        <span id="luot-like-{{ $sanphamphobien->id }}" class="luot-like-{{ $sanphamphobien->id }}" style="margin-right: 12px;font-size: 25px">
+                          @foreach($yeu_thich as $like)
+                            @if($sanphamphobien->id == $like->san_phams_id)
+                              {{ $like->yeu_thich }}
+                            @endif
+                          @endforeach
+                        </span>
+                          @if(Auth::check() and Auth::user()->admin != 1)
+                        <?php
+                          $is_liked = false;
+                        ?>
+                          @foreach($is_like as $like)
+                            @if($like->san_phams_id == $sanphamphobien->id)
+                              <?php
+                              $is_liked = true;
+                              ?>
+                              @break
+                            @endif
+                          @endforeach
+                          @if($is_liked == true)
+                            <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="den icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
+                        font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                          @else
+                            <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
+                        font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                          @endif
+                        @else
+                          <a class="icon-like" style="color: #ccc;
+                        font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @endif 
+                      </div>
                     </div>
                   
                   <div class="sale-off" data-id="{{$sanphamphobien['giam_gia']}}">
@@ -123,9 +125,9 @@
                       <p class="card-text price-color product__price-new">{{number_format($sanphammoinhat['gia_ban']*(100-$sanphammoinhat['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
                       <p  data-id="{{$sanphammoinhat['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                     </div>
-                    <div style="display:flex;justify-content: space-between;
+                    <div style="display:flex;justify-content: flex-end;
                     align-items: center;">
-                    <span id="luot-like-{{ $sanphammoinhat->id }}" class="luot-like-{{ $sanphammoinhat->id }}" style="margin-right: 2px;">
+                    <span id="luot-like-{{ $sanphammoinhat->id }}" class="luot-like-{{ $sanphammoinhat->id }}" style="margin-right: 12px;font-size:25px">
                     @foreach($yeu_thich as $like)
                       @if($sanphammoinhat->id == $like->san_phams_id)
                         {{ $like->yeu_thich }}
@@ -146,14 +148,14 @@
                       @endforeach
                       @if($is_liked == true)
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="den icon-like like-{{ $sanphammoinhat->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @else
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="icon-like like-{{ $sanphammoinhat->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @endif
                     @else
                       <a class="icon-like" style="color: #ccc;
-                    font-size: 30px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif 
                     </div>
                     <div class="sale-off" data-id="{{$sanphammoinhat['giam_gia']}}">
@@ -185,9 +187,9 @@
                       <p class="card-text price-color product__price-new">{{number_format($sanphamhot['gia_ban']*(100-$sanphamhot['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
                       <p  data-id="{{$sanphamhot['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamhot['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                     </div>
-                    <div style="display:flex;justify-content: space-between;
+                    <div style="display:flex;justify-content: flex-end;
                     align-items: center;">
-                    <span id="luot-like-{{ $sanphamhot->id }}" class="luot-like-{{ $sanphamhot->id }}" style="margin-right: 2px;">
+                    <span id="luot-like-{{ $sanphamhot->id }}" class="luot-like-{{ $sanphamhot->id }}" style="margin-right: 12px;font-size:25px">
                       @foreach($yeu_thich as $like)
                         @if($sanphamhot->id == $like->san_phams_id)
                           {{ $like->yeu_thich }}
@@ -208,14 +210,14 @@
                       @endforeach
                       @if($is_liked == true)
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="den icon-like like-{{ $sanphamhot->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @else
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="icon-like like-{{ $sanphamhot->id }}" style="color: #ccc;
-                    font-size: 30px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @endif
                     @else
                     <a class="icon-like" style="color: #ccc;
-                    font-size: 30px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif 
                     </div>
                     <div class="sale-off" data-id="{{$sanphamhot['giam_gia']}}">
@@ -245,9 +247,9 @@
                       <p style="font-size: 9px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
                       <p  style="font-size: 9px" data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                     </div>
-                    <div style="display:flex;justify-content: space-between;
+                    <div style="display:flex;justify-content: flex-end;
                     align-items: center;">
-                    <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="margin-right: 2px;">
+                    <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="margin-right: 10px;font-size:18px">
                     @foreach($yeu_thich as $like)
                       @if($sanpham->id == $like->san_phams_id)
                         {{ $like->yeu_thich }}

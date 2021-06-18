@@ -5,6 +5,19 @@
 <link rel="stylesheet" href="css/login.css">
 @endsection
 @section('content')
+<style>
+  .head-product-picture label {
+    font-size: 14px; 
+    cursor: pointer;
+    /* float: right; */
+    color: blue;
+    
+    margin: 0;
+  }
+  .head-product-picture label:hover {
+    border-bottom: 1px solid blue; 
+  }
+</style>
 <div class="container" style="margin-top:165px">
     <div class="registration__form">
         <div class="row">
@@ -47,7 +60,7 @@
                   <div class="form-group">
                     <label for="password" class="form-label">Mật khẩu</label>
                     <input id="password" name="mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
-                    <span class="show-hide" style="top: 51%;"><i class="fas fa-eye"></i></span>
+                    <span class="show-hide" style="top: 33%;"><i class="fas fa-eye"></i></span>
                     <span class="form-message"></span>
                     @if($errors->has('mat_khau'))
                             <span style="font-size: 13px; color:red">
@@ -65,7 +78,7 @@
                   <div class="form-group">
                     <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
                     <input id="password_confirmation" name="nhap_lai_mat_khau" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
-                    <span class="show-hide-two" style="top: 66%;"><i class="fas fa-eye fa-eye-2"></i></span>
+                    <span class="show-hide-two" style="top: 44%;"><i class="fas fa-eye fa-eye-2"></i></span>
                     <span class="form-message"></span>
                     @if($errors->has('nhap_lai_mat_khau'))
                             <span style="font-size: 13px; color:red">
@@ -79,6 +92,16 @@
                             </style>
                     @endif
                   </div>
+                  <label for="avatar" class="form-label">Cập nhật avatar</label>
+                  <div class="form-group head-product-picture">
+                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
+                    <label for="myFile">Chọn ảnh</label>
+                    <span class="form-message"></span>
+                  </div>
+                  <div class="form-group ">
+                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                  </div>
+                
                   {{--  <div class="form-group">
                     <label for="gender" class="form-label">Giới tính</label>
                     <div>
@@ -115,6 +138,12 @@
 </div>
 @endsection
 @section('js')
+<script>
+  var loadfile = function(event){
+    var img = document.getElementById('imgsp');
+    img.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
 <script src="js/validator.js"></script>
     <script src="js/main.js"></script>
     <script>
