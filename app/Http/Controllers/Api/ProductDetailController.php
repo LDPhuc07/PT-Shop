@@ -63,6 +63,7 @@ class ProductDetailController extends Controller
                         ->limit(10)
                         ->with(['taiKhoan','sanPham'])
                         ->get()->toArray();
+                      
         return $data;
     }
 }
