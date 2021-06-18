@@ -58,7 +58,11 @@
           </button>
         </div>
         <div class="header__second__like">
-          <a href="" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
+          @if(Auth::check() and Auth::user()->admin != 1)
+            <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
+          @else
+          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
+          @endif
         </div>
         <div class="header__second__cart">
           <a href="{{ route('cart.index') }}" class="header__second__cart--icon">

@@ -37,6 +37,7 @@
                     <table class="table-ds-sanpham">
                       <thead>
                           <tr>
+                              <th>Ảnh đại diện</th>
                               <th>Họ và tên</th>
                               <th>Email</th>
                               <th>Số điện thoại</th>
@@ -48,6 +49,12 @@
                       <tbody>
                         @foreach($arrays as $account)
                         <tr>
+                            <td>
+                              @if($account->anh_dai_dien != null)
+                                <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="anh"></td>
+                              @else
+                                <img src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="anh"></td>
+                              @endif
                             <td>{{ $account->ho_ten }}</td>
                             <td>{{ $account->email }}</td>
                             <td>{{ $account->so_dien_thoai }}</td>
@@ -58,7 +65,7 @@
                                 Người dùng
                               @endif
                             </td>
-                            <td>
+                            <td id="lock-td-{{ $account->id }}">
                               @if($account->trang_thai == true )
                                 Đang hoạt động
                               @else
@@ -67,15 +74,20 @@
                             </td>
                             <td>
                               @if($account->trang_thai == true )
-                                <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="fas fa-lock"></i></a>
+                                <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="lock-{{ $account->id }} fas fa-lock"></i></a>
                               @else
-                                <a onclick="unlock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="fas fa-lock-open"></i></a>
+                                <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="lock-{{ $account->id }} fas fa-lock-open"></i></a>
                               @endif
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                   </table>
+                  <nav aria-label="Page navigation example" style="margin-top:20px">
+                    <ul class="pagination">
+                      {!! $arrays->appends(request()->query())->links() !!}
+                    </ul>
+                  </nav>
                   </div>
               </div>
             </div>
@@ -96,15 +108,51 @@
 @section('script')
   <script>
     function lock(id) {
-      $.ajax({
-        url: 'admin/accounts/lock/'+id,
-        type: 'GET',
-      }).done(function(response) {
-        $("#ds-taikhoan").empty();
-        $("#ds-taikhoan").html(response);
-      });
+      if($(`.lock-${id}`).hasClass('fas fa-lock')) {
+        $.ajax({
+          url: 'admin/accounts/lock/'+id,
+          type: 'GET',
+
+          success:function(data) {
+            if(data == 'done') {
+              $(`.lock-${id}`).removeClass('fa-lock');
+              $(`.lock-${id}`).addClass('fa-lock-open');
+              $(`#lock-td-${id}`).html("Đã khóa");
+            }
+          }
+        });
+      }
+      else {
+        $.ajax({
+          url: 'admin/accounts/unlock/'+id,
+          type: 'GET',
+
+          success:function(data) {
+            if(data == 'done') {
+              $(`.lock-${id}`).removeClass('fa-lock-open');
+              $(`.lock-${id}`).addClass('fa-lock');
+              $(`#lock-td-${id}`).html("Đang hoạt động");
+            }
+          }
+        });
+      }
     }
-    
+    function doimau(tk_id, sp_id) {
+      if($(`.like-${sp_id}`).hasClass('den')) {
+        $.ajax({
+          url: 'dislike/'+sp_id+"/"+tk_id,
+          method: "GET"
+        });
+        $(`.like-${sp_id}`).removeClass('den');
+      }
+      else {
+        $.ajax({
+          url: 'like/'+sp_id+"/"+tk_id,
+          method: "GET"
+        });
+        $(`.like-${sp_id}`).addClass('den');
+      }
+    }
     function unlock(id) {
       $.ajax({
         url: 'admin/accounts/unlock/'+id,

@@ -3,6 +3,41 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/productdetail.css">
+<style>
+  .den {
+    color: #000 !important;
+  }
+  .text-center {text-align:center;}
+
+  /* Rating Star Widgets Style */
+  .rating-stars ul {
+    list-style-type:none;
+    padding:0;
+    
+    -moz-user-select:none;
+    -webkit-user-select:none;
+  }
+  .rating-stars ul > li.star {
+    display:inline-block;
+    
+  }
+  
+  /* Idle State of the stars */
+  .rating-stars ul > li.star > i.fa {
+    font-size:2.5em; /* Change the size of the stars */
+    color:#ccc; /* Color on idle state */
+  }
+  
+  /* Hover state of the stars */
+  .rating-stars ul > li.star.hover > i.fa {
+    color:#FFCC36;
+  }
+  
+  /* Selected state of the stars */
+  .rating-stars ul > li.star.selected > i.fa {
+    color:#FF912C;
+  }
+</style>
 @endsection
 @section('content')
 <!-- product detail -->
@@ -35,28 +70,67 @@
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
           <div id="header__second__like" class="header__second__like">
-            @if(Auth::check() and Auth::user()->admin != 1)
-            <?php
-              $is_liked = false;
-            ?>
-              @foreach($is_like as $like)
-                @if($like->san_phams_id == $sanpham->id)
-                  <?php
-                  $is_liked = true;
-                  ?>
-                  @break
+            <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="font-size:20px; margin-right: 2px;">
+              @foreach($yeu_thich as $like)
+                @if($sanpham->id == $like->san_phams_id)
+                  {{ $like->yeu_thich }}
                 @endif
               @endforeach
-              @if($is_liked == true)
-                <a onclick="dislike({{ Auth::user()->id }},{{ $sanpham->id }})" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-              @else
-                <a onclick="like({{ Auth::user()->id }},{{ $sanpham->id }})" class="header__second__like--icon"><i class="far fa-heart"></i></a>
-              @endif
-            @else
-              <a href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="far fa-heart"></i></a>
-            @endif
+            </span>
+            @if(Auth::check() and Auth::user()->admin != 1)
+                    <?php
+                      $is_liked = false;
+                    ?>
+                      @foreach($is_like as $like)
+                        @if($like->san_phams_id == $sanpham->id)
+                          <?php
+                          $is_liked = true;
+                          ?>
+                          @break
+                        @endif
+                      @endforeach
+                      @if($is_liked == true)
+                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="den icon-like like-{{ $sanpham->id }}" style="color: #ccc;
+                    font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                      @else
+                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanpham->id }})" class="icon-like like-{{ $sanpham->id }}" style="color: #ccc;
+                    font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                      @endif
+                    @else
+                    <a class="icon-like" style="color: #ccc;
+                    font-size: 20px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    @endif
           </div>
-          <input type="hidden" name="id" value="{{ $sanpham->id }}">
+          <div class='rating-stars text-center'>
+            <ul id='stars'>
+              <li class='star' title='Tệ' data-value='1'>
+                <i class='fa fa-star fa-fw'></i>
+              </li>
+              <li class='star' title='Tạm được' data-value='2'>
+                <i class='fa fa-star fa-fw'></i>
+              </li>
+              <li class='star' title='Được' data-value='3'>
+                <i class='fa fa-star fa-fw'></i>
+              </li>
+              <li class='star' title='Tốt' data-value='4'>
+                <i class='fa fa-star fa-fw'></i>
+              </li>
+              <li class='star' title='Rất tốt' data-value='5'>
+                <i class='fa fa-star fa-fw'></i>
+              </li>
+            </ul>
+            <div class='text-message'></div>
+          </div>
+          <input type="hidden" id="id_san_pham" name="id" value="{{ $sanpham->id }}">
+        </div>
+        <div>
+          <span id="danh-gia-tb" style="margin-right: 2px;">
+          @foreach($danh_gia as $rate)
+            @if($sanpham->id == $rate->san_phams_id)
+            {{round($rate->danh_gia,1)}}
+            @endif
+          @endforeach
+        </span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
         </div>
         <div class="product__price">
           <h2>{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</h2>
@@ -250,7 +324,6 @@
               <input type="button" value="+" class="control" onclick="congSoLuong({{ $qty->so_luong }})">
             </div>
             <button class="likenow">Thêm vào danh sách thích</button>
-            
           </div>
         </div>
         <div class="product__shopnow">
@@ -296,26 +369,36 @@
                 <p  data-id="{{$sanphamlienquan['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamlienquan['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
               </div>
               <div style="display:flex;justify-content: space-between;align-items: center;">
+                <span id="luot-like-{{ $sanphamlienquan->id }}" class="luot-like-{{ $sanphamlienquan->id }}" style="margin-right: 2px;">
+                  @foreach($yeu_thich as $like)
+                    @if($sanphamlienquan->id == $like->san_phams_id)
+                      {{ $like->yeu_thich }}
+                    @endif
+                  @endforeach
+                </span>
                 @if(Auth::check() and Auth::user()->admin != 1)
-            <?php
-              $is_liked = false;
-            ?>
-              @foreach($is_like as $like)
-                @if($like->san_phams_id == $sanphamlienquan->id)
-                  <?php
-                  $is_liked = true;
-                  ?>
-                  @break
-                @endif
-              @endforeach
-              @if($is_liked == true)
-                <a onclick="dislike_splq({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like" style="color: #000;font-size: 20px;"><i class="fas fa-heart"></i></a>
-              @else
-                <a onclick="like_splq({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i></a>
-              @endif
-            @else
-              <a href="{{ route('accounts.logout') }}" class="icon-like" style="color: #000;font-size: 20px;"><i class="far fa-heart"></i></a>
-            @endif
+                    <?php
+                      $is_liked = false;
+                    ?>
+                      @foreach($is_like as $like)
+                        @if($like->san_phams_id == $sanphamlienquan->id)
+                          <?php
+                          $is_liked = true;
+                          ?>
+                          @break
+                        @endif
+                      @endforeach
+                      @if($is_liked == true)
+                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="den icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
+                    font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                      @else
+                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
+                    font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                      @endif
+                    @else
+                    <a class="icon-like" style="color: #ccc;
+                    font-size: 18px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    @endif
               </div>
               <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
                 <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
@@ -448,6 +531,34 @@
         $("#like_splq").html(response);
       });
     }
+    function doimau(tk_id, sp_id) {
+      console.log('ok');
+      if($(`.like-${sp_id}`).hasClass('den')) {
+        $.ajax({
+          url: 'dislike/'+sp_id+"/"+tk_id,
+          method: "GET"
+        });
+        $(`.like-${sp_id}`).removeClass('den');
+        var like = parseInt($(`#luot-like-${sp_id}`).text());
+        like--;
+        $(`.luot-like-${sp_id}`).html(like.toString());
+      }
+      else {
+        $.ajax({
+          url: 'like/'+sp_id+"/"+tk_id,
+          method: "GET"
+        });
+        $(`.like-${sp_id}`).addClass('den');
+        if(isNaN(parseInt($(`#luot-like-${sp_id}`).text()))) {
+          var like = 0;
+        }
+        else {
+          var like = parseInt($(`#luot-like-${sp_id}`).text());
+        }
+        like++;
+        $(`.luot-like-${sp_id}`).html(like.toString());
+      }
+    }
   </script>
     <script>
       $(document).ready(function() {
@@ -474,4 +585,86 @@
       });
   
   </script>
+  <script>
+    $(document).ready(function(){
+      @if(Auth::check() and Auth::user()->admin != 1 and !empty($check_rate))
+        checkRating({{ $check_rate->diem }});
+      @endif
+
+        /* 1. Visualizing things on Hover - See next part for action on click */
+        $('#stars li').on('mouseover', function(){
+          var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+         
+          // Now highlight all the stars that's not after the current hovered star
+          $(this).parent().children('li.star').each(function(e){
+            if (e < onStar) {
+              $(this).addClass('hover');
+            }
+            else {
+              $(this).removeClass('hover');
+            }
+          });
+          
+        }).on('mouseout', function(){
+          $(this).parent().children('li.star').each(function(e){
+            $(this).removeClass('hover');
+          });
+        });
+        var check = 0;
+        @foreach($check_bills as $check_bill)
+          check = 1;
+        @endforeach
+        /* 2. Action to perform on click */
+        
+            $('#stars li').on('click', function(){
+              @if(Auth::check() and Auth::user()->admin != 1)
+                if(check == 1) {
+                  var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+                  var stars = $(this).parent().children('li.star');
+                  
+                  for (i = 0; i < stars.length; i++) {
+                    $(stars[i]).removeClass('selected');
+                  }
+                  
+                  for (i = 0; i < onStar; i++) {
+                    $(stars[i]).addClass('selected');
+                  }
+                  
+                  // JUST RESPONSE (Not needed)
+                  var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+                  var msg = "";
+                    $.ajax({
+                      url:"rating/create/" + ratingValue + "/" + {{ Auth::user()->id }} + "/" + $('#id_san_pham').val(),
+                      method: "GET",
+                      dataType   :'JSON',
+
+                      success:function(result) {
+                        $(`#danh-gia-tb`).html(result.toString());
+                      }
+                    });
+                }
+                else {
+                  var msg = "Vui lòng mua hàng để đánh giá";
+                  responseMessage(msg);
+                }
+              @else
+                var msg = "Vui lòng đăng nhập để đánh giá";
+                responseMessage(msg);
+              @endif
+            });
+      });
+      
+      function checkRating(onStar) {
+        var stars = $('#stars li').parent().children('li.star');
+        console.log(onStar);
+
+        for (i = 0; i < onStar; i++) {
+          $(stars[i]).addClass('selected');
+        }
+      }
+      
+      function responseMessage(msg) {
+        $('div.text-message').html("<span>" + msg + "</span>");
+      }
+</script>
 @endsection

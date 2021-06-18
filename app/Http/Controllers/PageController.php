@@ -8,6 +8,8 @@ use App\ChiTietHoaDon;
 use App\ChiTietSanPham;
 use App\LoaiSanPham;
 use App\YeuThich;
+use App\HoaDon;
+use App\DanhGia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -25,7 +27,12 @@ class PageController extends Controller
         $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
             $query->where('anhchinh',1);
         }))->offset(0)->limit(4)->get();
-
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+                                ->groupBy('san_phams_id')
+                                ->get();
         $sanphams = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
             $query->where('anhchinh',1);
         }))->offset(0)->limit(6)->get();
@@ -45,10 +52,10 @@ class PageController extends Controller
                                     }))->get();
         if(Auth::check() and Auth::user()->admin != 1) {
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.index', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
+            return view('pages.index', compact('yeu_thich','danh_gia','slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
         }
         else {
-            return view('pages.index', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
+            return view('pages.index', compact('yeu_thich','danh_gia','slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
         }
     }
     public function chitietsanpham(Request $request){
@@ -58,7 +65,12 @@ class PageController extends Controller
         $anhchinh = SanPham::where('id',$request->id)->with(array('anh' => function($query) {
             $query->where('anhchinh',1);
         }))->first();
-       
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+                                ->groupBy('san_phams_id')
+                                ->get();
         $size = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->distinct()->get();
         // dd($size);
         $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
@@ -72,11 +84,20 @@ class PageController extends Controller
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
         if(Auth::check() and Auth::user()->admin != 1) {
+            $id_sp = $request->id;
+            $check_bills = HoaDon::where('tai_khoans_id', Auth::user()->id)
+                                        ->whereHas('chiTietHoaDon', function($query) use ($id_sp) {
+                                            $query->whereHas('chiTietSanPham', function($que) use ($id_sp) {
+                                                $que->where('san_phams_id', $id_sp);
+                                            });
+                                        })
+                                        ->get();
+            $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.product_detail',compact('qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like'));
+            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills'));
         }
         else {
-            return view('pages.product_detail',compact('qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color'));
+            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color'));
         }
     }
     public function getSize($id, $mau) {
@@ -96,41 +117,42 @@ class PageController extends Controller
         $new->san_phams_id = $sp_id;
         $new->tai_khoans_id = $tk_id;
         $new->save();
-        $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
-        $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
-            $query->where('anhchinh',1);
-        }))->offset(0)->limit(4)->get();
+        echo 'done';
+        // $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
+        // $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
+        //     $query->where('anhchinh',1);
+        // }))->offset(0)->limit(4)->get();
 
-        $sanphams = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
-            $query->where('anhchinh',1);
-        }))->offset(0)->limit(6)->get();
+        // $sanphams = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
+        //     $query->where('anhchinh',1);
+        // }))->offset(0)->limit(6)->get();
 
-        $sanphamhots = SanPham::whereNotNull('giam_gia')->orderby('id', 'desc') 
-                                ->with(array('anh' => function($query) {
-                                    $query->where('anhchinh',1);
-                                }))->offset(0)->limit(4)->get();
+        // $sanphamhots = SanPham::whereNotNull('giam_gia')->orderby('id', 'desc') 
+        //                         ->with(array('anh' => function($query) {
+        //                             $query->where('anhchinh',1);
+        //                         }))->offset(0)->limit(4)->get();
 
-        $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
-                                ->groupBy('chi_tiet_san_phams_id')
-                                ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
+        // $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
+        //                         ->groupBy('chi_tiet_san_phams_id')
+        //                         ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
 
-        $sanphamphobiens = SanPham::with(array('anh' => function($query) {
-                                        $query->where('anhchinh',1);
-                                    })) 
-                                    ->whereIn('id',$ctsp)
-                                    ->get();
-        if(Auth::check() and Auth::user()->admin != 1) {
-            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
-        }
-        // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
-        //                     $query->where('anhchinh',1);
-        //                 }))->offset(0)->limit(2)->get();
-        // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
-        // dd($sanphamphobiens);
-        else {
-            return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
-        }
+        // $sanphamphobiens = SanPham::with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             })) 
+        //                             ->whereIn('id',$ctsp)
+        //                             ->get();
+        // if(Auth::check() and Auth::user()->admin != 1) {
+        //     $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+        //     return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
+        // }
+        // // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
+        // //                     $query->where('anhchinh',1);
+        // //                 }))->offset(0)->limit(2)->get();
+        // // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
+        // // dd($sanphamphobiens);
+        // else {
+        //     return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
+        // }
 
     }
     public function likeProductDetail($sp_id, $tk_id) {
@@ -183,6 +205,7 @@ class PageController extends Controller
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
+
         if(Auth::check() and Auth::user()->admin != 1) {
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
             return view('pages.like_product_detail_splq', compact('is_like','sanphamlienquans','sanpham'));
@@ -193,40 +216,81 @@ class PageController extends Controller
     }
     public function dislike($sp_id, $tk_id) {
         $new = YeuThich::where('tai_khoans_id',$tk_id)->where('san_phams_id',$sp_id)->delete();
-        $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
-        $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
-            $query->where('anhchinh',1);
-        }))->offset(0)->limit(4)->get();
+        echo 'done';
+        // $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
+        // $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
+        //     $query->where('anhchinh',1);
+        // }))->offset(0)->limit(4)->get();
 
-        $sanphams = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
-            $query->where('anhchinh',1);
-        }))->offset(0)->limit(6)->get();
+        // $sanphams = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
+        //     $query->where('anhchinh',1);
+        // }))->offset(0)->limit(6)->get();
 
-        $sanphamhots = SanPham::whereNotNull('giam_gia')->orderby('id', 'desc') 
-                                ->with(array('anh' => function($query) {
-                                    $query->where('anhchinh',1);
-                                }))->offset(0)->limit(4)->get();
+        // $sanphamhots = SanPham::whereNotNull('giam_gia')->orderby('id', 'desc') 
+        //                         ->with(array('anh' => function($query) {
+        //                             $query->where('anhchinh',1);
+        //                         }))->offset(0)->limit(4)->get();
 
-        $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
-                                ->groupBy('chi_tiet_san_phams_id')
-                                ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
+        // $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
+        //                         ->groupBy('chi_tiet_san_phams_id')
+        //                         ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('san_phams_id');
 
-        $sanphamphobiens = SanPham::with(array('anh' => function($query) {
-                                        $query->where('anhchinh',1);
-                                    })) 
-                                    ->whereIn('id',$ctsp)
-                                    ->get();
-        if(Auth::check() and Auth::user()->admin != 1) {
-            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
+        // $sanphamphobiens = SanPham::with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             })) 
+        //                             ->whereIn('id',$ctsp)
+        //                             ->get();
+        // if(Auth::check() and Auth::user()->admin != 1) {
+        //     $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+        //     return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
+        // }
+        // // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
+        // //                     $query->where('anhchinh',1);
+        // //                 }))->offset(0)->limit(2)->get();
+        // // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
+        // // dd($sanphamphobiens);
+        // else {
+        //     return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
+        // }
+    }
+    public function indexRating() {
+        $check_bills = HoaDon::where('tai_khoans_id', Auth::user()->id)
+                                        ->whereHas('chiTietHoaDon', function($query) {
+                                            $query->whereHas('chiTietSanPham', function($que) {
+                                                $que->where('san_phams_id', 100);
+                                            });
+                                        })
+                                        ->get();
+        $check_rate = DanhGia::where('tai_khoans_id', 3)->where('san_phams_id', 1)->first();
+        return view('pages.rating', compact('check_rate','check_bills'));
+    }
+    public function rating($sao, $id, $sanpham) {
+        $check_rate = DanhGia::where('tai_khoans_id', $id)->where('san_phams_id', $sanpham)->first();
+        if($check_rate != null) {
+            $update_rate = DanhGia::where('tai_khoans_id', $id)->where('san_phams_id', $sanpham)->first();
+            $update_rate->diem = $sao;
+            $update_rate->save();
         }
-        // $sanphamphobiens = SanPham::inRandomOrder() ->with(array('anh' => function($query) {
-        //                     $query->where('anhchinh',1);
-        //                 }))->offset(0)->limit(2)->get();
-        // sản phẩm phổ biến đổ sản phẩm bán nhiều nhất  của web
-        // dd($sanphamphobiens);
         else {
-            return view('pages.like_ajax', compact('slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens'));
+            $new = new DanhGia();
+            $new->tai_khoans_id = $id;
+            $new->san_phams_id = $sanpham;
+            $new->diem = $sao;
+            $new->save();
         }
+        $rating = DanhGia::select(array(DB::raw('AVG(diem) as danh_gia')))
+        ->where('san_phams_id', $sanpham)
+        ->first();
+        echo "$rating->danh_gia";
+        
+    }
+    public function danhSachYeuThich() {
+        $like = ['likes'=>YeuThich::where('tai_khoans_id', Auth::user()->id)
+                                    ->with(array('sanPham' => function($query) {
+                                                            $query->with(array('anh' => function($querys) {
+                                                                                            $querys->where('anhchinh',1);
+                                                                        }));
+                                            }))->get()];
+        return view('pages.listlike', $like);
     }
 }

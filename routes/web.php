@@ -90,9 +90,6 @@ Route::group(['prefix' => 'admin'], function() {
     
 });
 
-Route::get('/insert', function() {
-    DB::table('tai_khoans')->insert(['ho_ten'=>'Lê Đức Phú', 'password' => bcrypt('3456789'), 'email' => 'ldp@gmail.com', 'so_dien_thoai' => '0366753798', 'admin' => false]);
-});
 Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
@@ -116,9 +113,7 @@ Route::get('/pay', function () {
 Route::get('/news', function () {
     return view('pages.news');
 });
-Route::get('/list-like', function () {
-    return view('pages.listlike');
-});
+Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
 Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
@@ -142,3 +137,5 @@ Route::get('/dislike-product-detail/{sp_id}/{tk_id}','PageController@dislikeProd
 Route::get('/like-product-detail-splq/{sp_id}/{tk_id}','PageController@likeProductDetailSPLQ');
 Route::get('/dislike-product-detail-splq/{sp_id}/{tk_id}','PageController@dislikeProductDetailSPLQ');
 
+Route::get('/rating','PageController@indexRating');
+Route::get('/rating/create/{sao}/{id}/{sanpham}','PageController@rating');

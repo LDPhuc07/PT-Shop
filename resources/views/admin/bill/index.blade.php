@@ -48,7 +48,7 @@
                       </thead>
                       <tbody>
                         @foreach($arrays as $bill)
-                        <tr>
+                        <tr id="bill-item-{{ $bill->id }}">
                             <td>{{ $bill->id }}</td>
                             <td>{{ $bill->taiKhoan->ho_ten}}</td>
                             <td>{{ $bill->ngay_lap_hd }}</td>
@@ -59,7 +59,7 @@
                               </td>
                             @else
                               <td> 
-                                <a onclick="checkbill({{ $bill->id }})" class="not-check-btn">Chưa Chốt</a>
+                                <a onclick="checkbill({{ $bill->id }})" class="check-{{ $bill->id }} not-check-btn">Chưa Chốt</a>
                               </td>
                             @endif
                             <td>
@@ -85,6 +85,11 @@
                         @endforeach
                     </tbody>
                   </table>
+                  <nav aria-label="Page navigation example" style="margin-top:20px">
+                    <ul class="pagination">
+                      {!! $arrays->appends(request()->query())->links() !!}
+                    </ul>
+                  </nav>
                   </div>
               </div>
             </div>
@@ -125,19 +130,29 @@
       $.ajax({
         url: 'admin/bill/delete/' + id,
         type: 'GET',
-      }).done(function(res) {
-        $("#ds-hoa-don-div").empty();
-        $("#ds-hoa-don-div").html(res);
+
+        success:function(data) {
+          if(data == 'done') {
+            $(`#bill-item-${id}`).empty();
+          }
+        }
       });
     }
     function checkbill(id) {
-      $.ajax({
-        url: 'admin/bill/check-bill/' + id,
-        type: 'GET',
-      }).done(function(res) {
-        $("#ds-hoa-don-div").empty();
-        $("#ds-hoa-don-div").html(res);
-      });
+      if($(`.check-${id}`).hasClass('not-check-btn')) {
+        $.ajax({
+          url: 'admin/bill/check-bill/' + id,
+          type: 'GET',
+          
+          success:function(data) {
+            if(data == 'done') {
+              $(`.check-${id}`).removeClass('not-check-btn');
+              $(`.check-${id}`).addClass('checked');
+              $(`.check-${id}`).html('Đã Chốt');
+            }
+          }
+        });
+      }
     }
   </script>
 @endsection

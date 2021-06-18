@@ -6,30 +6,37 @@
 @endsection
 @section('content')
     <!-- content -->
-    <div class="listlike" style="margin-top: 240px;">
-        <div class="btn-edit" style="margin-bottom: 20px;display:flex;justify-content:flex-end">
-        </div>
+    <div class="listlike" style="margin-top: 200px;">
         <div class="container">
             <div class="row">
-                <div class="col-3">
+              @foreach($likes as $like)
+                <div style="margin-top: 20px" id="pro-like-item-{{ $like->san_phams_id }}" class="col-3">
+                  <a href="{{route('product_detail',['id'=>$like->san_phams_id])}}" class="product__new-item">
                     <div class="card" style="width: 100%">
-                      <img class="card-img-top" src="./assets/img/product/addidas1.jpg" alt="Card image cap">
+                      @foreach($like->sanPham->anh as $anh)
+                        <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
+                      @endforeach
                       <div class="card-body">
                         <h5 class="card-title custom__name-product">
-                          Card title Cardd title
+                          {{ $like->sanPham->ten_san_pham }}
                         </h5>
+                        <div class="product__price" id="price">
+                          <p class="card-text price-color product__price-new">{{number_format($like->sanPham->gia_ban*(100-$like->sanPham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</p>
+                          <p  data-id="{{$like->sanPham->giam_gia}}"  class="card-text price-color product__price-old">{{number_format($like->sanPham->gia_ban,0,',','.').' '.'VNĐ'}}</p>
+                        </div>
                         <div style="display:flex;justify-content: space-between;align-items: center;">
-                        <p class="card-text price-color ">1,000,000 đ</p>
-                        <a href="" class="icon-like" style="color: #000;
-                        font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>
-                         </div>
-                        <div class="sale-off">
-                          <span class="sale-off-percent">20%</span>
+                          <a onclick="dislike({{ $like->san_phams_id }},{{ $like->tai_khoans_id }})" class="icon-like" style="color: #000;
+                          font-size: 20px;"><i class="fas fa-heart"></i></a>
+                        </div>
+                        <div class="sale-off" data-id="{{$like->sanPham->giam_gia}}">
+                          <span class="sale-off-percent">{{$like->sanPham->giam_gia}}%</span>
                           <span class="sale-off-label">GIẢM</span>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
+                </div>
+              @endforeach
             </div>
         </div>
     </div>
@@ -49,6 +56,21 @@
           }
           
         }
+  </script>
+  <script>
+    function dislike(sp_id, tk_id) {
+      $.ajax({
+        url: 'dislike/'+sp_id+"/"+tk_id,
+        method: "GET",
+
+        success:function(data) {
+          if(data == 'done') {
+            $(`#pro-like-item-${sp_id}`).hide();
+            
+          }
+        }
+      });
+    }
   </script>
 <script>
     function validate(evt) {
@@ -80,5 +102,29 @@
         }
       });
     });
+</script>
+<script>
+  $(document).ready(function() {
+    var divGiamGia = $('.card-body').children('.sale-off');
+    console.log(divGiamGia);
+    $.each(divGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
+      {
+        $(v).css('display','none');
+      }
+    });
+  });
+</script>
+<script>
+$(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    console.log(pGiamGia);
+    $.each(pGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
+      {
+        $(v).css('display','none');
+      }
+    });
+  });
 </script>
 @endsection

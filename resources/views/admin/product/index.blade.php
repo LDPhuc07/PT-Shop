@@ -63,8 +63,10 @@
                               <th>BM thể thao</th>
                               <th>Giá bán</th>
                               <th>Giá gốc</th>
-                              <th>Giảm giá</th>
+                              <th>Giảm giá(%)</th>
                               <th>Hình ảnh</th>
+                              <th>Yêu thích</th>
+                              <th>Đánh giá</th>
                               <th>Mô tả</th>
                               <th>Chức năng</th>
                           </tr>
@@ -83,6 +85,22 @@
                               @foreach($ds->anh as $anh)
                                 @if($anh->anhchinh == 1)
                                   <img src="{{asset($anh->link)}}" alt="anh">
+                                @endif
+                              @endforeach
+                            </td>
+                            <td>
+
+                              @foreach($dsYeuThich as $like)
+                                @if($ds->id == $like->san_phams_id)
+                                  <span style="margin-right: 2px;">{{ $like->yeu_thich }}</span>
+                                @endif
+                              @endforeach
+                              <i style="color:#000" class="fas fa-heart"></i>
+                            </td>
+                            <td>
+                              @foreach($dsDanhGia as $rate)
+                                @if($ds->id == $rate->san_phams_id)
+                                <span style="margin-right: 2px;">{{round($rate->danh_gia,1)}}</span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
                                 @endif
                               @endforeach
                             </td>

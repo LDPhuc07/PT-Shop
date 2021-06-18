@@ -18,8 +18,8 @@ class CreateHoaDonsTable extends Migration
             $table->unsignedInteger('tai_khoans_id');
             // $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
             $table->dateTime('ngay_lap_hd');
-            $table->unsignedBigInteger('tong_tien');
-            $table->unsignedBigInteger('loi_nhuan')->nullable();
+            $table->unsignedBigInteger('tong_tien')->nullable();
+            $table->BigInteger('loi_nhuan')->nullable();
             $table->boolean('trang_thai')->default(true);
             $table->boolean('chot_don')->default(false);
             $table->timestamps();

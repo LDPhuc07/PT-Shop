@@ -26,14 +26,19 @@
                       </div>
                       <div id="cart-body" class="cart-body">
                       <?php
-                      $tongtien = 0;
+                        $tongtien = 0;
                         $contents = Cart::content();
+                        $dem = 0;
                       ?>
+                      @foreach($contents as $content)
+                        <?php $dem++ ?>
+                      @endforeach
+                      <div id="cart-body-row" class="row cart-body-row">
+                      @if($dem != 0)
                       @foreach($contents as $content)
                       <?php
                         $tongtien +=($content->price * $content->qty);
                        ?>
-                          <div id="cart-body-row" class="row cart-body-row">
                               <div class="col-11">
                                   <div class="row">
                                       <div class="col-2 center">
@@ -67,16 +72,12 @@
                               <div class="col-1 center" onclick="xoasanpham(`{{ $content->rowId }}`)">
                                 <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                             </div>
-                          </div>
-                          
-                          @endforeach
-
-
+                        @endforeach
+                        @else
+                        <h3 style="text-align:center;font-size: 20px; padding:25px 0;margin-left: 233px;">Giỏ hàng của bạn đang trống</h3>
+                        @endif
                       </div>
-                      {{-- layout chưa có sản phẩm --}}
-                      {{-- <div class="cart-body">
-                        <h3 style="text-align:center;font-size: 20px; padding:25px 0">Giỏ hàng của bạn đang trống</h3>
-                      </div> --}}
+                      </div>
                       <div class="cart-footer">
                           <div class="row cart-footer-row">
                               <div class="col-1"></div>

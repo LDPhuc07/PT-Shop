@@ -5,10 +5,13 @@ use Illuminate\Http\Request;
 use Request as HttpRequest; 
 use App\SanPham;
 use App\Anh;
+use App\YeuThich;
+use App\DanhGia;
 use App\Slideshow;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use DB;
 // use Input;
 use Illuminate\Support\Facades\Input;
 class SanPhamController extends Controller
@@ -28,14 +31,28 @@ class SanPhamController extends Controller
                                 // ->orWhere('mon_the_thaos_id','LIKE','%'.$request->search.'%')
                                 ->with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])
                                 ->paginate(4);
+            $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+            $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem)')))
+                                ->groupBy('san_phams_id')
+                                ->get();
         }
         else
         {
-            $timkiem = SanPham::with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])->paginate(4);
+            $timkiem = SanPham::where('trang_thai',1)->paginate(4);
+            $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                    ->groupBy('san_phams_id')
+                                    ->get();
+            $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+                                    ->groupBy('san_phams_id')
+                                    ->get();
         }
-
+        
         $dsSanPham = [
-            'dsSanPham'=>$timkiem
+            'dsSanPham'=>$timkiem,
+            'dsYeuThich'=>$yeu_thich,
+            'dsDanhGia'=>$danh_gia
         ];
         // dd($dsSanPham['dsSanPham']);    
         return view('admin.product.index',$dsSanPham);

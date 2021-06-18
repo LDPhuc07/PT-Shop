@@ -52,7 +52,10 @@
     <div class="header-btn"><a class="p-15" href="">Trang chủ</a></div>
     @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
-            <button class="p-15" id="account-nav">{{ Auth::user()->ho_ten }}</button>
+            <button class="p-15" id="account-nav">
+                <img style="width: 30px" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh"></td>
+                {{ Auth::user()->ho_ten }}
+            </button>
             <ul id="account-popover" class="popover account-popover">
                 <li><a href="{{ route('admin.accounts.edit', Auth::user()->id) }}">Quản lý tài khoản</a></li>
                 <li><a href="{{ route('admin.changPassword', Auth::user()->id) }}">Đổi mật khẩu</a></li>

@@ -17,7 +17,7 @@ use PDF;
 class HoaDonController extends Controller
 {
     public function index() {
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
+        $array = ['arrays'=>HoaDon::where('trang_thai',1)->paginate(5)];
         return view('admin.bill.index',$array);
     }
     public function billDetail($id) {
@@ -141,15 +141,13 @@ class HoaDonController extends Controller
         $new = HoaDon::find($id);
         $new->trang_thai = false;
         $new->save();
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
-        return view('admin.bill.delete_bill_ajax',$array);
+        echo 'done';
     }
     public function checkBill($id) {
         $new = HoaDon::find($id);
         $new->chot_don = true;
         $new->save();
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->get()];
-        return view('admin.bill.delete_bill_ajax',$array);
+        echo 'done';
     }
     public function printBill($id) {
         $pdf = \App::make('dompdf.wrapper');
@@ -181,7 +179,7 @@ class HoaDonController extends Controller
             ->orderBy('ngay_lap_hd','ASC');
         }
         
-        $array = ['arrays'=> $query->get()];
+        $array = ['arrays'=> $query->paginate(5)];
 
         // if(!empty($key)){
         //     if(!empty($key_from_day)){

@@ -79,27 +79,30 @@ class TaiKhoanController extends Controller
         $newAccount->email = $requests->email;
         $newAccount->password = Hash::make($requests->mat_khau);
         $newAccount->so_dien_thoai = $requests->so_dien_thoai;
+        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+            $img = $requests->anh_dai_dien;
+            $newAccount->anh_dai_dien=$img->getClientOriginalName();
+            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+        }
         $newAccount->admin = true;
         $newAccount->save();
         return redirect()->route('admin.accounts.login');
     }
     public function index() {
-        $array = ['arrays'=>TaiKhoan::all()];
+        $array = ['arrays'=>TaiKhoan::paginate(5)];
         return view('admin.account.index', $array);
     }
     public function lock($id) {
         $new = TaiKhoan::find($id);
         $new->trang_thai = false;
         $new->save();
-        $array = ['arrays'=>TaiKhoan::all()];
-        return view('admin.account.lock_account_ajax', $array);
+        echo "done";
     }
     public function unlock($id) {
         $new = TaiKhoan::find($id);
         $new->trang_thai = true;
         $new->save();
-        $array = ['arrays'=>TaiKhoan::all()];
-        return view('admin.account.lock_account_ajax', $array);
+        echo "done";
     }
     public function getDoiMatKhauAdmin() {
         return view('admin.account.change_password');
@@ -160,6 +163,11 @@ class TaiKhoanController extends Controller
             $new->so_dien_thoai = $requests->so_dien_thoai;
         }
         $new->dia_chi = $requests->dia_chi;
+        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+            $img = $requests->anh_dai_dien;
+            $new->anh_dai_dien=$img->getClientOriginalName();
+            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+        }
         $new->save();
         return redirect()->route('admin.products');
     }
@@ -270,7 +278,7 @@ class TaiKhoanController extends Controller
                                     } 
                                      
         });
-        $array = ['arrays'=> $query->get()];
+        $array = ['arrays'=> $query->paginate(5)];
         // dd($array);
         return view('admin.account.index', $array);
     }
