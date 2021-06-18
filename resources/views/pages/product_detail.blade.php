@@ -70,7 +70,6 @@
         @csrf
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
-      
           <div class='rating-stars text-center' style="margin-left: 80px">
             <ul id='stars'>
               <li class='star' title='Tệ' data-value='1'>
@@ -93,15 +92,7 @@
           </div>
           <input type="hidden" id="id_san_pham" name="id" value="{{ $sanpham->id }}">
         </div>
-        <div>
-          <span id="danh-gia-tb" style="margin-right: 2px;">
-          @foreach($danh_gia as $rate)
-            @if($sanpham->id == $rate->san_phams_id)
-            {{round($rate->danh_gia,1)}}
-            @endif
-          @endforeach
         
-        </div>
         <div class="product__price">
           <h2>{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</h2>
         </div>
@@ -300,8 +291,16 @@
           <button type="submit" class="add-cart">Thêm vào giỏ</button>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
-          <h3 style="font-size: 20px;">Sản phẩm được đánh giá: <i style="color:#FF912C;" class='fa fa-star fa-fw'></i></h3>
-        <div id="header__second__like" class="header__second__like">
+          <h3 style="font-size: 20px;">Sản phẩm được đánh giá: 
+              <span id="danh-gia-tb" style="margin-right: 2px;">
+              @foreach($danh_gia as $rate)
+                @if($sanpham->id == $rate->san_phams_id)
+                {{round($rate->danh_gia,1)}}
+                @endif
+              @endforeach
+            <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+          </h3>
+          <div id="header__second__like" class="header__second__like">
           <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="font-size:20px; margin-right: 2px;">
             @foreach($yeu_thich as $like)
               @if($sanpham->id == $like->san_phams_id)
