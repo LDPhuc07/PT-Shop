@@ -164,6 +164,8 @@
   });
 </script>
 <script>
+  var idlsp = {{$idlsp}};
+  var idmtt = {{$idmtt}};
   var trang= 0;
   $('.checkGia').click(function(){
     var price = $(this).attr('value');
@@ -171,7 +173,14 @@
     var priceTo = price.split("-")[1];
     $.ajax({
       type:'get',
-      url: '/api/priceRange?page='+trang+'&priceFrom='+priceFrom+'&priceTo='+priceTo,
+      url: '/api/priceRange',
+      data: {
+        'page' : trang,
+        'idlsp' : idlsp,
+        'idmtt' : idmtt,
+        'priceFrom' : priceFrom,
+        'priceTo' : priceTo
+      },
       success: function(products){
         render(products);
       }
@@ -181,29 +190,34 @@
   function chon(id){
     var tradeMark = $(this).attr('value');
     var idTradeMark = document.getElementById('cc'+id);
-    if(idTradeMark.checked){
-      arrayThuongHieu.push(id);
-    }else{
-      
-    }
+        if(idTradeMark.checked)
+        {
+          arrayThuongHieu.push(id);
+        }
+        else
+        {
+          arrayThuongHieu = arrayThuongHieu.filter(function(item){
+            return item !== id
+          })
+          
+        }
     console.log(arrayThuongHieu);
+    $.ajax({
+      type:'get',
+      url: '/api/trademark',
+      data: {
+        'page' : trang,
+        'idlsp' : idlsp,
+        'idmtt' : idmtt,
+        'tradeMark': tradeMark,
+        'arrayThuongHieu': arrayThuongHieu
+      },
+      success: function(products){
+        render(products);
+      }
+    });
   }
-  // $('.checkThuongHieu').click(function(){
-    
-  //   var idTradeMark = $(this).attr('id');
-  //   $.ajax({
-  //     type:'get',
-  //     url: '/api/trademark?page='+trang+'&tradeMark='+tradeMark,
-  //     success: function(products){
-  //       render(products);
-  //     }
-  //   });
-  // });
-
-
-
-  var idlsp = {{$idlsp}};
-  var idmtt = {{$idmtt}};
+ 
   var role = 'all'; 
   var loardmore = 0;
   var productFetching =false;
@@ -329,6 +343,7 @@
     }
     
     function render(products){
+    
     let html ='';
     
     $.each(products,function(index, product){

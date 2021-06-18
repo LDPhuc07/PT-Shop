@@ -13,7 +13,7 @@ class TaiKhoanSeeder extends Seeder
     {
         //
         DB::table('tai_khoans')->insert([
-            ['id'=> 1, 'ho_ten'=>'Nguyễn Văn A','email'=>'abc@gmail.com', 'password'=>bcrypt('123456'), 'so_dien_thoai'=>'0123456789', 'dia_chi'=>'khánh hòa', 'admin'=>true, 'remember_token'=>null, 'trang_thai'=>true],
+            ['id'=> 1,'anh_dai_dien'=>'avatar1.png', 'ho_ten'=>'Nguyễn Văn A','email'=>'abc@gmail.com', 'password'=>bcrypt('123456'), 'so_dien_thoai'=>'0123456789', 'dia_chi'=>'khánh hòa', 'admin'=>true, 'remember_token'=>null, 'trang_thai'=>true],
             ['id'=> 2, 'ho_ten'=>'Nguyễn Văn B','email'=>'bbc@gmail.com', 'password'=>bcrypt('123456'), 'so_dien_thoai'=>'0123456788', 'dia_chi'=>'khánh hòa', 'admin'=>true, 'remember_token'=>null, 'trang_thai'=>true],
             ['id'=> 3, 'ho_ten'=>'Nguyễn Văn V','email'=>'cbc@gmail.com', 'password'=>bcrypt('123456'), 'so_dien_thoai'=>'0123456787', 'dia_chi'=>'khánh hòa', 'admin'=>false, 'remember_token'=>null, 'trang_thai'=>true],
             ['id'=> 4, 'ho_ten'=>'Nguyễn Văn D','email'=>'dbc@gmail.com', 'password'=>bcrypt('123456'), 'so_dien_thoai'=>'0123456786', 'dia_chi'=>'khánh hòa', 'admin'=>false, 'remember_token'=>null, 'trang_thai'=>true],

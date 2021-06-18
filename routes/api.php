@@ -27,3 +27,5 @@ Route::get('bestseller','Api\ProductController@banchay');
 Route::get('priceRange','Api\ProductController@khoanggia');
 Route::get('trademark','Api\ProductController@thuonghieu');
 Route::get('size','Api\ProductController@kichthuoc');
+Route::get('getbinhluan','Api\ProductDetailController@getbinhluan');
+Route::post('postbinhluan','Api\ProductDetailController@postbinhluan');

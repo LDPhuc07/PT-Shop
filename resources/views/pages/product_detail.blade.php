@@ -11,6 +11,7 @@
     <div class="row">
       <div class="col-6">
         <div class="img-product">
+          <input type="hidden" data-id="{{$sanpham->id}}" id="trungid">
           <ul class="all-img">
               @foreach($sanpham->anh as $anh)
                 <li class="img-item">
@@ -275,6 +276,27 @@
     </div>
   </div>
 </div>
+<div class="product__comment">
+  <div class="container">
+    <h2 class="product__describe-heading">Bình luận</h2>
+    <div class="row">
+      <div class="col-4">
+        <textarea name="binhluan" id="cmt" cols="70" rows="10"></textarea>
+        @if(Auth::check() and Auth::user()->admin != 1)
+        <a onclick="postBinhLuan()" class="btn btn-comment">Gửi</a>
+        @else
+        <a href="{{ route('accounts.logout')}}" class="btn btn-comment">Gửi</a>
+        @endif
+      </div>
+      <div class="col-8">
+        <div class="body__comment" id="comment">
+          
+        </div>
+        <p style="font-size:16px;cursor: pointer;" id="commentLoard">Xem thêm bình luận</p>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- end product detail -->
 <!-- product relate to -->
 <div class="product__relateto">
@@ -459,6 +481,8 @@
         });
       });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/vi.min.js" integrity="sha512-LvYVj/X6QpABcaqJBqgfOkSjuXv81bLz+rpz0BQoEbamtLkUF2xhPNwtI/xrokAuaNEQAMMA1/YhbeykYzNKWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     $(document).ready(function() {
         var pGiamGia = $('.product__price').children('.product__price-old');
@@ -471,5 +495,100 @@
         });
       });
   
+  </script>
+  <script>
+      var loadBtn = $('#commentLoard');
+      var lessonPage = 0;
+      var idsp = $('#trungid').attr('data-id');
+      $(function(){
+        getBinhLuan();
+      });
+      function getBinhLuan(page){
+        if(!page)
+        {
+          page = 0;
+        }
+        $.ajax({
+          type: "get",
+          url: '/api/getbinhluan',
+          data: {
+            'idsp': idsp,
+            'page': page
+          },
+          success: function(binhluans){
+            if(binhluans.length == 0){
+              loadBtn.fadeOut();
+            }
+            console.log(binhluans);
+            appendBinhLuan(binhluans);
+          }
+        });
+      }
+      function appendBinhLuan(binhluans){
+        let html ='';
+        $.each(binhluans,function(index, binhluan){
+            html+='<div class="comment">';
+              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<div class="comment__content">';
+                html+='<div class="comment__content-heding">';
+                  html+='<h4 class="comment__content-name">'+binhluan.tai_khoan.ho_ten+'</h4>';
+                  html+='<span class="comment__content-time">'+moment(binhluan.created_at).fromNow()+'</span>';
+                  html+='</div>'
+                  html+='<div class="comment__content-content">';
+                    html+='<span>'+binhluan.noi_dung+'</span>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+        });
+        $('#comment').append(html);
+      }
+      function prependBinhLuan(binhluans){
+ 
+        // $.each(binhluans,function(index, binhluan){
+           let html='<div class="comment">';
+              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<div class="comment__content">';
+                html+='<div class="comment__content-heding">';
+                  html+='<h4 class="comment__content-name">'+binhluans.tai_khoan.ho_ten+'</h4>';
+                  html+='<span class="comment__content-time">'+moment(binhluans.created_at).fromNow()+'</span>';
+                  html+='</div>'
+                  html+='<div class="comment__content-content">';
+                    html+='<span>'+binhluans.noi_dung+'</span>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+        // });
+        $('#comment').prepend(html);
+      }
+      
+      function postBinhLuan(page){
+        if(!page)
+        {
+          page = 0;
+        }
+        var cmt = $('#cmt').val();
+        var idkh = {{Auth::id()}};
+
+        $.ajax({
+          type: "post",
+          url: '/api/postbinhluan',
+          data: {
+            'idsp': idsp,
+            'idkh': idkh,
+            'cmt': cmt,
+            'page': page
+          },
+          success: function(binhluans){
+            // $('#comment').html('');
+            $('#cmt').val('');
+            // console.log(binhluans[0]);
+            prependBinhLuan(binhluans[0]);
+          }
+        });
+      }
+      $('#commentLoard').click(function(){
+        lessonPage++;
+        getBinhLuan(lessonPage);
+      });
   </script>
 @endsection
