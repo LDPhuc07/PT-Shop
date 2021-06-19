@@ -198,6 +198,11 @@ class TaiKhoanController extends Controller
             $new->so_dien_thoai = $requests->so_dien_thoai;
         }
         $new->dia_chi = $requests->dia_chi;
+        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+            $img = $requests->anh_dai_dien;
+            $new->anh_dai_dien=$img->getClientOriginalName();
+            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+        }
         $new->save();
         return redirect()->route('index');
     }

@@ -6,19 +6,6 @@
 <link rel="stylesheet" href="css/account.css">
 @endsection
 @section('content')
-<style>
-  .head-product-picture label {
-    font-size: 14px; 
-    cursor: pointer;
-    /* float: right; */
-    color: blue;
-    
-    margin: 0;
-  }
-  .head-product-picture label:hover {
-    border-bottom: 1px solid blue; 
-  }
-</style>
 <div class="cart" style="margin-top: 160px;">
     <div class="container" style="margin-top: 180px;">
         <div class="row">
@@ -53,7 +40,7 @@
               <div class="heading-edit-account">
                 <h2>Hồ sơ của tôi</h2>
                 @foreach($arrays as $account)
-                <form action="{{ route('accounts.update',$account->id) }}" method="POST">
+                <form action="{{ route('accounts.update',$account->id) }}" method="POST" enctype="multipart/form-data">
                   @method('PUT')
                   @csrf
                   <div class="form-group">
@@ -120,26 +107,18 @@
                       </style>
                     @endif
                   </div>
-                  <label for="avatar" class="form-label">Cập nhật avatar</label>
-                  @if($account->anh_dai_dien == null)
-                  <div class="form-group head-product-picture">
-                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
-                    <label for="myFile">Chọn ảnh</label>
+                  <div class="form-group">
+                    <label for="avatar" class="form-label">Cập nhật avatar</label>
+                    <input id="avatar" name="anh_dai_dien" type="file" onchange="loadfile(event)" class="form-control">
                     <span class="form-message"></span>
                   </div>
-                  <div class="form-group ">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                  <div class="form-group">
+                    @if($account->anh_dai_dien == null)
+                      <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                    @else
+                      <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                    @endif
                   </div>
-                  @else
-                  <div class="form-group head-product-picture">
-                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
-                    <label for="myFile">Chọn ảnh</label>
-                    <span class="form-message"></span>
-                  </div>
-                  <div class="form-group ">
-                    <img src="{{asset(getLink('anh-dai-dien',$array->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-                  </div>
-                  @endif
                   <button class="form-submit">Lưu</button>
                 </form>
                 @endforeach
