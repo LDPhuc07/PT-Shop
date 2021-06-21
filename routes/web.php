@@ -127,7 +127,10 @@ Route::post('/cart/save', 'GioHangController@save')->name('cart.save');
 Route::get('/cart/delete-item-ajax/{id}', 'GioHangController@deleteItemAjax')->name('cart.deleteItemAjax');
 Route::get('/cart/update-item/{id}/{qty}', 'GioHangController@updateItem')->name('cart.updateItem');
 Route::get('/checkout', 'ThanhToanController@index')->name('checkout.index');
+Route::post('/checkout/buy-now','ThanhToanController@postThanhToanNgayIndex');
+Route::get('/checkout/buy-now','ThanhToanController@thanhToanNgayIndex')->name('checkout.buyNow');
 Route::post('/checkout/create','HoaDoncontroller@create')->name('bill.create');
+Route::post('/checkout/create-buy-now','HoaDoncontroller@createBuyNow')->name('bill.createBuyNow');
 
 //yeu thich
 Route::get('/like/{sp_id}/{tk_id}','PageController@like');

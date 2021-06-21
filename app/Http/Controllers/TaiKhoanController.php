@@ -69,6 +69,11 @@ class TaiKhoanController extends Controller
         $newAccount->ho_ten = $requests->ho_ten;
         $newAccount->email = $requests->email;
         $newAccount->password = Hash::make($requests->mat_khau);
+        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+            $img = $requests->anh_dai_dien;
+            $newAccount->anh_dai_dien=$img->getClientOriginalName();
+            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+        }
         $newAccount->admin = false;
         $newAccount->save();
         return redirect()->route('accounts.login');

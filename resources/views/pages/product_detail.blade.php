@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="col-6">
-        <form action="{{ route('cart.save') }}" method="POST">
+        <form action="" id="contactForm" method="POST">
         @csrf
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
@@ -287,8 +287,8 @@
           </div>
         </div>
         <div class="product__shopnow">
-          <button type="submit" class="shopnow">Mua ngay</button>
-          <button type="submit" class="add-cart">Thêm vào giỏ</button>
+          <button type="button" id="buynow" class="shopnow">Mua ngay</button>
+          <button type="button" id="addcart" class="add-cart">Thêm vào giỏ</button>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
           <h3 style="font-size: 20px;">Sản phẩm được đánh giá: 
@@ -634,14 +634,14 @@
             $(this).removeClass('hover');
           });
         });
-        var check = 0;
-        @foreach($check_bills as $check_bill)
-          check = 1;
-        @endforeach
         /* 2. Action to perform on click */
         
             $('#stars li').on('click', function(){
               @if(Auth::check() and Auth::user()->admin != 1)
+                var check = 0;
+                @foreach($check_bills as $check_bill)
+                  check = 1;
+                @endforeach
                 if(check == 1) {
                   var onStar = parseInt($(this).data('value'), 10); // The star currently selected
                   var stars = $(this).parent().children('li.star');
@@ -787,5 +787,19 @@
         lessonPage++;
         getBinhLuan(lessonPage);
       });
+</script>
+<script>
+  $('#addcart, #buynow').click(function () {
+    if (this.id == 'addcart') {
+      $('#contactForm').attr('action', '{{ route("cart.save") }}');
+      $(this).attr('type', 'submit');
+      $('#contactForm').submit();
+    }
+    else if (this.id == 'buynow') {
+      $('#contactForm').attr('action', '{{ route("checkout.buyNow") }}');
+      $(this).attr('type', 'submit');
+      $('#contactForm').submit();
+    }
+ });
 </script>
 @endsection

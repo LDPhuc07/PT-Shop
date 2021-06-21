@@ -80,7 +80,7 @@
             <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</p></li>
             <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các sự kiện sắp tới</p></li>
           </ul>
-          <a href="./registration.html"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
+          <a href="sign-up"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
         </div>
       </div>
     </div>

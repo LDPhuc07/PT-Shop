@@ -22,7 +22,7 @@
     <div class="registration__form">
         <div class="row">
             <div class="col-6">
-              <form action="" method="POST" class="form">
+              <form action="" method="POST" class="form" enctype="multipart/form-data">
                   @csrf
                   <h3 class="heading">ĐĂNG KÍ</h3>
                   <div class="form-group">
@@ -94,7 +94,7 @@
                   </div>
                   <label for="avatar" class="form-label">Cập nhật avatar</label>
                   <div class="form-group head-product-picture">
-                    <input name="avatar" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
+                    <input name="anh_dai_dien" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
                     <label for="myFile">Chọn ảnh</label>
                     <span class="form-message"></span>
                   </div>

@@ -8,16 +8,9 @@
 <div class="content" style="margin-top: 160px;">
     <div class="wrap">
         <div class="container">
-            <?php
-            $tongtien = 0;
-            ?>
-            <form action="{{ route('bill.create') }}" method="POST">
+            <form action="{{ route('bill.createBuyNow') }}" method="POST">
                 @csrf
             <div class="row">
-                    <?php
-                        $contents = Cart::content();
-                    ?>
-               
                     <div class="col-6">
                         <div class="main">
                             <div class="main-header">
@@ -147,28 +140,29 @@
                         </div>
                         <div class="sliderbar-content">
                             <div class="row row-sliderbar">
-                                @foreach($contents as $content)
-                        <?php
-                        $tongtien +=($content->price * $content->qty);
-                       ?>
+                                @if(Session::has('ten_san_pham'))
                                 <div class="col-4">
-                                    <img src="{{asset(getLink('product',$content->options->image))}}" alt="" width="80%">
-                                    <span class="notice">{{ $content->qty }}</span>
+                                    <img src="{{asset(getLink('product',$data['anh']))}}" alt="" width="80%">
+                                    <span class="notice">{{ $data['so_luong'] }}</span>
                                 </div>
                                 <div class="col-5">
-                                    <h5>{{ $content->name }}</h5>
+                                    <h5>{{ $data['ten_san_pham'] }}</h5>
                                 </div>
                                 <div class="col-3">
-                                    <h4 style="font-size:12px">{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</h4>
+                                    <h4 style="font-size:12px">{{number_format($data['gia'] * $data['so_luong'],0,',','.').' '.'VNĐ'}}</h4>
                                 </div>
-                                @endforeach
+                                @endif
                             </div>
                         </div>
                         <div class="slider-footer">
                             <div class="subtotal">
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Tạm tính:</span></div>
-                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
+                                    <div class="col-6 text-right">
+                                        @if(Session::has('ten_san_pham'))
+                                        <span>{{number_format($data['gia'] * $data['so_luong'],0,',','.').' '.'VNĐ'}}</span>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Phí vận chuyển</span></div>
@@ -178,7 +172,11 @@
                             <div class="total">
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Tổng cộng:</span></div>
-                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
+                                    <div class="col-6 text-right">
+                                        @if(Session::has('ten_san_pham'))
+                                        <span>{{number_format($data['gia'] * $data['so_luong'],0,',','.').' '.'VNĐ'}}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>

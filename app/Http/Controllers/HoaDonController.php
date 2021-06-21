@@ -13,6 +13,7 @@ use App\ChiTietHoaDon;
 use App\ChiTietSanPham;
 use Carbon\Carbon;
 use PDF;
+use Session;
 
 class HoaDonController extends Controller
 {
@@ -135,6 +136,115 @@ class HoaDonController extends Controller
             $add_loi_nhuan->save();
         }
         Cart::destroy();
+        echo 'Thanh toán thành công';
+    }
+    public function createBuyNow(Request $request){
+        if(Auth::check()) {
+            if(Auth::user()->dia_chi == null) {
+                $request->validate([
+                    'dia_chi' => 'required'
+                ],[
+                    'dia_chi.required' => 'Vui lòng nhập địa chỉ'
+                ]);
+                $new_update = TaiKhoan::find(Auth::user()->id);
+                $new_update->dia_chi = $request->dia_chi;
+                $new_update->save();
+            }
+            if(Auth::user()->so_dien_thoai == null) {
+                $request->validate([
+                    'so_dien_thoai' => 'required'
+                ],[
+                    'so_dien_thoai.required' => 'Vui lòng nhập địa chỉ'
+                ]);
+                $new_update = TaiKhoan::find(Auth::user()->id);
+                $new_update->so_dien_thoai = $request->so_dien_thoai;
+                $new_update->save();
+            }
+            $bill = array();
+            $bill['tai_khoans_id'] = Auth::user()->id;
+            $bill['ngay_lap_hd'] = Carbon::now();
+            $bill['trang_thai'] = true;
+            $bill_id = HoaDon::insertGetId($bill);
+
+            $data = Session::all();
+            $loi_nhuan = 0;
+            $tongtien = 0;
+            $bill_detail = new ChiTietHoaDon();
+            $bill_detail->hoa_dons_id = $bill_id;
+            $bill_detail->chi_tiet_san_phams_id = $data['id'];
+            $bill_detail->so_luong = $data['so_luong']; 
+            $update_ctsp = ChiTietSanPham::find($data['id']);
+            $update_ctsp->so_luong -= $data['so_luong'];
+            $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
+            $bill_detail->gia_ban = $data['gia'];
+            $tongtien += ($data['gia']*$data['so_luong']);
+            $loi_nhuan += (($data['gia'] - $update_ctsp->sanPham->gia_goc)*$data['so_luong']);
+            $update_ctsp->save();
+            $bill_detail->save();
+            $add_loi_nhuan = HoaDon::find($bill_id);
+            $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+            $add_loi_nhuan->tong_tien = $tongtien;
+            $add_loi_nhuan->save();
+        }
+        else {
+            $request->validate([
+                'ho_ten' => 'required',
+                'dia_chi' => 'required',
+                'so_dien_thoai' => 'required|numeric'
+            ],[
+                'ho_ten.required' => 'Vui lòng nhập họ và tên',
+                'dia_chi.required' => 'Vui lòng nhập địa chỉ',
+                'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
+            ]);
+            $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
+            if(empty($check_account)) {
+                $account = array();
+                $account['ho_ten'] = $request->ho_ten;
+                $account['dia_chi'] = $request->dia_chi;
+                $account['so_dien_thoai'] = $request->so_dien_thoai;
+                $account['admin'] = false;
+                $account_id = TaiKhoan::insertGetId($account);
+
+                $total = Cart::subtotal();
+                $bill = array();
+                $bill['tai_khoans_id'] = $account_id;
+                $bill['ngay_lap_hd'] = Carbon::now();
+                $bill['tong_tien'] = $total;
+                $bill['trang_thai'] = true;
+                $bill_id = HoaDon::insertGetId($bill);
+            }
+
+
+            else { 
+                $bill = array();
+                $bill['tai_khoans_id'] = $check_account->id;
+                $bill['ngay_lap_hd'] = Carbon::now();
+                $bill['trang_thai'] = true;
+                $bill_id = HoaDon::insertGetId($bill);
+            }   
+
+            $data = Session::all();
+            $loi_nhuan = 0;
+            $tongtien = 0;
+            $bill_detail = new ChiTietHoaDon();
+            $bill_detail->hoa_dons_id = $bill_id;
+            $bill_detail->chi_tiet_san_phams_id = $data['id'];
+            $bill_detail->so_luong = $data['so_luong']; 
+            $update_ctsp = ChiTietSanPham::find($data['id']);
+            $update_ctsp->so_luong -= $data['so_luong'];
+            $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
+            $bill_detail->gia_ban = $data['gia'];
+            $tongtien += ($data['gia']*$data['so_luong']);
+            $loi_nhuan += (($data['gia'] - $update_ctsp->sanPham->gia_goc)*$data['so_luong']);
+            $update_ctsp->save();
+            $bill_detail->save();
+            $add_loi_nhuan = HoaDon::find($bill_id);
+            $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+            $add_loi_nhuan->tong_tien = $tongtien;
+            $add_loi_nhuan->save();
+        }
+        session()->flush();
         echo 'Thanh toán thành công';
     }
     public function delete($id) {
