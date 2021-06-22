@@ -26,3 +26,10 @@ function changeImg(id){
     let imgPath = document.getElementById(id).getAttribute('src');
     document.getElementById('img-main').setAttribute('src', imgPath);
 }
+
+
+// history search
+// thêm lịch sử vào danh sách
+$('#addHistorySearch').click(function(){
+    console.log('1');
+});

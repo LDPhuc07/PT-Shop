@@ -113,6 +113,7 @@ Route::get('/pay', function () {
 Route::get('/news', function () {
     return view('pages.news');
 });
+Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
 Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
