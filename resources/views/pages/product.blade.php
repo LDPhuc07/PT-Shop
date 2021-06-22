@@ -3,6 +3,11 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/product.css">
+<style>
+  .den {
+    color: #000 !important;
+  }
+</style>
 @endsection
 @section('content')
 <div class="product" style="margin-top: 195px;">
@@ -277,8 +282,33 @@
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
-              html+='<a href="" class="icon-like" style="color: #000;';
-              html+='font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
+              html+='<div>'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 25px">'
+                  @foreach($yeu_thich as $like)
+                    if(product.id == {{ $like->san_phams_id }}) {
+                      html+='{{ $like->yeu_thich }}'
+                    }
+                  @endforeach
+                html+='</span>'
+              @if(Auth::check() and Auth::user()->admin != 1)
+                var is_liked = 0;
+                @foreach($is_like as $like)
+                  if({{ $like->san_phams_id }} == product.id) {
+                    is_liked = 1;
+                  }
+                @endforeach
+                if(is_liked == 1) {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                } else {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                }
+              @else
+                html+='<a class="icon-like" style="color: #ccc;'
+                html+='font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+              @endif
+              html+='</div>'
               html+='  </div>';
               html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
                 html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
@@ -288,6 +318,7 @@
               html+='</div>';
               html+='</a>';
               html+='</div>';
+              
               
     });
     $('#tatcasanpham').append(html);
@@ -411,5 +442,36 @@ $(document).ready(function() {
     });
   });
 </script>
+<script>
+  function doimau(tk_id, sp_id) {
+    if($(`.like-${sp_id}`).hasClass('den')) {
+      $.ajax({
+        url: 'dislike/'+sp_id+"/"+tk_id,
+        method: "GET"
+      });
+      $(`.like-${sp_id}`).removeClass('den');
+      var like = parseInt($(`#luot-like-${sp_id}`).text());
+      like--;
+      $(`.luot-like-${sp_id}`).html(like.toString());
 
+      console.log(like);
+    }
+    else {
+      $.ajax({
+        url: 'like/'+sp_id+"/"+tk_id,
+        method: "GET"
+      });
+      $(`.like-${sp_id}`).addClass('den');
+      if(isNaN(parseInt($(`#luot-like-${sp_id}`).text()))) {
+        var like = 0;
+      }
+      else {
+        var like = parseInt($(`#luot-like-${sp_id}`).text());
+      }
+      like++;
+      $(`.luot-like-${sp_id}`).html(like.toString());
+      console.log(like);
+    }
+  }
+</script>
 @endsection
