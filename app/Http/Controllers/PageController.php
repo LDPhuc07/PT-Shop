@@ -293,4 +293,27 @@ class PageController extends Controller
                                             }))->get()];
         return view('pages.listlike', $like);
     }
+    public function timkiem(Request $request)
+    {
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        $dsSanPhamSearch = SanPham::where('ten_san_pham','LIKE','%'.$request->search.'%')
+                            ->with(array('anh' => function($query) {
+                                $query->where('anhchinh',1);
+                            }))
+                            ->paginate(4);
+        // $dsSanPhamSearch = ['dsSanPhamSearch'=>$timkiem];
+        // return view('pages.search_view',$dsSanPhamSearch);
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+            return view('pages.search_view', compact('yeu_thich','danh_gia','is_like','dsSanPhamSearch'));
+        }
+        else {
+            return view('pages.search_view', compact('yeu_thich','danh_gia','dsSanPhamSearch'));
+        }
+    }
 }

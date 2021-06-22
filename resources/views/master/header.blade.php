@@ -37,26 +37,31 @@
         <div class="header__second__logo">
           <a href="#"><img src="img/logo/logomain.png" alt="" class="header__second__logo--img"></a>
         </div>
-        <div class="header__second__search">
-          <div class="header__second__search--input-wrap">
-            <input type="text" placeholder="Tìm kiếm..." class="header__second__search--input">
-            <!-- search history -->
-            <div class="header__second__search-history">
-              <h3 class="header__second__search-history-heading">Lịch sử tìm kiếm</h3>
-              <ul class="header__second__search-history-list">
-                <li class="header__second__search-history-item">
-                  <a href="">Adidas Original</a>
-                </li>
-                <li class="header__second__search-history-item">
-                  <a href="">Adidas Original</a>
-                </li>
-              </ul>
+        <form action="{{route('search')}}" class="header__second__search" method="get">
+          <div class="header__second__search" style="margin-left:0px">
+            <div class="header__second__search--input-wrap">
+              <input id="searchInput" type="text" placeholder="Tìm kiếm..." class="header__second__search--input" name="search" value="{{Request::get('search')}}" autocomplete="off">
+              <!-- search history -->
+              <div class="header__second__search-history">
+                <h3 class="header__second__search-history-heading">Lịch sử tìm kiếm</h3>
+                <ul class="header__second__search-history-list" id="listHistorySearch">
+                  <li class="header__second__search-history-item" style="cursor: pointer">
+                    <div style="display:flex;justify-content: space-between;align-items: center;vertical-align: middle;">
+                      <a href="">Adidas Original</a>
+                      <i class="fas fa-trash-alt" style="font-size: 16px;"></i>
+                    </div>
+                  </li>
+                  <li class="header__second__search-history-item">
+                    <a href="">Adidas Original</a>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <button class="header__second__search--btn" id="addHistorySearch" >
+              <i class="fi-rs-search header__second__search--btn-icon"></i>
+            </button>
           </div>
-          <button class="header__second__search--btn">
-            <i class="fi-rs-search header__second__search--btn-icon"></i>
-          </button>
-        </div>
+        </form>
         <div class="header__second__like">
           @if(Auth::check() and Auth::user()->admin != 1)
             <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>

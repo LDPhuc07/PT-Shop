@@ -137,6 +137,7 @@
                             <div class="pay">
                                 <button class="btn-pay">Thanh toán</button>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -180,6 +181,13 @@
                                     <div class="col-6"><span>Tổng cộng:</span></div>
                                     <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
+                            </div>
+                            @php
+                            $vnd_to_usd = ($content->price * $content->qty)/23083;
+                            @endphp
+                            <div>
+                                <div id="paypal-button"></div>
+                                <input type="hidden" id="vnd_to_usd" value="{{round($vnd_to_usd,2)}}">
                             </div>
                         </div>
                     </div>
