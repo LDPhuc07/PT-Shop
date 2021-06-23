@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\TaiKhoan;
+use App\MangXaHoi;
+use Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DangNhapRequest;
 use App\Http\Requests\DangKyRequest;
 use App\Http\Requests\DoiMatKhauRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Session;
 
 class TaiKhoanController extends Controller
 {
@@ -22,6 +25,22 @@ class TaiKhoanController extends Controller
         $email = $requests->email;
         $password = $requests->mat_khau;
         $remember = $requests->remember;
+        if(!empty($remember)) {
+            Session::put('email',$requests->email);
+            Session::put('mat_khau',$requests->mat_khau);
+            Session::put('remember',$remember);
+        }
+        else {
+            if(Session::has('email')) {
+                Session::forget('email');
+            }
+            if(Session::has('mat_khau')) {
+                Session::forget('mat_khau');
+            }
+            if(Session::has('remember')) {
+                Session::forget('remember');
+            }
+        }
         if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => true],$remember)) {
             if(Auth::user()->trang_thai == 1) {
                 return redirect('admin/dashboards');
@@ -292,4 +311,71 @@ class TaiKhoanController extends Controller
         // dd($array);
         return view('admin.account.index', $array);
     }
+    public function loginGoogle() {
+        return Socialite::driver('google')->redirect();
+    }
+    public function callbackGoogle() {
+        $users = Socialite::driver('google')->stateless()->user();
+
+        $authUser = $this->findOrCreateUser($users,'google');
+
+        $account_name = TaiKhoan::find($authUser->tai_khoans_id)->first();
+
+        $email = $account_name->email;
+        $password = $account_name->mat_khau;
+        $remember = $account_name->remember;
+        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+            if(Auth::user()->trang_thai == 1) {
+                return redirect()->route('index');
+            }
+            else {
+                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+            }
+        }
+        else {
+            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+        }
+    }
+    public function findOrCreateUser($users, $provider) {
+        $authUser = MangXaHoi::where('mang_xa_hoi_id', $users->id)->first();
+
+        if($authUser) {
+            return $authUser;
+        }
+
+        $new = new MangXaHoi();
+        $new->mang_xa_hoi_id = $users->id;
+        $new->mang_xa_hoi = strtoupper($provider);
+        $new->save();
+
+        $checkUser = TaiKhoan::where('email', $users->email)->first();
+
+        if(!$checkUser) {
+            $checkUser = array();
+            $checkUser['ho_ten'] = $users->name;
+            $checkUser['email'] = $users->email;
+            $checkUser['password'] = '';
+            $checkUser['trang_thai'] = 1;
+            $checkUser['admin'] = 0;
+            $checkUser['anh_dai_dien'] = $users->avatar;
+            $checkUser_id = TaiKhoan::insertGetId($checkUser);        
+        }
+        
+
+        $account_name = TaiKhoan::find($checkUser_id)->first();
+        $email = $account_name->email;
+        $password = $account_name->mat_khau;
+        $remember = $account_name->remember;
+        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+            if(Auth::user()->trang_thai == 1) {
+                return redirect()->route('index');
+            }
+            else {
+                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+            }
+        }
+        else {
+            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+        }
+    } 
 }

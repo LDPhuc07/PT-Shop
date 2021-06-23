@@ -23,7 +23,11 @@
                 <form method="POST">
                     @csrf
                     <div class="login-txt mb-16">
-                        <input class="textbox" name="email" type="text" placeholder="Email" autofocus>
+                        @if(Session::has('email'))
+                            <input class="textbox" name="email" type="text" placeholder="Email" value="{{ Session::get('email')}}">
+                        @else
+                            <input class="textbox" name="email" type="text" placeholder="Email" autofocus>
+                        @endif
                         @if($errors->has('email'))
                             <span class="error-msg">
                                 <i class="fas fa-times"></i>
@@ -37,7 +41,11 @@
                         @endif
                     </div>
                     <div class="login-txt password-txt mb-16">
-                        <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                        @if(Session::has('mat_khau'))
+                            <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu" value="{{ Session::get('mat_khau')}}">
+                        @else
+                            <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                        @endif
                         <a class="input-inline-btn" href="#">
                             <i class="fas fa-eye"></i>
                             <i class="fas fa-eye-slash" hidden></i>
@@ -55,7 +63,12 @@
                         @endif
                     </div>
                     <div class="login-txt remember-box mb-16">
-                        <input type="checkbox" name="remember">Nhớ mật khẩu
+                        @if(Session::has('remember'))
+                            <input type="checkbox" name="remember" value="remember" checked>
+                        @else
+                            <input type="checkbox" name="remember" value="remember">
+                        @endif
+                        Nhớ mật khẩu
                         <a href="{{ route('admin.accounts.sign-up') }}">Đăng ký</a>
                     </div>
                     <div class="login-txt mb-16">

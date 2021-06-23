@@ -62,7 +62,7 @@
                 <span>Facebook</span>
                 <img src="icon/facebook.svg" alt="" class="form-submit-social--img">
               </a>
-              <a href="" class="form-submit-social">
+              <a href="{{ route('accounts.login_google') }}" class="form-submit-social">
                 <span>GOOGLE</span>
                 <img src="icon/google.svg" alt="" class="form-submit-social--img">
               </a>

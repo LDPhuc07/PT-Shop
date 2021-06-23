@@ -244,7 +244,13 @@ class HoaDonController extends Controller
             $add_loi_nhuan->tong_tien = $tongtien;
             $add_loi_nhuan->save();
         }
-        session()->flush();
+        Session::forget('id');
+        Session::forget('ten_san_pham');
+        Session::forget('gia');
+        Session::forget('so_luong');
+        Session::forget('anh');
+        Session::forget('size');
+        Session::forget('mau');
         echo 'Thanh toán thành công';
     }
     public function delete($id) {

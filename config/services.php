@@ -24,6 +24,12 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => 'http://your-callback-url',
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
@@ -33,5 +39,11 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
+    'google' => [
+        'client_id' => '722077338538-l3691jjqk3ihh0821j6fesiirm11piik.apps.googleusercontent.com',
+        'client_secret' => 'v1SY_tXtOHtDIQl3K6yq9gJc',
+        'redirect' => 'http://127.0.0.1:8000/google/callback',
+    ],
+
 
 ];

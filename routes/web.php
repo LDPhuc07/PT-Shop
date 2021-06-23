@@ -94,6 +94,8 @@ Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
+Route::get('/login-google','TaiKhoanController@loginGoogle')->name('accounts.login_google');
+Route::get('/google/callback','TaiKhoanController@callbackGoogle');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'PageController@tatcasanpham')->name('product.products');

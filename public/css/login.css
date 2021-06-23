@@ -20,6 +20,7 @@
 }
 .form-group {
     margin: 20px 0;
+    position: relative;
 }
 .form-label {
     text-align: left;
@@ -172,13 +173,14 @@ ul {
 }
 .show-hide{
     position: absolute;
-    top:52%;
+    top:54px;
     right: 20px;
     transform: translateY(-50%);
 }
 .show-hide-two{
     position: absolute;
     right: 20px;
+    top: 54px;
     transform: translateY(-50%);
 }
 .show-hide-three{
@@ -212,4 +214,10 @@ ul {
 }
 #password_confirmation {
     position: relative;
+}
+.error-msg {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: red;
 }

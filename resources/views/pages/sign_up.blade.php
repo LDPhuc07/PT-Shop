@@ -60,7 +60,7 @@
                   <div class="form-group">
                     <label for="password" class="form-label">Mật khẩu</label>
                     <input id="password" name="mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
-                    <span class="show-hide" style="top: 33%;"><i class="fas fa-eye"></i></span>
+                    <span class="show-hide"><i class="fas fa-eye"></i></span>
                     <span class="form-message"></span>
                     @if($errors->has('mat_khau'))
                             <span style="font-size: 13px; color:red">
@@ -78,7 +78,7 @@
                   <div class="form-group">
                     <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
                     <input id="password_confirmation" name="nhap_lai_mat_khau" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
-                    <span class="show-hide-two" style="top: 44%;"><i class="fas fa-eye fa-eye-2"></i></span>
+                    <span class="show-hide-two"><i class="fas fa-eye fa-eye-2"></i></span>
                     <span class="form-message"></span>
                     @if($errors->has('nhap_lai_mat_khau'))
                             <span style="font-size: 13px; color:red">
@@ -92,32 +92,22 @@
                             </style>
                     @endif
                   </div>
+                  <div class="form-group">
+                    <label for="sdt" class="form-label">Số điện thoại</label>
+                    <input id="sdt" name="so_dien_thoai" type="number" placeholder="VD: 0366123456" class="form-control">
+                  </div> 
+                  <div class="form-group">
+                    <label for="address" class="form-label">Địa chỉ</label>
+                    <input id="address" name="dia_chi" type="text" placeholder="VD: 86 Đinh Bộ Lĩnh, P.26, Q. Bình Thạnh, TP.HCM" class="form-control">
+                  </div> 
                   <label for="avatar" class="form-label">Cập nhật avatar</label>
-                  <div class="form-group head-product-picture">
+                  <div class="form-group head-product-picture" style="float: right; margin: unset">
                     <input name="anh_dai_dien" type="file" id="myFile" class="form-control" style="display: none" onchange="loadfile(event)">
                     <label for="myFile">Chọn ảnh</label>
-                    <span class="form-message"></span>
                   </div>
                   <div class="form-group ">
                     <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                   </div>
-                
-                  {{--  <div class="form-group">
-                    <label for="gender" class="form-label">Giới tính</label>
-                    <div>
-                      <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="gender" value="male">Nam
-                    </div>
-                    <div class="form-check-inline">
-                        <input type="radio" class="form-check-input" name="gender" value="female">Nữ
-                    </div>
-                    <div class="form-check-inline">
-                      <input type="radio" class="form-check-input" name="gender" value="order">Khác
-                    </div>
-                    </div>
-                    <span class="form-message"></span>
-                  </div>  --}}
-                  
                   <button class="form-submit">Đăng ký <i class="fi-rs-arrow-right"></i></button>
                   <p style="font-size: 16px;margin: 10px 0;">Bạn đã có tài khoản? <a href="./Login.html" style="color: black; font-weight: bold">Đăng nhập</a></p>
               </form>
