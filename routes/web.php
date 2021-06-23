@@ -113,6 +113,9 @@ Route::get('/pay', function () {
 Route::get('/news', function () {
     return view('pages.news');
 });
+Route::get('/my-order', function () {
+    return view('pages.my_order');
+});
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
