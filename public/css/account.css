@@ -58,6 +58,38 @@
 .my-password-title {
     display: inline-flex;
 }
+.my-order-heading {
+    border-bottom: 2px solid #E1E3E8;
+    padding: 24px 0;
+    margin-right: -2px;
+    margin-left: unset !important;
+}
+.detail__my-order {
+    font-size: 14px;
+    text-align: center;
+}
+.my-order-body {
+
+}
+.my-order-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding : 5px 0;
+}
+.btn-stt {
+    color: white;
+    border-radius: 2px;
+    padding: 2px;
+}
+.bd-bottom {
+    border-bottom: 1px solid #E1E3E8;
+    align-items: center;
+    padding: 10px 0;
+}
+.body-one {
+    flex-direction: column;
+    font-size: 16px;
+}
 /* input[type="file"]{
     display: none;
 }
