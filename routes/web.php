@@ -90,12 +90,20 @@ Route::group(['prefix' => 'admin'], function() {
     
 });
 
+//Login facebook
+Route::get('/login-facebook','TaiKhoanController@login_facebook');
+Route::get('/facebook/callback','TaiKhoanController@callback_facebook');
+
+//Login google
+Route::get('/login-google','TaiKhoanController@login_google');
+Route::get('/login/google/callback','TaiKhoanController@callback_google');
+
 Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
-Route::get('/login-google','TaiKhoanController@loginGoogle')->name('accounts.login_google');
-Route::get('/google/callback','TaiKhoanController@callbackGoogle');
+// Route::get('/login-google','TaiKhoanController@loginGoogle')->name('accounts.login_google');
+// Route::get('/google/callback','TaiKhoanController@callbackGoogle');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
@@ -118,6 +126,9 @@ Route::get('/news', function () {
 Route::get('/my-order', function () {
     return view('pages.my_order');
 });
+Route::get('/order-success', function () {
+    return view('pages.oder_success');
+})->name('ordersuccess');
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
@@ -137,7 +148,7 @@ Route::post('/checkout/buy-now','ThanhToanController@postThanhToanNgayIndex');
 Route::get('/checkout/buy-now','ThanhToanController@thanhToanNgayIndex')->name('checkout.buyNow');
 Route::post('/checkout/create','HoaDoncontroller@create')->name('bill.create');
 Route::post('/checkout/create-buy-now','HoaDoncontroller@createBuyNow')->name('bill.createBuyNow');
-
+Route::get('/return-vnpay','HoaDoncontroller@returnOnline')->name('bill.returnOnline');
 //yeu thich
 Route::get('/like/{sp_id}/{tk_id}','PageController@like');
 Route::get('/dislike/{sp_id}/{tk_id}','PageController@dislike');

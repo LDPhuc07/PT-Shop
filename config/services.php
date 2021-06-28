@@ -40,10 +40,15 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
     'google' => [
-        'client_id' => '722077338538-l3691jjqk3ihh0821j6fesiirm11piik.apps.googleusercontent.com',
-        'client_secret' => 'v1SY_tXtOHtDIQl3K6yq9gJc',
-        'redirect' => 'http://127.0.0.1:8000/google/callback',
+        'client_id' => '473916773539-7j39re3pubrb5f2bia8ii2s8o80uvls1.apps.googleusercontent.com',
+        'client_secret' => 'GXgLpB7y2b9r9Wl27P0HkpQ7',
+        'redirect' => 'http://localhost:8000/login/google/callback',
     ],
-
+    'facebook' => [
+        'client_id' => '389466525832723',
+        'client_secret' => 'f762161f4f3979ac5960828d98e5509f',
+        'redirect' => 'http://127.0.0.1:8000/login/callback',
+    ],
+    
 
 ];

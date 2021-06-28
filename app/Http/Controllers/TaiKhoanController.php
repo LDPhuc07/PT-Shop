@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TaiKhoan;
 use App\MangXaHoi;
+use App\Socail;
 use Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DangNhapRequest;
@@ -15,6 +16,54 @@ use Session;
 
 class TaiKhoanController extends Controller
 {
+
+    public function login_facebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function callback_facebook(){
+        $provider = Socialite::driver('facebook')->user();
+        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
+        if($account){
+        //login in vao trang quan tri
+        $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
+        Session::put('ho_ten',$account_name->ho_ten);
+        Session::put('id',$account_name->id);
+        return redirect()->route('index');
+        }else{
+        
+        $hieu = new Social([
+        'provider_user_id' => $provider->getId(),
+        'provider' => 'facebook'
+        ]);
+        
+        $orang = TaiKhoan::where('email',$provider->getEmail())->first();
+        
+        if(!$orang){
+        $orang = TaiKhoan::create([
+        
+        'ho_ten' => $provider->getName(),
+        'email' => $provider->getEmail(),
+        'password' => '',
+        'so_dien_thoai' => '',
+        'anh_dai_dien' =>'',
+        'admin' => 0
+        
+        ]);
+        }
+        $hieu->login()->associate($orang);
+        $hieu->save();
+        
+        $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
+        
+        Session::put('ho_ten',$account_name->ho_ten);
+        Session::put('id',$account_name->id);
+        return redirect()->route('index');
+        }
+    }
+
+
     public function getDangNhapAdmin() {
         return view('admin.login');
     }
@@ -311,71 +360,119 @@ class TaiKhoanController extends Controller
         // dd($array);
         return view('admin.account.index', $array);
     }
-    public function loginGoogle() {
-        return Socialite::driver('google')->redirect();
-    }
-    public function callbackGoogle() {
-        $users = Socialite::driver('google')->stateless()->user();
+    // public function loginGoogle() {
+    //     return Socialite::driver('google')->redirect();
+    // }
+    // public function callbackGoogle() {
+    //     $users = Socialite::driver('google')->stateless()->user();
 
-        $authUser = $this->findOrCreateUser($users,'google');
+    //     $authUser = $this->findOrCreateUser($users,'google');
 
-        $account_name = TaiKhoan::find($authUser->tai_khoans_id)->first();
+    //     $account_name = TaiKhoan::find($authUser->tai_khoans_id)->first();
 
-        $email = $account_name->email;
-        $password = $account_name->mat_khau;
-        $remember = $account_name->remember;
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
-            if(Auth::user()->trang_thai == 1) {
-                return redirect()->route('index');
-            }
-            else {
-                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
-            }
-        }
-        else {
-            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
-        }
-    }
-    public function findOrCreateUser($users, $provider) {
-        $authUser = MangXaHoi::where('mang_xa_hoi_id', $users->id)->first();
+    //     $email = $account_name->email;
+    //     $password = $account_name->mat_khau;
+    //     $remember = $account_name->remember;
+    //     if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+    //         if(Auth::user()->trang_thai == 1) {
+    //             return redirect()->route('index');
+    //         }
+    //         else {
+    //             return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+    //         }
+    //     }
+    //     else {
+    //         return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+    //     }
+    // }
+    // public function findOrCreateUser($users, $provider) {
+    //     $authUser = MangXaHoi::where('mang_xa_hoi_id', $users->id)->first();
 
-        if($authUser) {
-            return $authUser;
-        }
+    //     if($authUser) {
+    //         return $authUser;
+    //     }
 
-        $new = new MangXaHoi();
-        $new->mang_xa_hoi_id = $users->id;
-        $new->mang_xa_hoi = strtoupper($provider);
-        $new->save();
+    //     $new = new MangXaHoi();
+    //     $new->mang_xa_hoi_id = $users->id;
+    //     $new->mang_xa_hoi = strtoupper($provider);
+    //     $new->save();
 
-        $checkUser = TaiKhoan::where('email', $users->email)->first();
+    //     $checkUser = TaiKhoan::where('email', $users->email)->first();
 
-        if(!$checkUser) {
-            $checkUser = array();
-            $checkUser['ho_ten'] = $users->name;
-            $checkUser['email'] = $users->email;
-            $checkUser['password'] = '';
-            $checkUser['trang_thai'] = 1;
-            $checkUser['admin'] = 0;
-            $checkUser['anh_dai_dien'] = $users->avatar;
-            $checkUser_id = TaiKhoan::insertGetId($checkUser);        
-        }
+    //     if(!$checkUser) {
+    //         $checkUser = array();
+    //         $checkUser['ho_ten'] = $users->name;
+    //         $checkUser['email'] = $users->email;
+    //         $checkUser['password'] = '';
+    //         $checkUser['trang_thai'] = 1;
+    //         $checkUser['admin'] = 0;
+    //         $checkUser['anh_dai_dien'] = $users->avatar;
+    //         $checkUser_id = TaiKhoan::insertGetId($checkUser);        
+    //     }
         
 
-        $account_name = TaiKhoan::find($checkUser_id)->first();
-        $email = $account_name->email;
-        $password = $account_name->mat_khau;
-        $remember = $account_name->remember;
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
-            if(Auth::user()->trang_thai == 1) {
-                return redirect()->route('index');
-            }
-            else {
-                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
-            }
+    //     $account_name = TaiKhoan::find($checkUser_id)->first();
+    //     $email = $account_name->email;
+    //     $password = $account_name->mat_khau;
+    //     $remember = $account_name->remember;
+    //     if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+    //         if(Auth::user()->trang_thai == 1) {
+    //             return redirect()->route('index');
+    //         }
+    //         else {
+    //             return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+    //         }
+    //     }
+    //     else {
+    //         return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+    //     }
+    // } 
+
+    public function login_google(){
+        return Socialite::driver('google')->redirect();
         }
-        else {
-            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
+        public function callback_google(){
+        $users = Socialite::driver('google')->stateless()->user();
+        // return $users->id;
+        $authUser = $this->findOrCreateUser($users,'google');
+        $account_name = TaiKhoan::where('id',$authUser->tai_khoans_id)->first();
+        Session::put('ho_ten',$account_name->ho_ten);
+        Session::put('id',$account_name->id);
+        return redirect()->route('index');
+        
         }
-    } 
+        public function findOrCreateUser($users,$provider){
+        $authUser = Social::where('provider_user_id', $users->id)->first();
+        if($authUser){
+        
+        return $authUser;
+        }
+        
+        $hieu = new Social([
+        'provider_user_id' => $users->id,
+        'provider' => strtoupper($provider)
+        
+        ]);
+        
+        $orang = TaiKhoan::where('email',$provider->getEmail())->first();
+        
+        if(!$orang){
+        $orang = Login::create([
+            'ho_ten' => $provider->getName(),
+            'email' => $provider->getEmail(),
+            'password' => '',
+            'so_dien_thoai' => '',
+            'anh_dai_dien' =>'',
+            'admin' => 0
+        ]);
+        }
+        $hieu->login()->associate($orang);
+        $hieu->save();
+        
+        $account_name = TaiKhoan::where('id',$authUser->user)->first();
+        Session::put('ho_ten',$account_name->ho_ten);
+        Session::put('id',$account_name->id);
+        return redirect()->route('index');
+        
+        }
 }

@@ -112,3 +112,10 @@
     justify-content: center;
     align-items: center;
 } */
+.bbc {
+    color: var(--black-color);
+}
+.bbc:hover{
+    color:var(--black-color);
+    text-decoration: none;
+}

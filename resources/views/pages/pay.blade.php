@@ -29,7 +29,7 @@
                                 </div>
                             <div class="main-customer-info">
                                 <div class="main-customer-info-img">
-                                    <img src="img/product/noavatar.png" alt="" width="60px" height="60px">
+                                    <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
                                 </div>
                                 @if(Auth::check() and Auth::user()->admin != 1)
                                 <div class="main-customer-info-logged">
@@ -127,9 +127,14 @@
                             </div>
                                 @endif
                         </div>
+                        <div style="margin-top:20px;font-size: 16px;color:black">
+                            <label for="" style="font-weight:bold">Chọn Phương thức thanh toán khác:</label>
+                        </br>
+                            <input type="checkbox" name="payment">   Thanh toán VnPay
+                        </div>
                         <div class="main-footer">
                             <div class="continue">
-                                <a href="">
+                                <a href="{{ route('cart.index') }}">
                                     <i class="fi-rs-angle-left"></i>
                                     Giỏ hàng
                                 </a>
@@ -137,8 +142,9 @@
                             <div class="pay">
                                 <button class="btn-pay">Thanh toán</button>
                             </div>
-                            
+                                                       
                         </div>
+                        
                     </div>
                 </div>
                 <div class="col-6" style="background-color:#f3f3f3;">
@@ -183,11 +189,11 @@
                                 </div>
                             </div>
                             @php
-                            $vnd_to_usd = ($content->price * $content->qty)/23083;
+                            $vnd_to_usd = ($content->price * $content->qty);
                             @endphp
                             <div>
                                 <div id="paypal-button"></div>
-                                <input type="hidden" id="vnd_to_usd" value="{{round($vnd_to_usd,2)}}">
+                                <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
                             </div>
                         </div>
                     </div>

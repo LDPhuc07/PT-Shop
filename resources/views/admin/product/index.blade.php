@@ -16,43 +16,48 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
+                   <form action="">
                   <div class="head-table">
                     <div class="search">
-                      <form action="">
+                     
                         <input class="search-txt" type="text" placeholder="Search.." name="search">
                         <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
-                      </form>
+                      
                     </div>
                     <div class="group-filter-btn">
                       <div class="filter-catagories-wrap">
-                        <button id="filter-catagories-wrap-id" class="filter-catagories-btn btn">
-                          <span>Loại sản phẩm</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-catagories" class="popover">
-                          <div class="arrow"></div>
-                        </div>
+                       
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <button id="filter-catagories-sport-wrap-id" class="filter-catagories-sport-btn btn">
-                          <span>BM thể thao</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-catagories-sport" class="popover">
-                          <div class="arrow"></div>
-                        </div>
+                        <select class="textbox" name="monthethao" id="monthethao">
+                          <option value="">Môn thể thao</option>
+                          <?php $monthethao = App\MonTheThao::all()  ?>
+                          @foreach($monthethao as $i)
+                            <option value="{{$i['id']}}">{{$i['ten_the_thao']}}</option>
+                          @endforeach
+                        </select>
                       </div>
-                      <div class="filter-producer-wrap">
-                        <button id="filter-producer-wrap-id" class="filter-producer-btn btn">
-                          <span>Nhà sản xuất</span>
-                          <i class="fas fa-caret-down"></i>
-                        </button>
-                        <div id="popover-producer" class="popover">
-                          <div class="arrow"></div>
-                        </div>
+                      <div class="filter-catagories-sport-wrap">
+                        <select class="textbox" name="nhasanxuat" id="nhasanxuat">
+                          <option value="">Nhà sản xuất</option>
+                          <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
+                          @foreach($nhasanxuat as $i)
+                            <option value="{{$i['id']}}">{{$i['ten_nha_san_xuat']}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="filter-catagories-sport-wrap">
+                        <select class="textbox" name="loaisanpham" id="loaisanpham">
+                          <option value="">LoaiSanPham</option>
+                          <?php $loaisanpham = App\LoaiSanPham::all()  ?>
+                          @foreach($loaisanpham as $i)
+                            <option value="{{$i['id']}}">{{$i['ten_loai_san_pham']}}</option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                   </div>
+                </form>
                   <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">
                       <thead>
@@ -104,7 +109,11 @@
                                 @endif
                               @endforeach
                             </td>
-                            <td>{{$ds['mo_ta']}}</td>
+                            <td>
+                              <?php
+                                echo $ds->mo_ta;
+                              ?>
+                            </td>
                             <td style="display:flex">
                               <a href="{{route('sanpham.edit',['id' => $ds['id']])}}" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <form id="sanpham_{{$ds['id']}}" action="{{route('sanpham.delete',['id' => $ds['id']])}}" method="POST">
