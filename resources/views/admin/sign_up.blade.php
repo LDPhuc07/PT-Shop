@@ -64,8 +64,11 @@
                                     </style>
                                 @endif
                             </div>
-                            <div class="mb-16 sign-up-txt">
+                            <div style="position: relative" class="mb-16 sign-up-txt">
                                 <input class="textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                                <a id="mat_khau" class="input-inline-btn">
+                                    <i class="show-pass fas fa-eye"></i>
+                                </a>
                                 @if($errors->has('mat_khau'))
                                     <span class="error-msg">
                                         <i class="fas fa-times"></i>
@@ -78,8 +81,11 @@
                                     </style>
                                 @endif
                             </div>
-                            <div class="mb-16 sign-up-txt">
+                            <div style="position: relative" class="mb-16 sign-up-txt">
                                 <input class="textbox" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu">
+                                <a id="nhap_lai_mat_khau" class="input-inline-btn">
+                                    <i class="show-pass fas fa-eye"></i>
+                                </a>
                                 @if($errors->has('nhap_lai_mat_khau'))
                                     <span class="error-msg">
                                         <i class="fas fa-times"></i>
@@ -143,6 +149,26 @@
             var img = document.getElementById('imgsp');
             img.src = URL.createObjectURL(event.target.files[0]);
         }
+
+        $(document).ready(function() {
+            $("#mat_khau").on('click', function(event){
+                showPass('mat_khau');
+            });
+            $("#nhap_lai_mat_khau").on('click', function(event){
+                showPass('nhap_lai_mat_khau');
+            });
+            function showPass(key) {
+                if($(`#${key} .show-pass`).hasClass("fa-eye")) {
+                    $(`input[name="${key}"]`).attr('type','text');
+                    $(`#${key} .show-pass`).removeClass("fa-eye");
+                    $(`#${key} .show-pass`).addClass("fa-eye-slash");
+                } else {
+                    $(`input[name="${key}"]`).attr('type','password');
+                    $(`#${key} .show-pass`).removeClass("fa-eye-slash");
+                    $(`#${key} .show-pass`).addClass("fa-eye");
+                }
+            }
+        });
     </script>
 </body>
 </html>

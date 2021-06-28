@@ -17,7 +17,7 @@
           <td>{{ $bill_detail->chiTietSanPham->mau }}</td>
           <td>{{ $bill_detail->chiTietSanPham->kich_thuoc }}</td>
           <td>{{ $bill_detail->so_luong}}</td>
-          <td>{{number_format($bill_detail->chiTietSanPham->sanPham->gia_ban * $bill_detail->so_luong,0,',','.').' '.'VNĐ'}}</td>
+          <td>{{number_format(($bill_detail->chiTietSanPham->sanPham->gia_ban*(100-$bill_detail->chiTietSanPham->sanPham->giam_gia)/100) * $bill_detail->so_luong,0,',','.').' '.'VNĐ'}}</td>
       </tr>
       @endforeach
   </tbody>

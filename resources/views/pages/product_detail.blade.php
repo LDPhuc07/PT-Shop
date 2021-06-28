@@ -277,18 +277,24 @@
               @endforeach
             </div>
           </div>
-          <div class="product__wrap">
-            <div id="product__amount" class="product__amount">
-              <label for="">Số lượng: </label>
-              <input type="button" value="-" class="control" onclick="truSoLuong()">
-              <input type="text" name="so_luong"  value="1" class="text-input" onkeypress='validate(event)' name="quantity" id="textsoluong"> 
-              <input type="button" value="+" class="control" onclick="congSoLuong({{ $qty->so_luong }})">
+          <div id="product__amount" >
+            <div class="product__wrap">
+              <div class="product__amount">
+                <label for="">Số lượng: </label>
+                <input type="button" value="-" class="control" onclick="truSoLuong()">
+                <input type="text" name="so_luong"  value="1" class="text-input" onkeypress='validate(event)' name="quantity" id="textsoluong"> 
+                <input type="button" value="+" class="control" onclick="congSoLuong({{ $qty->so_luong }})">
+              </div>
+            </div>
+            <div class="product__shopnow">
+              @if($qty->so_luong > 0)
+                <input value="Mua ngay" onclick="congSoLuong2()" type="button" id="buynow" class="shopnow">
+                <input value="Thêm vào giỏ" onclick="congSoLuong1()" type="button" id="addcart" class="add-cart">
+              @else 
+                <input value="Hết ngay" type="button" class="shopnow">
+              @endif
             </div>
           </div>
-        </div>
-        <div class="product__shopnow">
-          <button type="button" id="buynow" class="shopnow">Mua ngay</button>
-          <button type="button" id="addcart" class="add-cart">Thêm vào giỏ</button>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
           <h3 style="font-size: 20px;">Sản phẩm được đánh giá: 
@@ -457,6 +463,16 @@
             var result = document.getElementById('textsoluong').value;
             document.getElementById('textsoluong').value = parseInt(result) + 1;
           }
+        }
+        function congSoLuong2() {
+          $('#contactForm').attr('action', '{{ route("checkout.buyNow") }}');
+          $('#buynow').attr('type', 'submit');
+          $('#contactForm').submit();
+        }
+        function congSoLuong1() {
+          $('#contactForm').attr('action', '{{ route("cart.save") }}');
+          $('#addcart').attr('type', 'submit');
+          $('#contactForm').submit();
         }
         function truSoLuong(){
           var result = document.getElementById('textsoluong').value;
@@ -788,7 +804,7 @@
         getBinhLuan(lessonPage);
       });
 </script>
-<script>
+{{--  <script>
   $('#addcart, #buynow').click(function () {
     if (this.id == 'addcart') {
       $('#contactForm').attr('action', '{{ route("cart.save") }}');
@@ -801,5 +817,5 @@
       $('#contactForm').submit();
     }
  });
-</script>
+</script>  --}}
 @endsection

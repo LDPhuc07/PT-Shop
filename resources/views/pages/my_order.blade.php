@@ -53,40 +53,29 @@
                       </div>
                     </div>
                     <div class="my-order-body">
-                      <div class="row bd-bottom">
-                        <div class="col-2">#1</div>
-                        <div class="col-3">05-06-2021</div>
-                        <div class="col-3">3.000.000 VNĐ</div>
-                        <div class="col-2">
-                          <span class="btn-stt blue" >Đang xác nhận</span>
+                      @foreach($arrays as $bill)
+                        <div class="row bd-bottom">
+                          <div class="col-2">{{ $bill->id }}</div>
+                          <div class="col-3">{{ date('Y-m-d', strtotime($bill->ngay_lap_hd)) }}</div>
+                          <div class="col-3">{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</div>
+                          <div class="col-2">
+                            @if ($bill->chot_don == true)
+                              <span class="btn-stt green" >Đã chốt đơn</span>
+                            @else
+                              <span class="btn-stt blue" >Đang xác nhận</span>
+                            @endif
+                          </div>
+                          <div class="col-2">
+                            <a onclick="showModal({{ $bill->id }})">Xem</a>
+                          </div>
                         </div>
-                        <div class="col-2">
-                          <a href="" data-toggle="modal" data-target="#myModal">Xem</a>
-                        </div>
-                      </div>
-                      <div class="row bd-bottom">
-                        <div class="col-2">#2</div>
-                        <div class="col-3">05-06-2021</div>
-                        <div class="col-3">3.000.000 VNĐ</div>
-                        <div class="col-2">
-                          <span class="btn-stt green">Đã giao</span>
-                        </div>
-                        <div class="col-2">
-                          <a href="">Xem</a>
-                        </div>
-                      </div>
-                      <div class="row bd-bottom">
-                        <div class="col-2">#3</div>
-                        <div class="col-3">05-06-2021</div>
-                        <div class="col-3">3.000.000 VNĐ</div>
-                        <div class="col-2">
-                          <span class="btn-stt red">Đã hủy</span>
-                        </div>
-                        <div class="col-2">
-                          <a href="">Xem</a>
-                        </div>
-                      </div>
+                      @endforeach
                     </div>
+                    <nav aria-label="Page navigation example" style="margin-top:20px">
+                      <ul class="pagination">
+                        {!! $arrays->appends(request()->query())->links() !!}
+                      </ul>
+                    </nav>
                   </form>
                 </div>
               </div>
@@ -104,47 +93,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <div class="body-one">
-            <div>Tổng tiền: 3.000.000 VNĐ</div>
-            <div>Giá đã giảm: 1.000.000 VNĐ</div>
-            <div>Phí ship: 30.000 VNĐ</div>
-            <div>Thành Tiền: 3.000.000 VNĐ</div>
-          </div>
-          <form action="">
-            <div class="my-order-heading">
-              <div class="row" style="text-align:center">
-                <div class="col-4">Sản phẩm</div>
-                <div class="col-1">Số lượng</div>
-                <div class="col-3">Giá</div>
-                <div class="col-1">Giảm giá</div>
-                <div class="col-3">Tổng</div>
-              </div>
-            </div>
-            <div class="body-two">
-              <div class="row" style="text-align:center; margin-top:10px">
-                <div class="col-4" style="display: flex;">
-                  <a href=""><img src="./assets/img/product/addidas1.jpg" alt="" style="width: 50px;height: 50px;margin-right: 5px;"></a>
-                  <h5>Adidas smith</h5>
-                </div>
-                <div class="col-1">3</div>
-                <div class="col-3">1.000.000 VNĐ</div>
-                <div class="col-1">20%</div>
-                <div class="col-3">3.000.000 VNĐ</div>
-              </div>
-            </div>
-            <div class="body-two">
-              <div class="row" style="text-align:center; margin-top:10px">
-                <div class="col-4" style="display: flex;">
-                  <a href=""><img src="./assets/img/product/addidas1.jpg" alt="" style="width: 50px;height: 50px;margin-right: 5px;"></a>
-                  <h5>Adidas smith</h5>
-                </div>
-                <div class="col-1">3</div>
-                <div class="col-3">1.000.000 VNĐ</div>
-                <div class="col-1">20%</div>
-                <div class="col-3">3.000.000 VNĐ</div>
-              </div>
-            </div>
-          </form>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default red" data-dismiss="modal" style="color: white;">Close</button>
@@ -161,6 +110,22 @@
     </script>
 @endsection
 @section('js')
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+<script>
+  function showModal(id) {
+    $.ajax({
+      url: 'bill/detail/'+id,
+      type: 'GET',
+    }).done(function(res) {
+      //hiện tiêu đề
+      $('#myModal .modal-body').html(res);
+      //hiện modal
+      $('#myModal').modal('show');
+    });
+  }
+</script>
 <script>
     const pass_field = document.querySelector('#password');
     const show_btn = document.querySelector('.fa-eye')

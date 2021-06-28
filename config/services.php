@@ -39,11 +39,11 @@ return [
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
-    'google' => [
-        'client_id' => '722077338538-l3691jjqk3ihh0821j6fesiirm11piik.apps.googleusercontent.com',
-        'client_secret' => 'v1SY_tXtOHtDIQl3K6yq9gJc',
-        'redirect' => 'http://127.0.0.1:8000/google/callback',
-    ],
 
+    'google' => [
+        'client_id' => '153181180512-il3th3apkumpedsnquqvmrcf5a5jugrj.apps.googleusercontent.com',
+        'client_secret' => 'Dys1rx09j_s99NYBNNIvm8YT',
+        'redirect' => 'http://127.0.0.1:8000/google-plus/callback' 
+    ],
 
 ];

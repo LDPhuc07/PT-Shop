@@ -338,4 +338,22 @@ class HoaDonController extends Controller
        
         return view('admin.bill.index',$array);
     }
+    public function myBill() {
+        $array = ['arrays'=>HoaDon::where('trang_thai',1)
+                                    ->where('tai_khoans_id',Auth::user()->id)
+                                    ->paginate(5)];
+        return view('pages.my_order',$array);
+    }
+    public function myBillDetail($id) {
+        $array = ChiTietHoaDon::where('hoa_dons_id', $id)
+                                ->with(array('chiTietSanPham' => function($query) {
+                                    $query->with(array('sanPham' => function($querys) {
+                                        $querys->with(array('anh' => function($que) {
+                                            $que->where('anhchinh',1);
+                                        }));
+                                    }));
+                                }))
+                                ->get();
+        return view('pages.my_bill_detail',compact('array'));
+    }
 }

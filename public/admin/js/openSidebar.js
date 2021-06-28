@@ -3,14 +3,14 @@ $('#sidebar-link').click(function(){
   if(document.getElementById("mySidebar").style.width != "200px") {
     clicked = true;
     document.getElementById("mySidebar").style.width = "200px";
-    document.getElementById("main").style.marginLeft = "200px";
+    document.getElementById("main").style.paddingLeft = "200px";
     visibilityOption(".brand-text", "unset");
     visibilityOption(".nav-text", "unset");
   }
   else {
     clicked = false;
     document.getElementById("mySidebar").style.width = "74px";
-    document.getElementById("main").style.marginLeft= "74px";
+    document.getElementById("main").style.paddingLeft= "74px";
     visibilityOption(".brand-text", "hidden");
     visibilityOption(".nav-text", "hidden");
   }
@@ -30,7 +30,7 @@ $('#mySidebar').hover(function() {
 },function() {
   if(clicked == false) {
     document.getElementById("mySidebar").style.width = "74px";
-    document.getElementById("main").style.marginLeft= "74px";
+    document.getElementById("main").style.paddingLeft= "74px";
     visibilityOption(".brand-text", "hidden");
     visibilityOption(".nav-text", "hidden");
   }

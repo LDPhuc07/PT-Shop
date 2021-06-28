@@ -21,7 +21,7 @@
                   <a href="{{ route('accounts.getChangePassword',Auth::user()->id) }}">Đổi mật khẩu</a>
                 </li>
                 <li class="nav-item__first-item">
-                  <a href="">Đơn mua</a>
+                  <a href="{{ route('bill') }}">Đơn mua</a>
                 </li>
                 <li class="nav-item__first-item">
                   <a href="{{ route('accounts.logout') }}">Đăng xuất</a>

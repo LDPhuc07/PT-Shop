@@ -95,7 +95,7 @@ Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');
 Route::post('/login', 'TaiKhoanController@postDangNhap');
 Route::get('/login-google','TaiKhoanController@loginGoogle')->name('accounts.login_google');
-Route::get('/google/callback','TaiKhoanController@callbackGoogle');
+Route::get('/google-plus/callback','TaiKhoanController@callbackGoogle');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
@@ -103,20 +103,8 @@ Route::get('/product-details/{id}','PageController@chitietsanpham')->name('produ
 Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
 Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
 Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
-Route::get('/carts', function () {
-    return view('pages.cart');
-});
-Route::get('/sign-up', function () {
-    return view('pages.sign_up');
-}); 
-Route::get('/pay', function () {
-    return view('pages.pay');
-});
 Route::get('/news', function () {
     return view('pages.news');
-});
-Route::get('/my-order', function () {
-    return view('pages.my_order');
 });
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
@@ -124,6 +112,8 @@ Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('account
 Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
 Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
+Route::get('/bill','HoaDonController@myBill')->name('bill');
+Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');

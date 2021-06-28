@@ -109,18 +109,20 @@
   <script>
     function lock(id) {
       if($(`.lock-${id}`).hasClass('fas fa-lock')) {
-        $.ajax({
-          url: 'admin/accounts/lock/'+id,
-          type: 'GET',
+        if(confirm('Bạn có thật sự muốn khóa tài khoản này?') == true){
+          $.ajax({
+            url: 'admin/accounts/lock/'+id,
+            type: 'GET',
 
-          success:function(data) {
-            if(data == 'done') {
-              $(`.lock-${id}`).removeClass('fa-lock');
-              $(`.lock-${id}`).addClass('fa-lock-open');
-              $(`#lock-td-${id}`).html("Đã khóa");
+            success:function(data) {
+              if(data == 'done') {
+                $(`.lock-${id}`).removeClass('fa-lock');
+                $(`.lock-${id}`).addClass('fa-lock-open');
+                $(`#lock-td-${id}`).html("Đã khóa");
+              }
             }
-          }
-        });
+          });
+        }
       }
       else {
         $.ajax({

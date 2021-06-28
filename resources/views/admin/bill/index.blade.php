@@ -127,16 +127,18 @@
     }
 
     function deleteBill(id) {
-      $.ajax({
-        url: 'admin/bill/delete/' + id,
-        type: 'GET',
+      if(confirm('Bạn có thật sự muốn xóa?') == true){
+        $.ajax({
+          url: 'admin/bill/delete/' + id,
+          type: 'GET',
 
-        success:function(data) {
-          if(data == 'done') {
-            $(`#bill-item-${id}`).empty();
+          success:function(data) {
+            if(data == 'done') {
+              $(`#bill-item-${id}`).empty();
+            }
           }
-        }
-      });
+        });
+      }
     }
     function checkbill(id) {
       if($(`.check-${id}`).hasClass('not-check-btn')) {

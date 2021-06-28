@@ -111,8 +111,8 @@
                                 @csrf
                                 @method('DELETE')
                               <span class="delete-btn cursor" data-target="#modalSanPham" data-toggle="modal" data-id="{{$ds['id']}}"><i class="fas fa-trash-alt"></i></span>
-                              <a href="{{route('chitietsanpham.index',['id' => $ds['id']])}}" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               </form>
+                              <a href="{{route('chitietsanpham.index',['id' => $ds['id']])}}" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>
                     </tbody>
