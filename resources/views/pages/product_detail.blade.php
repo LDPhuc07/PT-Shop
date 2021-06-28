@@ -354,7 +354,11 @@
       <div class="col-11">
         <h3 class="name__product">{{$sanpham->ten_san_pham}}</h3>
         <h3>Thông số kĩ thuật: </h3>
-        <p>{{$sanpham->mo_ta}}</p>
+        <p>
+          <?php
+          echo $sanpham->mo_ta
+          ?>
+        </p>
       </div>
     </div>
   </div>
@@ -387,60 +391,62 @@
     <h3 class="product__relateto-heading">Sản phẩm liên quan</h3>
     <div id="like_splq" class="row">
       @foreach($sanphamlienquans as $sanphamlienquan)
-        <div class="col-3">
-          <div class="card" style="width: 100%">
-            @foreach($sanphamlienquan->anh as $anh)
-              <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
-            @endforeach
-            <div class="card-body">
-              <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>
-              <div class="product__price" id="price">
-                <p class="card-text price-color product__price-new">{{number_format($sanphamlienquan['gia_ban']*(100-$sanphamlienquan['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
-                <p  data-id="{{$sanphamlienquan['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamlienquan['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
-              </div>
-              <div style="display:flex;justify-content: space-between;align-items: center;">
-                <span id="luot-like-{{ $sanphamlienquan->id }}" class="luot-like-{{ $sanphamlienquan->id }}" style="margin-right: 2px;">
-                  @foreach($yeu_thich as $like)
-                    @if($sanphamlienquan->id == $like->san_phams_id)
-                      {{ $like->yeu_thich }}
-                    @endif
-                  @endforeach
-                </span>
-                @if(Auth::check() and Auth::user()->admin != 1)
-                    <?php
-                      $is_liked = false;
-                    ?>
-                      @foreach($is_like as $like)
-                        @if($like->san_phams_id == $sanphamlienquan->id)
-                          <?php
-                          $is_liked = true;
-                          ?>
-                          @break
-                        @endif
-                      @endforeach
-                      @if($is_liked == true)
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="den icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
-                    font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                      @else
-                        <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
-                    font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+        <a href="{{route('product_detail',['id'=>$sanphamlienquan->id])}}" class="product__new-item">
+          <div class="col-3">
+            <div class="card" style="width: 100%">
+              @foreach($sanphamlienquan->anh as $anh)
+                <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
+              @endforeach
+              <div class="card-body">
+                <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>
+                <div class="product__price" id="price">
+                  <p class="card-text price-color product__price-new">{{number_format($sanphamlienquan['gia_ban']*(100-$sanphamlienquan['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                  <p  data-id="{{$sanphamlienquan['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphamlienquan['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                </div>
+                <div style="display:flex;justify-content: space-between;align-items: center;">
+                  <span id="luot-like-{{ $sanphamlienquan->id }}" class="luot-like-{{ $sanphamlienquan->id }}" style="margin-right: 2px;">
+                    @foreach($yeu_thich as $like)
+                      @if($sanphamlienquan->id == $like->san_phams_id)
+                        {{ $like->yeu_thich }}
                       @endif
-                    @else
-                    <a class="icon-like" style="color: #ccc;
-                    font-size: 18px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
-                    @endif
-              </div>
-              <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
-                <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
-                <span class="sale-off-label">GIẢM</span>
+                    @endforeach
+                  </span>
+                  @if(Auth::check() and Auth::user()->admin != 1)
+                      <?php
+                        $is_liked = false;
+                      ?>
+                        @foreach($is_like as $like)
+                          @if($like->san_phams_id == $sanphamlienquan->id)
+                            <?php
+                            $is_liked = true;
+                            ?>
+                            @break
+                          @endif
+                        @endforeach
+                        @if($is_liked == true)
+                          <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="den icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
+                      font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @else
+                          <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamlienquan->id }})" class="icon-like like-{{ $sanphamlienquan->id }}" style="color: #ccc;
+                      font-size: 18px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        @endif
+                      @else
+                      <a class="icon-like" style="color: #ccc;
+                      font-size: 18px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                      @endif
+                </div>
+                <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
+                  <span class="sale-off-percent">{{$sanphamlienquan['giam_gia']}}%</span>
+                  <span class="sale-off-label">GIẢM</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       @endforeach
     </div>
     <div class="seemore">
-      <a href="">Xem thêm</a>
+      <a href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Xem thêm</a>
     </div>
   </div>
 </div>
@@ -713,7 +719,7 @@
       var loadBtn = $('#commentLoard');
       var lessonPage = 0;
       var idsp = $('#trungid').attr('data-id');
-      $(function(){
+      $(document).ready(function(){
         getBinhLuan();
       });
       function getBinhLuan(page){
@@ -741,7 +747,7 @@
         let html ='';
         $.each(binhluans,function(index, binhluan){
             html+='<div class="comment">';
-              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluan.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluan.tai_khoan.ho_ten+'</h4>';
@@ -759,7 +765,7 @@
  
         // $.each(binhluans,function(index, binhluan){
            let html='<div class="comment">';
-              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluans.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluans.tai_khoan.ho_ten+'</h4>';
@@ -780,7 +786,7 @@
           page = 0;
         }
         var cmt = $('#cmt').val();
-        var idkh = {{Auth::id()}};
+        var idkh = {{Auth::id() ?? 0}};
 
         $.ajax({
           type: "post",

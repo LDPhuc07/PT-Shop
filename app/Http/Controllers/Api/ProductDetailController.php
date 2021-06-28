@@ -46,6 +46,7 @@ class ProductDetailController extends Controller
                         ->limit(10)
                         ->with(['taiKhoan','sanPham'])
                         ->get()->toArray();
+                        // dd($data);
         return $data;
     }
     public function postbinhluan(Request $request)

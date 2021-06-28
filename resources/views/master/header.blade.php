@@ -11,7 +11,7 @@
           </li>
           <li class="nav-item nav-item__first nav-item__first-user">
             @if(Auth::check() and Auth::user()->admin != 1)
-              <img src="{{asset('img/product/noavatar.png')}}" alt="" class="nav-item__first-img">
+              <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="nav-item__first-img">
               <span class="nav-item__first-name">{{ Auth::user()->ho_ten }}</span>
               <ul class="nav-item__first-menu">
                 <li class="nav-item__first-item">

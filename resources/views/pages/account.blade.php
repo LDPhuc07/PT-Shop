@@ -10,29 +10,37 @@
     <div class="container" style="margin-top: 180px;">
         <div class="row">
           <div class="col-4">
+            @foreach($arrays as $account)
               <div class="heading">
-                  <img src="{{asset('img/product/noavatar.png')}}" alt="" class="heading-img">
-                  <span class="heading-name_acc"></span>
+                  <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="" class="heading-img">
+                  <span class="heading-name_acc">{{$account->ho_ten}}</span>
               </div>
+            @endforeach
               <div class="menu-manager">
+                <a href="{{ route('accounts',Auth::user()->id) }}" class="bbc">
                   <div class="my-profile" onclick="hienThiDoiThongTin()">
-                      <div class="my-profile-title active">
-                        <div class="my-profile-icon"><i class="fas fa-user"></i></div>
-                        <div class="my-profile-name">Hồ sơ của tôi</div>
-                      </div>
-                  </div>
+                    <div class="my-profile-title active">
+                      <div class="my-profile-icon"><i class="fas fa-user"></i></div>
+                      <div class="my-profile-name">Hồ sơ của tôi</div>
+                    </div>
+                </div>
+                </a>
+                <a href="" class="bbc">
                   <div class="my-order">
                     <div class="my-order-title">
                       <div class="my-order-icon"><i class="fas fa-shopping-bag"></i></div>
                     <div class="my-order-name">Đơn hàng của tôi</div>
                     </div>
                   </div>
-                  <div class="my-password" onclick="hienThiDoiMatKhau()">
-                    <div class="my-password-title">
-                      <div class="my-password-icon"><i class="fas fa-key"></i></div>
-                      <div class="my-password-name">Đổi mật khẩu</div>
+                </a>
+                  <a href="{{ route('accounts.getChangePassword',Auth::user()->id) }}" class="bbc">
+                    <div class="my-password" onclick="hienThiDoiMatKhau()">
+                      <div class="my-password-title">
+                        <div class="my-password-icon"><i class="fas fa-key"></i></div>
+                        <div class="my-password-name">Đổi mật khẩu</div>
+                      </div>
                     </div>
-                  </div>
+                  </a>
               </div>
           </div>
           <div class="col-8">

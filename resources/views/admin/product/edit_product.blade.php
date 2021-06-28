@@ -94,7 +94,7 @@
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Mô tả</label>
                   <i class="fas fa-info"></i>
-                  <textarea class="textbox" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
+                  <textarea class="ckeditor" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
                   <div class="error error-name" 	@if($errors->has('mota')) style="display:block;color:red" @endif>{{$errors->first('mota')}}</div>
                 </div>
               </div>
@@ -129,6 +129,7 @@
         var img = document.getElementById(`imgsp_${id}`);
         img.src = URL.createObjectURL(trung.files[0]);
     }
+    CKEDITOR.replace( 'textarea1');
     </script>
 @endsection
 @section('script')

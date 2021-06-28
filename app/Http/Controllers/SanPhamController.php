@@ -20,17 +20,101 @@ class SanPhamController extends Controller
         if(!empty($request->search))
         {
             $search = $request->search;
-            $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
-                                ->orwhereHas('nhaSanXuat', function($query) use ($search) {
-                                    $query->where('ten_nha_san_xuat','LIKE','%'.$search.'%');
-                                })
-                                ->orwhereHas('monTheThao', function($query) use ($search) {
-                                    $query->where('ten_the_thao','LIKE','%'.$search.'%');
-                                })   
-                                // ->orWhere('loai_san_phams_id','LIKE','%'.$request->search.'%') 
-                                // ->orWhere('mon_the_thaos_id','LIKE','%'.$request->search.'%')
-                                ->with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])
-                                ->paginate(4);
+            $key_loaisanpham= $request->loaisanpham;
+            $key_monthethao = $request->monthethao;
+            $key_nhasanxuat = $request->nhasanxuat;
+            // dd(!empty($key_monthethao));
+            if(!empty($key_monthethao) && !empty($key_nhasanxuat) && !empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+                    $query->where('id','=',$key_monthethao);
+                })
+                ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+                    $query->where('id','=',$key_nhasanxuat);
+                })
+                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+                    $query->where('id','=',$key_loaisanpham);
+                })->paginate(4);
+            }
+            else if(!empty($key_monthethao) && !empty($key_nhasanxuat) && empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+                    $query->where('id','=',$key_monthethao);
+                })
+                ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+                    $query->where('id','=',$key_nhasanxuat);
+                })->paginate(4);
+            }
+            else if(!empty($key_monthethao) && empty($key_nhasanxuat) && empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+                    $query->where('id','=',$key_monthethao);
+                })->paginate(4);
+            }
+            else if(empty($key_monthethao) && !empty($key_nhasanxuat) && !empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+                    $query->where('id','=',$key_nhasanxuat);
+                })
+                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+                    $query->where('id','=',$key_loaisanpham);
+                })->paginate(4);
+            }
+            else if(empty($key_monthethao) && empty($key_nhasanxuat) && !empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+                    $query->where('id','=',$key_loaisanpham);
+                })->paginate(4);
+            }
+            else if(empty($key_monthethao) && !empty($key_nhasanxuat) && empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+                    $query->where('id','=',$key_nhasanxuat);
+                })->paginate(4);
+            }
+            else if(!empty($key_monthethao) && empty($key_nhasanxuat) && !empty($key_loaisanpham))
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+                    $query->where('id','=',$key_monthethao);
+                })
+                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+                    $query->where('id','=',$key_loaisanpham);
+                })->paginate(4);
+            }
+            else
+            {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->paginate(4);
+            }
+            
+            // {
+            //     if($key_monthethao != 'null')
+            //     {
+            //         $a->where('ten_san_pham','LIKE','%'.$search.'%')->where('loai_san_phams_id','=',$key_monthethao);
+            //         // if(!empty($key_monthethao))
+            //         // {
+            //         //     $a->where('loai_san_phams_id','=',$key_monthethao);
+            //         // }
+                    
+            //     }
+            //     if($key_monthethao == 'null')
+            //     {
+            //         $a->where('ten_san_pham','LIKE','%'.$search.'%');
+            //     }
+            // })
+            
+            
+            // $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+            //                     ->orwhereHas('nhaSanXuat', function($query) use ($search) {
+            //                         $query->where('ten_nha_san_xuat','LIKE','%'.$search.'%');
+            //                     })
+            //                     ->orwhereHas('monTheThao', function($query) use ($search) {
+            //                         $query->where('ten_the_thao','LIKE','%'.$search.'%');
+            //                     })
+            //                     ->with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])
+            //                     ->paginate(4);
+
+
+            
             $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
                                 ->groupBy('san_phams_id')
                                 ->get();
@@ -58,6 +142,7 @@ class SanPhamController extends Controller
         return view('admin.product.index',$dsSanPham);
     }
     public function storeAdmin(Request $request) {
+        dd($request->all());
         $rule = [
             'mota' => 'required',
             'giamgia' => 'required|numeric',

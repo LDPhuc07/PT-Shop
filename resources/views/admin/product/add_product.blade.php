@@ -100,7 +100,7 @@
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Thêm ảnh {{ $i }}</label>
                 <input type="file" name=anhchitiet[]>
-              </div>
+              </div>  
             </div>
             @endfor
           </div> --}}
@@ -109,7 +109,7 @@
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Mô tả</label>
                 <i class="fas fa-info"></i>
-                <textarea class="textbox" cols="30" rows="10" name="mota">
+                <textarea class="ckeditor" cols="30" rows="10" name="mota" id="textarea1">
                 </textarea>
                 <div class="error error-name" 	@if($errors->has('mota')) style="display:block;color:red" @endif>{{$errors->first('mota')}}</div>
               </div>
@@ -124,11 +124,13 @@
       </form>
     </div>
     <script>
-       var loadfile = function(trung){
+        var loadfile = function(trung){
         var id = trung.getAttribute('data-id');
         console.log(id);
         var img = document.getElementById(`imgsp_${id}`);
         img.src = URL.createObjectURL(trung.files[0]);
+        
     }
+    CKEDITOR.replace( 'textarea1');
     </script>
 @endsection

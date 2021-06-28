@@ -10,7 +10,9 @@
 </style>
 @endsection
 @section('content')
+
 <div class="product" style="margin-top: 195px;">
+ 
     <div class="container">
         <div class="row">
             <div class="col-3">
