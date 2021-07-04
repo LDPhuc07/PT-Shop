@@ -10,12 +10,10 @@
     <div class="container" style="margin-top: 180px;">
         <div class="row">
           <div class="col-4">
-            @foreach($arrays as $account)
               <div class="heading">
-                  <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="" class="heading-img">
-                  <span class="heading-name_acc">{{$account->ho_ten}}</span>
+                  <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="heading-img">
+                  <span class="heading-name_acc">{{Auth::user()->ho_ten}}</span>
               </div>
-            @endforeach
               <div class="menu-manager">
                 <a href="{{ route('accounts',Auth::user()->id) }}" class="bbc">
                   <div class="my-profile" onclick="hienThiDoiThongTin()">
@@ -25,7 +23,7 @@
                     </div>
                 </div>
                 </a>
-                <a href="" class="bbc">
+                <a href="{{ route('bill') }}" class="bbc">
                   <div class="my-order">
                     <div class="my-order-title">
                       <div class="my-order-icon"><i class="fas fa-shopping-bag"></i></div>

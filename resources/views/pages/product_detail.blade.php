@@ -291,7 +291,7 @@
                 <input value="Mua ngay" onclick="congSoLuong2()" type="button" id="buynow" class="shopnow">
                 <input value="Thêm vào giỏ" onclick="congSoLuong1()" type="button" id="addcart" class="add-cart">
               @else 
-                <input value="Hết ngay" type="button" class="shopnow">
+                <input value="Hết hàng" type="button" class="shopnow">
               @endif
             </div>
           </div>

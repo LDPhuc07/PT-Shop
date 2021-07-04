@@ -42,7 +42,7 @@
             <div class="header__second__search--input-wrap">
               <input id="searchInput" type="text" placeholder="Tìm kiếm..." class="header__second__search--input" name="search" value="{{Request::get('search')}}" autocomplete="off">
               <!-- search history -->
-              <div class="header__second__search-history">
+              {{-- <div class="header__second__search-history">
                 <h3 class="header__second__search-history-heading">Lịch sử tìm kiếm</h3>
                 <ul class="header__second__search-history-list" id="listHistorySearch">
                   <li class="header__second__search-history-item" style="cursor: pointer">
@@ -55,7 +55,7 @@
                     <a href="">Adidas Original</a>
                   </li>
                 </ul>
-              </div>
+              </div> --}}
             </div>
             <button class="header__second__search--btn" id="addHistorySearch" >
               <i class="fi-rs-search header__second__search--btn-icon"></i>
@@ -64,9 +64,10 @@
         </form>
         <div class="header__second__like">
           @if(Auth::check() and Auth::user()->admin != 1)
-            <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
+            <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span class="header__second__like--notice">2</span></a>
+            
           @else
-          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
+          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span class="header__second__like--notice">2</span></a>
           @endif
         </div>
         <div class="header__second__cart">
@@ -110,24 +111,24 @@
             </div>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'4','idmtt' => '0'])}}">Quần áo <i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}">Quần áo <i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
-                <li class="hover-me">  <a href="{{route('categlory',['idlsp' =>'4','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
+                <li class="hover-me">  <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
                 </li>
-                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '9'])}}" class="sub-menu-1--link">Chạy</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '9'])}}" class="sub-menu-1--link">Chạy</a></i>
                 </li>
-                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '5'])}}" class="sub-menu-1--link">Cầu lông</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '5'])}}" class="sub-menu-1--link">Cầu lông</a></i>
                 </li>
-                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '2'])}}" class="sub-menu-1--link">Bóng rỗ</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '2'])}}" class="sub-menu-1--link">Bóng rỗ</a></i>
                 </li>
-                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'4','idmtt' => '3'])}}" class="sub-menu-1--link">Quần vợt</a></i>
+                <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '3'])}}" class="sub-menu-1--link">Quần vợt</a></i>
                 </li>
               </ul>
             </div>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="#">Phụ kiện<i class="fi-rs-caret-down"></i></a>
+            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'3','idmtt' => '0'])}}">Phụ kiện<i class="fi-rs-caret-down"></i></a>
             <div class="sub-menu-1">
               <ul>
                 <li class="hover-me"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '1'])}}" class="sub-menu-1--link">Bóng đá</a></i>
