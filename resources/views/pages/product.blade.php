@@ -280,7 +280,7 @@
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price" id="price">';
                 html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
@@ -324,14 +324,27 @@
               
     });
     $('#tatcasanpham').append(html);
+    
     $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    $.each(divGiamGia, function(i,v){
+      var divGiamGia = $('.card-body').children('.sale-off');
+      
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+    });
+
+    $(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    console.log(pGiamGia);
+    $.each(pGiamGia, function(i,v){
       if(!Number($(v).attr('data-id')))
       {
         $(v).css('display','none');
       }
     });
+  });
   });
   }
 
@@ -388,7 +401,7 @@
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price" id="price">';
                 html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
@@ -433,9 +446,18 @@
     });
     $('#tatcasanpham').html(html);
     $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    $.each(divGiamGia, function(i,v){
-      if(!Number($(v).attr('data-id')) )
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')) )
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+    $(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    $.each(pGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
       {
         $(v).css('display','none');
       }

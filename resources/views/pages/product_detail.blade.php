@@ -294,6 +294,7 @@
                 <input value="Hết hàng" type="button" class="shopnow">
               @endif
             </div>
+            <input type="text" placeholder="Nhấn vào đây" id="modalNhan" onclick="fadeInModal()">
           </div>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
@@ -451,7 +452,28 @@
   </div>
 </div>
 <!-- end  product relate to-->
+{{-- alert cart --}}
+<div class="alert" style="display:none">
+  <div class="alert__heading">
+      <h4>Thêm vào giỏ hàng</h4>
+  </div>
+  <div class="alert__body">
+      <img src="./adirunner.jpg" alt="" class="alert__body-img">
+      <div>
+          <h5 class="alert__body-name">Adidas stan smith</h5>
+          <span class="alert__body-amount">Số lượng: 1</span>
+          <h6 class="alert__body-price">2.000.000 VNĐ</h6>
+      </div>
+  </div>
+  <div class="alert__footer">
+      <a class="click__cart">Xem giỏ hàng</a>
+  </div>
+</div>
+<div class="overlay" style="display: none" onclick="fadeout()">
 
+</div>
+
+{{-- end alert cart --}}
 @endsection
 @section('js')
 <script src="js/main.js"></script>
@@ -824,4 +846,22 @@
     }
  });
 </script>  --}}
+<script>
+  function fadeInModal()
+  {
+      $('.alert').fadeIn();   
+      $('.overlay').fadeIn(); 
+  }
+  function fadeOutModal()
+  {
+      $('.alert').fadeOut();
+      $('.overlay').fadeOut();
+  }
+  function fadeout()
+  {
+      $('.overlay').fadeOut();
+      $('.alert').fadeOut();
+  }
+  setInterval(fadeOutModal, 5000);
+</script>
 @endsection

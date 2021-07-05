@@ -151,8 +151,8 @@ class HoaDonController extends Controller
             return redirect()->route('ordersuccess');
 
         }
-        session()->forget('tong_tien');
-        session()->forget('url_prev');
+        // session()->forget('tong_tien');
+        // session()->forget('url_prev');
         return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
     }
 
