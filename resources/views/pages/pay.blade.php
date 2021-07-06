@@ -8,16 +8,9 @@
 <div class="content" style="margin-top: 160px;">
     <div class="wrap">
         <div class="container">
-            <?php
-            $tongtien = 0;
-            ?>
             <form action="{{ route('bill.create') }}" method="POST">
                 @csrf
             <div class="row">
-                    <?php
-                        $contents = Cart::content();
-                    ?>
-               
                     <div class="col-6">
                         <div class="main">
                             <div class="main-header">
@@ -28,9 +21,9 @@
                                     <h2>Thông tin giao hàng</h2>
                                 </div>
                             <div class="main-customer-info">
-                                <div class="main-customer-info-img">
+                                {{-- <div class="main-customer-info-img">
                                     <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
-                                </div>
+                                </div> --}}
                                 @if(Auth::check() and Auth::user()->admin != 1)
                                 <div class="main-customer-info-logged">
                                     <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
@@ -139,25 +132,129 @@
                                     Giỏ hàng
                                 </a>
                             </div>
+                            @if(Auth::check() and Auth::user()->admin != 1)
+                                <?php
+                                    $dem3 = 0; 
+                                ?>
+                                @foreach($arrays as $array)
+                                <?php
+                                $dem3++; 
+                                ?>
+                                @endforeach
+                                @if($dem3 != 0)
                             <div class="pay">
-                                <button class="btn-pay">Thanh toán</button>
+                                <button type="submit" class="btn-pay">Thanh toán</button>
                             </div>
-                                                       
+                            @else 
+                            <div class="pay">
+                                <button type="button" class="btn-pay">Thanh toán</button>
+                            </div>
+                            @endif
+                            @else
+                                <?php
+                                    $dem = 0;
+                                    $contents = Cart::content();
+                                ?>
+                                @foreach($contents as $content)
+                                    <?php $dem++; ?>
+                                @endforeach
+                                @if($dem != 0)
+                                <div class="pay">
+                                    <button type="submit" class="btn-pay">Thanh toán</button>
+                                </div>
+                                @else
+                                <div class="pay">
+                                    <button type="button" class="btn-pay">Thanh toán</button>
+                                </div>
+                                @endif
+                            @endif                      
                         </div>
                         
                     </div>
                 </div>
                 <div class="col-6" style="background-color:#f3f3f3;">
-                    <div class="sliderbar">
-                        <div class="sliderbar-header">
-                            <h2>Thông tin đơn hàng</h2>
+                    
+                                @if(Auth::check() and Auth::user()->admin != 1)
+                                    @if($dem3 != 0)
+                                    <?php
+                                    $tongtien = 0;
+                                    ?>
+                                    @foreach($arrays as $array)
+                                    <?php
+                                    $tongtien +=($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong;;
+                                ?>
+                                <div class="sliderbar">
+                                    <div class="sliderbar-header">
+                                        <h2>Thông tin đơn hàng</h2>
+                                    </div>
+                                    <div class="sliderbar-content">
+                                        <div class="row row-sliderbar">
+                                <div class="col-4">
+                                    @foreach($array->chiTietSanPham->sanPham->anh as $anh)
+                                        <img src="{{asset($anh->link)}}" alt="" width="80%">
+                                    @endforeach
+                                    
+                                    <span class="notice">{{ $array->so_luong }}</span>
+                                </div>
+                                <div class="col-5">
+                                    <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                                </div>
+                                <div class="col-3">
+                                    <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>
+                                </div>
+                                @endforeach
+                            </div>
                         </div>
-                        <div class="sliderbar-content">
-                            <div class="row row-sliderbar">
+                        <div class="slider-footer">
+                            <div class="subtotal">
+                                <div class="row row-sliderbar-footer">
+                                    <div class="col-6"><span>Tạm tính:</span></div>
+                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
+                                </div>
+                                <div class="row row-sliderbar-footer">
+                                    <div class="col-6"><span>Phí vận chuyển</span></div>
+                                    <div class="col-6 text-right"><span></span></div>
+                                </div>
+                            </div>
+                            <div class="total">
+                                <div class="row row-sliderbar-footer">
+                                    <div class="col-6"><span>Tổng cộng:</span></div>
+                                    <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
+                                </div>
+                            </div>
+                            {{-- @php
+                            $vnd_to_usd = ($content->price * $content->qty);
+                            @endphp --}}
+                            {{-- <div>
+                                <div id="paypal-button"></div>
+                                <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
+                            </div> --}}
+                        </div>
+                    </div>
+                                @else
+                                    <h1 style="text-align: center;
+                                    margin-top: 25%;">Không có sản phẩm để thanh toán</h1>
+                                @endif
+                                @else
+                                <?php
+                                    $tongtien = 0;
+                                    $contents = Cart::content();
+                                    $dem1 = 0;
+                                ?>
                                 @foreach($contents as $content)
-                        <?php
-                        $tongtien +=($content->price * $content->qty);
-                       ?>
+                                    <?php $dem1++; ?>
+                                @endforeach
+                                @if($dem1 != 0)
+                                @foreach($contents as $content)
+                                    <?php
+                                    $tongtien +=($content->price * $content->qty);
+                                ?>
+                                <div class="sliderbar">
+                                    <div class="sliderbar-header">
+                                        <h2>Thông tin đơn hàng</h2>
+                                    </div>
+                                    <div class="sliderbar-content">
+                                        <div class="row row-sliderbar">
                                 <div class="col-4">
                                     <img src="{{asset(getLink('product',$content->options->image))}}" alt="" width="80%">
                                     <span class="notice">{{ $content->qty }}</span>
@@ -188,15 +285,21 @@
                                     <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
                             </div>
-                            @php
+                            {{-- @php
                             $vnd_to_usd = ($content->price * $content->qty);
-                            @endphp
-                            <div>
+                            @endphp --}}
+                            {{-- <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
+                    @else
+                    <h1 style="     text-align: center;
+                    margin-top: 50%;">Không có sản phẩm để thanh toán</h1>
+                    @endif
+                                @endif
+                                
                 </div>
                 </form>
             </div>

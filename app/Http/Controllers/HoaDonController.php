@@ -11,9 +11,11 @@ use App\TaiKhoan;
 use App\HoaDon;
 use App\ChiTietHoaDon;
 use App\ChiTietSanPham;
+use App\Giohang;
 use Carbon\Carbon;
 use PDF;
 use Session;
+use DB;
 
 class HoaDonController extends Controller
 {
@@ -110,7 +112,7 @@ class HoaDonController extends Controller
         }
         return redirect($vnp_Url);
         }
-        if(Auth::check()) {
+        if(Auth::check() and Auth::user()->admin != 1) {
             if(Auth::user()->dia_chi == null) {
                 $request->validate([
                     'dia_chi' => 'required'
@@ -137,22 +139,24 @@ class HoaDonController extends Controller
             $bill['trang_thai'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
-            $contents = Cart::content();
+            $gio_hangs = GioHang::where('tai_khoans_id',Auth::user()->id)->get();
             $loi_nhuan = 0;
             $tongtien = 0;
-            foreach($contents as $content) {
+            foreach($gio_hangs as $gio_hang) {
+                $giaban = $gio_hang->chiTietSanPham->sanpham->gia_ban*(100-$gio_hang->chiTietSanPham->sanpham->giam_gia)/100;
+                $giagoc = $gio_hang->chiTietSanPham->sanPham->gia_goc;
                 $bill_detail = new ChiTietHoaDon();
                 $bill_detail->hoa_dons_id = $bill_id;
-                $bill_detail->chi_tiet_san_phams_id = $content->id;
-                $bill_detail->so_luong = $content->qty; 
+                $bill_detail->chi_tiet_san_phams_id = $gio_hang->chi_tiet_san_phams_id;
+                $bill_detail->so_luong = $gio_hang->so_luong; 
+                $bill_detail->gia_goc = $giagoc;
+                $bill_detail->gia_ban = $giaban;
                 $update_ctsp = ChiTietSanPham::find($content->id);
                 $update_ctsp->so_luong -= $content->qty;
-                $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
-                $bill_detail->gia_ban = $content->price;
-                $tongtien += ($content->price*$content->qty);
-                $loi_nhuan += (($content->price - $update_ctsp->sanPham->gia_goc)*$content->qty);
                 $update_ctsp->save();
                 $bill_detail->save();
+                $tongtien += ($giaban*$gio_hang->so_luong);
+                $loi_nhuan += (($giaban - $giagoc)*$gio_hang->so_luong);
             }
             $add_loi_nhuan = HoaDon::find($bill_id);
             $add_loi_nhuan->loi_nhuan = $loi_nhuan;
@@ -439,5 +443,212 @@ class HoaDonController extends Controller
                                 }))
                                 ->get();
         return view('pages.my_bill_detail',compact('array'));
+    }
+    public function indexStatistic() {
+        $arrays = DB::table('chi_tiet_hoa_dons')
+                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                    ->get();
+        return view('admin.statistic.index',compact('arrays'));
+    }
+    public function statistic(Request $request) {
+        // dd($request->all());
+        if($request->thong_ke_theo != "ko") {
+            $dau_thang_nay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+            $dau_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+            $cuoi_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+
+
+            $sub_7_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(7)->toDateString();
+            $sub_365_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(365)->toDateString();
+
+            $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+            if($request->thong_ke_theo == '7ngay') {
+                $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                
+            }
+            if($request->thong_ke_theo == 'thangtruoc') {
+                $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                
+            }
+            if($request->thong_ke_theo == 'thangnay') {
+                $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                
+            }
+            if($request->thong_ke_theo == '365ngayqua') {
+                $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                
+            }
+        } else {
+            if(!empty($request->key_from_day)) {
+                if(!empty($request->key_to_day)) {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$request->key_from_day, $request->key_to_day])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                } else {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->key_from_day)
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                }
+            } else {
+                if(!empty($request->key_to_day)) {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->key_to_day)
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                } else {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                    ->get();
+                }
+            }
+        }
+        // if($request->key_from_day == null and $request->key_to_day = null and $request->thong_ke_theo == "ko") {
+        //     $arrays = DB::table('chi_tiet_hoa_dons')
+        //             ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+        //             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+        //             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+        //             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+        //             ->get();
+        //     echo "1";
+        // }
+        // else {
+        //     echo "2";
+        // }
+        $key_from_day = $request->key_from_day;
+        $key_to_day = $request->key_to_day;
+        $thong_ke_theo = $request->thong_ke_theo;
+        return view('admin.statistic.index',compact('arrays','key_from_day','key_to_day','thong_ke_theo'));
+    }
+    public function printStatistic() {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_statistic_convert());
+        return $pdf->stream();
+    }
+    public function print_statistic_convert() {
+        $arrays = DB::table('chi_tiet_hoa_dons')
+                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                    ->get();
+        return view('admin.statistic.form_print',compact('arrays'));
+    }
+    public function printStatisticKeyToDay($key_to_day) {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_statistic_key_to_day_convert($key_to_day));
+        return $pdf->stream();
+    }
+    public function print_statistic_key_to_day_convert($key_to_day) {
+        $arrays = DB::table('chi_tiet_hoa_dons')
+                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->whereDate('hoa_dons.ngay_lap_hd','<=',$key_to_day)
+                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                    ->get();
+        return view('admin.statistic.form_print_key_to_day',compact('arrays','key_to_day'));
+    }
+    public function printStatisticKeyFromDay($key_from_day) {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_statistic_key_from_day_convert($key_from_day));
+        return $pdf->stream();
+    }
+    public function print_statistic_key_from_day_convert($key_from_day) {
+        $arrays = DB::table('chi_tiet_hoa_dons')
+                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->whereDate('hoa_dons.ngay_lap_hd','>=',$key_from_day)
+                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                    ->get();
+        return view('admin.statistic.form_print_key_from_day',compact('arrays','key_from_day'));
+    }
+    public function printStatisticKeyFromToDay($key_from_day, $key_to_day) {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_statistic_key_from_to_day_convert($key_from_day, $key_to_day));
+        return $pdf->stream();
+    }
+    public function printStatisticThongKeTheo($thong_ke_theo) {
+        if($thong_ke_theo == '7ngay') {
+            $key_from_day = Carbon::now('Asia/Ho_Chi_Minh')->subDay(7)->toDateString();
+            $key_to_day = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        }
+        if($thong_ke_theo == 'thangtruoc') {
+            $key_from_day = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+            $key_to_day = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+        }
+        if($thong_ke_theo == 'thangnay') {
+            $key_from_day = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+            $key_to_day = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        }
+        if($thong_ke_theo == '365ngayqua') {
+            $key_from_day = Carbon::now('Asia/Ho_Chi_Minh')->subDay(365)->toDateString();
+            $key_to_day = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        }
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_statistic_key_from_to_day_convert($key_from_day, $key_to_day));
+        return $pdf->stream();
+    }
+    public function print_statistic_key_from_to_day_convert($key_from_day, $key_to_day) {
+        $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->whereBetween('hoa_dons.ngay_lap_hd',[$key_from_day, $key_to_day])
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+        return view('admin.statistic.form_print_key_from_to_day',compact('arrays','key_from_day','key_to_day'));
     }
 }

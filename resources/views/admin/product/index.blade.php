@@ -29,7 +29,7 @@
                        
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <select class="textbox" name="monthethao" id="monthethao">
+                        <select style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
                           <option value="">Môn thể thao</option>
                           <?php $monthethao = App\MonTheThao::all()  ?>
                           @foreach($monthethao as $i)
@@ -38,7 +38,7 @@
                         </select>
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <select class="textbox" name="nhasanxuat" id="nhasanxuat">
+                        <select class="textbox" style="border-radius: unset" name="nhasanxuat" id="nhasanxuat">
                           <option value="">Nhà sản xuất</option>
                           <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
                           @foreach($nhasanxuat as $i)
@@ -47,8 +47,8 @@
                         </select>
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <select class="textbox" name="loaisanpham" id="loaisanpham">
-                          <option value="">LoaiSanPham</option>
+                        <select class="textbox" style="border-radius: 0 3px 3px 0; border-left: unset" name="loaisanpham" id="loaisanpham">
+                          <option value="">loại sản phẩm</option>
                           <?php $loaisanpham = App\LoaiSanPham::all()  ?>
                           @foreach($loaisanpham as $i)
                             <option value="{{$i['id']}}">{{$i['ten_loai_san_pham']}}</option>
@@ -94,20 +94,67 @@
                               @endforeach
                             </td>
                             <td>
-
-                              @foreach($dsYeuThich as $like)
-                                @if($ds->id == $like->san_phams_id)
-                                  <span style="margin-right: 2px;">{{ $like->yeu_thich }}</span>
-                                @endif
-                              @endforeach
-                              <i style="color:#000" class="fas fa-heart"></i>
+                              <div class="yeu_thich">
+                                @foreach($dsYeuThich as $like)
+                                  @if($ds->id == $like->san_phams_id)
+                                    <span style="margin-right: 2px;">{{ $like->yeu_thich }}</span>
+                                  @endif
+                                @endforeach
+                                <i style="color:#000" class="fas fa-heart"></i>
+                                <div id="popover-catagories" class="popover">
+                                  <div class="arrow">
+                                  </div>
+                                  <ul style="margin-bottom: 0">
+                                    @foreach($listYeuThich as $like)
+                                      @if($ds->id == $like->san_phams_id)
+                                        <li style="padding: 4px;
+                                        list-style: none; font-size: 12px; ">{{ $like->taiKhoan->ho_ten }}</li>
+                                      @endif
+                                    @endforeach
+                                  </ul>
+                                </div>
+                              </div>
                             </td>
                             <td>
-                              @foreach($dsDanhGia as $rate)
-                                @if($ds->id == $rate->san_phams_id)
-                                <span style="margin-right: 2px;">{{round($rate->danh_gia,1)}}</span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
-                                @endif
-                              @endforeach
+                              <div class="danh_gia">
+                                @foreach($dsDanhGia as $rate)
+                                  @if($ds->id == $rate->san_phams_id)
+                                    <span style="margin-right: 2px;">{{round($rate->danh_gia,1)}}</span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+                                  @endif
+                                @endforeach
+                                <div id="popover-catagories" style="min-width: 200px;" class="popover">
+                                  <div class="arrow"></div>
+                                  <ul style="margin-bottom: 0">
+                                    @foreach($listDanhGia as $rate)
+                                      @if($ds->id == $rate->san_phams_id)
+                                        <li style="padding: 4px;
+                                        list-style: none; font-size: 12px; display:flex">
+                                          <div style="width: 50%">
+                                            {{ $rate->taiKhoan->ho_ten }}
+                                          </div>
+                                          <div style="width: 50%">
+                                            <div class='rating-stars text-center'>
+                                              <ul id='stars'>
+                                                @for($i=0; $i < 5; $i++)
+                                                  @if($i < $rate->diem)
+                                                    <li class='star'>
+                                                      <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                  @else
+                                                    <li class='star'>
+                                                      <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                  @endif
+                                                @endfor
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      @endif
+                                    @endforeach
+                                  </ul>
+                                </div>
+                              </div>
                             </td>
                             <td>
                               <?php

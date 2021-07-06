@@ -3,16 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Cart;
 use App\SanPham;
 use App\ChiTietSanPham;
 use App\Anh;
+use App\GioHang;
 use Session;
 
 class ThanhToanController extends Controller
 {
     public function index() {
-        return view('pages.pay');   
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $arrays = GioHang::where('tai_khoans_id',Auth::user()->id)
+                            ->with(array('chiTietSanPham' => function($query) {
+                                $query->with(array('sanPham' => function($querys) {
+                                    $querys->with(array('anh' => function($que) {
+                                            $que->where('anhchinh',1);
+                                    }));
+                                }));
+                            }))
+                            ->get();
+            return view('pages.pay', compact('arrays')); 
+        } else {
+            return view('pages.pay');   
+        }
     }
     public function postindex(Request $request) {
         echo 'mua hang lien';

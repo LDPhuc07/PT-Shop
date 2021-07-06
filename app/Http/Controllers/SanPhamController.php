@@ -132,11 +132,15 @@ class SanPhamController extends Controller
                                     ->groupBy('san_phams_id')
                                     ->get();
         }
-        
+        $list_yeu_thich = YeuThich::all();
+        $list_danh_gia = DanhGia::all();
         $dsSanPham = [
             'dsSanPham'=>$timkiem,
             'dsYeuThich'=>$yeu_thich,
-            'dsDanhGia'=>$danh_gia
+            'dsDanhGia'=>$danh_gia,
+            'listYeuThich'=>$list_yeu_thich,
+            'listDanhGia'=>$list_danh_gia
+
         ];
         // dd($dsSanPham['dsSanPham']);    
         return view('admin.product.index',$dsSanPham);

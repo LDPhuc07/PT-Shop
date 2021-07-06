@@ -48,6 +48,12 @@
             <p class="nav-text">Hóa Đơn</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.statistics') }}">
+            <i class="nav-icon fas fa-chart-bar"></i>
+            <p class="nav-text">Thống kê</p>
+            </a>
+        </li>
         </ul>
     </nav>
     </div>

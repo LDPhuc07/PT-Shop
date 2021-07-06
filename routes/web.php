@@ -88,6 +88,16 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
     Route::post('bill/search','HoaDonController@search')->name('admin.bill.search');
     
+    //thống kê
+    Route::get('statistics','HoaDonController@indexStatistic')->name('admin.statistics');
+    Route::post('statistics/search','HoaDonController@statistic')->name('admin.statistics.search');
+    Route::get('statistics/print','HoaDonController@printStatistic')->name('admin.statistics.print');
+    Route::get('statistics/printKeyToDay/{key_to_day}','HoaDonController@printStatisticKeyToDay');
+    Route::get('statistics/printKeyFromDay/{key_from_day}','HoaDonController@printStatisticKeyFromDay');
+    Route::get('statistics/printKeyFromToDay/{key_from_day}/{key_to_day}','HoaDonController@printStatisticKeyFromToDay');
+    Route::get('statistics/printThongKeTheo/{thong_ke_theo}','HoaDonController@printStatisticThongKeTheo');
+    
+    
 });
 
 Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');

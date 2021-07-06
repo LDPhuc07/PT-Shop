@@ -52,7 +52,7 @@
     <div class="header-btn"><a class="p-15" href="">Trang chủ</a></div>
     @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
-            <button class="p-15" id="account-nav">
+            <button style="padding: 14px" id="account-nav">
                 <img style="width: 30px" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh"></td>
                 {{ Auth::user()->ho_ten }}
             </button>
