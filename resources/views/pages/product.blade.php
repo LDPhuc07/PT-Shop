@@ -82,7 +82,7 @@
                         </li>
                       </ul>
                     </div>
-                    <div class="product__filter-size">
+                    {{-- <div class="product__filter-size">
                       <h4 class="product__filter-heading">Size <i class="fi-rs-minus" onclick="khonghienthidanhsach(3,`size`)" id="minus-3"></i> <i class="fi-rs-plus undisplay" onclick="khonghienthidanhsach(3,`size`)" id="plus-3"></i></h4>
                       <ul id= "size" class="product__filter-ckeckbox">
                         <li class="product__filter-item">
@@ -116,7 +116,7 @@
                           </label>
                         </li>
                       </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-9">
@@ -280,7 +280,7 @@
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price" id="price">';
                 html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
@@ -324,14 +324,27 @@
               
     });
     $('#tatcasanpham').append(html);
+    
     $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    $.each(divGiamGia, function(i,v){
+      var divGiamGia = $('.card-body').children('.sale-off');
+      
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+    });
+
+    $(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    console.log(pGiamGia);
+    $.each(pGiamGia, function(i,v){
       if(!Number($(v).attr('data-id')))
       {
         $(v).css('display','none');
       }
     });
+  });
   });
   }
 
@@ -388,12 +401,37 @@
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price" id="price">';
                 html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.gia_ban+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
-              html+='<a href="" class="icon-like" style="color: #000;';
-              html+='font-size: 20px;"><i class="far fa-heart"></i><i class="fas fa-heart"></i></a>';
+              html+='<div>'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 25px">'
+                  @foreach($yeu_thich as $like)
+                    if(product.id == {{ $like->san_phams_id }}) {
+                      html+='{{ $like->yeu_thich }}'
+                    }
+                  @endforeach
+                html+='</span>'
+              @if(Auth::check() and Auth::user()->admin != 1)
+                var is_liked = 0;
+                @foreach($is_like as $like)
+                  if({{ $like->san_phams_id }} == product.id) {
+                    is_liked = 1;
+                  }
+                @endforeach
+                if(is_liked == 1) {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                } else {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                }
+              @else
+                html+='<a class="icon-like" style="color: #ccc;'
+                html+='font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+              @endif
+              html+='</div>'
               html+='  </div>';
               html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
                 html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
@@ -404,12 +442,22 @@
               html+='</a>';
               html+='</div>';
               
+              
     });
     $('#tatcasanpham').html(html);
     $(document).ready(function() {
-    var divGiamGia = $('.card-body').children('.sale-off');
-    $.each(divGiamGia, function(i,v){
-      if(!Number($(v).attr('data-id')) )
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')) )
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+    $(document).ready(function() {
+    var pGiamGia = $('.product__price').children('.product__price-old');
+    $.each(pGiamGia, function(i,v){
+      if(!Number($(v).attr('data-id')))
       {
         $(v).css('display','none');
       }

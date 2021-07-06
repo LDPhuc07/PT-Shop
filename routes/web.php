@@ -116,6 +116,9 @@ Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@get
 Route::get('/news', function () {
     return view('pages.news');
 });
+Route::get('/order-success', function () {
+    return view('pages.oder_success');
+})->name('ordersuccess');
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
@@ -124,6 +127,7 @@ Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')-
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
+Route::get('/return-vnpay/{tkid}','HoaDoncontroller@return')->name('bill.return');
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');

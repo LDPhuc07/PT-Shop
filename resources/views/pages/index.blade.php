@@ -61,7 +61,11 @@
                 @endforeach
                 <div class="card-body">
                   <h4 class="card-title">{{$sanphamphobien['ten_san_pham']}}</h4>
-                  <p class="card-text custom__name-product" style="font-weight: 400;">{{$sanphamphobien['mo_ta']}}</p>
+                  <p class="card-text custom__name-product" style="font-weight: 400;">
+                    <?php 
+                    echo $sanphamphobien['mo_ta']
+                    ?>
+                  </p>
                   <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>

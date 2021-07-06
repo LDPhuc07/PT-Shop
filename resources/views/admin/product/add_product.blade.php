@@ -32,11 +32,9 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <label class="product-info-item-label" for="">Giảm giá<span class="repuired"> *</span></label>
-                <i class="fas fa-info"></i>
-                <input class="textbox" type="text" placeholder="Nhập giảm giá" name="giamgia">
-                <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
-                    
+                    <label class="product-info-item-label" for="">Giảm giá<span class="repuired">(%)</span></label>
+                    <i class="fas fa-info"></i>
+                    <input class="textbox" type="number" placeholder="Nhập giảm giá" name="giamgia">
                   </div>
                 </div>
               </div>

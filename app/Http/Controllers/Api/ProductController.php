@@ -34,8 +34,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('id','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -46,8 +46,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('id','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -56,8 +56,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('id','asc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -77,8 +77,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('id','desc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -89,8 +89,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('id','desc')
-                                ->offset($request->page*4)
-                                ->limit(4)
+                                ->offset($request->page*8)
+                                ->limit(8)
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->get();
@@ -99,8 +99,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                                 ->orderBy('id','desc')
-                                ->offset($request->page*4)
-                                ->limit(4)
+                                ->offset($request->page*8)
+                                ->limit(8)
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->get();
@@ -121,8 +121,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('id','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -133,8 +133,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('id','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -143,8 +143,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('id','asc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -170,8 +170,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('gia_ban','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -182,8 +182,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('gia_ban','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -192,8 +192,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('gia_ban','asc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -213,8 +213,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('gia_ban','desc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -225,8 +225,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('gia_ban','desc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -235,8 +235,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('gia_ban','desc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -258,8 +258,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('ten_san_pham','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -270,8 +270,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('ten_san_pham','asc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -280,8 +280,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('ten_san_pham','asc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -303,8 +303,8 @@ class ProductController extends Controller
                             ])
                         // ->where('mon_the_thaos_id ',$request->idmtt)    
                         ->orderBy('ten_san_pham','desc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -315,8 +315,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->orderBy('ten_san_pham','desc')
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -325,8 +325,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                     ->orderBy('ten_san_pham','desc')
-                    ->offset($request->page*4)
-                    ->limit(4)
+                    ->offset($request->page*8)
+                    ->limit(8)
                     ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                     }))->get();
@@ -345,8 +345,8 @@ class ProductController extends Controller
                             ['mon_the_thaos_id',$request->idmtt],
                             ]) 
                         ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                         }))->get();
@@ -356,8 +356,8 @@ class ProductController extends Controller
                 $data = SanPham::whereNull('deleted_at')
                         ->where('loai_san_phams_id',$request->idlsp)
                         ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                         }))->get();
@@ -366,8 +366,8 @@ class ProductController extends Controller
         else{
             $data = SanPham::whereNull('deleted_at')
                         ->whereBetween('gia_ban',[$request->priceFrom, $request->priceTo])
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                         $query->where('anhchinh',1);
                         }))->get();
@@ -391,8 +391,8 @@ class ProductController extends Controller
                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
                                 $query->whereIn('id',$arrayThuongHieu);
                             })
-                            ->offset($request->page*4)
-                            ->limit(4)
+                            ->offset($request->page*8)
+                            ->limit(8)
                             ->with(array('anh' => function($query) {
                                 $query->where('anhchinh',1);
                             }))->get();
@@ -404,8 +404,8 @@ class ProductController extends Controller
                         ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
                             $query->whereIn('id',$arrayThuongHieu);
                         })
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
@@ -416,8 +416,8 @@ class ProductController extends Controller
                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
                                 $query->whereIn('id',$arrayThuongHieu);
                             })
-                            ->offset($request->page*4)
-                            ->limit(4)
+                            ->offset($request->page*8)
+                            ->limit(8)
                             ->with(array('anh' => function($query) {
                                 $query->where('anhchinh',1);
                             }))->get();
@@ -432,8 +432,8 @@ class ProductController extends Controller
                         ->whereHas('chiTietSanPham', function($query) use ($key) {
                             $query->where('kich_thuoc',$key);
                         })
-                        ->offset($request->page*4)
-                        ->limit(4)
+                        ->offset($request->page*8)
+                        ->limit(8)
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();

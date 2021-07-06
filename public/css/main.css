@@ -150,6 +150,7 @@
     font-size: 20px;
     color: var(--black-color);
     margin-left: 10px;
+    position: relative;
 }
 .header__second__cart--icon:hover,    
 .header__second__like--icon:hover {
@@ -159,6 +160,16 @@
     padding: 6px 7px 6px 7px;
 }
 .header__second__cart--notice {
+    position: absolute;
+    background-color: #d9121f;
+    color: var(--white-color);
+    padding: 1px 6px;
+    font-size: 10px;
+    border-radius: 50%;
+    top: -4px;
+    right: -8px;
+}
+.header__second__like--notice {
     position: absolute;
     background-color: #d9121f;
     color: var(--white-color);
