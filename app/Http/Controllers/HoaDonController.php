@@ -53,8 +53,8 @@ class HoaDonController extends Controller
                 $bill_detail->so_luong = $gio_hang->so_luong; 
                 $bill_detail->gia_goc = $giagoc;
                 $bill_detail->gia_ban = $giaban;
-                $update_ctsp = ChiTietSanPham::find($content->id);
-                $update_ctsp->so_luong -= $content->qty;
+                $update_ctsp = ChiTietSanPham::find($gio_hang->chi_tiet_san_phams_id);
+                $update_ctsp->so_luong -= $gio_hang->so_luong;
                 $update_ctsp->save();
                 $bill_detail->save();
                 $tongtien += ($giaban*$gio_hang->so_luong);
@@ -271,8 +271,8 @@ class HoaDonController extends Controller
                 $bill_detail->so_luong = $gio_hang->so_luong; 
                 $bill_detail->gia_goc = $giagoc;
                 $bill_detail->gia_ban = $giaban;
-                $update_ctsp = ChiTietSanPham::find($content->id);
-                $update_ctsp->so_luong -= $content->qty;
+                $update_ctsp = ChiTietSanPham::find($gio_hang->chi_tiet_san_phams_id);
+                $update_ctsp->so_luong -= $gio_hang->so_luong;
                 $update_ctsp->save();
                 $bill_detail->save();
                 $tongtien += ($giaban*$gio_hang->so_luong);

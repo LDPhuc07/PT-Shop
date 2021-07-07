@@ -67,7 +67,7 @@
             <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span id="header__second__like--notice" class="header__second__like--notice"></span></a>
             
           @else
-          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span id="header__second__like--notice" class="header__second__like--notice"></span></a>
+          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i></a>
           @endif
         </div>
         <div class="header__second__cart">
