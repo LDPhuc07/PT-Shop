@@ -68,6 +68,9 @@
             $(`#pro-like-item-${sp_id}`).hide();
             
           }
+          var like_header = parseInt($(`#header__second__like--notice`).text());
+          like_header--;
+          $(`#header__second__like--notice`).html(like_header.toString());
         }
       });
     }

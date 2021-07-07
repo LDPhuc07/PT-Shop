@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cart;
+use DB;
 use App\SanPham;
 use App\ChiTietSanPham;
 use App\Anh;
@@ -53,6 +54,16 @@ class GioHangController extends Controller
                     $update->save();
                 }
             }
+            $arrays = GioHang::where('tai_khoans_id',Auth::user()->id)->where('chi_tiet_san_phams_id',$ctsp->id)
+                                    ->with(array('chiTietSanPham' => function($query) {
+                                        $query->with(array('sanPham' => function($querys) {
+                                            $querys->with(array('anh' => function($que) {
+                                                    $que->where('anhchinh',1);
+                                            }));
+                                        }));
+                                    }))
+                                    ->first();
+            return view('pages.alert_cart',compact('arrays'));
         } else {
             $contents = Cart::content();
             $dem = 0;
@@ -99,8 +110,10 @@ class GioHangController extends Controller
                     }
                 }
             }
+            $arrays = Cart::content()->where('id',$ctsp->id);
+            return view('pages.alert_cart',compact('arrays'));
         }
-        return redirect()->route('cart.index');
+        // return redirect()->route('cart.index');
         // if($content->id != null) {
         //     $data['id'] = $ctsp->id;
         //     $data['qty'] = $request->so_luong;

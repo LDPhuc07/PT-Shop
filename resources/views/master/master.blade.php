@@ -75,7 +75,29 @@
     <div class="zalo-chat-widget" data-oaid="813275282970584175" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420"></div>
 
   <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+  <script>
+    $(document).ready(function() {
+      @if(Auth::check() and Auth::user()->admin != 1)
+        $.ajax({
+          url:"header-like",
+          method: "GET",
+          success:function(result) {
+            $(`#header__second__like--notice`).html(result.toString());
 
+          }
+        });
+      @endif
+
+      $.ajax({
+        url:"header-cart",
+        method: "GET",
+        success:function(result) {
+          $(`#header__second__cart--notice`).html(result.toString());
+
+        }
+      });
+    });
+  </script>
 
   {{-- thanh toán online --}}
   

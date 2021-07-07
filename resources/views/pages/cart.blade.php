@@ -179,6 +179,14 @@
         }).done(function(response) {
           $("#cart-content").empty();
           $("#cart-content").html(response);
+          $.ajax({
+            url:"header-cart",
+            method: "GET",
+            success:function(result) {
+              $(`#header__second__cart--notice`).html(result.toString());
+    
+            }
+          });
         });
       }
   </script>

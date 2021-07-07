@@ -222,13 +222,13 @@
                                     <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
                             </div>
-                            {{-- @php
-                            $vnd_to_usd = ($content->price * $content->qty);
-                            @endphp --}}
-                            {{-- <div>
+                            @php
+                            $vnd_to_usd = $tongtien;
+                            @endphp
+                            <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                                 @else
@@ -285,13 +285,13 @@
                                     <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                 </div>
                             </div>
-                            {{-- @php
-                            $vnd_to_usd = ($content->price * $content->qty);
-                            @endphp --}}
-                            {{-- <div>
+                            @php
+                            $vnd_to_usd = $tongtien;
+                            @endphp
+                            <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                     @else

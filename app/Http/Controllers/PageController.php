@@ -10,8 +10,10 @@ use App\LoaiSanPham;
 use App\YeuThich;
 use App\HoaDon;
 use App\DanhGia;
+use App\GioHang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Cart;
 use DB;
 
 class PageController extends Controller
@@ -254,15 +256,15 @@ class PageController extends Controller
         // }
     }
     public function indexRating() {
-        $check_bills = HoaDon::where('tai_khoans_id', Auth::user()->id)
-                                        ->whereHas('chiTietHoaDon', function($query) {
-                                            $query->whereHas('chiTietSanPham', function($que) {
-                                                $que->where('san_phams_id', 100);
-                                            });
-                                        })
-                                        ->get();
-        $check_rate = DanhGia::where('tai_khoans_id', 3)->where('san_phams_id', 1)->first();
-        return view('pages.rating', compact('check_rate','check_bills'));
+        $arrays = DB::table('gio_hangs')->select('chi_tiet_san_phams.mau as mau','chi_tiet_san_phams.kich_thuoc as kich_thuoc','san_phams.ten_san_pham as ten_san_pham', 'anhs.link as link','gio_hangs.so_luong as so_luong')
+                                ->join('chi_tiet_san_phams','gio_hangs.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                                ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                                ->join('anhs','anhs.san_phams_id','=','san_phams.id')
+                                ->where('gio_hangs.tai_khoans_id',3)
+                                ->where('gio_hangs.chi_tiet_san_phams_id',10)
+                                ->where('anhs.anhchinh',1)
+                                ->first();
+            dd($arrays);
     }
     public function rating($sao, $id, $sanpham) {
         $check_rate = DanhGia::where('tai_khoans_id', $id)->where('san_phams_id', $sanpham)->first();
@@ -314,6 +316,27 @@ class PageController extends Controller
         }
         else {
             return view('pages.search_view', compact('yeu_thich','danh_gia','dsSanPhamSearch'));
+        }
+    }
+    public function headerLike() {
+        $yeu_thich = YeuThich::select(array(DB::raw('COUNT(id) as yeu_thich')))
+                                ->where('tai_khoans_id', Auth::user()->id)
+                                ->first();
+        echo $yeu_thich->yeu_thich;
+    }
+    public function headerCart() {
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $gio_hang = GioHang::select(array(DB::raw('COUNT(id) as gio_hang')))
+                                    ->where('tai_khoans_id', Auth::user()->id)
+                                    ->first();
+            echo $gio_hang->gio_hang;
+        } else {
+            $gio_hangs = Cart::content();
+            $dem = 0;
+            foreach($gio_hangs as $gio_hang) {
+                $dem++;
+            }
+            echo $dem;
         }
     }
 }

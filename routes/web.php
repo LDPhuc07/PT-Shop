@@ -127,9 +127,11 @@ Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')-
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
-Route::get('/return-vnpay/{tkid}','HoaDoncontroller@return')->name('bill.return');
+Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@NotAcc')->name('bill.return');
+Route::get('/return-vnpay','HoaDoncontroller@return')->name('bill.return');
 // Auth::routes();
-
+Route::get('/header-like','PageController@headerLike')->name('header.like');
+Route::get('/header-cart','PageController@headerCart')->name('header.cart');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/cart', 'GioHangController@index')->name('cart.index');
@@ -152,3 +154,4 @@ Route::get('/dislike-product-detail-splq/{sp_id}/{tk_id}','PageController@dislik
 
 Route::get('/rating','PageController@indexRating');
 Route::get('/rating/create/{sao}/{id}/{sanpham}','PageController@rating');
+

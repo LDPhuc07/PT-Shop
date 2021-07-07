@@ -294,7 +294,6 @@
                 <input value="Hết hàng" type="button" class="shopnow">
               @endif
             </div>
-            <input type="text" placeholder="Nhấn vào đây" id="modalNhan" onclick="fadeInModal()">
           </div>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
@@ -447,14 +446,14 @@
 </div>
 <!-- end  product relate to-->
 {{-- alert cart --}}
-<div class="alert" style="display:none">
+<div id="alert-cart" class="alert" style="display:none">
   <div class="alert__heading">
       <h4>Thêm vào giỏ hàng</h4>
   </div>
   <div class="alert__body">
       <img src="./adirunner.jpg" alt="" class="alert__body-img">
       <div>
-          <h5 class="alert__body-name">Adidas stan smith</h5>
+          <h5 class="alert__body-name"></h5>
           <span class="alert__body-amount">Số lượng: 1</span>
           <h6 class="alert__body-price">2.000.000 VNĐ</h6>
       </div>
@@ -492,9 +491,28 @@
           $('#contactForm').submit();
         }
         function congSoLuong1() {
-          $('#contactForm').attr('action', '{{ route("cart.save") }}');
-          $('#addcart').attr('type', 'submit');
-          $('#contactForm').submit();
+
+          var form = $('#contactForm');
+          form.attr('action', '{{ route("cart.save") }}');
+          var url = form.attr('action');
+
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+          }).done(function(response) {
+            $("#alert-cart").empty();
+            $("#alert-cart").html(response);
+            $.ajax({
+              url:"header-cart",
+              method: "GET",
+              success:function(result) {
+                $(`#header__second__cart--notice`).html(result.toString());
+      
+              }
+            });
+            fadeInModal();
+          });
         }
         function truSoLuong(){
           var result = document.getElementById('textsoluong').value;
@@ -604,6 +622,9 @@
         var like = parseInt($(`#luot-like-${sp_id}`).text());
         like--;
         $(`.luot-like-${sp_id}`).html(like.toString());
+        var like_header = parseInt($(`#header__second__like--notice`).text());
+        like_header--;
+        $(`#header__second__like--notice`).html(like_header.toString());
       }
       else {
         $.ajax({
@@ -618,6 +639,9 @@
           var like = parseInt($(`#luot-like-${sp_id}`).text());
         }
         like++;
+        var like_header = parseInt($(`#header__second__like--notice`).text());
+        like_header++;
+        $(`#header__second__like--notice`).html(like_header.toString());
         $(`.luot-like-${sp_id}`).html(like.toString());
       }
     }

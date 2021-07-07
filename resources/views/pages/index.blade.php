@@ -387,9 +387,10 @@
       $(`.like-${sp_id}`).removeClass('den');
       var like = parseInt($(`#luot-like-${sp_id}`).text());
       like--;
+      var like_header = parseInt($(`#header__second__like--notice`).text());
+      like_header--;
+      $(`#header__second__like--notice`).html(like_header.toString());
       $(`.luot-like-${sp_id}`).html(like.toString());
-
-      console.log(like);
     }
     else {
       $.ajax({
@@ -404,8 +405,10 @@
         var like = parseInt($(`#luot-like-${sp_id}`).text());
       }
       like++;
+      var like_header = parseInt($(`#header__second__like--notice`).text());
+      like_header++;
+      $(`#header__second__like--notice`).html(like_header.toString());
       $(`.luot-like-${sp_id}`).html(like.toString());
-      console.log(like);
     }
   }
   

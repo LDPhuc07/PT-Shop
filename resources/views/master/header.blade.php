@@ -64,24 +64,17 @@
         </form>
         <div class="header__second__like">
           @if(Auth::check() and Auth::user()->admin != 1)
-            <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span class="header__second__like--notice">2</span></a>
+            <a href="{{ route('listlike') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span id="header__second__like--notice" class="header__second__like--notice"></span></a>
             
           @else
-          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span class="header__second__like--notice">2</span></a>
+          <a href="{{ route('accounts.login') }}" class="header__second__like--icon"><i class="fi-rs-heart"></i><span id="header__second__like--notice" class="header__second__like--notice"></span></a>
           @endif
         </div>
         <div class="header__second__cart">
           <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
             <i class="fi-rs-shopping-bag"></i>
-            <span class="header__second__cart--notice"><?php
-              $contents = Cart::content();
-              $i = 0;
-            ?>
-            @foreach($contents as $content)
-              <?php $i++ ?>
-            @endforeach
-            {{ $i }}
-          </span>
+            <span id="header__second__cart--notice" class="header__second__cart--notice">
+            </span>
           </a>
         </div>
       </div>
