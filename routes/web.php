@@ -128,7 +128,7 @@ Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
 Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@NotAcc')->name('bill.return');
-Route::get('/return-vnpay','HoaDoncontroller@return')->name('bill.return');
+Route::get('/return-vnpay/{id}','HoaDoncontroller@return')->name('bill.return');
 // Auth::routes();
 Route::get('/header-like','PageController@headerLike')->name('header.like');
 Route::get('/header-cart','PageController@headerCart')->name('header.cart');

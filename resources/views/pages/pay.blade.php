@@ -225,6 +225,7 @@
                             @php
                             $vnd_to_usd = $tongtien;
                             @endphp
+                            {{ $vnd_to_usd }}
                             <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
@@ -288,6 +289,7 @@
                             @php
                             $vnd_to_usd = $tongtien;
                             @endphp
+                            {{ $vnd_to_usd }}
                             <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
