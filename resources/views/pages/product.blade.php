@@ -153,7 +153,33 @@
         </div>
     </div>
 </div>
-   
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Thông báo</h4>
+        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a type="button" class="btn btn-secondary " data-dismiss="modal">Đóng</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 @endsection
 @section('js')
 <script src="js/main.js"></script>
@@ -307,8 +333,14 @@
                   html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 }
               @else
+                  <?php
+                    if(!Auth::check())
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
                 html+='<a class="icon-like" style="color: #ccc;'
-                html+='font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                html+='font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
               @endif
               html+='</div>'
               html+='  </div>';
@@ -428,8 +460,14 @@
                   html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 }
               @else
+                  <?php
+                    if(!Auth::check())
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
                 html+='<a class="icon-like" style="color: #ccc;'
-                html+='font-size: 25px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                html+='font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
               @endif
               html+='</div>'
               html+='  </div>';

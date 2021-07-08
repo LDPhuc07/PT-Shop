@@ -334,8 +334,14 @@
                   font-size: 20px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif
                   @else
+                  <?php
+                    if(!Auth::check())
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
                   <a class="icon-like" style="color: #ccc;
-                  font-size: 20px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                  font-size: 20px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                   @endif
         </div>
         </div>
@@ -354,7 +360,11 @@
       <div class="col-11">
         <h3 class="name__product">{{$sanpham->ten_san_pham}}</h3>
         <h3>Thông số kĩ thuật: </h3>
-        <p>{{$sanpham->mo_ta}}</p>
+        <p>
+          <?php
+           echo $sanpham->mo_ta
+          ?>
+        </p>
       </div>
     </div>
   </div>
@@ -387,6 +397,7 @@
     <h3 class="product__relateto-heading">Sản phẩm liên quan</h3>
     <div id="like_splq" class="row">
       @foreach($sanphamlienquans as $sanphamlienquan)
+      <a href="{{route('product_detail',['id'=>$sanphamlienquan->id])}}" class="product__new-item">
         <div class="col-3">
           <div class="card" style="width: 100%">
             @foreach($sanphamlienquan->anh as $anh)
@@ -427,7 +438,7 @@
                       @endif
                     @else
                     <a class="icon-like" style="color: #ccc;
-                    font-size: 18px;" href="{{ route('accounts.logout') }}" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 18px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif
               </div>
               <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
@@ -437,6 +448,7 @@
             </div>
           </div>
         </div>
+      </a>
       @endforeach
     </div>
     <div class="seemore">
@@ -465,7 +477,31 @@
 <div class="overlay" style="display: none" onclick="fadeout()">
 
 </div>
-
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Thông báo</h4>
+        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a type="button" class="btn btn-secondary " data-dismiss="modal">Đóng</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
 {{-- end alert cart --}}
 @endsection
 @section('js')
@@ -787,7 +823,7 @@
         let html ='';
         $.each(binhluans,function(index, binhluan){
             html+='<div class="comment">';
-              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluan.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluan.tai_khoan.ho_ten+'</h4>';
@@ -805,7 +841,7 @@
  
         // $.each(binhluans,function(index, binhluan){
            let html='<div class="comment">';
-              html+='<img class="comment-img" src="./assets/img/product/noavatar.png" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluan.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluans.tai_khoan.ho_ten+'</h4>';
@@ -826,7 +862,7 @@
           page = 0;
         }
         var cmt = $('#cmt').val();
-        var idkh = {{Auth::id()}};
+        var idkh = {{Auth::id() ?? 0}};
 
         $.ajax({
           type: "post",

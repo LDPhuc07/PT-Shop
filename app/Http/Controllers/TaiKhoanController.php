@@ -103,11 +103,17 @@ class TaiKhoanController extends Controller
         }
     }
     public function postDangNhap(DangNhapRequest $requests) {
+        
         $email = $requests->email;
         $password = $requests->mat_khau;
         $remember = $requests->remember;
         if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
             if(Auth::user()->trang_thai == 1) {
+                if(Session::has('url previous')) {
+                    $url_dn = Session::get('url previous');
+                    Session::forget('url previous');
+                    return redirect($url_dn);
+                }
                 return redirect()->route('index');
             }
             else {

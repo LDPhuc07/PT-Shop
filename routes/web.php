@@ -101,7 +101,7 @@ Route::group(['prefix' => 'admin'], function() {
     
     
 });
-
+Route::get('/reset-password','ForgotPasswordController@getFormResetPassword')->name('resertPassowrd');
 Route::get('/sign-up','TaiKhoanController@getDangKy')->name('accounts.sign-up');
 Route::post('/sign-up','TaiKhoanController@postDangKy');
 Route::get('/login', 'TaiKhoanController@getDangNhap')->name('accounts.login');

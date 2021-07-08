@@ -12,7 +12,7 @@
          <form action="" method="POST" class="form" >
            @csrf
             <h3 class="heading">ĐĂNG NHẬP</h3>
-            <a href="" class="form__forgot-password">Bạn quên mật khẩu?</a>
+            <a href="{{route('resertPassowrd')}}" class="form__forgot-password">Bạn quên mật khẩu?</a>
             <div class="form-group">
               <label for="email" class="form-label">Email</label>
               <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
@@ -82,6 +82,34 @@
           </ul>
           <a href="sign-up"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Bạn quên mật khẩu ?</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <h5>Nhập địa chỉ email của bạn phía dưới, và nếu tài khoản tồn tại, chúng tôi sẽ gửi cho bạn một đường dẫn để đặt lại mật khẩu</h5>
+          <input type="email" placeholder="Nhập mật khẩu"> 
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+         
+          <a href="{{ route('resertPassword') }}" type="button" class="btn btn-secondary">
+            Đặt lại mật khẩu
+          </a>
+        </div>
+        
       </div>
     </div>
   </div>
