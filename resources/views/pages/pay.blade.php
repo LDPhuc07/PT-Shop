@@ -21,9 +21,15 @@
                                     <h2>Thông tin giao hàng</h2>
                                 </div>
                             <div class="main-customer-info">
-                                {{-- <div class="main-customer-info-img">
+                                @if(Auth::check() and Auth::user()->admin != 1)
+                                <div class="main-customer-info-img">
                                     <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
-                                </div> --}}
+                                </div>
+                                @else
+                                <div class="main-customer-info-img" style="display:none">
+                                    <img src="{{asset(getLink('anh-dai-dien','no-image.png'))}}" alt="" width="60px" height="60px">
+                                </div>
+                                @endif
                                 @if(Auth::check() and Auth::user()->admin != 1)
                                 <div class="main-customer-info-logged">
                                     <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
@@ -123,7 +129,13 @@
                         <div style="margin-top:20px;font-size: 16px;color:black">
                             <label for="" style="font-weight:bold">Chọn Phương thức thanh toán khác:</label>
                         </br>
-                            <input type="checkbox" name="payment">   Thanh toán VnPay
+                        <div style="display:flex;justify-content: space-between;">
+                            <div style="display:flex;align-items: center;">
+                                <input type="radio" name="payment" style="margin-right:5px" >
+                                <span>Thanh toán VnPay</span>
+                            </div>
+                            <img src="{{asset(getLink('logo','vn.png'))}}" alt="" style="width:50%;height:50px">
+                        </div>
                         </div>
                         <div class="main-footer">
                             <div class="continue">
@@ -225,7 +237,6 @@
                             @php
                             $vnd_to_usd = $tongtien;
                             @endphp
-                            {{ $vnd_to_usd }}
                             <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
@@ -289,7 +300,6 @@
                             @php
                             $vnd_to_usd = $tongtien;
                             @endphp
-                            {{ $vnd_to_usd }}
                             <div>
                                 <div id="paypal-button"></div>
                                 <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
