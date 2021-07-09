@@ -18,19 +18,31 @@
                     <div class="search">
                       <form action="{{ route('admin.accounts.search') }}" method="POST">
                         @csrf
-                        <input class="search-txt" type="text" placeholder="Search.." name="search">
-                        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                        <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại" name="search">
                     </div>
-                    <div class="group-filter-btn">
-                      <label style="width: 120px;
+                    <div style="margin-right: 16px" class="group-filter-btn">
+                      <label style="width: 115px;
                       position: relative;
                       top: 6px;">Loại tài khoản: </label>
-                      <select style="width: 170px;" name="admin">
+                      <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="admin">
                         <option value="">--Chọn--</option>
                         <option value="1">Admin</option>
                         <option value="0">Người dùng</option>
                       </select>
                     </div>
+                    <div style="margin-right: 16px" class="group-filter-btn">
+                      <label style="width: 90px;
+                      position: relative;
+                      top: 6px;">Trạng thái: </label>
+                      <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai">
+                        <option value="">--Chọn--</option>
+                        <option value="0">Đã khóa</option>
+                        <option value="1">Đang hoạt động</option>
+                      </select>
+                    </div>
+                    <input type="submit" style="color: #fff;
+                      background-color: #0069d9;
+                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
                   </form>
                   </div>
                   <div id="ds-taikhoan" class="ds-sanpham-div">

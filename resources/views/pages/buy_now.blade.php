@@ -120,6 +120,12 @@
                             </div>
                                 @endif
                         </div>
+                        <div style="margin-top:20px;font-size: 16px;color:black">
+                            <label for="" style="font-weight:bold">Chọn Phương thức thanh toán khác:</label>
+                        </br>
+                            <input type="checkbox" name="payment">   Thanh toán VnPay
+                        </div>
+
                         <div class="main-footer">
                             <div class="continue">
                                 <a href="">
@@ -128,7 +134,11 @@
                                 </a>
                             </div>
                             <div class="pay">
-                                <button class="btn-pay">Thanh toán</button>
+                                @if(Session::has('ten_san_pham'))
+                                <button type="submit" class="btn-pay">Thanh toán</button>
+                                @else
+                                <button type="button" class="btn-pay">Thanh toán</button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -169,15 +179,24 @@
                                     <div class="col-6 text-right"><span></span></div>
                                 </div>
                             </div>
+                            <?php $tongtien = 0 ?>
                             <div class="total">
                                 <div class="row row-sliderbar-footer">
                                     <div class="col-6"><span>Tổng cộng:</span></div>
                                     <div class="col-6 text-right">
                                         @if(Session::has('ten_san_pham'))
                                         <span>{{number_format($data['gia'] * $data['so_luong'],0,',','.').' '.'VNĐ'}}</span>
+                                        <?php $tongtien = $data['gia'] * $data['so_luong'] ?>
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                            @php
+                            $vnd_to_usd = $tongtien;
+                            @endphp
+                            <div>
+                                <div id="paypal-button"></div>
+                                <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
                             </div>
                         </div>
                     </div>

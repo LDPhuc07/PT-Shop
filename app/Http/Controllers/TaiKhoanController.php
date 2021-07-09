@@ -165,6 +165,10 @@ class TaiKhoanController extends Controller
         $array = ['arrays'=>TaiKhoan::paginate(5)];
         return view('admin.account.index', $array);
     }
+    public function getSearch() {
+        $array = ['arrays'=>TaiKhoan::paginate(5)];
+        return redirect('admin/accounts');
+    }
     public function lock($id) {
         $new = TaiKhoan::find($id);
         $new->trang_thai = false;
@@ -280,82 +284,58 @@ class TaiKhoanController extends Controller
         return redirect()->route('index');
     }
     public function quanLyTaiKhoan($id) {
-        $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
+        $array = ['arrays'=>TaiKhoan::where('id',$id)->get()];
         return view('pages.account',$array);
     }
     public function DoiMatKhau($id) {
-        $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
+        $array = ['arrays'=>TaiKhoan::where('id',$id)->get()];
         return view('pages.change_password',$array);
     }
     public function search(Request $requests) {
         $key = $requests->search;
         $key_admin = $requests->admin;
-        $query = TaiKhoan::Where(function ($a) use ($key, $key_admin)
-         {
-            
-                                    if($key_admin != 'null')
-                                    {
-                                        $a->where('ho_ten','LIKE','%'.$key.'%');
-                                        // dd(!empty($key_admin));
-                                        if($key_admin == '1')
-                                        {
-                                            $a->where('admin',true);  
-                                        }
-                                        if($key_admin == '0')
-                                        {
-                                            $a->where('admin',false);
-                                        }
-                       
-                                    }
-                                    if($key_admin == 'null')
-                                    {
-                                        $a->where('ho_ten','LIKE','%'.$key.'%');
-                                    }
-                                   
-        })          
-        ->orWhere(function ($a) use ($key, $key_admin)
-        {
-                                if($key_admin != 'null')
-                                    {
-                                        $a->where('email',$key);
-                                        // dd(!empty($key_admin));
-                                        if($key_admin == '1')
-                                        {
-                                            $a->where('admin',true);  
-                                        }
-                                        if($key_admin == '0')
-                                        {
-                                            $a->where('admin',false);
-                                        }
-                       
-                                    }
-                                if($key_admin == 'null')
-                                {
-                                    $a->where('email','LIKE',$key);
-                                } 
-        })
-        ->orWhere(function ($a) use ($key, $key_admin)
-         {
-                                    if($key_admin != 'null')
-                                    {
-                                        $a->where('so_dien_thoai','LIKE','%'.$key.'%');
-                                        // dd(!empty($key_admin));
-                                        if($key_admin == '1')
-                                        {
-                                            $a->where('admin',true);  
-                                        }
-                                        if($key_admin == '0')
-                                        {
-                                            $a->where('admin',false);
-                                        }
-
-                                    }
-                                    if($key_admin == 'null')
-                                    {
-                                            $a->where('so_dien_thoai','LIKE','%'.$key.'%');
-                                    } 
-                                     
-        });
+        $key_trang_thai = $requests->trang_thai;
+        if($requests->admin == null) {
+            if($key_trang_thai == null) {
+                $query = TaiKhoan::where(
+                    function($que) use ($key) {
+                        $que->where('ho_ten','LIKE','%'.$key.'%');
+                        $que->orwhere('email','LIKE','%'.$key.'%');
+                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                    }
+                );
+            } else {
+                $query = TaiKhoan::where(
+                    function($que) use ($key) {
+                        $que->where('ho_ten','LIKE','%'.$key.'%');
+                        $que->orwhere('email','LIKE','%'.$key.'%');
+                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                    }
+                )
+                ->where('trang_thai',$key_trang_thai);
+            }
+        } else {
+            if($key_trang_thai == null) {
+                $query = TaiKhoan::where(
+                    function($que) use ($key) {
+                        $que->where('ho_ten','LIKE','%'.$key.'%');
+                        $que->orwhere('email','LIKE','%'.$key.'%');
+                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                    }
+                )
+                ->where('admin',$key_admin);
+            } else {
+                $query = TaiKhoan::where(
+                    function($que) use ($key) {
+                        $que->where('ho_ten','LIKE','%'.$key.'%');
+                        $que->orwhere('email','LIKE','%'.$key.'%');
+                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                    }
+                )
+                ->where('admin',$key_admin)
+                ->where('trang_thai',$key_trang_thai);
+            }
+        }
         $array = ['arrays'=> $query->paginate(5)];
         // dd($array);
         return view('admin.account.index', $array);

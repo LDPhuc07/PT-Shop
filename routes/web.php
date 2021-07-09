@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
     Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::post('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
+    Route::get('/accounts/search','TaiKhoanController@getSearch');
     Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
     Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
@@ -87,6 +88,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('bill/check-bill/{id}','HoaDonController@checkBill')->name('admin.bill.check-bill');
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
     Route::post('bill/search','HoaDonController@search')->name('admin.bill.search');
+    Route::get('bill/search','HoaDonController@getSearch');
     
     //thống kê
     Route::get('statistics','HoaDonController@indexStatistic')->name('admin.statistics');
@@ -127,8 +129,10 @@ Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')-
 Route::put('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
-Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@NotAcc')->name('bill.return');
+Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@returnNotAcc')->name('bill.return');
 Route::get('/return-vnpay/{id}','HoaDoncontroller@return')->name('bill.return');
+Route::get('/return-buy-now-vnpay-not-acc/{tkid}','HoaDoncontroller@returnBuyNowNotAcc');
+Route::get('/return-buy-now-vnpay/{id}','HoaDoncontroller@returnBuyNow');
 // Auth::routes();
 Route::get('/header-like','PageController@headerLike')->name('header.like');
 Route::get('/header-cart','PageController@headerCart')->name('header.cart');

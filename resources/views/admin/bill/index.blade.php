@@ -6,12 +6,7 @@
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
-            <h3>Tài khoản</h3>
-          </div>
-          <div class="add-pro">
-            <a href="admin/sign-up">
-              <p>Đăng ký</p>
-            </a>
+            <h3>Hóa đơn</h3>
           </div>
         </div>
         <div class="row">
@@ -21,8 +16,7 @@
                     @csrf
                     <div class="head-table">
                       <div class="search">
-                          <input class="search-txt" name="key_search" type="text" placeholder="Search..">
-                          <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                          <input class="search-txt" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">
                       </div>
                       <div class="group-filter-btn">
                         <label style="width: 211px;
@@ -30,8 +24,21 @@
                         top: 6px;">Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">
                         <label style="width: 242px;
                         position: relative;
-                        top: 6px;">Đến ngày: </label><input type="text" id="datepicker2" name="key_to_day" class="form-control">
+                        top: 6px;">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
                       </div>
+                      <div style="margin-right: 16px;" class="group-filter-btn">
+                        <label style="width: 75px;
+                        position: relative;
+                        top: 6px;">Chốt đơn: </label>
+                        <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="chot_don">
+                          <option value="">--Chọn--</option>
+                          <option value="1">Đã chốt</option>
+                          <option value="0">Chưa chốt</option>
+                        </select>
+                      </div>
+                      <input type="submit" style="color: #fff;
+                      background-color: #0069d9;
+                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
                     </div>
                   </form>
                   <div id="ds-hoa-don-div" class="ds-sanpham-div">
