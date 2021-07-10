@@ -420,7 +420,7 @@
     });
     }
     
-    function render(products){
+  function render(products){
     
     let html ='';
     
@@ -493,14 +493,14 @@
       });
     });
     $(document).ready(function() {
-    var pGiamGia = $('.product__price').children('.product__price-old');
-    $.each(pGiamGia, function(i,v){
-      if(!Number($(v).attr('data-id')))
-      {
-        $(v).css('display','none');
-      }
+      var pGiamGia = $('.product__price').children('.product__price-old');
+      $.each(pGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
     });
-  });
   }
   $('.dropdown-item').on("click",function(x){
     console.log($( x['currentTarget']).text());

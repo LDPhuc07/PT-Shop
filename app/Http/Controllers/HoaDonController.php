@@ -237,7 +237,7 @@ class HoaDonController extends Controller
         $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
         $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
         $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-vnpay-buy_now/{$id}";
+        $vnp_Returnurl = "http://localhost:8000/return-vnpay/{$id}";
         $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
         $vnp_OrderType = 'billpayment';
@@ -414,7 +414,7 @@ class HoaDonController extends Controller
         $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
         $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
         $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-vnpay-not-acc/{{$check_account->id}}";
+        $vnp_Returnurl = "http://localhost:8000/return-vnpay-not-acc/{$check_account->id}";
         $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
         $vnp_OrderType = 'billpayment';
@@ -632,7 +632,7 @@ class HoaDonController extends Controller
         $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
         $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
         $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{{$account_id}}";
+        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{$account_id}";
         $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
         $vnp_OrderType = 'billpayment';
@@ -701,7 +701,7 @@ class HoaDonController extends Controller
         $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
         $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
         $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{{$check_account->id}}";
+        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{$check_account->id}";
         $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
         $vnp_OrderType = 'billpayment';

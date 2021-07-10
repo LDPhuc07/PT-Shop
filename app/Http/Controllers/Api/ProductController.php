@@ -439,6 +439,32 @@ class ProductController extends Controller
                         }))->get();
         return $data;
     }
+    public function search(Request $request)
+    {
+        
+        // $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+        //                         ->groupBy('san_phams_id')
+        //                         ->get();
+        // $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+        //                         ->groupBy('san_phams_id')
+        //                         ->get();
+        $data = SanPham::where('ten_san_pham','LIKE','%'.$request->key_search.'%')
+                            ->offset($request->page*4)
+                            ->limit(4)
+                            ->with(array('anh' => function($query) {
+                                $query->where('anhchinh',1);
+                            }))
+                            ->get();              
+        
+        // if(Auth::check() and Auth::user()->admin != 1) {
+        //     $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+        //     return view('pages.search_view', compact('yeu_thich','danh_gia','is_like','dsSanPhamSearch'));
+        // }
+        // else {
+        //     return view('pages.search_view', compact('yeu_thich','danh_gia','dsSanPhamSearch'));
+        // }
+        return $data;           
+    }
     /**
      * Store a newly created resource in storage.
      *

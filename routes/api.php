@@ -29,7 +29,7 @@ Route::get('trademark','Api\ProductController@thuonghieu');
 Route::get('size','Api\ProductController@kichthuoc');
 Route::get('getbinhluan','Api\ProductDetailController@getbinhluan');
 Route::post('postbinhluan','Api\ProductDetailController@postbinhluan');
-
+Route::get('timkiem','Api\ProductController@search');
 // resert password
 Route::post('reset-password', 'ResetPasswordController@sendMail')->name('resertPassword');
 Route::put('reset-password/{token}', 'ResetPasswordController@reset');

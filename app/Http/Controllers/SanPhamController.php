@@ -250,7 +250,6 @@ class SanPhamController extends Controller
  
         $rule = [
             'mota' => 'required',
-            'giamgia' => 'numeric',
             // 'giaban' => 'numeric',
             'tensanpham' => 'required',
             'giaban' => 'required|numeric|digits_between:4,11',
