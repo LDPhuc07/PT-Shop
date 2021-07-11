@@ -25,14 +25,14 @@
           <div class="carousel-item active">
             <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption">
-              <a href="" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
+              <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
             </div>   
           </div>
           @else
           <div class="carousel-item">
             <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption">
-              <a href="" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
+              <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
             </div>   
           </div>
           @endif
@@ -61,11 +61,13 @@
                 @endforeach
                 <div class="card-body">
                   <h4 class="card-title">{{$sanphamphobien['ten_san_pham']}}</h4>
-                  <p class="card-text custom__name-product" style="font-weight: 400;">
-                    <?php 
-                    echo $sanphamphobien['mo_ta']
+                  
+                  <span class="card-text custom__name-product" style="font-weight: 400;">
+                    <?php
+                      echo $sanphamphobien->mo_ta;
                     ?>
-                  </p>
+                  </span>
+                  
                   <div style="display:flex;justify-content: space-between;
                     align-items: center;">
                       <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
@@ -124,7 +126,7 @@
                     <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
                   @endforeach
                   <div class="card-body">
-                    <h5 class="card-title">{{$sanphammoinhat['ten_san_pham']}}</h5>
+                    <h5 class="card-title custom__name-product">{{$sanphammoinhat['ten_san_pham']}}</h5>
                     <div class="product__price" id="price">
                       <p class="card-text price-color product__price-new">{{number_format($sanphammoinhat['gia_ban']*(100-$sanphammoinhat['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
                       <p  data-id="{{$sanphammoinhat['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanphammoinhat['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
@@ -246,7 +248,7 @@
                     <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
                   @endforeach
                   <div class="card-body">
-                    <h5 class="card-title">{{$sanpham['ten_san_pham']}}</h5>
+                    <h5 class="card-title custom__name-product" style="font-size:14px">{{$sanpham['ten_san_pham']}}</h5>
                     <div class="product__price" id="price">
                       <p style="font-size: 9px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
                       <p  style="font-size: 9px" data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>

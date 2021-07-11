@@ -841,7 +841,7 @@
  
         // $.each(binhluans,function(index, binhluan){
            let html='<div class="comment">';
-              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluan.tai_khoan.anh_dai_dien+'" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluans.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluans.tai_khoan.ho_ten+'</h4>';

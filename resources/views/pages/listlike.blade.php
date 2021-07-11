@@ -6,7 +6,7 @@
 @endsection
 @section('content')
     <!-- content -->
-    <div class="listlike" style="margin-top: 200px;">
+    <div class="listlike" style="margin-top: 200px;margin-bottom: 370px;">
         <div class="container">
             <div class="row">
               @foreach($likes as $like)
@@ -38,6 +38,11 @@
                 </div>
               @endforeach
             </div>
+            {{-- <nav aria-label="Page navigation example" style="display:flex;justify-content: center;font-size: 20px;margin-top: 50px">
+                  <ul class="pagination">
+                    {!! $likes->appends(request()->query())->links() !!}
+                  </ul>
+                </nav> --}}
         </div>
     </div>
     <!-- end content -->
