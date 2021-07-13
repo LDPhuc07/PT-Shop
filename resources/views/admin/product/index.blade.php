@@ -98,9 +98,9 @@
                                 @foreach($dsYeuThich as $like)
                                   @if($ds->id == $like->san_phams_id)
                                     <span style="margin-right: 2px;">{{ $like->yeu_thich }}</span>
+                                    <i style="color:#000" class="fas fa-heart"></i>
                                   @endif
                                 @endforeach
-                                <i style="color:#000" class="fas fa-heart"></i>
                                 <div id="popover-catagories" class="popover">
                                   <div class="arrow">
                                   </div>

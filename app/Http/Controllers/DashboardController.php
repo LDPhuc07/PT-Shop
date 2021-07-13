@@ -20,7 +20,11 @@ class DashboardController extends Controller
         $dem_don_hang = HoaDon::where('trang_thai',true)->count();
         $count_san_pham_max = DB::table('chi_tiet_hoa_dons')->join('chi_tiet_san_phams', 'chi_tiet_hoa_dons.chi_tiet_san_phams_id', '=', 'chi_tiet_san_phams.id')
                      ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('COUNT(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->first();
-        $san_pham_max = SanPham::find($count_san_pham_max->san_phams_id);             
+        if($count_san_pham_max->san_phams_id == null) {
+            $san_pham_max = null;
+        } else {
+            $san_pham_max = SanPham::find($count_san_pham_max->san_phams_id);
+        }               
         return view('admin.dashboard.index',['dem_yeu_thich' => $dem_yeu_thich,'dem_khach_hang' => $dem_khach_hang,'dem_don_hang' => $dem_don_hang,'san_pham_max' => $san_pham_max]);
     }
     public function filterByDate(Request $request) {

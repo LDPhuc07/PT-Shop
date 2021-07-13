@@ -54,7 +54,12 @@
             <div class="col-lg-3 col-6 pr-0 pl-8">
                 <div class="small-box unique-visitors">
                 <div class="inner">
-                    <h3>{{ $san_pham_max->ten_san_pham }}</h3>
+                    @if($san_pham_max == null)
+                        <h3>Không có</h3>
+                    @else
+                        <h3>{{ $san_pham_max->ten_san_pham }}</h3>
+                    @endif
+                    
                     <p>Sản phẩm bán chạy</p>
                 </div>
                 <div class="icon">
