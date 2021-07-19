@@ -106,7 +106,7 @@
                     <label for="myFile">Chọn ảnh</label>
                   </div>
                   <div class="form-group ">
-                    <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                    <img src="{{asset(getLink('anh-dai-dien','no-avatar.jpg'))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                   </div>
                   <button class="form-submit">Đăng ký <i class="fi-rs-arrow-right"></i></button>
                   <p style="font-size: 16px;margin: 10px 0;">Bạn đã có tài khoản? <a href="./Login.html" style="color: black; font-weight: bold">Đăng nhập</a></p>

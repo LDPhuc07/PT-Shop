@@ -224,7 +224,7 @@ class SanPhamController extends Controller
             }
         }
         
-         return redirect()->route('sanpham.indexAdmin')->with('success', 'Tạo thành công');
+         return redirect()->route('sanpham.indexAdmin')->with('success', 'Thêm sản phẩm mới thành công');
     }
     public function create() {
         return view('admin.product.add_product');
@@ -354,7 +354,7 @@ class SanPhamController extends Controller
         //         }
         //     }
         // }
-        return redirect()->route('sanpham.indexAdmin')->with('success', 'Cập nhật thành công');
+        return redirect()->route('sanpham.indexAdmin')->with('success', 'Cập nhật sản phẩm thành công');
     }
     public function getDelImg(Request $request,$id){
     //     return response()->json([

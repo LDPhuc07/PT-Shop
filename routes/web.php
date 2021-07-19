@@ -63,7 +63,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/sanpham/create',("SanPhamController@create"))->name('sanpham.create');
     Route::post('/sanpham/store',("SanPhamController@storeAdmin"))->name('sanpham.storeAdmin');
     Route::get('/sanpham/{id}/edit',("SanPhamController@edit"))->name('sanpham.edit');
-    Route::put('/nhasanxuat/{id}',("SanPhamController@update"))->name('sanpham.update');
+    Route::put('/sanpham/{id}',("SanPhamController@update"))->name('sanpham.update');
     Route::delete('/sanpham/delete/{id}',("SanPhamController@delete"))->name('sanpham.delete');
     Route::get('/sanpham/delimg/{id}',("SanPhamController@getDelImg"))->name('sanpham.delimg');
     // chi tiết sản phẩm

@@ -148,6 +148,10 @@ class TaiKhoanController extends Controller
             $newAccount->anh_dai_dien=$img->getClientOriginalName();
             $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
         }
+        else
+        {
+            $newAccount->anh_dai_dien='no-avatar.jpg';
+        }
         $newAccount->admin = false;
         $newAccount->save();
         return redirect()->route('accounts.login');

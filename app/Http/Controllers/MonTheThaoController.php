@@ -87,7 +87,7 @@ class MonTheThaoController extends Controller
         $dsMonTheThao = new MonTheThao();
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
         $dsMonTheThao->save();
-        return redirect()->route('monthethao.index')->with('success', 'Thêm môn thể thao thành công');
+        return redirect()->route('monthethao.index')->with('success', 'Thêm môn thể thao mới thành công');
     }
 
     /**

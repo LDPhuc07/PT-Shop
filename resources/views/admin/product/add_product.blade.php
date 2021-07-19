@@ -80,7 +80,7 @@
                   <div class="product-info product-picture">
                     <input type="file" class="form-control" name="link[]" id="link_{{$i}}" data-id="{{$i}}" onchange="loadfile(this)">
                     <div class="form-group abc-{{$i}}">
-                        <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp_{{$i}}" class="img-thumbnail" width="200px">
+                        <img src="{{asset(getLink('product','no-image.png'))}}" alt="no img" id="imgsp_{{$i}}" class="img-thumbnail" width="200px">
                     </div>
                   </div>
                 </div>

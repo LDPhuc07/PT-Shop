@@ -137,7 +137,7 @@
     var count3 = 0;
     $(document).ready(function(){
     $('#addImages').click(function(){
-      $('#insert').append('<input type="file" style="margin:10px" class="form-control" data-id="batcanhchua_'+count3+'" name="link[]" id="link_{{$i}}" onchange="loadfile(this)"><img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp_batcanhchua_'+count3+'" class="img-thumbnail" width="150px">')
+      $('#insert').append('<input type="file" style="margin:10px" class="form-control" data-id="batcanhchua_'+count3+'" name="link[]" id="link_{{$i}}" onchange="loadfile(this)"><img src="{{asset(getLink('product','no-image.png'))}}" alt="no img" id="imgsp_batcanhchua_'+count3+'" class="img-thumbnail" width="150px">')
       count3++;
     })
     });

@@ -221,7 +221,7 @@ class HoaDonController extends Controller
                 $request->validate([
                     'so_dien_thoai' => 'required'
                 ],[
-                    'so_dien_thoai.required' => 'Vui lòng nhập địa chỉ'
+                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại'
                 ]);
                 $new_update = TaiKhoan::find(Auth::user()->id);
                 $new_update->so_dien_thoai = $request->so_dien_thoai;

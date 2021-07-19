@@ -98,7 +98,7 @@ class ChiTietSanPhamController extends Controller
             }
         }
         $dsChiTietSanPham->save();
-        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Tao thanh cong');
+        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Thêm chi tiết sản phẩm mới thành công');
     }
 
     /**
@@ -176,7 +176,7 @@ class ChiTietSanPhamController extends Controller
             }
         }
         $dsChiTietSanPham->save();
-        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Tao thanh cong');
+        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Cập nhật chi tiết sản phẩm thành công');
     }
 
     /**
@@ -197,6 +197,6 @@ class ChiTietSanPhamController extends Controller
         }
         $dsChiTietSanPham = ChiTietSanPham::find($idct);
         $dsChiTietSanPham->delete();
-        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'xóa chi tiết sản phẩm thành công thành công');
+        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'xóa chi tiết sản phẩm thành công');
     }
 }

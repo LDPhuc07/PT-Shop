@@ -89,7 +89,7 @@ class LoaiSanPhamController extends Controller
         $dsLoaiSanPham->save();
         
         // return redirect('admin.sport.index',$dsMonTheThao); 
-        return redirect()->route('loaisanpham.index')->with('success', 'Thêm loại sản phẩm thành công');
+        return redirect()->route('loaisanpham.index')->with('success', 'Thêm loại sản phẩm mới thành công');
     }
 
     /**

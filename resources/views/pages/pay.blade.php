@@ -40,7 +40,7 @@
                                 @if(Auth::user()->dia_chi == null)
                                 <div class="fieldset-address">
                                     <label class="form-label" for="">Địa chỉ</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="dia_chi">
                                 @if($errors->has('dia_chi'))
                                     <span style="font-size: 13px; color:red">
                                     <i class="fas fa-times"></i>
@@ -57,7 +57,7 @@
                                 @if(Auth::user()->so_dien_thoai == null)
                                 <div class="fieldset-phone">
                                     <label class="form-label" for="">Số điện thoại</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="so_dien_thoai">
                                     @if($errors->has('so_dien_thoai'))
                             <span style="font-size: 13px; color:red">
                                 <i class="fas fa-times"></i>
