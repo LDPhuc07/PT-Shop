@@ -20,7 +20,7 @@
                   <div class="col-4">
                     <label class="product-info-item-label" for="">Màu<span class="repuired"> *</span></label>
                     <i class="fas fa-info"></i>
-                    <input class="textbox" style="width: 100%" type="text" name="mau" required pattern="[A-Za-z]+">
+                    <input class="textbox" style="width: 100%" type="text" name="mau" required pattern="[ a-zA-Z,#.-]+">
                     <div class="error error-name" 	@if($errors->has('mau')) style="display:block;color:red" @endif>{{$errors->first('mau')}}</div>
                   </div>
                   <div class="col-4">
