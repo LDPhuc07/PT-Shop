@@ -428,6 +428,7 @@
     background-color: var(--black-color);
     color: var(--white-color);
     text-transform: uppercase;
+    padding-top: 6px;
 }
 .btn-comment:hover {
     color: var(--white-color);

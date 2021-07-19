@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NhaSanXuat;
-use App\SanPham;
 use Illuminate\Support\Facades\Validator;
 class NhaSanXuatController extends Controller
 {
@@ -91,7 +90,7 @@ class NhaSanXuatController extends Controller
         $dsNhaSanXuat->save();
         
         // return redirect('admin.sport.index',$dsMonTheThao); 
-        return redirect()->route('nhasanxuat.index')->with('success', 'Tạo nhà sản xuất thành công');
+        return redirect()->route('nhasanxuat.index')->with('success', 'Thêm nhà sản xuất mới thành công');
     }
 
     /**
@@ -156,7 +155,6 @@ class NhaSanXuatController extends Controller
         $dsNhaSanXuat->ten_nha_san_xuat=$request->tennhasanxuat;
         $dsNhaSanXuat->save();
         
-        // return redirect('admin.sport.index',$dsMonTheThao); 
         return redirect()->route('nhasanxuat.index')->with('success', 'Cập nhật nhà sản xuất thành công');
     }
 
@@ -179,7 +177,7 @@ class NhaSanXuatController extends Controller
         $dsNhaSanXuat = NhaSanXuat::find($id);
         $dsSanPham = SanPham::where('nha_san_xuats_id', '=', $id)->get();
         if(count($dsSanPham) != 0){
-            return redirect()->route('loaisanpham.index')->with('error', 'Nhà sản xuất đang được dùng không được xóa');
+            return redirect()->route('nhasanxuat.index')->with('error', 'Nhà sản xuất đang được dùng không được xóa');
         }
         else {
             $dsNhaSanXuat->delete();

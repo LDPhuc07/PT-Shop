@@ -132,19 +132,19 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title" style="color:red">Cảnh báo</h4>
+          <h4 class="modal-title" style="color:orange">Cảnh báo</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body">
-          Bạn có chắc muốn xóa
+          Bạn thật sự muốn xóa
         </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" id="chitietsanpham" style="background-color:red;color:white">confirm</button>
+          <button type="button" class="btn" data-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-danger" id="chitietsanpham" style="background-color:red;color:white">OK</button>
         </div>
         
       </div>

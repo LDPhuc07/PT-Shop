@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="css/cart.css">
 @endsection
 @section('content')
-<div class="cart" style="margin-top: 160px;">
+<div class="cart" style="margin-top: 198px;">
     <div class="container">
         <div class="cart-wrap">
           <div id="cart-content" class="cart-content">

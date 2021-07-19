@@ -90,7 +90,7 @@ class SlideShowController extends Controller
         else
             {$dsSlideShow->link='no-image.png';}
         $dsSlideShow->save();
-        return redirect()->route('slideshow.index')->with('success', 'Tạo thành công');
+        return redirect()->route('slideshow.index')->with('success', 'Thêm slideshow mới thành công');
     }
 
     /**

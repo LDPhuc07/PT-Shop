@@ -378,7 +378,7 @@
         @if(Auth::check() and Auth::user()->admin != 1)
         <a onclick="postBinhLuan()" class="btn btn-comment">Gửi</a>
         @else
-        <a href="{{ route('accounts.logout')}}" class="btn btn-comment">Gửi</a>
+        <a  class="btn btn-comment" data-toggle="modal" data-target="#myModal2">Gửi</a>
         @endif
       </div>
       <div class="col-8">
@@ -491,6 +491,31 @@
       <!-- Modal body -->
       <div class="modal-body">
         Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a type="button" class="btn btn-secondary " data-dismiss="modal">Đóng</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal2">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Thông báo</h4>
+        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để bình luận!
       </div>
       
       <!-- Modal footer -->
@@ -841,7 +866,7 @@
  
         // $.each(binhluans,function(index, binhluan){
            let html='<div class="comment">';
-              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluan.tai_khoan.anh_dai_dien+'" alt="" >';
+              html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluans.tai_khoan.anh_dai_dien+'" alt="" >';
               html+='<div class="comment__content">';
                 html+='<div class="comment__content-heding">';
                   html+='<h4 class="comment__content-name">'+binhluans.tai_khoan.ho_ten+'</h4>';
