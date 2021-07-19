@@ -618,8 +618,6 @@ class HoaDonController extends Controller
                 'dia_chi' => 'required',
                 'so_dien_thoai' => 'digits:10|required|numeric'
             ],[
-                'ho_ten.required' => 'Vui lòng nhập họ và tên',
-                'dia_chi.required' => 'Vui lòng nhập địa chỉ',
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
                 'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
