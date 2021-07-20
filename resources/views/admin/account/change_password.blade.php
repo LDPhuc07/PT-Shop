@@ -24,7 +24,7 @@
                     @method('put')
                     @csrf
                     <div style="position: relative" class="login-txt mb-16">
-                        <input class="textbox" name="mat_khau_cu" type="password" placeholder="Mật khẩu cũ" autofocus>
+                        <input class="textbox" style="    width: 100%;" name="mat_khau_cu" type="password" placeholder="Mật khẩu cũ" autofocus>
                         <a id="mat_khau_cu" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
@@ -41,7 +41,7 @@
                         @endif
                     </div>
                     <div class="login-txt password-txt mb-16">
-                        <input class=" textbox" name="mat_khau_moi" type="password" placeholder="Mật khẩu mới">
+                        <input class=" textbox" style="    width: 100%;" name="mat_khau_moi" type="password" placeholder="Mật khẩu mới">
                         <a id="mat_khau_moi" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
@@ -58,7 +58,7 @@
                         @endif
                     </div>
                     <div style="position: relative" class="login-txt password-txt mb-16">
-                        <input class="textbox" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu mới">
+                        <input class="textbox" style="    width: 100%;" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu mới">
                         <a id="nhap_lai_mat_khau" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>

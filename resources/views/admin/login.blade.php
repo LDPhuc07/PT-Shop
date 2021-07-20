@@ -24,9 +24,9 @@
                     @csrf
                     <div class="login-txt mb-16">
                         @if(Session::has('email'))
-                            <input class="textbox" name="email" type="text" placeholder="Email" value="{{ Session::get('email')}}">
+                            <input style="width: 100%" class="textbox" name="email" type="text" placeholder="Email" value="{{ Session::get('email')}}">
                         @else
-                            <input class="textbox" name="email" type="text" placeholder="Email" autofocus>
+                            <input style="width: 100%" class="textbox" name="email" type="text" placeholder="Email" autofocus>
                         @endif
                         @if($errors->has('email'))
                             <span class="error-msg">
@@ -42,9 +42,9 @@
                     </div>
                     <div class="login-txt password-txt mb-16">
                         @if(Session::has('mat_khau'))
-                            <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu" value="{{ Session::get('mat_khau')}}">
+                            <input style="width: 100%" class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu" value="{{ Session::get('mat_khau')}}">
                         @else
-                            <input class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                            <input style="width: 100%" class=" textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
                         @endif
                         <a class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
@@ -79,7 +79,7 @@
                         @endif
                         <button class="btn login-btn">Đăng nhập</button>
                     </div>
-                    <div class="social-auth-links text-center">
+                    {{--  <div class="social-auth-links text-center">
                         <p>Hoặc</p>
                         <a class="btn facebook-login-btn" href="">
                             <span>Đăng nhâp với facebook</span>
@@ -89,7 +89,7 @@
                             <span>Đăng nhâp với google</span>
                             <img class= "img-social" src="{{asset('icon/google.svg')}}" alt="">
                         </a>
-                    </div>
+                    </div>  --}}
                 </form>
             </div>
         </div>

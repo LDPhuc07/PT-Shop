@@ -56,16 +56,16 @@
                             </span>
                         @endif
             <button class="form-submit">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
-            <h4>HOẶC</h4>
+            {{--  <h4>HOẶC</h4>  --}}
             <div class="form-social">
-              <a href="{{url('/login-facebook')}}" class="form-submit-social">
+              {{--  <a href="{{url('/login-facebook')}}" class="form-submit-social">
                 <span>Facebook</span>
                 <img src="icon/facebook.svg" alt="" class="form-submit-social--img">
               </a>
               <a href="{{url('/login-google')}}" class="form-submit-social">
                 <span>GOOGLE</span>
                 <img src="icon/google.svg" alt="" class="form-submit-social--img">
-              </a>
+              </a>  --}}
             </div>
          </form>
         </div>

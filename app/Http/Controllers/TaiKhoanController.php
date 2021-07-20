@@ -158,6 +158,7 @@ class TaiKhoanController extends Controller
         $newAccount->email = $requests->email;
         $newAccount->password = Hash::make($requests->mat_khau);
         $newAccount->so_dien_thoai = $requests->so_dien_thoai;
+        $newAccount->so_dien_thoai = $requests->dia_chi;
         if($requests->hasFile('anh_dai_dien')){// neu anh co ton
             $img = $requests->anh_dai_dien;
             $newAccount->anh_dai_dien=$img->getClientOriginalName();
@@ -202,7 +203,7 @@ class TaiKhoanController extends Controller
                 return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
             }
         } else {
-            return redirect()->back()->with('thong_bao','Mật khẩu không hợp lệ');
+            return redirect()->back()->with('thong_bao','Mật khẩu không đúng');
         }
     }
     public function putDoiMatKhau(DoiMatKhauRequest $requests, $id) {
@@ -308,6 +309,7 @@ class TaiKhoanController extends Controller
                         $que->where('ho_ten','LIKE','%'.$key.'%');
                         $que->orwhere('email','LIKE','%'.$key.'%');
                         $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
                     }
                 );
             } else {
@@ -316,6 +318,7 @@ class TaiKhoanController extends Controller
                         $que->where('ho_ten','LIKE','%'.$key.'%');
                         $que->orwhere('email','LIKE','%'.$key.'%');
                         $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
                     }
                 )
                 ->where('trang_thai',$key_trang_thai);
@@ -327,6 +330,7 @@ class TaiKhoanController extends Controller
                         $que->where('ho_ten','LIKE','%'.$key.'%');
                         $que->orwhere('email','LIKE','%'.$key.'%');
                         $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
                     }
                 )
                 ->where('admin',$key_admin);
@@ -336,6 +340,7 @@ class TaiKhoanController extends Controller
                         $que->where('ho_ten','LIKE','%'.$key.'%');
                         $que->orwhere('email','LIKE','%'.$key.'%');
                         $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
                     }
                 )
                 ->where('admin',$key_admin)

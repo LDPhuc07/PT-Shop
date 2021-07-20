@@ -42,6 +42,7 @@ class HoaDonController extends Controller
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
             $bill['trang_thai'] = true;
+            $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $gio_hangs = GioHang::where('tai_khoans_id',$id)->get();
@@ -85,6 +86,7 @@ class HoaDonController extends Controller
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
             $bill['trang_thai'] = true;
+            $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $contents = Cart::content();
@@ -124,6 +126,7 @@ class HoaDonController extends Controller
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
             $bill['trang_thai'] = true;
+            $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $data = Session::all();
@@ -169,6 +172,7 @@ class HoaDonController extends Controller
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
             $bill['trang_thai'] = true;
+            $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $data = Session::all();
@@ -219,9 +223,11 @@ class HoaDonController extends Controller
             }
             if(Auth::user()->so_dien_thoai == null) {
                 $request->validate([
-                    'so_dien_thoai' => 'required'
+                    'so_dien_thoai' => 'digits:10|required|numeric'
                 ],[
-                    'so_dien_thoai.required' => 'Vui lòng nhập địa chỉ'
+                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                    'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+                    'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
                 ]);
                 $new_update = TaiKhoan::find(Auth::user()->id);
                 $new_update->so_dien_thoai = $request->so_dien_thoai;
@@ -322,11 +328,12 @@ class HoaDonController extends Controller
             $request->validate([
                 'ho_ten' => 'required',
                 'dia_chi' => 'required',
-                'so_dien_thoai' => 'required|numeric'
+                'so_dien_thoai' => 'digits:10|required|numeric'
             ],[
                 'ho_ten.required' => 'Vui lòng nhập họ và tên',
                 'dia_chi.required' => 'Vui lòng nhập địa chỉ',
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
             ]);
             $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
@@ -510,9 +517,11 @@ class HoaDonController extends Controller
             }
             if(Auth::user()->so_dien_thoai == null) {
                 $request->validate([
-                    'so_dien_thoai' => 'required'
+                    'so_dien_thoai' => 'digits:10|required|numeric'
                 ],[
-                    'so_dien_thoai.required' => 'Vui lòng nhập địa chỉ'
+                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                    'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+                    'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
                 ]);
                 $new_update = TaiKhoan::find(Auth::user()->id);
                 $new_update->so_dien_thoai = $request->so_dien_thoai;
@@ -607,11 +616,12 @@ class HoaDonController extends Controller
             $request->validate([
                 'ho_ten' => 'required',
                 'dia_chi' => 'required',
-                'so_dien_thoai' => 'required|numeric'
+                'so_dien_thoai' => 'digits:10|required|numeric'
             ],[
                 'ho_ten.required' => 'Vui lòng nhập họ và tên',
                 'dia_chi.required' => 'Vui lòng nhập địa chỉ',
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
             ]);
             $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();

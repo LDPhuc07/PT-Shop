@@ -50,6 +50,7 @@
                               <th>Ngày lập hóa đơn</th>
                               <th>Tổng tiền</th>
                               <th>Chốt đơn</th>
+                              <th>Hình thức thanh toán</th>
                               <th></th>
                           </tr>
                       </thead>
@@ -69,8 +70,39 @@
                                 <a onclick="checkbill({{ $bill->id }})" class="check-{{ $bill->id }} not-check-btn">Chưa Chốt</a>
                               </td>
                             @endif
+                            @if ($bill->hinh_thuc_thanh_toan == true)
+                              <td>
+                                <span style="cursor: unset" class="checked">Trả trước</span>
+                              </td>
+                            @else
+                              <td> 
+                                <span style="cursor: unset" class="not-check-btn">Trả sau</span>
+                              </td>
+                            @endif
                             <td>
                               <a onclick="deleteBill({{ $bill->id }})" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                              <div class="modal fade" id="modal">
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                  
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" style="color:red">Thông báo</h4>
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                      Bạn có thực sự muốn xóa hóa đơn này ?
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                      <button type="button" class="btn btn-danger" id="khoa" style="background-color:red;color:white">OK</button>
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
                               <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
                               <div class="modal fade" id="form-modal" role="dialog">
@@ -134,7 +166,8 @@
     }
 
     function deleteBill(id) {
-      if(confirm('Bạn có thật sự muốn xóa?') == true){
+      $('#modal').modal('show');
+        $("#khoa").click(function() {
         $.ajax({
           url: 'admin/bill/delete/' + id,
           type: 'GET',
@@ -142,10 +175,11 @@
           success:function(data) {
             if(data == 'done') {
               $(`#bill-item-${id}`).empty();
+              $('#modal').modal('hide');
             }
           }
         });
-      }
+      })
     }
     function checkbill(id) {
       if($(`.check-${id}`).hasClass('not-check-btn')) {

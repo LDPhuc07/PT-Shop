@@ -18,18 +18,15 @@
                 <div class="ds-sanpham">
                    <form action="">
                   <div class="head-table">
-                    <div class="search">
+                    <div style="    width: calc(100% - 434px);" class="search">
                      
-                        <input class="search-txt" type="text" placeholder="Search.." name="search">
-                        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                        <input style="padding-right: 4px" class="search-txt" type="text" placeholder="Search.." name="search">
                       
                     </div>
-                    <div class="group-filter-btn">
-                      <div class="filter-catagories-wrap">
-                       
-                      </div>
+                    <div style="margin-right: 16px;" class="group-filter-btn">
                       <div class="filter-catagories-sport-wrap">
-                        <select style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
+                        <select style="height: 100%;border-right: none;
+                        border-radius: 3px 0 0 3px;" style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
                           <option value="">Môn thể thao</option>
                           <?php $monthethao = App\MonTheThao::all()  ?>
                           @foreach($monthethao as $i)
@@ -38,7 +35,7 @@
                         </select>
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <select class="textbox" style="border-radius: unset" name="nhasanxuat" id="nhasanxuat">
+                        <select style="height: 100%;border-radius: unset;" class="textbox" style="border-radius: unset" name="nhasanxuat" id="nhasanxuat">
                           <option value="">Nhà sản xuất</option>
                           <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
                           @foreach($nhasanxuat as $i)
@@ -47,8 +44,9 @@
                         </select>
                       </div>
                       <div class="filter-catagories-sport-wrap">
-                        <select class="textbox" style="border-radius: 0 3px 3px 0; border-left: unset" name="loaisanpham" id="loaisanpham">
-                          <option value="">loại sản phẩm</option>
+                        <select style="height: 100%;border-radius: 0 3px 3px 0;
+                        border-left: 0;" class="textbox" style="border-radius: 0 3px 3px 0; border-left: unset" name="loaisanpham" id="loaisanpham">
+                          <option value="">Loại sản phẩm</option>
                           <?php $loaisanpham = App\LoaiSanPham::all()  ?>
                           @foreach($loaisanpham as $i)
                             <option value="{{$i['id']}}">{{$i['ten_loai_san_pham']}}</option>
@@ -56,6 +54,9 @@
                         </select>
                       </div>
                     </div>
+                    <input type="submit" style="color: #fff;
+                      background-color: #0069d9;
+                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
                   </div>
                 </form>
                   <div class="ds-sanpham-div">

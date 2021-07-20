@@ -54,7 +54,8 @@
                 <div class="form-group form-group-old-password">
                   <div style="display:flex;justify-content: space-between;">
                     <label for="password" class="form-label">Mật khẩu cũ</label>
-                    <span class="show-hide"><i class="fas fa-eye"></i></span>
+                    <span style="    top: 54px;
+    z-index: 1;" class="show-hide"><i class="fas fa-eye"></i></span>
                   </div>
                   <input id="password" name="mat_khau_cu" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>
@@ -73,7 +74,8 @@
                 <div class="form-group form-group-new-password">
                   <div style="display:flex;justify-content: space-between;">
                     <label for="password-new" class="form-label">Mật khẩu mới</label>
-                    <span class="show-hide-two"><i class="fas fa-eye fa-eye-2"></i></span>
+                    <span style="    top: 54px;
+    z-index: 1;" class="show-hide-two"><i class="fas fa-eye fa-eye-2"></i></span>
                   </div>
                   <input id="password-new" name="mat_khau_moi" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>
@@ -92,7 +94,8 @@
                 <div class="form-group form-group-confirm-password">
                   <div style="display:flex;justify-content: space-between;">
                     <label for="password-confirm" class="form-label">Nhập lại mật khẩu</label>
-                    <span class="show-hide-three"><i class="fas fa-eye fa-eye-3"></i></span>
+                    <span style="    top: 54px;
+    z-index: 1;" class="show-hide-three"><i class="fas fa-eye fa-eye-3"></i></span>
                   </div>
                   <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>

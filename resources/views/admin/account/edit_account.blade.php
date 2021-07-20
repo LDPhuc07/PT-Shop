@@ -30,7 +30,7 @@
               <div class="col-md-6">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Họ và tên</label>
-                  <input class="textbox" type="text" name="ho_ten" value="{{ $array->ho_ten }}" placeholder="Nhập họ và tên">
+                  <input class="textbox" style="    width: 100%;" type="text" name="ho_ten" value="{{ $array->ho_ten }}" placeholder="Nhập họ và tên">
                   @if($errors->has('ho_ten'))
                     <span style="font-size: 13px; color:red">
                         <i class="fas fa-times"></i>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Email</label>
-                  <input class="textbox" type="text" name="email" value="{{ $array->email }}" placeholder="Nhập email">
+                  <input class="textbox" style="    width: 100%;" type="text" name="email" value="{{ $array->email }}" placeholder="Nhập email">
                   @if($errors->has('email'))
                     <span style="font-size: 13px; color:red">
                         <i class="fas fa-times"></i>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Số điện thoại</label>
-                  <input class="textbox" type="text" name="so_dien_thoai" value="{{ $array->so_dien_thoai }}" placeholder="Nhập số điện thoại">
+                  <input class="textbox" style="    width: 100%;" type="text" name="so_dien_thoai" value="{{ $array->so_dien_thoai }}" placeholder="Nhập số điện thoại">
                   @if($errors->has('so_dien_thoai'))
                     <span style="font-size: 13px; color:red">
                         <i class="fas fa-times"></i>
@@ -75,7 +75,7 @@
                 </div>
                   <div class="product-info-item">
                   <label class="product-info-item-label" for="">Địa chỉ</label>
-                  <input class="textbox" type="text" name="dia_chi" value="{{ $array->diachi }}" placeholder="Nhập địa chỉ">
+                  <input class="textbox" style="    width: 100%;" type="text" name="dia_chi" value="{{ $array->diachi }}" placeholder="Nhập địa chỉ">
                   @if($errors->has('dia_chi'))
                     <span style="font-size: 13px; color:red">
                         <i class="fas fa-times"></i>

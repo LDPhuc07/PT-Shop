@@ -16,7 +16,7 @@
             <div class="col-sm-12">
                 <div class="ds-sanpham">
                   <div class="head-table">
-                    <div class="search">
+                    <div style="width: 100%; margin: unset" class="search">
                       <form action="{{route('monthethao.index')}}" method="GET">
                         <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">
                         <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>

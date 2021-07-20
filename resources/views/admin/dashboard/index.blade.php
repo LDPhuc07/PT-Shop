@@ -40,7 +40,7 @@
                 <div class="small-box bounce-rate">
                 <div class="inner">
                     <h3>{{ $dem_khach_hang }}</h3>
-                    <p>Thành viên mới</p>
+                    <p>Khách hàng</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>

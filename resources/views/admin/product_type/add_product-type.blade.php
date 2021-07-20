@@ -10,8 +10,8 @@
       </div>
       <form action="{{route('loaisanpham.store')}}" method="post">
         @csrf
-        <div class="row add-product-form">
-          <div class="col-8 pl-0 pr-10">
+        <div style="margin: 25px 220px 0;border-bottom: unset" class="add-product-form">
+          <div style="border-bottom: 1px solid #dfe4e8; padding-bottom: 24px" class="pl-0 pr-0">
             <div class="product-info">
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Tên loại sản phẩm<span class="repuired"> *</span></label>
@@ -21,11 +21,11 @@
               </div> 
             </div>
           </div>
-        </div>
-        <div class="product-footer">
-          <div class="product-footer-btn">
-            {{-- <button class="destroy-btn btn">Hủy</button> --}}
-            <button class="save-btn btn">Lưu</button>
+          <div style="padding: unset; padding-top: 24px" class="product-footer">
+            <div class="product-footer-btn">
+              {{-- <button class="destroy-btn btn">Hủy</button> --}}
+              <button class="save-btn btn">Lưu</button>
+            </div>
           </div>
         </div>
       </form>

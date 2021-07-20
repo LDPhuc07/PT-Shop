@@ -18,7 +18,7 @@
                     <div class="search">
                       <form action="{{ route('admin.accounts.search') }}" method="POST">
                         @csrf
-                        <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại" name="search">
+                        <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại, địa chỉ" name="search">
                     </div>
                     <div style="margin-right: 16px" class="group-filter-btn">
                       <label style="width: 115px;
@@ -52,7 +52,8 @@
                               <th>Ảnh đại diện</th>
                               <th>Họ và tên</th>
                               <th>Email</th>
-                              <th>Số điện thoại</th>
+                              <th>Số điện thoại</th> 
+                              <th>Địa chỉ</th>
                               <th>Loại tài khoản</th>
                               <th>Trạng thái</th>
                               <th></th>
@@ -70,6 +71,7 @@
                             <td>{{ $account->ho_ten }}</td>
                             <td>{{ $account->email }}</td>
                             <td>{{ $account->so_dien_thoai }}</td>
+                            <td>{{ $account->dia_chi }}</td>
                             <td>
                               @if($account->admin == true )
                                 Admin
@@ -87,6 +89,28 @@
                             <td>
                               @if($account->trang_thai == true )
                                 <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="lock-{{ $account->id }} fas fa-lock"></i></a>
+                                <div class="modal fade" id="modal">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                    
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" style="color:red">Thông báo</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                        Bạn có thực sự muốn khóa tài khoản này ?
+                                      </div>
+                                      <!-- Modal footer -->
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                        <button type="button" class="btn btn-danger" id="khoa" style="background-color:red;color:white">OK</button>
+                                      </div>
+                                      
+                                    </div>
+                                  </div>
+                                </div>
                               @else
                                 <a onclick="lock({{ $account->id }})" href="javascript:" class="delete-btn"><i class="lock-{{ $account->id }} fas fa-lock-open"></i></a>
                               @endif
@@ -118,10 +142,14 @@
 </script> --}}
 @endsection
 @section('script')
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script>
     function lock(id) {
       if($(`.lock-${id}`).hasClass('fas fa-lock')) {
-        if(confirm('Bạn có thật sự muốn khóa tài khoản này?') == true){
+        $('#modal').modal('show');
+        $("#khoa").click(function() {
           $.ajax({
             url: 'admin/accounts/lock/'+id,
             type: 'GET',
@@ -131,10 +159,11 @@
                 $(`.lock-${id}`).removeClass('fa-lock');
                 $(`.lock-${id}`).addClass('fa-lock-open');
                 $(`#lock-td-${id}`).html("Đã khóa");
+                $('#modal').modal('hide');
               }
             }
           });
-        }
+        });
       }
       else {
         $.ajax({

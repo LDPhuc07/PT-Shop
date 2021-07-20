@@ -28,7 +28,7 @@ class DangKyRequest extends FormRequest
             'email' => 'required|email|unique:tai_khoans,email',
             'mat_khau' => 'required|min:6',
             'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
-            'so_dien_thoai' => 'numeric|unique:tai_khoans,so_dien_thoai'
+            'so_dien_thoai' => 'digits:10|required|numeric|unique:tai_khoans,so_dien_thoai'
         ];
     }
 
@@ -44,7 +44,7 @@ class DangKyRequest extends FormRequest
             'nhap_lai_mat_khau.required_with' => 'Nhập lại mật khẩu không hợp lệ',
             'nhap_lai_mat_khau.same' => 'Nhập lại mật khẩu không hợp lệ',
             'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
-            // 'so_dien_thoai.size' => 'Số điện thoại phai la 10',
+            'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
             'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
             'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký'
         ];

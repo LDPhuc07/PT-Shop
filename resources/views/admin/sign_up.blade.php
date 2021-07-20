@@ -28,7 +28,7 @@
     <div class="register-page">
         <div style="width:700px" class="register-box">
             <div class="register-logo">
-                <img class="logo-login" src="https://banner2.cleanpng.com/20190417/fw/kisspng-adidas-run-waist-bag-black-mens-logo-image-thr-adidas-deerupt-bea-world-festival-5cb752a7e7db73.0092557415555181199497.jpg" alt="">
+                <img class="logo-login" src="{{asset('img/logo/logomain.png')}}" alt="">
             </div>
             <div class="register-body">
                 <h3 class="mb-16">Đăng ký</h3>
@@ -37,7 +37,7 @@
                         <form action="" class="register-form" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-16 sign-up-txt">
-                                <input class="textbox" name="ho_ten" type="text" placeholder="Họ và tên">
+                                <input class="textbox" style="width: 100%" name="ho_ten" type="text" placeholder="Họ và tên">
                                 @if($errors->has('ho_ten'))
                                     <span class="error-msg">
                                         <i class="fas fa-times"></i>
@@ -51,7 +51,7 @@
                                 @endif
                             </div>
                             <div class="mb-16 sign-up-txt">
-                                <input class="textbox" name="email" type="text" placeholder="Email">
+                                <input class="textbox" style="width: 100%" name="email" type="text" placeholder="Email">
                                 @if($errors->has('email'))
                                     <span class="error-msg">
                                         <i class="fas fa-times"></i>
@@ -65,7 +65,7 @@
                                 @endif
                             </div>
                             <div style="position: relative" class="mb-16 sign-up-txt">
-                                <input class="textbox" name="mat_khau" type="password" placeholder="Mật khẩu">
+                                <input class="textbox" style="width: 100%" name="mat_khau" type="password" placeholder="Mật khẩu">
                                 <a id="mat_khau" class="input-inline-btn">
                                     <i class="show-pass fas fa-eye"></i>
                                 </a>
@@ -82,7 +82,7 @@
                                 @endif
                             </div>
                             <div style="position: relative" class="mb-16 sign-up-txt">
-                                <input class="textbox" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu">
+                                <input class="textbox" style="width: 100%" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu">
                                 <a id="nhap_lai_mat_khau" class="input-inline-btn">
                                     <i class="show-pass fas fa-eye"></i>
                                 </a>
@@ -99,7 +99,7 @@
                                 @endif
                             </div>
                             <div class="mb-16 sign-up-txt">
-                                <input class="textbox" name="so_dien_thoai" type="text" placeholder="Số điện thoại">
+                                <input class="textbox" style="width: 100%" name="so_dien_thoai" type="text" placeholder="Số điện thoại">
                                 @if($errors->has('so_dien_thoai'))
                                     <span class="error-msg">
                                         <i class="fas fa-times"></i>
@@ -111,6 +111,9 @@
                                         }
                                     </style>
                                 @endif
+                            </div>
+                            <div style="position: relative" class="mb-16 sign-up-txt">
+                                <input class="textbox" style="width: 100%" name="dia_chi" type="text" placeholder="Địa chỉ">
                             </div>
                         </div>
                     <div class="col-md-6">
