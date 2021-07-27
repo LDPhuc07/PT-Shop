@@ -1,5 +1,65 @@
 @extends('admin.master.master')
-@section('content')
+@section('content') 
+<style>
+  @media(max-width: 767px) {
+    .mobile-sp {
+      padding: unset;
+    }
+    .ds-sanpham {
+      border-radius: unset;
+    }
+    .head-table {
+      display: grid;
+    }
+    .search {
+      width: 100%;
+      margin-right: unset;
+    }
+    .group-filter-btn {
+      margin-top: 8px;
+      margin-right: unset !important;
+      display: block;
+    }
+    .slt-admin, .slt-status {
+      height: 38px;
+      float: right;
+    }
+    .lbl-admin, .lbl-status {
+      top:0 !important;
+    }
+    .sub-acc {
+      height: 38px;
+      margin-top: 8px;
+    }
+    .ds-sanpham-div {
+      overflow-x:auto;
+    }
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+    .head-table {
+      display: block;
+    }
+    .search {
+      width: 100%;
+      margin-right: unset;
+    }
+    .group-filter-btn {
+      display: inline-block;
+      margin-top: 8px;
+    }
+    .slt-admin, .slt-status {
+      height: 38px;
+    }
+    .lbl-admin, .lbl-status {
+      top:0 !important;
+    }
+    .sub-acc {
+      height: 38px;
+      float: right;
+      margin-top: 8px;
+    }
+  }
+</style>
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
@@ -12,7 +72,7 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="mobile-sp col-sm-12">
                 <div class="ds-sanpham">
                   <div class="head-table">
                     <div class="search">
@@ -21,20 +81,20 @@
                         <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại, địa chỉ" name="search">
                     </div>
                     <div style="margin-right: 16px" class="group-filter-btn">
-                      <label style="width: 115px;
+                      <label class="lbl-admin" style="width: 115px;
                       position: relative;
                       top: 6px;">Loại tài khoản: </label>
-                      <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="admin">
+                      <select class="slt-admin" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="admin">
                         <option value="">--Chọn--</option>
                         <option value="1">Admin</option>
                         <option value="0">Người dùng</option>
                       </select>
                     </div>
                     <div style="margin-right: 16px" class="group-filter-btn">
-                      <label style="width: 90px;
+                      <label class="lbl-status" style="width: 90px;
                       position: relative;
                       top: 6px;">Trạng thái: </label>
-                      <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai">
+                      <select class="slt-status" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai">
                         <option value="">--Chọn--</option>
                         <option value="0">Đã khóa</option>
                         <option value="1">Đang hoạt động</option>
@@ -42,7 +102,7 @@
                     </div>
                     <input type="submit" style="color: #fff;
                       background-color: #0069d9;
-                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
+                      border-color: #0062cc;" class="btn sub-acc" value="Tìm kiếm">
                   </form>
                   </div>
                   <div id="ds-taikhoan" class="ds-sanpham-div">
@@ -119,12 +179,12 @@
                         @endforeach
                     </tbody>
                   </table>
-                  <nav aria-label="Page navigation example" style="margin-top:20px">
+                  </div>
+                  <nav aria-label="Page navigation example" style="padding: 0 15px 20px;">
                     <ul class="pagination">
                       {!! $arrays->appends(request()->query())->links() !!}
                     </ul>
                   </nav>
-                  </div>
               </div>
             </div>
         </div>

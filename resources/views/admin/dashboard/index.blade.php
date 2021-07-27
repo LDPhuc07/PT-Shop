@@ -87,7 +87,7 @@
                         <p>
                             Lọc theo:
                             <select class="dashboard-filter form-control">
-                                <option>--Chọn--</option>
+                                <option value="ko">--Chọn--</option>
                                 <option value="7ngay">7 ngày qua</option>
                                 <option value="thangtruoc">Tháng trước</option>
                                 <option value="thangnay">Tháng này</option>
@@ -140,12 +140,12 @@
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
                 // The name of the data record attribute that contains x-values.
-                xkey: 'ngay_lap_hd',
+                xkey: 'ngay_lap_hoadon',
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ['tong_tien'],
+                ykeys: ['loi_nhuan'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
-                labels: ['Tổng tiền']
+                labels: ['Doanh thu']
             });
 
             function chart30days() {
@@ -164,7 +164,7 @@
                 });
             }
 
-            $('.dashboard-filter').change(function() {
+            {{--  $('.dashboard-filter').change(function() {
 
                 var dashboard_value = $(this).val();
                 var _token = $('input[name="_token"]').val();
@@ -179,18 +179,19 @@
                         chart.setData(data);
                     }
                 });
-            });
+            });  --}}
 
             $('#btn-dashboard-filter').click(function() {
                 var _token = $('input[name="_token"]').val();
                 var from_date = $('#datepicker').val();
                 var to_date = $('#datepicker2').val();
+                var dashboard_value = $('.dashboard-filter').val();
 
                 $.ajax({
                     url: "admin/dashboards/filter-by-date",
                     method: "POST",
                     dataType: "JSON",
-                    data: {from_date:from_date, to_date:to_date, _token:_token},
+                    data: {from_date:from_date, to_date:to_date, _token:_token,dashboard_value:dashboard_value},
 
                     success:function(data) {
                         chart.setData(data);

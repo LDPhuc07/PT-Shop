@@ -1,6 +1,21 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .add-product-form {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: unset;
+    border-bottom: unset;
+  }
+  .product-info {
+    margin-bottom: 16px;
+  }
+  .product-footer {
+    padding: unset;
+    padding-top: 16px;
+    border-top: 1px solid #dfe4e8;
+  }
   .head-product-picture label {
     font-size: 14px; 
     cursor: pointer;
@@ -10,6 +25,30 @@
   }
   .head-product-picture label:hover {
     border-bottom: 1px solid blue; 
+  }
+  @media(max-width: 767px) {
+    .add-product-form {
+      width: 100%;
+    }
+    .product-footer {
+      padding: 16px; 
+      border-radius: unset;
+    }
+    .head-add-pro {
+      padding: 16px;
+      margin-bottom: unset;
+    }
+    .product-container {
+      margin-top: unset;
+    }
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+    .add-product-form {
+      width: 90%;
+    }
+    .head-add-pro {
+      padding: 25px 45px 0;
+    }
   }
 </style>
 <div class="product-container">
@@ -24,7 +63,7 @@
       <form action="{{ route('admin.accounts.update',$array->id) }}" method="POST" enctype="multipart/form-data">
       @method('PUT')
       @csrf
-      <div style="margin: 25px 300px 0;" class="add-product-form">
+      <div class="add-product-form">
           <div class="product-info">
             <div class="row">
               <div class="col-md-6">
@@ -110,12 +149,12 @@
               </div>
             </div>
           </div>
-      </div>
-      <div class="product-footer">
-        <div class="product-footer-btn">
-          <button class="destroy-btn btn">Hủy</button>
-          <button class="save-btn btn">Lưu</button>
-        </div>
+          <div class="product-footer">
+            <div class="product-footer-btn">
+              <button class="destroy-btn btn">Hủy</button>
+              <button class="save-btn btn">Lưu</button>
+            </div>
+          </div>
       </div>
     </form>
     @endforeach
