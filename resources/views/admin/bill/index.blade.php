@@ -1,6 +1,67 @@
 @extends('admin.master.master')
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+  @media(max-width: 767px) {
+    .search {
+      width: 100%;
+      margin-right: unset;
+    }
+    .head-table {
+      display: block;
+    }
+    .group-filter-btn {
+      display: block;
+      margin-right: unset !important;
+    }
+    .w-100 {
+      width: 100% !important;
+    }
+    .inl-blk {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .head-title {
+      margin-bottom: unset;
+    }
+    .content-wrapper {
+      padding-left: unset;
+      padding-right: unset;
+    }
+    .head-title {
+      margin-left: 16px;
+    }
+  }
+  @media(min-width: 768px) and (max-width: 1024px) {
+    .head-table {
+      display: block;
+    }
+    .search {
+      width: 100%;
+    }
+    .group-filter-btn {
+      display: inline-block;
+      margin-right: 19px !important;
+    }
+    .unset-width {
+      width: unset !important;
+    }
+    .inl-blk {
+      display: inline-block;
+      height: 38px;
+    }
+  }
+  .table-ds-sanpham {
+    min-width: 1000px;
+  }
+  .ds-sanpham-div {
+    overflow-x: auto;
+    padding-bottom: unset;
+  }
+  .content-wrapper {
+    margin-top: unset;
+  }
+</style>
 @endsection
 @section('content')
     <div class="content-wrapper">
@@ -18,27 +79,29 @@
                       <div class="search">
                           <input class="search-txt" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">
                       </div>
-                      <div class="group-filter-btn">
-                        <label style="width: 211px;
-                        position: relative;
-                        top: 6px;">Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">
-                        <label style="width: 242px;
-                        position: relative;
-                        top: 6px;">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
-                      </div>
-                      <div style="margin-right: 16px;" class="group-filter-btn">
-                        <label style="width: 75px;
-                        position: relative;
-                        top: 6px;">Chốt đơn: </label>
-                        <select style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="chot_don">
-                          <option value="">--Chọn--</option>
-                          <option value="1">Đã chốt</option>
-                          <option value="0">Chưa chốt</option>
-                        </select>
-                      </div>
-                      <input type="submit" style="color: #fff;
-                      background-color: #0069d9;
-                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
+                        <div class="group-filter-btn">
+                          <label style="width: 211px;
+                          position: relative;
+                          top: 6px;">Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">
+                        </div>
+                        <div class="group-filter-btn">
+                          <label class="unset-width" style="width: 242px;
+                          position: relative;
+                          top: 6px;">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
+                        </div>
+                        <div style="margin-right: 16px;" class="group-filter-btn">
+                          <label class="unset-width" style="width: 75px;
+                          position: relative;
+                          top: 6px;">Chốt đơn: </label>
+                          <select  class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="chot_don">
+                            <option value="">--Chọn--</option>
+                            <option value="1">Đã chốt</option>
+                            <option value="0">Chưa chốt</option>
+                          </select>
+                        </div>
+                        <input type="submit" style="color: #fff;
+                        background-color: #0069d9;
+                        border-color: #0062cc;" class="btn inl-blk" value="Tìm kiếm">
                     </div>
                   </form>
                   <div id="ds-hoa-don-div" class="ds-sanpham-div">
@@ -124,12 +187,12 @@
                         @endforeach
                     </tbody>
                   </table>
-                  <nav aria-label="Page navigation example" style="margin-top:20px">
-                    <ul class="pagination">
+                  </div>
+                  <nav aria-label="Page navigation example" style="padding: 15px;">
+                    <ul class="pagination" style="margin-bottom: unset ">
                       {!! $arrays->appends(request()->query())->links() !!}
                     </ul>
                   </nav>
-                  </div>
               </div>
             </div>
         </div>

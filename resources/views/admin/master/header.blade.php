@@ -49,7 +49,7 @@
             <i class="fas fa-bars"></i>
         </button>
     </div>
-    <div class="header-btn"><a class="p-15" href="">Trang chủ</a></div>
+    <div class="header-btn"><a class="p-15" href="{{ route('admin.dashboards') }}">Trang chủ</a></div>
     @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
             <button style="padding: 14px;height: 54px" id="account-nav">
