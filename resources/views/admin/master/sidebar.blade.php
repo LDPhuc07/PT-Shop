@@ -1,8 +1,13 @@
 <div id="mySidebar" class="main-sidebar">
-    <a class="brand-link" href="">
-    <img class ="logo" src="{{asset('img/logo/logomain.png')}}" alt="">
-    <span class="brand-text">P&T Sport</span>
-    </a>
+    <div style="position: relative">
+        <a class="brand-link" href="">
+            <img class ="logo" src="{{asset('img/logo/logomain.png')}}" alt="">
+            <span class="brand-text">P&T Sport</span>
+        </a>
+        <button id="close-sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
     <div class="sidebar">
     <nav>
         <ul class="nav">

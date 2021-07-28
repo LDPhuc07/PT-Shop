@@ -850,3 +850,24 @@ a:hover {
 .rating-stars ul > li.star.selected > i.fa {
   color:#FF912C;
 }
+.close-sidebar {
+  width: 50px;
+  height: 50px;
+}
+#close-sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #202d3f;
+  border: none;
+  padding: 8px;
+  visibility: hidden;
+}
+#close-sidebar i {
+  font-size: 32px;
+  color: white;
+}
+.disabledbutton {
+  pointer-events: none;
+  opacity: 0.4;
+}
