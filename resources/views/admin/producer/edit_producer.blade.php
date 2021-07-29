@@ -1,8 +1,25 @@
 @extends('admin.master.master')
 @section('content')
+<style>
+  .product-container {
+    margin-top: unset;
+  }
+  .add-product-form {
+    margin: 25px 220px 0;
+    border-bottom: unset;
+  }
+  @media(max-width: 767px) {
+    .head-add-pro {
+      padding: 20px;
+    }
+    .add-product-form {
+      margin: 20px;
+    }
+  }
+</style>
     <div class="product-container">
       <div class="head-title head-add-pro">
-        <a href="{{ route('loaisanpham.index')}}">
+        <a href="{{ route('nhasanxuat.index') }}">
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách loại sản phẩm</span>
         </a>
@@ -12,7 +29,7 @@
         @method('PUT')
         @csrf
         {{-- <input type="hidden" value="{{$dsMonTheThao['id']}}" name="id"> --}}
-        <div style="margin: 25px 220px 0;border-bottom: unset" class="add-product-form">
+        <div class="add-product-form">
           <div style="border-bottom: 1px solid #dfe4e8; padding-bottom: 24px" class="col-12 pl-0 pr-0">
             <div class="product-info">
               <div class="product-info-item">

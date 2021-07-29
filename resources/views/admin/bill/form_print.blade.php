@@ -48,7 +48,7 @@
                 <label for="">Thu Ngân:</label> Lê Đức Phục
             </div>
         </div>
-        <table style="width: 100%;">
+        <table style="width: 100%">
             <thead style="border-bottom: 1px solid">
                 <tr>
                     <th>Sản phẩm</th>

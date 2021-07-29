@@ -31,6 +31,9 @@
     .head-title {
       margin-left: 16px;
     }
+    .group-filter-btn label {
+      text-align: unset !important;
+    }
   }
   @media(min-width: 768px) and (max-width: 1024px) {
     .head-table {
@@ -50,6 +53,9 @@
       display: inline-block;
       height: 38px;
     }
+    .group-filter-btn label {
+      text-align: unset !important;
+    }
   }
   .table-ds-sanpham {
     min-width: 1000px;
@@ -60,6 +66,11 @@
   }
   .content-wrapper {
     margin-top: unset;
+  }
+  .group-filter-btn label {
+    width: 211px;
+    margin-top: 6px;
+    text-align: center;
   }
 </style>
 @endsection
@@ -80,19 +91,13 @@
                           <input class="search-txt" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">
                       </div>
                         <div class="group-filter-btn">
-                          <label style="width: 211px;
-                          position: relative;
-                          top: 6px;">Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">
+                          <label>Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">
                         </div>
                         <div class="group-filter-btn">
-                          <label class="unset-width" style="width: 242px;
-                          position: relative;
-                          top: 6px;">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
+                          <label class="unset-width">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
                         </div>
                         <div style="margin-right: 16px;" class="group-filter-btn">
-                          <label class="unset-width" style="width: 75px;
-                          position: relative;
-                          top: 6px;">Chốt đơn: </label>
+                          <label class="unset-width">Chốt đơn: </label>
                           <select  class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="chot_don">
                             <option value="">--Chọn--</option>
                             <option value="1">Đã chốt</option>

@@ -1,4 +1,4 @@
-<table class="table-ds-sanpham">
+<table style="min-width: unset" class="table-ds-sanpham">
     <thead>
         <tr>
             <th>Mã hóa đơn</th>
