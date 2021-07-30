@@ -59,6 +59,12 @@
             <p class="nav-text">Thống kê</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('slideshow.index') }}">
+            <i class="nav-icon fas fa-photo-video"></i>
+            <p class="nav-text">Slideshow</p>
+            </a>
+        </li>
         </ul>
     </nav>
     </div>

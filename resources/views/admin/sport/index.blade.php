@@ -1,5 +1,15 @@
 @extends('admin.master.master')
 @section('content')
+<style>
+  @media(max-width: 767px) {
+    .content-wrapper {
+      margin-top: unset;
+    }
+    h3 {
+      font-size: 1.70rem;
+    }
+  }
+</style>
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">

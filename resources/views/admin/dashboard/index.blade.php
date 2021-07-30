@@ -2,11 +2,43 @@
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<style>
+    .rpv-head {
+        -webkit-box-flex: 0;
+        flex: 0 0 50%;
+        max-width: 25%;
+    }
+    @media(max-width: 767px) {
+        .rpv-head {
+            -webkit-box-flex: 0;
+            flex: 0 0 50%;
+            min-width: 100%;
+            padding-right: unset;
+            padding-left: unset;
+        }
+        .btn-thongke {
+            text-align: center;
+        }
+    }
+    @media(min-width: 768px) and (max-width: 1024px) {
+        .rpv-head {
+            -webkit-box-flex: 0;
+            flex: 0 0 50%;
+            min-width: 50%;
+        }
+        .new-registrations-div {
+            padding-right: unset;
+        }
+        .bounce-rate-div {
+            padding-left: unset;
+        }
+    }
+</style>
 @endsection
 @section('content')
     <div class="content-wrapper">
         <div class="row m-0">
-            <div class="col-lg-3 col-6 pl-0 pr-8">
+            <div class="rpv-head pl-0 pr-8 new-order-div">
                 <div class="small-box new-order">
                 <div class="inner">
                     <h3>{{ $dem_don_hang }}</h3>
@@ -21,7 +53,7 @@
                 </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6 pl-8 pr-8">
+            <div class="rpv-head pl-8 pr-8 new-registrations-div">
                 <div class="small-box new-registrations">
                 <div class="inner">
                     <h3>{{ $dem_yeu_thich }}</h3>
@@ -36,7 +68,7 @@
                 </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6 pl-8 pr-8">
+            <div class="rpv-head pl-8 pr-8 bounce-rate-div">
                 <div class="small-box bounce-rate">
                 <div class="inner">
                     <h3>{{ $dem_khach_hang }}</h3>
@@ -51,7 +83,7 @@
                 </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6 pr-0 pl-8">
+            <div class="rpv-head pr-0 pl-8 unique-visitors-div">
                 <div class="small-box unique-visitors">
                 <div class="inner">
                     @if($san_pham_max == null)
@@ -95,7 +127,7 @@
                             </select>
                          </p>
                     </div>
-                    <div class="col-lg-2">
+                    <div class= " btn-thongke col-md-2">
                         <input style="    margin-top: 24px;
                         height: 38px;" type="button" id="btn-dashboard-filter" class="btn btn-primary btn-sm" value="Lọc kết quả">
                     </div>
