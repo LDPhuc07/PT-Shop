@@ -7,6 +7,68 @@
    right: 27px;
    top: -85px;
   }
+  .abc {
+    position: relative;
+    width: 50%;
+  }
+  .abc a {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+  }
+  .img-thumbnail {
+    width: 100%;
+  }
+  .add-img-btn {
+    background-color: #007bff;color:#fff;
+    margin-top: 15px;
+    float: right
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+    .add-product-form {
+      margin: 0;
+    }
+    .abc {
+      width: 80%;
+    }
+    .head-add-pro {
+      padding: 18px;
+      margin-bottom: 0;
+    }
+  }
+  @media(max-width: 767px) {
+    .head-add-pro {
+      padding: 12px;
+    }
+    .add-product-form {
+      margin: unset;
+    }
+    .info-pdt {
+      padding: unset;
+      min-width: 100%;
+    }
+    .img-pdt {
+      min-width: 100%;
+      padding: unset;
+    }
+    .img-item {
+      padding: unset;
+    }
+    .abc {
+      max-width: 40%;
+      display: inline-block;
+      margin: 16px;
+    }
+    .add-img-btn {
+      margin-right: 20px;
+    }
+    .product-footer {
+      padding: 20px
+    }
+    .head-title {
+      margin-bottom: unset;
+    }
+  }
 </style>
     <div class="product-container">
       <div class="head-title head-add-pro">
@@ -21,7 +83,7 @@
         @csrf
         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
         <div class="row add-product-form">
-          <div class="col-8">
+          <div class="col-8 info-pdt">
             <div class="col-12 pl-0 pr-10">
               <div class="product-info">
                 <div class="product-info-item">
@@ -100,8 +162,8 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
-            <div class="col-12">
+          <div class="col-4 img-pdt">
+            <div class="col-12 img-item">
               @foreach($dsSanPham->anh as $i => $anh)
                 <div class="form-group abc" id="{{$i}}">
                   <img src="{{asset($anh->link)}}" alt="no img" id="{{$i}}" data-id="{{$anh->id}}" idHinh="imgsp_{{$i}}" class="img-thumbnail" width="60%">
@@ -109,7 +171,7 @@
                     {{-- <input type="file" class="form-control" data-id="{{$i}}" name="link[]" id="link_{{$i}}" onchange="loadfile(this)"> --}}
                 </div>
               @endforeach
-              <button type="button" class="btn btn-primary" id=addImages style="background-color: #007bff;color:#fff;margin-top: 15px">Thêm hình ảnh</button>
+              <button type="button" class="btn btn-primary add-img-btn" id=addImages >Thêm hình ảnh</button>
             </div>
             <div id="insert"></div>
           </div>

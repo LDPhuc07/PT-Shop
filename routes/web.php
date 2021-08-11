@@ -11,7 +11,13 @@
 |
 */
 
-Route::group(['prefix' => 'admin'], function() {
+
+Route::get('/admin/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
+Route::post('/admin/login', 'TaiKhoanController@postDangNhapAdmin');
+Route::get('/admin/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
+Route::post('/admin/sign-up','TaiKhoanController@postDangKyAdmin');
+Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], function() {
+    Route::get('/', 'DashboardController@index')->name('admin.dashboards');
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
     Route::post('/dashboards/filter-by-date','DashboardController@filterByDate');
     Route::post('/dashboards/filter','DashboardController@filter');
@@ -29,11 +35,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::post('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
     Route::get('/accounts/search','TaiKhoanController@getSearch');
-    Route::get('/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
-    Route::post('/login', 'TaiKhoanController@postDangNhapAdmin');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
-    Route::get('/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
-    Route::post('/sign-up','TaiKhoanController@postDangKyAdmin');
     
      // Môn thể thao
     Route::match(['get','post'],'/monthethao',("MonTheThaoController@index"))->name('monthethao.index');

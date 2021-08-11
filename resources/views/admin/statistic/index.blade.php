@@ -1,6 +1,53 @@
 @extends('admin.master.master')
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+  .lbl_thong_ke_theo {
+    white-space: nowrap;
+    margin-right: 8px;
+    margin-top: 5px;
+  }
+  .btn_thong_ke {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  .thong_ke_theo {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    margin-right: 16px
+  }
+  .key_day {
+    display: flex;
+    margin-right: 16px;
+  }
+  .content-wrapper {
+    margin-top: unset;;
+  }
+  @media(max-width: 767px) {
+    .head-table {
+      display: grid;
+    }
+    .key_day {
+      margin-right: unset;
+    }
+    .thong_ke_theo {
+      width: 100%;
+      margin-right: unset;
+      margin-top: 8px;
+      height: 38px;
+    }
+    .key_day:first-child {
+      margin-bottom: 8px;
+    }
+    .btn_thong_ke {
+      margin-top: 8px;
+    }
+    .lbl_thong_ke_theo {
+      margin-top: 14px;
+    }
+  }
+</style>
 @endsection
 @section('content')
     <div class="content-wrapper">
@@ -40,31 +87,27 @@
                   <form action="{{ route('admin.statistics.search') }}" method="POST">
                     @csrf
                     <div class="head-table">
-                      <div style="display: flex; margin-right: 16px;">
+                      <div class="key_day">
                         <label style="white-space: nowrap; margin-right: 8px;
                         margin-top: 5px;">Từ ngày: </label>
                         <input name="key_from_day" type="text" id="datepicker" class="form-control">
                       </div>
-                      <div style="display: flex; margin-right: 16px;">
+                      <div class="key_day">
                         <label style="white-space: nowrap; margin-right: 8px;
                         margin-top: 5px;">Đến ngày: </label>
                         <input name="key_to_day" type="text" id="datepicker2" class="form-control">
                       </div>
                       <div style="display: flex">
-                        <label style="white-space: nowrap; margin-right: 8px;
-                        margin-top: 5px;">Thống kê theo: </label>
-                        <select name="thong_ke_theo" style="border: 1px solid #ced4da;
-                        border-radius: .25rem; margin-right: 16px" class="dashboard-filter">
+                        <label class="lbl_thong_ke_theo">Thống kê theo: </label>
+                        <select class="thong_ke_theo" name="thong_ke_theo" class="dashboard-filter">
                           <option value="ko">--Chọn--</option>
-                          <option value="7ngay">7 ngày qua</option>
+                          <option value="7ngay">Tuần qua</option>
                           <option value="thangtruoc">Tháng trước</option>
                           <option value="thangnay">Tháng này</option>
-                          <option value="365ngayqua">365 ngày qua</option>
+                          <option value="365ngayqua">Năm qua</option>
                         </select>
                       </div>
-                      <input type="submit" style="color: #fff;
-                      background-color: #0069d9;
-                      border-color: #0062cc;" class="btn" value="Thống kê">
+                      <input type="submit" class="btn btn_thong_ke" value="Thống kê">
                     </div>
                   </form>
                   <div id="ds-hoa-don-div" class="ds-sanpham-div">
@@ -99,7 +142,7 @@
                   </nav>  --}}
                   <div style="text-align: right;
                   margin-top: 20px;">
-                    <label for="">Tổngt doanh thu:</label>
+                    <label for="">Tổng doanh thu:</label>
                     <span>{{number_format($tong,0,',','.').' '.'VNĐ'}}</span>
                   </div>
                   </div>

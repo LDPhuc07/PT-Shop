@@ -1,5 +1,39 @@
 @extends('admin.master.master')
 @section('content')
+<style>
+  .search {
+    width: calc(100% - 434px);
+  }
+  .ds-sanpham-div {
+    overflow-x: auto;
+    padding-bottom: unset;
+  }
+  .table-ds-sanpham {
+    min-width: 1000px;
+  }
+  .group-filter-btn {
+    margin-right: 16px;
+  }
+  @media(max-width: 767px) {
+    .head-table {
+      display: grid;  
+    }
+    .search {
+      width: 100%;
+      margin-right: unset;
+    }
+    .group-filter-btn {
+      height: 38px;
+      margin-top: 8px;
+      margin-right: unset ;
+    }
+    .tim_kiem_btn {
+      margin-top: 8px;
+    }
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+  }
+</style>
     <div class="content-wrapper">
         <div class="head-title">
           <div class="title-name">
@@ -18,12 +52,12 @@
                 <div class="ds-sanpham">
                    <form action="">
                   <div class="head-table">
-                    <div style="    width: calc(100% - 434px);" class="search">
+                    <div class="search">
                      
                         <input style="padding-right: 4px" class="search-txt" type="text" placeholder="Search.." name="search">
                       
                     </div>
-                    <div style="margin-right: 16px;" class="group-filter-btn">
+                    <div class="group-filter-btn">
                       <div class="filter-catagories-sport-wrap">
                         <select style="height: 100%;border-right: none;
                         border-radius: 3px 0 0 3px;" style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
@@ -56,7 +90,7 @@
                     </div>
                     <input type="submit" style="color: #fff;
                       background-color: #0069d9;
-                      border-color: #0062cc;" class="btn" value="Tìm kiếm">
+                      border-color: #0062cc;" class="btn tim_kiem_btn" value="Tìm kiếm">
                   </div>
                 </form>
                   <div class="ds-sanpham-div">
@@ -175,12 +209,13 @@
                     </tbody>
                     @endforeach
                   </table>
-                  <nav aria-label="Page navigation example" style="margin-top:20px">
-                    <ul class="pagination">
+                  
+                  </div>
+                  <nav style="padding: 15px" aria-label="Page navigation example">
+                    <ul style="margin: unset" class="pagination">
                       {!! $dsSanPham->appends(request()->query())->links() !!}
                     </ul>
                   </nav>
-                  </div>
               </div>
             </div>
         </div>

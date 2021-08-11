@@ -135,6 +135,7 @@ class DashboardController extends Controller
         $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
                     ->where('hoa_dons.trang_thai',true)
+                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
         foreach($get as $key => $val) {

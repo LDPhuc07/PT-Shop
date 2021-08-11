@@ -1,5 +1,32 @@
 @extends('admin.master.master')
 @section('content')
+<style>
+  .img-div {
+    text-align: center;
+  }
+  .img-div img {
+    margin-top: 8px;
+  }
+  @media(min-width: 768px) and (max-width: 1023px) {
+    .add-product-form {
+      margin: 25px 50px 0;
+    }
+  }
+  @media(max-width: 767px) {
+    .add-product-form {
+      margin: 1px;
+    }
+    .head-add-pro {
+      padding: 18px;
+    }
+    .img-col {
+      min-width: 100%;
+    }
+    .product-footer {
+      padding: 18px;
+    }
+  }
+</style>
     <div class="product-container">
       <div class="head-title head-add-pro">
         <a href="{{ route('sanpham.indexAdmin') }}">
@@ -11,7 +38,7 @@
       <form action="{{route('sanpham.storeAdmin')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row add-product-form">
-          <div class="col-12 pl-0 pr-10">
+          <div class="col-12 pl-0 pr-0">
             <div class="product-info">
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Tên sản phẩm<span class="repuired"> *</span></label>
@@ -76,10 +103,10 @@
               </div>
               <div class="row">
                 @for($i = 1; $i <=4 ; $i++)
-                <div class="col-3">
+                <div class="col-3 img-col">
                   <div class="product-info product-picture">
                     <input type="file" class="form-control" name="link[]" id="link_{{$i}}" data-id="{{$i}}" onchange="loadfile(this)">
-                    <div class="form-group abc-{{$i}}">
+                    <div class="form-group abc-{{$i}} img-div">
                         <img src="{{asset(getLink('product','no-image.png'))}}" alt="no img" id="imgsp_{{$i}}" class="img-thumbnail" width="200px">
                     </div>
                   </div>

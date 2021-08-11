@@ -120,10 +120,10 @@
                             Lọc theo:
                             <select class="dashboard-filter form-control">
                                 <option value="ko">--Chọn--</option>
-                                <option value="7ngay">7 ngày qua</option>
+                                <option value="7ngay">Tuần qua</option>
                                 <option value="thangtruoc">Tháng trước</option>
                                 <option value="thangnay">Tháng này</option>
-                                <option value="365ngayqua">365 ngày qua</option>
+                                <option value="365ngayqua">Năm qua</option>
                             </select>
                          </p>
                     </div>

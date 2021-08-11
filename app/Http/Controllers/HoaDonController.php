@@ -992,10 +992,17 @@ class HoaDonController extends Controller
         return view('pages.my_bill_detail',compact('array'));
     }
     public function indexStatistic() {
+
+        $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+
+
         $arrays = DB::table('chi_tiet_hoa_dons')
                     ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
         return view('admin.statistic.index',compact('arrays'));
@@ -1006,7 +1013,6 @@ class HoaDonController extends Controller
             $dau_thang_nay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
             $dau_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
             $cuoi_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
-
 
             $sub_7_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(7)->toDateString();
             $sub_365_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(365)->toDateString();

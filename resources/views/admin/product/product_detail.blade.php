@@ -1,5 +1,19 @@
 @extends('admin.master.master')
 @section('content')
+<style>
+  .content-wrapper {
+    margin-top: unset;
+  }
+  @media(max-width: 767px) {
+    .search {
+      width: 100%;
+      margin: unset;
+    }
+    .sanpham-chitiet {
+      padding: unset;
+    } 
+  }
+</style>
 <div class="content-wrapper">
   <div class="head-title">
     <div class="title-name">
@@ -14,7 +28,7 @@
   </div>
   @include('admin.mess.message')
   <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 sanpham-chitiet">
           <div class="ds-sanpham">
             <div class="head-table">
               <div class="search">
