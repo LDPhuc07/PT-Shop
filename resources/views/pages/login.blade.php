@@ -4,11 +4,31 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/login.css">
 @endsection
+<style>
+    /* Mobile & tablet  */
+@media (max-width: 1023px) {
+
+}
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .btn-blocker {
+    display: block;
+    width: 100%;
+  }
+}
+/* mobile */
+@media (max-width: 739px) {
+  .btn-blocker {
+    display: block;
+    width: 100%;
+  }
+}
+</style>
 @section('content')
 <div class="container" style="margin-top: 160px;">
     <div class="login__form">
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
          <form action="" method="POST" class="form" >
            @csrf
             <h3 class="heading">ĐĂNG NHẬP</h3>
@@ -55,7 +75,7 @@
                                 {{ session('thong_bao') }}
                             </span>
                         @endif
-            <button class="form-submit">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
+            <button class="form-submit btn-blocker">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
             {{--  <h4>HOẶC</h4>  --}}
             <div class="form-social">
               {{--  <a href="{{url('/login-facebook')}}" class="form-submit-social">
@@ -69,7 +89,7 @@
             </div>
          </form>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <h3 class="heading">TẠO MỘT TÀI KHOẢN</h3>
           <p class="text-login">Thật dễ dàng tạo một tài khoản. Hãy nhập địa chỉ email của bạn và điền vào mẫu trên trang tiếp theo và tận hưởng những lợi ích của việc sở hữu một tài khoản :</p>
           <ul>
@@ -80,7 +100,7 @@
             <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</p></li>
             <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các sự kiện sắp tới</p></li>
           </ul>
-          <a href="sign-up"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
+          <a href="sign-up"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit btn-blocker">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
         </div>
       </div>
     </div>
