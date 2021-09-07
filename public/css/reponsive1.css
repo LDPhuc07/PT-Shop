@@ -1,0 +1,42 @@
+/* Mobile & tablet  */
+@media (max-width: 1023px) {}
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .header{
+        overflow: hidden;
+        background-color: var(--white-color);
+        height: var(--header-height);
+        border-bottom: 1px solid #eee;
+        position: unset;
+        z-index: 999;
+        box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    }
+    .header__first {
+        justify-content: center;
+    }
+    .header__second__logo {
+        display: none;
+    }
+    .header__second__search {
+        margin-left: unset;
+        margin-right: 90px;
+    }
+    .header__second__like{
+        margin-left: unset;
+        width: unset;
+    }
+    .header__second__search-history {
+        display: none;
+    }
+    .usb {
+        display:block;
+    }
+    .checkbtn {
+        display:block;
+    }
+    .nav__third {
+
+    }
+}
+/* mobile */
+@media (max-width: 739px) {}
