@@ -50,6 +50,7 @@
 }
 .sortby {
     display: flex;
+    float: right;
 }
 .sortby label {
     margin-right: 10px;
@@ -70,9 +71,6 @@
 }
 .dropdown-item:hover {
     background-color: var(--hover-color);
-}
-.row {
-    margin-bottom: 20px;
 }
 .loadmore {
     text-align: center;
@@ -106,4 +104,34 @@
 .loadmore-btn:hover {
     text-decoration: none;
     color: var(--white-color);
+}
+
+.filter-mobile {
+    padding: 15px 15px;
+    height: 100%;
+    overflow-y: auto;
+    width: 270px;
+    position: fixed;
+    background-color: #fff;
+    z-index: 999999 !important;
+    top: 0 !important;
+    right: 0 !important;
+    transition: transform 0.8s;
+    transform: translateX(270px);
+}
+.xyz{
+    transform: translateX(0);
+}
+.overlay2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    position:  fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    cursor: pointer;
+}
+.row-product {
+    margin-bottom: 20px;
 }

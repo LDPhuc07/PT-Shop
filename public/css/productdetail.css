@@ -1,6 +1,5 @@
 .product__detail {
     margin: 40px 0;
-    margin-top: 180px;
 }
 .all-img {
     float:left;
@@ -534,4 +533,9 @@
 }
 .alert__body-name {
     height: 48px;
+}
+.header__second__like {
+    text-align: right;
+    margin-left: 0;
+    margin-top: -6px;
 }

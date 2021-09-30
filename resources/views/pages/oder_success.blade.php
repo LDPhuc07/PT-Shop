@@ -15,5 +15,4 @@
 <!-- end content -->
 @endsection
 @section('js')
-<script src="js/main.js"></script>
 @endsection

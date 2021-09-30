@@ -37,6 +37,100 @@
   .rating-stars ul > li.star.selected > i.fa {
     color:#FF912C;
   }
+  /* Mobile & tablet  */
+@media (max-width: 1023px) {
+}
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .daonguoc {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #main-img {
+    max-width: unset;
+  }
+  #main-img img {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+  }
+  .all-img > li {
+    display: inline-block;
+  }
+  .all-img {
+    padding: unset;
+  }
+  .img-item img {
+    width: 150px;
+    cursor: pointer;
+    margin: 5px 10px;
+  }
+  textarea {
+    width: 100%;
+  }
+  .btn-comment {
+    display: block;
+    width: 100%;
+    padding: 25px 0 35px 0;
+    font-size: small;
+  }
+}
+/* mobile */
+@media (max-width: 739px) {
+  .daonguoc {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #main-img img {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+  }
+  .all-img > li {
+    display: inline-block;
+  }
+  .all-img {
+    padding: unset;
+  }
+  .img-item img {
+    width: 80px;
+    margin: 5px 2px;
+  }
+  .product__price {
+    margin: 15px 0;
+  }
+  .product__wrap {
+    display: block;
+    margin: 15px 0;
+  }
+  .add-cart {
+    width: 100%;
+    padding: 10px 0;
+    margin: 15px 0;
+  }
+  .product__shopnow {
+    display: block;
+  }
+  .shopnow {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .likenow {
+    width: 100%;
+  }
+  .btn-comment {
+    width: 100%;
+  }
+  .alert {
+    width: 100%;
+  }
+} 
 </style>
 @endsection
 @section('content')
@@ -44,7 +138,7 @@
 <div class="product__detail">
   <div class="container">
     <div class="row">
-      <div class="col-6">
+      <div class="col-lg-6 col-12 daonguoc">
         <div class="img-product">
           <input type="hidden" data-id="{{$sanpham->id}}" id="trungid">
           <ul class="all-img">
@@ -65,33 +159,34 @@
           @endforeach
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-lg-6 col-12">
         <form action="" id="contactForm" method="POST">
         @csrf
+        <div class='rating-stars'>
+          <ul id='stars'>
+            <li class='star' title='Tệ' data-value='1'>
+              <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Tạm được' data-value='2'>
+              <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Được' data-value='3'>
+              <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Tốt' data-value='4'>
+              <i class='fa fa-star fa-fw'></i>
+            </li>
+            <li class='star' title='Rất tốt' data-value='5'>
+              <i class='fa fa-star fa-fw'></i>
+            </li>
+          </ul>
+          <div class='text-message'></div>
+        </div>
+        <input type="hidden" id="id_san_pham" name="id" value="{{ $sanpham->id }}">
         <div class="product__name">
           <h2>{{$sanpham->ten_san_pham}}</h2>
-          <div class='rating-stars text-center' style="margin-left: 80px">
-            <ul id='stars'>
-              <li class='star' title='Tệ' data-value='1'>
-                <i class='fa fa-star fa-fw'></i>
-              </li>
-              <li class='star' title='Tạm được' data-value='2'>
-                <i class='fa fa-star fa-fw'></i>
-              </li>
-              <li class='star' title='Được' data-value='3'>
-                <i class='fa fa-star fa-fw'></i>
-              </li>
-              <li class='star' title='Tốt' data-value='4'>
-                <i class='fa fa-star fa-fw'></i>
-              </li>
-              <li class='star' title='Rất tốt' data-value='5'>
-                <i class='fa fa-star fa-fw'></i>
-              </li>
-            </ul>
-            <div class='text-message'></div>
-          </div>
-          <input type="hidden" id="id_san_pham" name="id" value="{{ $sanpham->id }}">
         </div>
+        
         
         <div class="product__price">
           <h2>{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</h2>
@@ -297,7 +392,7 @@
           </div>
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
-          <h3 style="font-size: 20px;">Sản phẩm được đánh giá: 
+          <h3 style="font-size: 16px;">Sản phẩm được đánh giá: 
               <span id="danh-gia-tb" style="margin-right: 2px;">
               @foreach($danh_gia as $rate)
                 @if($sanpham->id == $rate->san_phams_id)
@@ -373,7 +468,7 @@
   <div class="container">
     <h2 class="product__describe-heading">Bình luận</h2>
     <div class="row">
-      <div class="col-4">
+      <div class="col-lg-4 col-12 mb-4">
         <textarea name="binhluan" id="cmt" cols="70" rows="10"></textarea>
         @if(Auth::check() and Auth::user()->admin != 1)
         <a onclick="postBinhLuan()" class="btn btn-comment">Gửi</a>
@@ -381,7 +476,7 @@
         <a  class="btn btn-comment" data-toggle="modal" data-target="#myModal2">Gửi</a>
         @endif
       </div>
-      <div class="col-8">
+      <div class="col-lg-8 col-12">
         <div class="body__comment" id="comment">
           
         </div>
@@ -398,7 +493,7 @@
     <div id="like_splq" class="row">
       @foreach($sanphamlienquans as $sanphamlienquan)
       <a href="{{route('product_detail',['id'=>$sanphamlienquan->id])}}" class="product__new-item">
-        <div class="col-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
           <div class="card" style="width: 100%">
             @foreach($sanphamlienquan->anh as $anh)
               <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
@@ -530,7 +625,6 @@
 {{-- end alert cart --}}
 @endsection
 @section('js')
-<script src="js/main.js"></script>
       <script src="js/zoomsl.js"></script>
       <script>
         $(document).ready(function(){
@@ -569,7 +663,7 @@
               method: "GET",
               success:function(result) {
                 $(`#header__second__cart--notice`).html(result.toString());
-      
+                $(`#header__second__cart--notice1`).html(result.toString());
               }
             });
             fadeInModal();
@@ -686,6 +780,10 @@
         var like_header = parseInt($(`#header__second__like--notice`).text());
         like_header--;
         $(`#header__second__like--notice`).html(like_header.toString());
+
+        var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1--;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
       }
       else {
         $.ajax({
@@ -703,6 +801,10 @@
         var like_header = parseInt($(`#header__second__like--notice`).text());
         like_header++;
         $(`#header__second__like--notice`).html(like_header.toString());
+
+        var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1++;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
         $(`.luot-like-${sp_id}`).html(like.toString());
       }
     }

@@ -4,16 +4,52 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/login.css">
 @endsection
+@section('content')
 <style>
-    /* Mobile & tablet  */
+  form.example input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+  }
+  
+  form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+  }
+  
+  form.example button:hover {
+    background: #0b7dda;
+  }
+  
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+      /* Mobile & tablet  */
 @media (max-width: 1023px) {
-
+  .custom-btn {
+    margin: unset; 
+  }
 }
 /* tablet */
 @media (min-width: 740px) and (max-width: 1023px) {
   .btn-blocker {
     display: block;
     width: 100%;
+  }
+  .show-hide {
+    top: 56px;
   }
 }
 /* mobile */
@@ -22,13 +58,16 @@
     display: block;
     width: 100%;
   }
+  
+  .show-hide {
+    top: 56px;
+  }
 }
-</style>
-@section('content')
-<div class="container" style="margin-top: 160px;">
+  </style>
+<div class="container">
     <div class="login__form">
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-sm-12 col-lg-6">
          <form action="" method="POST" class="form" >
            @csrf
             <h3 class="heading">ĐĂNG NHẬP</h3>
@@ -50,7 +89,7 @@
               @endif
             </div>
         
-            <div class="form-group">
+            <div class="form-group matkhau">
               <label for="mat_khau" class="form-label">Mật khẩu</label>
               <input id="password" name="mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
               <span class="show-hide"><i class="fas fa-eye"></i></span>
@@ -75,7 +114,7 @@
                                 {{ session('thong_bao') }}
                             </span>
                         @endif
-            <button class="form-submit btn-blocker">ĐĂNG NHẬP <i class="fi-rs-arrow-right"></i></button>
+            <button class="form-submit btn-blocker ">ĐĂNG NHẬP <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button>
             {{--  <h4>HOẶC</h4>  --}}
             <div class="form-social">
               {{--  <a href="{{url('/login-facebook')}}" class="form-submit-social">
@@ -89,18 +128,18 @@
             </div>
          </form>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-sm-12 col-lg-6">
           <h3 class="heading">TẠO MỘT TÀI KHOẢN</h3>
           <p class="text-login">Thật dễ dàng tạo một tài khoản. Hãy nhập địa chỉ email của bạn và điền vào mẫu trên trang tiếp theo và tận hưởng những lợi ích của việc sở hữu một tài khoản :</p>
           <ul>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Tổng quan đơn giản về thông tin cá nhân của bạn</p></li>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Thanh toán nhanh hơn</p></li>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Ưu đãi và khuyến mãi độc quyền</p></li>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các sản phẩm mới nhất</p></li>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</p></li>
-            <li class="text-login-item"><i class="fi-rs-check"></i><p class="text-login">Các sự kiện sắp tới</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Tổng quan đơn giản về thông tin cá nhân của bạn</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Thanh toán nhanh hơn</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Ưu đãi và khuyến mãi độc quyền</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Các sản phẩm mới nhất</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</p></li>
+            <li class="text-login-item"><i class="fas fa-check"></i><p class="text-login">Các sự kiện sắp tới</p></li>
           </ul>
-          <a href="sign-up"><button style="margin-left: 10px;margin-top: 18px;" class="form-submit btn-blocker">ĐĂNG KÍ <i class="fi-rs-arrow-right"></i></button></a>
+          <a href="sign-up"><button class="form-submit btn-blocker">ĐĂNG KÍ <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button></a>
         </div>
       </div>
     </div>

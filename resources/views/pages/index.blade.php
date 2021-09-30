@@ -9,43 +9,49 @@
 </style>
 @endsection
 @section('content')
-<div class="content" style="margin-top: 160px">
+<div class="container">
     <!-- slide show -->
-    <div class="slideshow">
-      <div id="demo" class="carousel slide" data-ride="carousel">
-        <ul class="carousel-indicators">
-          <li data-target="#demo" data-slide-to="0" class="active"></li>
-          <li data-target="#demo" data-slide-to="1"></li>
-          <li data-target="#demo" data-slide-to="2"></li>
-        </ul>
-        <div class="carousel-inner">
-          {{-- @foreach($slides as $slide) --}}
-          @for($slide = 0; $slide < count($slides); $slide++)
-          @if($slide == 0)
-          <div class="carousel-item active">
-            <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
-            <div class="carousel-caption">
-              <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
-            </div>   
+    <div class="row">
+      <section class="awe-section-1">
+        <div class="mt-4 top-sliders col-md-12">
+          <div class="slideshow">
+            <div id="demo" class="carousel slide" data-ride="carousel">
+              <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+              </ul>
+              <div class="carousel-inner">
+                {{-- @foreach($slides as $slide) --}}
+                @for($slide = 0; $slide < count($slides); $slide++)
+                @if($slide == 0)
+                <div class="carousel-item active">
+                  <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
+                  <div class="carousel-caption">
+                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
+                  </div>   
+                </div>
+                @else
+                <div class="carousel-item">
+                  <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
+                  <div class="carousel-caption">
+                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
+                  </div>   
+                </div>
+                @endif
+                @endfor
+                {{-- @endforeach --}}
+              </div>
+              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
           </div>
-          @else
-          <div class="carousel-item">
-            <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
-            <div class="carousel-caption">
-              <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}" class="click-slideshow">Xem ngay <i class="fi-rs-arrow-right"></i></a>
-            </div>   
-          </div>
-          @endif
-          @endfor
-          {{-- @endforeach --}}
         </div>
-        <a class="carousel-control-prev" href="#demo" data-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#demo" data-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </a>
-      </div>
+      </section>
     </div>
     <!-- end slide show -->
     <div id="product" class="product">
@@ -54,7 +60,7 @@
           <h3 class="product__popular title-product">Sản phẩm phổ biến</h3>
           <div class="row">
             @foreach($sanphamphobiens as $sanphamphobien)
-            <div class="col-6">
+            <div class="col-lg-6 col-sm-12 mb-20">
               <div class="card" style="width: 100%;">
                 @foreach($sanphamphobien->anh as $anh)
                 <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image" style="width:100%">
@@ -70,7 +76,7 @@
                   
                   <div style="display:flex;justify-content: space-between;
                     align-items: center;">
-                      <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fi-rs-arrow-right white-color"></i></a>
+                      <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 5px;"></i></a>
                       <div>
                         <span id="luot-like-{{ $sanphamphobien->id }}" class="luot-like-{{ $sanphamphobien->id }}" style="margin-right: 12px;font-size: 25px">
                           @foreach($yeu_thich as $like)
@@ -119,7 +125,7 @@
           <h3 class="product__ne title-product">Sản phẩm mới</h3>
             <div class="row">
               @foreach($sanphammoinhats as $sanphammoinhat)
-              <div class="col-3">
+              <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
                 <a href="{{route('product_detail',['id'=>$sanphammoinhat->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanphammoinhat->anh as $anh)
@@ -179,7 +185,7 @@
           <h3 class="product__sale title-product">Top sản phẩm hot</h3>
           <div class="row">
             @foreach($sanphamhots as $sanphamhot)
-            <div class="col-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
               <a href="{{route('product_detail',['id'=>$sanphamhot->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanphamhot->anh as $anh)
@@ -241,7 +247,7 @@
           <h3 class="product__yml title-product">Có thể bạn sẽ thích</h3>
           <div class="row">
             @foreach($sanphams as $sanpham)
-            <div class="col-2">
+            <div class="col-lg-2 col-md-4 col-sm-12 mb-20">
               <a href="{{route('product_detail',['id'=>$sanpham->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
                   @foreach($sanpham->anh as $anh)
@@ -368,7 +374,6 @@
 </div>
 @endsection
 @section('js')
-<script src="js/main.js"></script>
 <script>
     $(document).ready(function() {
       var divGiamGia = $('.card-body').children('.sale-off');
@@ -417,6 +422,10 @@
       var like_header = parseInt($(`#header__second__like--notice`).text());
       like_header--;
       $(`#header__second__like--notice`).html(like_header.toString());
+
+      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+      like_header1--;
+      $(`#header__second__like--notice1`).html(like_header1.toString());
       $(`.luot-like-${sp_id}`).html(like.toString());
     }
     else {
@@ -435,10 +444,13 @@
       var like_header = parseInt($(`#header__second__like--notice`).text());
       like_header++;
       $(`#header__second__like--notice`).html(like_header.toString());
+      
+      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+      like_header1++;
+      $(`#header__second__like--notice1`).html(like_header1.toString());
       $(`.luot-like-${sp_id}`).html(like.toString());
     }
   }
-  
 </script>
 <script>
   $(document).ready(function() {
