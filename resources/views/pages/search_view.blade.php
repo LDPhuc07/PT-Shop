@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 
-<div class="product" style="margin-top: 195px;">
+<div class="product">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -18,7 +18,7 @@
               </div>
               <div class="row" id="tatcasanpham">
                 @foreach($dsSanPhamSearch as $i)
-                <div class="col-3" style="margin-top:20px">
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
                   <a href="{{route('product_detail',['id'=>$i->id])}}" class="product__new-item">
                   <div class="card" style="width: 100%;margin-bottom: 20px;">
                     @foreach($i->anh as $anh)
@@ -147,7 +147,7 @@
       let html ='';
     
       $.each(products,function(index, product){
-      html+='<div class="col-3" style="margin-bottom: 20px">';
+      html+='<div class="col-lg-3 col-md-6 col-sm-12 mb-20" style="margin-bottom: 20px">';
       html+='<a href="/product-details/'+product.id+'" class="product__new-item">';
           html+='<div class="card" style="width: 100%;">';
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';

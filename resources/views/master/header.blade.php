@@ -503,7 +503,7 @@
                 <div class="col-4">
                   <a href="">
                     <picture>
-                      <img src="img/product/addidas1.jpg" alt="" width="100%">
+                      <img src="img/product/nikesb1_94.jpg" alt="" width="100%">
                     </picture>
                   </a>
                 </div>

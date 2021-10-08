@@ -6,11 +6,31 @@
 <link rel="stylesheet" href="css/account.css">
 @endsection
 @section('content')
-<div class="cart" style="margin-top: 160px;">
-    <div class="container" style="margin-top: 180px;">
+<style>
+  /* Mobile & tablet  */
+  @media (max-width: 1023px) {
+   .detail__confirm-password {
+     margin-left: unset;
+     margin-top: 20px;
+     border-top: 1px solid #000;
+   }
+  }
+
+  /* tablet */
+  @media (min-width: 740px) and (max-width: 1023px) {
+    
+  }
+
+  /* mobile */
+  @media (max-width: 739px) {
+    
+  }
+</style>
+<div class="cart" style="margin-top:30px">
+    <div class="container">
         @include('admin.mess.message')
         <div class="row">
-          <div class="col-4">
+          <div class="col-lg-4 col-12">
             <div class="heading">
                 <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="heading-img">
                 <span class="heading-name_acc">{{Auth::user()->ho_ten}}</span>
@@ -42,7 +62,7 @@
                 </a>
             </div>
           </div>
-          <div class="col-8">
+          <div class="col-lg-8 col-12">
             <div class="detail__confirm-password">
               <div class="heading-edit-password">
                 <h2>Đổi lại mật khẩu</h2>
@@ -94,7 +114,7 @@
                 <div class="form-group form-group-confirm-password">
                   <div style="display:flex;justify-content: space-between;">
                     <label for="password-confirm" class="form-label">Nhập lại mật khẩu</label>
-                    <span style="    top: 54px;
+                    <span style=" right:0;   top: 54px;
     z-index: 1;" class="show-hide-three"><i class="fas fa-eye fa-eye-3"></i></span>
                   </div>
                   <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">

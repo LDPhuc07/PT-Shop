@@ -6,10 +6,30 @@
 <link rel="stylesheet" href="css/account.css">
 @endsection
 @section('content')
-<div class="cart" style="margin-top: 160px;">
-    <div class="container" style="margin-top: 180px;">
+<style>
+  /* Mobile & tablet  */
+  @media (max-width: 1023px) {
+   .detial__my-profile {
+     margin-left: unset;
+     margin-top: 20px;
+     border-top: 1px solid #000;
+   }
+  }
+
+  /* tablet */
+  @media (min-width: 740px) and (max-width: 1023px) {
+    
+  }
+
+  /* mobile */
+  @media (max-width: 739px) {
+    
+  }
+</style>
+<div class="cart" style="margin-top: 30px">
+    <div class="container">
         <div class="row">
-          <div class="col-4">
+          <div class="col-lg-4 col-12">
               <div class="heading">
                   <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="heading-img">
                   <span class="heading-name_acc">{{Auth::user()->ho_ten}}</span>
@@ -41,7 +61,7 @@
                   </a>
               </div>
           </div>
-          <div class="col-8">
+          <div class="col-lg-8 col-12">
             <div class="detial__my-profile ">
               <div class="heading-edit-account">
                 <h2>Hồ sơ của tôi</h2>

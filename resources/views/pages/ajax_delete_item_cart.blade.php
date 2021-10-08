@@ -1,3 +1,54 @@
+<style>
+
+        /* Mobile & tablet  */
+@media (max-width: 1023px) {
+}
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .cart-wrap {
+    padding-top: 8px;
+    padding-bottom: 46px
+  }
+  .cart-body-left {
+    width: 100%;
+  }
+  .cart-body-right {
+    margin-top: 8px;
+    width: 100%;
+    padding: 16px;
+  }
+}
+/* mobile */
+@media (max-width: 739px) {
+  .cart-wrap {
+    padding-top:8px;
+    padding-bottom: 46px;
+  }
+  .cart-body-left {
+    width: 100%;
+  }
+  .cart-body-right {
+    margin-top: 8px;
+    width: 100%;
+    padding: 16px;
+  }
+  .cart-body-row {
+    flex-direction: row;
+    /* margin-left: -12px;
+    margin-right: -12px; */
+  }
+  .card-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .card-info-img {
+    grid-row: span 3;
+  }
+  .cart-quantity {
+    margin-top: 5px;
+  }
+}
+  </style>
 <form action="" id="form-cart" class="form-cart">
   <div class="cart-body-left">
       <div class="cart-heding hidden-xs">
@@ -49,7 +100,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-2 col-12">
+                <div class="col-md-2 col-12 hidden-xs" style="font-size: 16px;">
                     <span>{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</span>
                 </div>
                 <div class="col-md-3 col-12">
@@ -60,12 +111,12 @@
                       <input type="button" value="+" class="control" onclick="congSoLuong({{$array->id}},{{ $array->chiTietSanPham->so_luong }})">
                   </div>
                 </div>
-                <div class="col-md-2 col-12">
+                <div class="col-md-2 col-12" style="font-size: 16px;">
                   <span>{{number_format(($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong,0,',','.').' '.'VNĐ'}}</span>
                 </div>
             </div>
           </div>
-          <div class="col-md-1 col-2 hidden-xs" onclick="xoasanpham({{$array->id}})">
+          <div class="col-md-1 col-2" onclick="xoasanpham({{$array->id}})">
             <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
           </div>
         </div>
@@ -102,7 +153,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-md-2 col-12" style="font-size: 16px;">
+                        <div class="col-md-2 col-12 hidden-xs" style="font-size: 16px;">
                             <span>{{number_format($content->price,0,',','.').' '.'VNĐ'}}</span>
                         </div>
                         <div class="col-md-3 col-12">
@@ -113,12 +164,12 @@
                               <input type="button" value="+" class="control" onclick="congSoLuong(`{{ $content->rowId }}`,{{ $content->options->qty_original }})">
                           </div>
                         </div>
-                        <div class="col-md-2 col-12 hidden-xs">
+                        <div class="col-md-2 col-12 "  style="font-size: 16px;">
                           <span>{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1 col-2 text-right" onclick="xoasanpham(`{{ $content->rowId }}`)">
+                <div class="col-md-1 col-2" onclick="xoasanpham(`{{ $content->rowId }}`)">
                   <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
               </div>
         </div>
