@@ -216,7 +216,9 @@ html, body {
   padding-right: 24px;
 }
 .table-ds-sanpham tbody td img {
-  height: 37px;
+  height: 35px;
+  width: 35px;
+  object-fit: cover;
 }
 .table-ds-sanpham tbody tr {
   background-color: #fafafa;;
@@ -438,7 +440,15 @@ textarea.textbox {
   border-radius: 3px;
   margin-left: 4px;
 }
-.checked {
+.checked i {
+  color: #33CC66;
+  font-size: 24px;
+}
+.not-check-btn i {
+  color: #C2C2C2;
+  font-size: 24px;
+}
+.repaid {
   background: linear-gradient( 
   180deg
  ,#33CC66,#33CC33)!important;
@@ -449,7 +459,7 @@ textarea.textbox {
   border-radius: 3px;
   margin-left: 4px;
 }
-.not-check-btn {
+.postpaid {
   background: linear-gradient( 
   180deg
  ,#C2C2C2,#B7B7B7)!important;
@@ -478,6 +488,17 @@ textarea.textbox {
  ,#183153,#295085)!important;
   border-color: #183153;
   box-shadow: inset 0 1px 0 0 #295085;
+  color: #fff!important;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+.check-bill-btn {
+  background: linear-gradient( 
+  180deg
+ ,#23b4a7,#3ab48c)!important;
+  border-color: #23b4a7;
+  box-shadow: inset 0 1px 0 0 #3ab48c;
   color: #fff!important;
   padding: 4px 10px;
   border-radius: 3px;
@@ -869,4 +890,17 @@ a:hover {
 .disabledbutton {
   pointer-events: none;
   opacity: 0.4;
+}
+.avt {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+.main-footer {
+  position: relative;
+  bottom: 0;
+  text-align: center;
+  padding: 8px 16px;
 }

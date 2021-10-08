@@ -18,13 +18,14 @@
             }
             td, th {
                 padding-right: 20px;
+                padding-top: 4px;
+                padding-bottom: 4px;
                 text-align: left;
             }
             .total {
                 margin-top: 20px;
                 text-align: right;
             }
-            .info
             .greeting {
                 text-align: center;
                 margin-top: 20px;
@@ -45,7 +46,7 @@
                 <label for="">Ngày lập HD:</label> {{ $bill->ngay_lap_hd }} <br/>
             </div>
             <div class="info_item">
-                <label for="">Thu Ngân:</label> Lê Đức Phục
+                <label for="">Thu Ngân:</label> {{ Auth::user()->ho_ten }}
             </div>
         </div>
         <table style="width: 100%">
@@ -67,10 +68,15 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align: right;">Tổng tiền: </td>
+                    <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
+                </tr>
+            </tfoot>
         </table>
-        <div class="total">
-            <label for="">Tổng tiền: </label>    {{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}
-        </div>
         <div class="greeting">
             <p>Cảm ơn quý khách, hẹn gặp lại!</p>
         </div>

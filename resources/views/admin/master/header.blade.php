@@ -43,6 +43,15 @@
     @endif
     </ul>
 </div>  --}}
+<style>
+    .avt-head {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%; 
+        background-position: center;
+        object-fit: cover;
+    }
+</style>
 <div class="header">
     <div class="header-btn">
         <button class="p-15" id="sidebar-link">
@@ -53,7 +62,7 @@
     @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
             <button style="padding: 14px;height: 54px" id="account-nav">
-                <img style="width: 30px" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh"></td>
+                <img class="avt-head" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh"></td>
                 {{ Auth::user()->ho_ten }}
             </button>
             <ul id="account-popover" class="popover account-popover">
@@ -62,7 +71,7 @@
                 <li><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></li>
             </ul>
         </div> 
-     @else
+    @else
         <div class="header-btn account-btn">
             <a href="{{ route('admin.accounts.login') }}" class="p-15">Đăng nhập</a>
         </div>

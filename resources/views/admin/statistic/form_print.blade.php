@@ -49,7 +49,7 @@
                 <label for="">Ngày lập báo cáo thống kê:</label> 21/02/2021 <br/>
             </div>
             <div class="info_item">
-                <label for="">Người lập báo cáo thống kê:</label> Lê Đức Phục
+                <label for="">Người lập báo cáo thống kê:</label> {{ Auth::user()->ho_ten }}
             </div>
         </div>
         <table style="width: 100%;">

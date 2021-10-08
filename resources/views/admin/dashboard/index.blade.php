@@ -47,10 +47,6 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    More info 
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
                 </div>
             </div>
             <div class="rpv-head pl-8 pr-8 new-registrations-div">
@@ -62,10 +58,6 @@
                 <div class="icon">
                     <i class="fas fa-thumbs-up"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    More info 
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
                 </div>
             </div>
             <div class="rpv-head pl-8 pr-8 bounce-rate-div">
@@ -77,10 +69,6 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    More info 
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
                 </div>
             </div>
             <div class="rpv-head pr-0 pl-8 unique-visitors-div">
@@ -97,10 +85,6 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">
-                    More info 
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
                 </div>
             </div>
         </div>

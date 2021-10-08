@@ -12,12 +12,12 @@
 */
 
 
+Route::get('/admin', 'DashboardController@index');
 Route::get('/admin/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.accounts.login');
 Route::post('/admin/login', 'TaiKhoanController@postDangNhapAdmin');
 Route::get('/admin/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
 Route::post('/admin/sign-up','TaiKhoanController@postDangKyAdmin');
 Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], function() {
-    Route::get('/', 'DashboardController@index')->name('admin.dashboards');
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
     Route::post('/dashboards/filter-by-date','DashboardController@filterByDate');
     Route::post('/dashboards/filter','DashboardController@filter');

@@ -115,23 +115,23 @@ class SanPhamController extends Controller
 
 
             
-            $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
-                                ->groupBy('san_phams_id')
-                                ->get();
-            $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem)')))
-                                ->groupBy('san_phams_id')
-                                ->get();
+            // $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+            //                     ->groupBy('san_phams_id')
+            //                     ->get();
+            // $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+            //                     ->groupBy('san_phams_id')
+            //                     ->get();
         }
         else
         {
             $timkiem = SanPham::where('trang_thai',1)->paginate(4);
-            $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
-                                    ->groupBy('san_phams_id')
-                                    ->get();
-            $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
-                                    ->groupBy('san_phams_id')
-                                    ->get();
         }
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                    ->groupBy('san_phams_id')
+                                    ->get();
+        $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia'),DB::raw('COUNT(san_phams_id) as dem_danh_gia')))
+                                ->groupBy('san_phams_id')
+                                ->get();
         $list_yeu_thich = YeuThich::all();
         $list_danh_gia = DanhGia::all();
         $dsSanPham = [

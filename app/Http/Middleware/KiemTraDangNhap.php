@@ -16,7 +16,7 @@ class KiemTraDangNhap
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(Auth::guard($guard)->check()) {
+        if(Auth::guard($guard)->check() and Auth::user()->admin != 0) {
             return $next($request);
         }
         return redirect('admin/login');

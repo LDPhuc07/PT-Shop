@@ -73,6 +73,8 @@ class PageController extends Controller
         $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
                                 ->groupBy('san_phams_id')
                                 ->get();
+        $list_danh_gia = DanhGia::where('san_phams_id', $request->id)->get();
+        $dem_danh_gia = DanhGia::where('san_phams_id',$request->id)->count();
         $size = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->distinct()->get();
         // dd($size);
         $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
@@ -96,10 +98,10 @@ class PageController extends Controller
                                         ->get();
             $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills'));
+            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills','dem_danh_gia','list_danh_gia'));
         }
         else {
-            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color'));
+            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','dem_danh_gia','list_danh_gia'));
         }
     }
     public function getSize($id, $mau) {

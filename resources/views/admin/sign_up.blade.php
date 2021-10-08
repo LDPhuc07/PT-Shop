@@ -21,6 +21,19 @@
         .head-product-picture label:hover {
           border-bottom: 1px solid blue; 
         }
+        .sign-up-btn {
+            width: 100%;
+            text-align: center;
+        }
+        @media(max-width: 767px) {
+            .sign-up-btn {
+                margin-top: 16px;
+            }
+            .main-footer {
+                right: -50%;
+                transform: translate(-5%);
+            }
+        }
       </style>
     <title>Document</title>
 </head>
@@ -126,8 +139,7 @@
                             <img id="imgsp" style="width: 170px; margin: 0; margin-top:30px; height: unset" src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="">
                         </div>
                     </div>
-                    <div style="width: 100%;
-                    text-align: center;">
+                    <div class="sign-up-btn">
                         <input style="width: 250px;" class="register-btn btn" value="Đăng ký" type="submit">
                     </div>
                 </form>
@@ -142,6 +154,7 @@
                         
         </script>
     @endif
+    @include('admin.master.footer')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="admin/js/openSidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

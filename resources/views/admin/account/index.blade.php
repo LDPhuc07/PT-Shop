@@ -124,7 +124,7 @@
                         <tr>
                             <td>
                               @if($account->anh_dai_dien != null)
-                                <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="anh"></td>
+                                <img class="avt" src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="anh"></td>
                               @else
                                 <img src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="anh"></td>
                               @endif

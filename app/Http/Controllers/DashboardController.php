@@ -124,8 +124,7 @@ class DashboardController extends Controller
         // dd($chart_data);
         echo $data = json_encode($chart_data);
     }
-    public function filter30Days(Request $request) {
-        $data = $request->all();
+    public function filter30Days() {
 
         $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
 

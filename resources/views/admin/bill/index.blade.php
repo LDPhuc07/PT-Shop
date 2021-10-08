@@ -126,25 +126,28 @@
                         @foreach($arrays as $bill)
                         <tr id="bill-item-{{ $bill->id }}">
                             <td>{{ $bill->id }}</td>
-                            <td>{{ $bill->taiKhoan->ho_ten}}</td>
+                            <td>
+                              <img class="avt" src="{{asset(getLink('anh-dai-dien',$bill->taiKhoan->anh_dai_dien))}}" alt="">
+                              {{ $bill->taiKhoan->ho_ten}}
+                            </td>
                             <td>{{ $bill->ngay_lap_hd }}</td>
                             <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                             @if ($bill->chot_don == true)
                               <td>
-                                <a class="checked">Đã Chốt</a>
+                                <a class="checked"><i class="fas fa-check-circle"></i></a>
                               </td>
                             @else
                               <td> 
-                                <a onclick="checkbill({{ $bill->id }})" class="check-{{ $bill->id }} not-check-btn">Chưa Chốt</a>
+                                <a class="check-{{ $bill->id }} not-check-btn"><i class="fas fa-exclamation-circle"></i></a>
                               </td>
                             @endif
                             @if ($bill->hinh_thuc_thanh_toan == true)
                               <td>
-                                <span style="cursor: unset" class="checked">Trả trước</span>
+                                <span style="cursor: unset" class="repaid">Trả trước</span>
                               </td>
                             @else
                               <td> 
-                                <span style="cursor: unset" class="not-check-btn">Trả sau</span>
+                                <span style="cursor: unset" class="postpaid">Trả sau</span>
                               </td>
                             @endif
                             <td>
@@ -173,6 +176,9 @@
                               </div>
                               <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
+                              @if ($bill->chot_don == false)
+                                <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="check-bill-btn"><i class="fas fa-calendar-check"></i></a>
+                              @endif
                               <div class="modal fade" id="form-modal" role="dialog">
                                 <div class="modal-dialog">
                         
@@ -243,8 +249,8 @@
           success:function(data) {
             if(data == 'done') {
               $(`#bill-item-${id}`).empty();
-              $('#modal').modal('hide');
             }
+            $('#modal').modal('hide');
           }
         });
       })
@@ -259,7 +265,9 @@
             if(data == 'done') {
               $(`.check-${id}`).removeClass('not-check-btn');
               $(`.check-${id}`).addClass('checked');
-              $(`.check-${id}`).html('Đã Chốt');
+              $(`.check-${id} .fas`).removeClass('fa-exclamation-circle');
+              $(`.check-${id} .fas`).addClass('fa-check-circle');
+              $(`#check-bill-${id}`).hide();
             }
           }
         });

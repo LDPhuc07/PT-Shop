@@ -14,6 +14,10 @@
   .group-filter-btn {
     margin-right: 16px;
   }
+  .yeu_thich .popover, .danh_gia .popover {
+    max-height: 130px;
+    overflow-y: auto;
+  }
   @media(max-width: 767px) {
     .head-table {
       display: grid;  
@@ -155,6 +159,9 @@
                                 @foreach($dsDanhGia as $rate)
                                   @if($ds->id == $rate->san_phams_id)
                                     <span style="margin-right: 2px;">{{round($rate->danh_gia,1)}}</span><i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+                                    <span  style="color:#FF912C;">
+                                      ({{ $rate->dem_danh_gia }})
+                                    </span>
                                   @endif
                                 @endforeach
                                 <div id="popover-catagories" style="min-width: 200px;" class="popover">
