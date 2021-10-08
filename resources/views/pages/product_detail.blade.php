@@ -421,11 +421,20 @@
           <h3 style="font-size: 16px;">Sản phẩm được đánh giá: 
             <div class="rating">
               <span id="danh-gia-tb" style="margin-right: 2px;">
+              <?php
+                $is_rate_point = 0;
+              ?>
               @foreach($danh_gia as $rate)
                 @if($sanpham->id == $rate->san_phams_id)
                 {{round($rate->danh_gia,1)}}
+                <?php
+                  $is_rate_point++;
+                ?>
                 @endif
               @endforeach
+              @if($is_rate_point == 0)
+                0
+              @endif
               </span>
             <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
             <span style="color:#FF912C;">
@@ -435,10 +444,8 @@
                   content: "";
                 }
               </style>
-                ({{ $dem_danh_gia }})
-              @else
-              (0)
               @endif
+              ({{ $dem_danh_gia }})
             </span>
             <ul class="nav-item__first-menu nav-item__first-menu_rate" style="width: 200px">
                 @foreach($list_danh_gia as $rate)
