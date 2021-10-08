@@ -2,7 +2,7 @@
     background-color: #f3f3f3;
 }
 .cart-body-left {
-    width: calc(100% - 384px) !important;
+    width: calc(100% - 384px);
     background-color: var(--white-color);
 }
 .cart-body-right {
@@ -41,7 +41,7 @@
     border-bottom: 1px solid #E1E3E8;
     padding: 24px 0;
     margin-right: -2px;
-    margin-left: unset !important;
+    margin-left: unset;
 }
 .fi-rs-cross {
     font-size:20px;
@@ -135,15 +135,15 @@
     display: block;
     text-align: center;
 }
-.chekout:hover {
-    text-decoration: none;
-    color: var(--white-color);
-}
 .center {
     text-align: center;
 }
 .fa-trash {
     font-size: 16px;
     color: var(--hover-color);
-    vertical-align: middle;
+    /* vertical-align: middle; */
+}
+.chekout:hover {
+    text-decoration: none;
+    color: var(--white-color);
 }

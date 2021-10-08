@@ -48,7 +48,6 @@
     <!-- end content -->
 @endsection
 @section('js')
-<script src="js/main.js"></script>
       <script>
         function congSoLuong(){
           var result = document.getElementById('textsoluong').value;
@@ -76,6 +75,10 @@
           var like_header = parseInt($(`#header__second__like--notice`).text());
           like_header--;
           $(`#header__second__like--notice`).html(like_header.toString());
+
+          var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+          like_header1--;
+          $(`#header__second__like--notice1`).html(like_header1.toString());
         }
       });
     }

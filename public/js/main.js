@@ -28,8 +28,47 @@ function changeImg(id){
 }
 
 
-// history search
-// thêm lịch sử vào danh sách
-$('#addHistorySearch').click(function(){
-    console.log('1');
-});
+$(document).ready(function(){
+    $(window).resize(function() {
+        if($(window).width() < 739) {
+            $('.collapse').removeClass('show');
+        }
+        else
+        {
+            $('.collapse').addClass('show');
+        }
+    });
+    // click mega menu
+    $('.header_nav-list .header_nav-list-item a').click(function(e) {
+        $('.header_nav-list-item a').removeClass('active');
+        $(this).addClass('active');
+    });
+    $('.ng-has-child1 > a i').click(function(e){
+        e.preventDefault();
+        $('.ul-has-child1').toggle('slow');
+        $('.cong').toggleClass('hidden');
+        $('.tru').toggleClass('hidden');
+    })
+   
+    $('.ng-has-child2 > a i').click(function(e){
+        e.preventDefault();
+    })
+    $('#trigger-mobile').click(function(e){
+        console.log('1');
+        $('.mobile-main-menu').toggleClass('xyz');
+        $('.overlay1').toggleClass('hidden');
+    })
+    $('.overlay1').click(function(e){
+        $('.mobile-main-menu').toggleClass('xyz');
+        $('.overlay1').toggleClass('hidden');
+    })
+    // click thông tin đơn hàng trang pay
+    $('.summary').click(function(){
+        $('.summary-content').toggle('slow');
+    })
+})
+function hienthi(id, name){
+    $(`#${name}`).toggle('slow');
+    $(`.cong${id}`).toggleClass('hidden');
+    $(`.tru${id}`).toggleClass('hidden');
+}

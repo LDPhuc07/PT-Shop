@@ -6,7 +6,7 @@
 .heading {
     text-align: start;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 34px;
     color: var(--black-color);
     margin: 15px 0;
 }
@@ -20,7 +20,6 @@
 }
 .form-group {
     margin: 20px 0;
-    position: relative;
 }
 .form-label {
     text-align: left;
@@ -33,7 +32,7 @@
     height: 50px;
     padding: 8px 12px;
     border: 1px solid #b3b3b3;
-    border-radius: unset !important;
+    border-radius: 4px;
     outline: none !important;
     font-size: 1.4rem;
 }
@@ -63,6 +62,7 @@
     overflow: hidden;
     border: 1px solid var(--black-color);
     transition: 0.8s;
+    border-radius: 4px;
 }
 .form-submit::before{
     content:"";
@@ -93,11 +93,10 @@
     color: var(--black-color);
 }
 h4 {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px 30px 0px;
 }
 .form-social {
-    display: flex;
-    flex-direction: row;
+    
 }
 .form-submit-social {
     background:none;
@@ -152,15 +151,17 @@ h4 {
 .text-login {
     font-size: 16px;
     color: #101920;
+    margin: unset;
 }
 ul {
     list-style: none;
 }
 .text-login-item {
     display:flex;
-    margin: 10px;
+    margin: 19px;
+    align-items: center;
 }
-.fi-rs-check {
+.fa-check {
     font-size: 16px;
     margin-right: 10px;
 }
@@ -171,16 +172,19 @@ ul {
     right: 20px;
     cursor: pointer;
 }
+#password_confirmation {
+    position: relative;
+}
 .show-hide{
     position: absolute;
-    top:54px;
-    right: 20px;
+    top:56px;
+    right: 4px;
     transform: translateY(-50%);
 }
 .show-hide-two{
+    top:56px;
     position: absolute;
-    right: 20px;
-    top: 54px;
+    right: 4px;
     transform: translateY(-50%);
 }
 .show-hide-three{
@@ -206,15 +210,24 @@ ul {
 .fa-eye-2.hide:before {
     content: '\f070';
 }
-.fa-eye-3.hide:before {
+.fa-eye-3.hide::before {
     content: '\f070';
 }
-#password {
+.matkhau {
     position: relative;
 }
-#password_confirmation {
+.nhaplaimatkhau {
     position: relative;
 }
+.custom-btn {
+    margin-left: 10px;
+    margin-top: 18px; 
+}
+
+
+
+
+
 .error-msg {
     display: block;
     font-size: 14px;

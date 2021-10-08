@@ -49,12 +49,12 @@
                 <input class="textbox" type="text" placeholder="Nhập tên loại slideshow" name='tenslideshow'>
                 <div class="error error-name" 	@if($errors->has('tenslideshow')) style="display:block;color:red" @endif>{{$errors->first('tenslideshow')}}</div>
               </div>
-              <div class="product-info-item">
+              {{-- <div class="product-info-item">
                 <label class="product-info-item-label" for="">Link liên kết<span class="repuired"> *</span></label>
                 <i class="fas fa-info"></i>
                 <input class="textbox" type="text" placeholder="Nhập link liên kết" name='tenslideshow'>
                 <div class="error error-name" 	@if($errors->has('tenslideshow')) style="display:block;color:red" @endif>{{$errors->first('tenslideshow')}}</div>
-              </div>
+              </div> --}}
             </div>
           </div>
           <div class="img-slide col-4 pl-0 pr-10">

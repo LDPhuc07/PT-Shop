@@ -83,7 +83,7 @@
           method: "GET",
           success:function(result) {
             $(`#header__second__like--notice`).html(result.toString());
-
+            $(`#header__second__like--notice1`).html(result.toString());
           }
         });
       @endif
@@ -93,7 +93,7 @@
         method: "GET",
         success:function(result) {
           $(`#header__second__cart--notice`).html(result.toString());
-
+          $(`#header__second__cart--notice1`).html(result.toString());
         }
       });
     });
@@ -107,5 +107,5 @@
 
   {{-- <script src="js/main.js"></script> --}}
   @yield('js')
-  
+  <script src="js/main.js"></script>
 </html>
