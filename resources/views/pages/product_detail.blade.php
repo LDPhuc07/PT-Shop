@@ -4,6 +4,23 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/productdetail.css">
 <style>
+  .rating {
+    display: inline;
+    position: relative;
+  }
+  .nav-item__first-item > div {
+    text-decoration: none;
+    color: var(--white-color);
+    font-size: 1.2rem;
+    display: block;
+    padding: 8px;
+  }
+  .nav-item__first-item .rating-stars ul > li.star > i.fa {
+    font-size: 10px;
+  }
+  .rating:hover .nav-item__first-menu {
+    display: block;
+  }
   .den {
     color: #000 !important;
   }
@@ -36,6 +53,15 @@
   /* Selected state of the stars */
   .rating-stars ul > li.star.selected > i.fa {
     color:#FF912C;
+  }
+  .nav-item__first-menu_rate::before {
+    content: unset;
+
+  }
+  .nav-item__first-menu_rate {
+    max-height: 130px;
+    overflow-y: auto;
+
   }
   /* Mobile & tablet  */
 @media (max-width: 1023px) {
@@ -393,13 +419,62 @@
         </div>
         <div style="display:flex;justify-content: space-between; margin-top:20px">
           <h3 style="font-size: 16px;">Sản phẩm được đánh giá: 
+            <div class="rating">
               <span id="danh-gia-tb" style="margin-right: 2px;">
               @foreach($danh_gia as $rate)
                 @if($sanpham->id == $rate->san_phams_id)
                 {{round($rate->danh_gia,1)}}
                 @endif
               @endforeach
+              </span>
             <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+            <span style="color:#FF912C;">
+              @if($dem_danh_gia != 0)
+              <style>
+                .nav-item__first-menu_rate::before {
+                  content: "";
+                }
+              </style>
+                ({{ $dem_danh_gia }})
+              @else
+              (0)
+              @endif
+            </span>
+            <ul class="nav-item__first-menu nav-item__first-menu_rate" style="width: 200px">
+                @foreach($list_danh_gia as $rate)
+              <li class="nav-item__first-item" style="display: flex">
+                <div style="width: 50%; color: white">
+                  @if(Auth::check() and Auth::user()->admin != 1)
+                    @if(Auth::user()->ho_ten == $rate->taiKhoan->ho_ten)
+                      Bạn
+                    @else
+                      {{ $rate->taiKhoan->ho_ten }}
+                    @endif
+                  @else
+                    {{ $rate->taiKhoan->ho_ten }}
+                  @endif
+                </div>
+                <div style="width: 50%">
+                  <div class='rating-stars text-center'>
+                    <ul id='stars'>
+                      @for($i=0; $i < 5; $i++)
+                        @if($i < $rate->diem)
+                          <li class='star'>
+                            <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
+                          </li>
+                        @else
+                          <li class='star'>
+                            <i class='fa fa-star fa-fw'></i>
+                          </li>
+                        @endif
+                      @endfor
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              @endforeach
+            </ul>
+          </div>
           </h3>
           <div id="header__second__like" class="header__second__like">
           <span id="luot-like-{{ $sanpham->id }}" class="luot-like-{{ $sanpham->id }}" style="font-size:20px; margin-right: 2px;">
