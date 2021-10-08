@@ -111,7 +111,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-md-2 col-12" style="font-size: 16px;">
+                                <div class="col-md-2 col-12 hidden-xs" style="font-size: 16px;">
                                     <span>{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</span>
                                 </div>
                                 <div class="col-md-3 col-12">
@@ -122,12 +122,12 @@
                                       <input type="button" value="+" class="control" onclick="congSoLuong({{$array->id}},{{ $array->chiTietSanPham->so_luong }})">
                                   </div>
                                 </div>
-                                <div class="col-md-2 col-12">
+                                <div class="col-md-2 col-12" style="font-size: 16px;">
                                   <span>{{number_format(($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong,0,',','.').' '.'VNĐ'}}</span>
                                 </div>
                             </div>
                           </div>
-                          <div class="col-md-1 col-2 hidden-xs" onclick="xoasanpham({{$array->id}})" style="font-size: 16px;">
+                          <div class="col-md-1 col-2" onclick="xoasanpham({{$array->id}})" style="font-size: 16px;">
                             <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                           </div>
                         </div>
@@ -180,7 +180,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1 col-2 text-right" onclick="xoasanpham(`{{ $content->rowId }}`)">
+                                <div class="col-md-1 col-2" onclick="xoasanpham(`{{ $content->rowId }}`)">
                                   <span class="delete-btn"><a href="javascript:"><i data-target="#sanpham" data-toggle="modal" data-id="3" class="fas fa-trash" style="cursor: pointer;"></i></a></span> 
                               </div>
                         </div>

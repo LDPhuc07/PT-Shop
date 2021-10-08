@@ -6,11 +6,11 @@
 @endsection
 @section('content')
     <!-- content -->
-    <div class="listlike" style="margin-top: 200px;margin-bottom: 370px;">
+    <div class="listlike">
         <div class="container">
             <div class="row">
               @foreach($likes as $like)
-                <div style="margin-top: 20px" id="pro-like-item-{{ $like->san_phams_id }}" class="col-3">
+                <div style="margin-top: 20px" id="pro-like-item-{{ $like->san_phams_id }}" class="col-lg-3 col-md-6 col-sm-12 mb-20">
                   <a href="{{route('product_detail',['id'=>$like->san_phams_id])}}" class="product__new-item">
                     <div class="card" style="width: 100%">
                       @foreach($like->sanPham->anh as $anh)

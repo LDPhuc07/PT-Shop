@@ -87,5 +87,5 @@
   </div>
 </footer>
   <div id="go-to-top">
-    <a href="" class="btn-gototop"><i class="fas fa-arrow-up"></i></a>
+    <a class="btn-gototop"><i class="fas fa-arrow-up"></i></a>
   </div>
