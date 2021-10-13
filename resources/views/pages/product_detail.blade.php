@@ -63,6 +63,25 @@
     overflow-y: auto;
 
   }
+  .rating-people {
+    position: relative;
+    color:#FF912C;
+  }
+  .rating-people:hover .note {
+    display: block;
+  }
+  .rating-people .note {
+    position: absolute;
+    padding: 8px;
+    background-color: #000;
+    color: white;
+    top: -35px;
+    left: -7px;
+    white-space: nowrap;
+    opacity: 0.7;
+    display: none;
+    font-size: 11px
+  }
   /* Mobile & tablet  */
 @media (max-width: 1023px) {
 }
@@ -437,7 +456,7 @@
               @endif
               </span>
             <i style="color:#FF912C;" class='fa fa-star fa-fw'></i>
-            <span style="color:#FF912C;">
+            <span class="rating-people">
               @if($dem_danh_gia != 0)
               <style>
                 .nav-item__first-menu_rate::before {
@@ -446,6 +465,7 @@
               </style>
               @endif
               ({{ $dem_danh_gia }})
+              <p class="note">Số lượng khách hàng đánh giá</p>
             </span>
             <ul class="nav-item__first-menu nav-item__first-menu_rate" style="width: 200px">
                 @foreach($list_danh_gia as $rate)
