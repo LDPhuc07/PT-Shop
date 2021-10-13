@@ -108,4 +108,5 @@
   {{-- <script src="js/main.js"></script> --}}
   @yield('js')
   <script src="js/main.js"></script>
+  <script src="../../editor/ckeditor/ckeditor.js"></script>
 </html>

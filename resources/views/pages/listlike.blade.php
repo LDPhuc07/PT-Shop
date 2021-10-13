@@ -35,9 +35,18 @@
                       </div>
                     </div>
                   </a>
-                </div>
+                </div> 
               @endforeach
             </div>
+            {{-- layout khi chưa có sản phẩm --}}
+            {{-- <div class="row" style="padding: 8% 0">
+              <div class="col-12">
+                <h1 style="text-align:center">Các sản phẩm được thêm vào danh sách yêu thích của bạn sẽ được lưu trữ ở đây</h1>
+              </div>
+            </div> --}}
+            {{-- end layout --}}
+
+            
             {{-- <nav aria-label="Page navigation example" style="display:flex;justify-content: center;font-size: 20px;margin-top: 50px">
                   <ul class="pagination">
                     {!! $likes->appends(request()->query())->links() !!}
