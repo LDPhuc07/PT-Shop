@@ -220,7 +220,10 @@ class PageController extends Controller
     }
     public function dislike($sp_id, $tk_id) {
         $new = YeuThich::where('tai_khoans_id',$tk_id)->where('san_phams_id',$sp_id)->delete();
-        echo 'done';
+
+        $dem_yeu_thich = YeuThich::where('tai_khoans_id',$tk_id)->count();
+        
+        return $dem_yeu_thich;
         // $slides = Slideshow::orderby('id', 'desc')->offset(0)->limit(3)->get();
         // $sanphammoinhats= SanPham::orderby('id', 'desc') ->with(array('anh' => function($query) {
         //     $query->where('anhchinh',1);
@@ -289,13 +292,15 @@ class PageController extends Controller
         
     }
     public function danhSachYeuThich() {
-        $like = ['likes'=>YeuThich::where('tai_khoans_id', Auth::user()->id)
+        $likes = YeuThich::where('tai_khoans_id', Auth::user()->id)
                                     ->with(array('sanPham' => function($query) {
                                                             $query->with(array('anh' => function($querys) {
                                                                                             $querys->where('anhchinh',1);
                                                                         }));
-                                            }))->get()];
-        return view('pages.listlike', $like);
+                                            }))->get();
+
+        $dem_yeu_thich = YeuThich::where('tai_khoans_id',Auth::user()->id)->count();
+        return view('pages.listlike', compact('likes','dem_yeu_thich'));
     }
     public function timkiem(Request $request)
     {

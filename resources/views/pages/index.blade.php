@@ -415,40 +415,42 @@
       $.ajax({
         url: 'dislike/'+sp_id+"/"+tk_id,
         method: "GET"
-      });
-      $(`.like-${sp_id}`).removeClass('den');
-      var like = parseInt($(`#luot-like-${sp_id}`).text());
-      like--;
-      var like_header = parseInt($(`#header__second__like--notice`).text());
-      like_header--;
-      $(`#header__second__like--notice`).html(like_header.toString());
+      }).done(function(response) {
+        $(`.like-${sp_id}`).removeClass('den');
+        var like = parseInt($(`#luot-like-${sp_id}`).text());
+        like--;
+        var like_header = parseInt($(`#header__second__like--notice`).text());
+        like_header--;
+        $(`#header__second__like--notice`).html(like_header.toString());
 
-      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
-      like_header1--;
-      $(`#header__second__like--notice1`).html(like_header1.toString());
-      $(`.luot-like-${sp_id}`).html(like.toString());
+        var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1--;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
+        $(`.luot-like-${sp_id}`).html(like.toString());
+      });
     }
     else {
       $.ajax({
         url: 'like/'+sp_id+"/"+tk_id,
         method: "GET"
+      }).done(function(response) {
+        $(`.like-${sp_id}`).addClass('den');
+        if(isNaN(parseInt($(`#luot-like-${sp_id}`).text()))) {
+          var like = 0;
+        }
+        else {
+          var like = parseInt($(`#luot-like-${sp_id}`).text());
+        }
+        like++;
+        var like_header = parseInt($(`#header__second__like--notice`).text());
+        like_header++;
+        $(`#header__second__like--notice`).html(like_header.toString());
+        
+        var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1++;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
+        $(`.luot-like-${sp_id}`).html(like.toString());
       });
-      $(`.like-${sp_id}`).addClass('den');
-      if(isNaN(parseInt($(`#luot-like-${sp_id}`).text()))) {
-        var like = 0;
-      }
-      else {
-        var like = parseInt($(`#luot-like-${sp_id}`).text());
-      }
-      like++;
-      var like_header = parseInt($(`#header__second__like--notice`).text());
-      like_header++;
-      $(`#header__second__like--notice`).html(like_header.toString());
-      
-      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
-      like_header1++;
-      $(`#header__second__like--notice1`).html(like_header1.toString());
-      $(`.luot-like-${sp_id}`).html(like.toString());
     }
   }
 </script>

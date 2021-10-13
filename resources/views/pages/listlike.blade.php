@@ -8,7 +8,8 @@
     <!-- content -->
     <div class="listlike">
         <div class="container">
-            <div class="row">
+          @if($dem_yeu_thich > 0)
+            <div id="have-like-div" class="row">
               @foreach($likes as $like)
                 <div style="margin-top: 20px" id="pro-like-item-{{ $like->san_phams_id }}" class="col-lg-3 col-md-6 col-sm-12 mb-20">
                   <a href="{{route('product_detail',['id'=>$like->san_phams_id])}}" class="product__new-item">
@@ -38,14 +39,20 @@
                 </div> 
               @endforeach
             </div>
-            {{-- layout khi chưa có sản phẩm --}}
-            {{-- <div class="row" style="padding: 8% 0">
+            <div id="have-not-like-div" class="row" style="display:none; padding: 8% 0">
               <div class="col-12">
                 <h1 style="text-align:center">Các sản phẩm được thêm vào danh sách yêu thích của bạn sẽ được lưu trữ ở đây</h1>
               </div>
-            </div> --}}
+            </div>
+          @else
+            {{-- layout khi chưa có sản phẩm --}}
+            <div class="row" style="padding: 8% 0">
+              <div class="col-12">
+                <h1 style="text-align:center">Các sản phẩm được thêm vào danh sách yêu thích của bạn sẽ được lưu trữ ở đây</h1>
+              </div>
+            </div>
             {{-- end layout --}}
-
+          @endif
             
             {{-- <nav aria-label="Page navigation example" style="display:flex;justify-content: center;font-size: 20px;margin-top: 50px">
                   <ul class="pagination">
@@ -77,9 +84,12 @@
         method: "GET",
 
         success:function(data) {
-          if(data == 'done') {
+          if(data > 0) {
             $(`#pro-like-item-${sp_id}`).hide();
-            
+          }
+          else { 
+            $("#have-not-like-div").css("display", "block");
+            $("#have-like-div").css("display", "none");
           }
           var like_header = parseInt($(`#header__second__like--notice`).text());
           like_header--;
