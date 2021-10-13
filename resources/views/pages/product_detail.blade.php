@@ -570,19 +570,20 @@
   <div class="container">
     <h2 class="product__describe-heading">Bình luận</h2>
     <div class="row">
-      <div class="col-lg-4 col-12 mb-4">
-        <textarea name="binhluan" id="cmt" cols="70" rows="10"></textarea>
+      <div class=" col-12 mb-4">
+        <textarea class="ckeditor" name="binhluan" id="cmt" cols="70" rows="10"></textarea>
+           
         @if(Auth::check() and Auth::user()->admin != 1)
-        <a onclick="postBinhLuan()" class="btn btn-comment">Gửi</a>
+        <a onclick="postBinhLuan()" class="btn btn-comment" style="float: right">Gửi Bình Luận</a>
         @else
-        <a  class="btn btn-comment" data-toggle="modal" data-target="#myModal2">Gửi</a>
+        <a class="btn btn-comment" data-toggle="modal" data-target="#myModal2" >Gửi Bình Luận</a>
         @endif
       </div>
-      <div class="col-lg-8 col-12">
+      <div class="col-12">
         <div class="body__comment" id="comment">
           
         </div>
-        <p style="font-size:16px;cursor: pointer;" id="commentLoard">Xem thêm bình luận</p>
+        <p style="font-size:16px;cursor: pointer; color: #ce3f3f" id="commentLoard">Xem thêm bình luận</p>
       </div>
     </div>
   </div>
@@ -1020,7 +1021,9 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/vi.min.js" integrity="sha512-LvYVj/X6QpABcaqJBqgfOkSjuXv81bLz+rpz0BQoEbamtLkUF2xhPNwtI/xrokAuaNEQAMMA1/YhbeykYzNKWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
+     
       var loadBtn = $('#commentLoard');
       var lessonPage = 0;
       var idsp = $('#trungid').attr('data-id');
@@ -1040,10 +1043,12 @@
             'page': page
           },
           success: function(binhluans){
+            var trung = binhluans.length
+            $('.numbercomment').text(trung);
+            console.log(trung);
             if(binhluans.length == 0){
               loadBtn.fadeOut();
             }
-            console.log(binhluans);
             appendBinhLuan(binhluans);
           }
         });
@@ -1067,7 +1072,6 @@
         $('#comment').append(html);
       }
       function prependBinhLuan(binhluans){
- 
         // $.each(binhluans,function(index, binhluan){
            let html='<div class="comment">';
               html+='<img class="comment-img" src="/img/anh-dai-dien/'+binhluans.tai_khoan.anh_dai_dien+'" alt="" >';
@@ -1090,7 +1094,8 @@
         {
           page = 0;
         }
-        var cmt = $('#cmt').val();
+        var cmt = CKEDITOR.instances['cmt'].getData();
+        
         var idkh = {{Auth::id() ?? 0}};
 
         $.ajax({
@@ -1104,7 +1109,7 @@
           },
           success: function(binhluans){
             // $('#comment').html('');
-            $('#cmt').val('');
+            CKEDITOR.instances['cmt'].setData('');
             // console.log(binhluans[0]);
             prependBinhLuan(binhluans[0]);
           }
@@ -1114,7 +1119,9 @@
         lessonPage++;
         getBinhLuan(lessonPage);
       });
+      
 </script>
+
 {{--  <script>
   $('#addcart, #buynow').click(function () {
     if (this.id == 'addcart') {
@@ -1147,4 +1154,5 @@
   }
   setInterval(fadeOutModal, 5000);
 </script>
+
 @endsection

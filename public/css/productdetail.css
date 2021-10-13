@@ -422,12 +422,12 @@
 	color: #fff;
 }
 .btn-comment {
-    width: 60px;
-    height:30px;
+    margin-top: 1.4rem;
+    padding: 15px 40px;
     background-color: var(--black-color);
     color: var(--white-color);
+    font-size: 16px;
     text-transform: uppercase;
-    padding-top: 6px;
 }
 .btn-comment:hover {
     color: var(--white-color);
@@ -440,10 +440,11 @@
     background-color: #eee;
     height: 400px;
     overflow-y: auto;
+    border-radius: 4px;
 }
 .comment {
     display:flex;
-    padding: 10px 5px;
+    padding: 10px 15px;
 }
 .comment-img {
     width:50px;

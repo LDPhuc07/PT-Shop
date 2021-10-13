@@ -503,7 +503,7 @@
                 <div class="col-4">
                   <a href="">
                     <picture>
-                      <img src="img/product/nikesb1_94.jpg" alt="" width="100%">
+                      <img src="https://media.giphy.com/media/mj7HcKFq23oobJMcOG/giphy.gif" alt="" width="80%">
                     </picture>
                   </a>
                 </div>
