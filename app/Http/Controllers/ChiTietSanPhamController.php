@@ -64,15 +64,17 @@ class ChiTietSanPhamController extends Controller
     {
         //
         $rule = [
-            'mau' => 'required',
-            'kichthuoc'=>'required',
+            'mau' => 'required|max:20',
+            'kichthuoc'=>'required|max:10',
             'soluong'=>'required|numeric',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'mau.required' => 'Bạn chưa nhập màu',
+            'mau.max' => 'Màu không quá 20 ký tự',
             'kichthuoc.required' => 'Bạn chưa nhập kích thước',
+            'kichthuoc.max' => 'Kích thước không quá 10 ký tự',
             'soluong.required' => 'Bạn chưa nhập số lượng', 
         ];
         $customName = [
@@ -141,15 +143,17 @@ class ChiTietSanPhamController extends Controller
     {
         //
         $rule = [
-            'mau' => 'required',
-            'kichthuoc'=>'required',
+            'mau' => 'required|max:20',
+            'kichthuoc'=>'required|max:10',
             'soluong'=>'required|numeric',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'mau.required' => 'Bạn chưa nhập màu',
+            'mau.max' => 'Màu không quá 20 ký tự',
             'kichthuoc.required' => 'Bạn chưa nhập kích thước',
+            'kichthuoc.max' => 'Kích thước không quá 10 ký tự',
             'soluong.required' => 'Bạn chưa nhập số lượng', 
         ];
         $customName = [

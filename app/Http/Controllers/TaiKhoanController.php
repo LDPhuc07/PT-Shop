@@ -226,19 +226,21 @@ class TaiKhoanController extends Controller
     }
     public function updateAccountAdmin(Request $requests, $id) {
         $requests->validate([
-            'ho_ten' => 'required'
+            'ho_ten' => 'required|max:50'
         ],[
-            'ho_ten.required' => 'Vui lòng nhập họ và tên'
+            'ho_ten.required' => 'Vui lòng nhập họ và tên',
+            'ho_ten.max' => 'Họ và tên không quá 50 ký tự'
         ]);
         $new = TaiKhoan::find($id);
         $new->ho_ten = $requests->ho_ten;
         if(Auth::user()->email != $requests->email) {
             $requests->validate([
-                'email' => 'required|email|unique:tai_khoans,email'
+                'email' => 'required|email|unique:tai_khoans,email|max:50'
             ],[
                 'email.required' => 'Vui lòng nhập email',
                 'email.email' => 'Email không hợp lệ',
-                'email.unique' => 'Email đã được đăng ký'
+                'email.unique' => 'Email đã được đăng ký',
+                'email.max' => 'Email không quá 50 ký tự',
             ]);
             $new->email = $requests->email;
         }

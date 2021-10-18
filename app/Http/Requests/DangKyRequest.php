@@ -24,8 +24,8 @@ class DangKyRequest extends FormRequest
     public function rules()
     {
         return [
-            'ho_ten' => 'required',
-            'email' => 'required|email|unique:tai_khoans,email',
+            'ho_ten' => 'required|max:50',
+            'email' => 'required|email|unique:tai_khoans,email|max:50',
             'mat_khau' => 'required|min:6',
             'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
             'so_dien_thoai' => 'digits:10|required|numeric|unique:tai_khoans,so_dien_thoai'
@@ -36,9 +36,11 @@ class DangKyRequest extends FormRequest
     {
         return [
             'ho_ten.required' => 'Vui lòng nhập họ và tên',
+            'ho_ten.max' => 'Họ và tên không quá 50 ký tự',
             'email.required' => 'Vui lòng nhập email',
             'email.email' => 'Email không hợp lệ',
             'email.unique' => 'Email đã đã được đăng ký',
+            'email.max' => 'Email không quá 50 ký tự',
             'mat_khau.required' => 'Vui lòng nhập mật khẩu',
             'mat_khau.min' => 'Mật khẩu phải từ 6 ký tự trở lên',
             'nhap_lai_mat_khau.required_with' => 'Nhập lại mật khẩu không hợp lệ',

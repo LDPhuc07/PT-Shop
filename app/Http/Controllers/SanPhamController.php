@@ -149,7 +149,7 @@ class SanPhamController extends Controller
         $rule = [
             'mota' => 'required',
             // 'giaban' => 'numeric',
-            'tensanpham' => 'required',
+            'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -162,6 +162,7 @@ class SanPhamController extends Controller
             // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
+            'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'mota.required' => 'Bạn chưa nhập mô tả',
             'giamgia.required' => 'Bạn chưa nhập giảm giá',
@@ -251,7 +252,7 @@ class SanPhamController extends Controller
         $rule = [
             'mota' => 'required',
             // 'giaban' => 'numeric',
-            'tensanpham' => 'required',
+            'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -264,6 +265,7 @@ class SanPhamController extends Controller
             // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
+            'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'mota.required' => 'Bạn chưa nhập mô tả',
             'giamgia.required' => 'Bạn chưa nhập giảm giá',

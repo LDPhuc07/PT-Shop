@@ -32,7 +32,9 @@
             <div class="product-info">
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Tên nhà sản xuất<span class="repuired"> *</span></label>
-                <i class="fas fa-info"></i>
+                <i class="fas fa-info note-info">
+                  <p>Tên nhà sản xuất không quá 50 ký tự</p>
+                </i>
                 <input class="textbox" type="text" placeholder="Nhập tên nhá sản xuất" name='tennhasanxuat'>
                 <div class="error error-name" 	@if($errors->has('tennhasanxuat')) style="display:block;color:red" @endif>{{$errors->first('tennhasanxuat')}}</div>
               </div> 

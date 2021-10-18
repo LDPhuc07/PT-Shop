@@ -55,7 +55,7 @@ class LoaiSanPhamController extends Controller
     {
         //
         $rule = [
-            'tenloaisanpham' => 'required',
+            'tenloaisanpham' => 'required|max:50',
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -68,6 +68,7 @@ class LoaiSanPhamController extends Controller
             // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tenloaisanpham.required' => 'Bạn chưa nhập tên loại sản phẩm',
+            'tenloaisanpham.max' => 'Tên loại sản phẩm không quá 50 ký tự'
         ];
         $customName = [
             'tenloaisanpham' => 'Tên loại sản phẩm',
@@ -128,11 +129,12 @@ class LoaiSanPhamController extends Controller
     {
         //
         $rule = [
-            'tenloaisanpham' => 'required',
+            'tenloaisanpham' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'tenloaisanpham.required' => 'Bạn chưa nhập tên loại sản phẩm',
+            'tenloaisanpham.max' => 'Tên loại sản phẩm không quá 50 ký tự'
         ];
         $customName = [
             'tenloaisanpham' => 'Tên loại sản phẩm',

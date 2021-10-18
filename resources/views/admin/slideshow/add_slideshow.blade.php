@@ -44,8 +44,10 @@
           <div class="name-slide col-8 pl-0 pr-10">
             <div class="product-info">
               <div class="product-info-item">
-                <label class="product-info-item-label" for="">Tên loại sản phẩm<span class="repuired"> *</span></label>
-                <i class="fas fa-info"></i>
+                <label class="product-info-item-label" for="">Tên slideshow<span class="repuired"> *</span></label>
+                <i class="fas fa-info note-info">
+                  <p>Tên slideshow không quá 100 ký tự</p>
+                </i>
                 <input class="textbox" type="text" placeholder="Nhập tên loại slideshow" name='tenslideshow'>
                 <div class="error error-name" 	@if($errors->has('tenslideshow')) style="display:block;color:red" @endif>{{$errors->first('tenslideshow')}}</div>
               </div>

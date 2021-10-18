@@ -51,11 +51,12 @@ class MonTheThaoController extends Controller
     {
         //
         $rule = [
-            'tenthethao' => 'required',
+            'tenthethao' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
+            'tenthethao.max' => 'Tên thể thao không quá 50 ký tự'
         ];
         $customName = [
             'tenthethao' => 'Tên thể thao',
@@ -126,11 +127,12 @@ class MonTheThaoController extends Controller
     {
         //
         $rule = [
-            'tenthethao' => 'required',
+            'tenthethao' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
+            'tenthethao.max' => 'Tên thể thao không quá 50 ký tự'
         ];
         $customName = [
             'tenthethao' => 'Tên thể thao',

@@ -52,11 +52,12 @@ class NhaSanXuatController extends Controller
     {
         //
         $rule = [
-            'tennhasanxuat' => 'required',
+            'tennhasanxuat' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'tennhasanxuat.required' => 'Bạn chưa nhập tên nhà sản xuất',
+            'tennhasanxuat.max' => 'Tên nhà sản xuất không quá 50 ký tự'
         ];
         $customName = [
             'tennhasanxuat' => 'Tên nhà sản xuất',
@@ -129,11 +130,12 @@ class NhaSanXuatController extends Controller
     {
         //
         $rule = [
-            'tennhasanxuat' => 'required',
+            'tennhasanxuat' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'tennhasanxuat.required' => 'Bạn chưa nhập tên nhà sản xuất',
+            'tennhasanxuat.max' => 'Tên nhà sản xuất không quá 50 ký tự'
         ];
         $customName = [
             'tennhasanxuat' => 'Tên nhà sản xuất',

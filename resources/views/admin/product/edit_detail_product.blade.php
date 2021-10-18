@@ -34,19 +34,25 @@
                 <div class="row">
                   <div class="col-4">
                     <label class="product-info-item-label" for="">Màu<span class="repuired"> *</span></label>
-                    <i class="fas fa-info"></i>
+                    <i class="fas fa-info note-info">
+                      <p>Nhập màu không quá 20 ký tự</p>
+                    </i>
                     <input class="textbox" style="width: 100%" type="text" name="mau" value="{{$dsChiTietSanPham['mau']}}">
                 <div class="error error-name" 	@if($errors->has('mau')) style="display:block;color:red" @endif>{{$errors->first('mau')}}</div>
                   </div>
                   <div class="col-4">
                     <label class="product-info-item-label" for="">Kích thước<span class="repuired"> *</span></label>
-                    <i class="fas fa-info"></i>
+                    <i class="fas fa-info note-info">
+                      <p>Nhập kích thước không quá 10 ký tự</p>
+                    </i>
                     <input class="textbox" style="width: 100%" type="text" name="kichthuoc" value="{{$dsChiTietSanPham['kich_thuoc']}}">
                     <div class="error error-name" 	@if($errors->has('kichthuoc')) style="display:block;color:red" @endif>{{$errors->first('kichthuoc')}}</div>
                   </div>
                   <div class="col-4">
                     <label class="product-info-item-label" for="">Số lượng<span class="repuired"> *</span></label>
-                    <i class="fas fa-info"></i>
+                    <i class="fas fa-info note-info">
+                      <p>Nhập giá trị số</p>
+                    </i>
                     <input class="textbox" style="width: 100%" type="text" name="soluong" value="{{$dsChiTietSanPham['so_luong']}}">
                     <div class="error error-name" 	@if($errors->has('soluong')) style="display:block;color:red" @endif>{{$errors->first('soluong')}}</div>
                   </div>

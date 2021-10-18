@@ -1,6 +1,6 @@
 <div id="mySidebar" class="main-sidebar">
     <div style="position: relative">
-        <a class="brand-link" href="">
+        <a class="brand-link" href="{{ route('admin.dashboards') }}">
             <img class ="logo" src="{{asset('img/logo/logomain.png')}}" alt="">
             <span class="brand-text">P&T Sport</span>
         </a>

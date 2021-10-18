@@ -34,7 +34,9 @@
             <div class="product-info">
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Tên môn thể thao<span class="repuired"> *</span></label>
-                <i class="fas fa-info"></i>
+                <i class="fas fa-info note-info">
+                  <p>Loại sản phẩm không quá 50 ký tự</p>
+                </i>
                 <input class="textbox" type="text" placeholder="Nhập tên sản phẩm" value="{{$dsLoaiSanPham['ten_loai_san_pham']}}" name="tenloaisanpham">
                 <div class="error error-name" 	@if($errors->has('tenloaisanpham')) style="display:block;color:red" @endif>{{$errors->first('tenloaisanpham')}}</div>
               </div>

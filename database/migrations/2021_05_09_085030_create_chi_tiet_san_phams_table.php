@@ -17,8 +17,8 @@ class CreateChiTietSanPhamsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('san_phams_id');
             // $table->foreign('san_phams_id')->references('id')->on('san_phams');
-            $table->string('mau', 50)->nullable();
-            $table->char('kich_thuoc', 50)->nullable();
+            $table->string('mau', 20)->nullable();
+            $table->char('kich_thuoc', 10)->nullable();
             $table->unsignedInteger('so_luong');
             $table->timestamps();
             $table->softDeletes();

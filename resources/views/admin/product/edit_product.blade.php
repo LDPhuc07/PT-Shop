@@ -88,7 +88,9 @@
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Tên sản phẩm<span class="repuired"> *</span></label>
-                  <i class="fas fa-info"></i>
+                  <i class="fas fa-info note-info">
+                    <p>Tên sản phẩm không quá 50 ký tự</p>
+                  </i>
                   <input class="textbox" type="text" placeholder="Nhập tên sản phẩm" value="{{$dsSanPham['ten_san_pham']}}" name="tensanpham">
                   <div class="error error-name" 	@if($errors->has('tensanpham')) style="display:block;color:red" @endif>{{$errors->first('tensanpham')}}</div>
                 </div>
@@ -96,7 +98,6 @@
                   <div class="row">
                     <div class="col-6">
                       <label class="product-info-item-label" for="nhasanxuat">Nhà sản xuất<span class="repuired"> *</span></label>
-                      <i class="fas fa-info"></i>
                       <select class="textbox" name="nhasanxuat" id="nhasanxuat">
                         <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
                         @foreach($nhasanxuat as $i)
@@ -107,7 +108,9 @@
                     
                     <div class="col-6">
                       <label class="product-info-item-label" for="">Giảm giá<span class="repuired">(%)</span></label>
-                      <i class="fas fa-info"></i>
+                      <i class="fas fa-info note-info">
+                        <p>Nhập ký tự số từ 1 đến 100</p>
+                      </i>
                       <input class="textbox" type="number" placeholder="Nhập giảm giá"  value="{{$dsSanPham['giam_gia']}}" name="giamgia">
                       {{-- <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div> --}}
                     </div>
@@ -117,7 +120,6 @@
                   <div class="row">
                     <div class="col-6">
                       <label class="product-info-item-label" for="loaisanpham">Loại sản phẩm<span class="repuired"> *</span></label>
-                      <i class="fas fa-info"></i>
                       <select class="textbox" name="loaisanpham" id="loaisanpham">
                         <?php $loaisanpham = App\LoaiSanPham::all()  ?>
                         @foreach($loaisanpham as $i)
@@ -127,7 +129,6 @@
                     </div>
                     <div class="col-6">
                       <label class="product-info-item-label" for="monthethao">Bộ môn thể thao<span class="repuired"> *</span></label>
-                      <i class="fas fa-info"></i>
                       <select class="textbox" name="monthethao" id="monthethao">
                         <?php $monthethao = App\MonTheThao::all()  ?>
                         @foreach($monthethao as $i)
@@ -139,13 +140,17 @@
                 </div>
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
-                      <i class="fas fa-info"></i>
+                      <i class="fas fa-info note-info">
+                        <p>Nhập ký tự số</p>
+                      </i>
                       <input class="textbox" type="text" placeholder="Nhập giá gốc" value="{{$dsSanPham['gia_goc']}}" name="giagoc">
                       <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
                 </div>
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
-                      <i class="fas fa-info"></i>
+                      <i class="fas fa-info note-info">
+                        <p>Nhập ký tự số</p>
+                      </i>
                       <input class="textbox" type="text" placeholder="Nhập giá bán" value="{{$dsSanPham['gia_ban']}}" name="giaban">
                       <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
                 </div>
@@ -155,7 +160,6 @@
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Mô tả</label>
-                  <i class="fas fa-info"></i>
                   <textarea class="ckeditor" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
                   <div class="error error-name" 	@if($errors->has('mota')) style="display:block;color:red" @endif>{{$errors->first('mota')}}</div>
                 </div>
