@@ -1,6 +1,25 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .tim_kiem_btn {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+    height: 38px;
+    width: 80px;
+    margin-left: 16px;
+  }
+  .search-form {
+    width: 100%;
+    display: inline-block;
+  } 
+  .search {
+    width: calc( 100% - 96px);
+    margin: unset;
+  }
+  .search-txt {
+    padding: 4px 6px 4px 6px;
+  }
   @media(max-width: 767px) {
     .content-wrapper {
       margin-top: unset;
@@ -24,12 +43,12 @@
             <div class="col-sm-12">
                 <div class="ds-sanpham">
                   <div class="head-table">
-                    <div style="width: 100%; margin: unset" class="search">
-                      <form action="{{route('loaisanpham.index')}}" method="GET">
+                    <form class="search-form"  action="{{route('loaisanpham.index')}}" method="GET">
+                      <div class="search">
                         <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">
-                        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
-                      </form>
-                    </div>
+                      </div>
+                      <input type="submit" class="btn tim_kiem_btn" value="Tìm kiếm">
+                  </form>
                   </div>
                   <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">

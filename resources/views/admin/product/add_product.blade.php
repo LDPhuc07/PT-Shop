@@ -1,15 +1,70 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .add-img-div {
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .list-img {
+    max-height: 440px;
+    overflow-y: auto;
+  }
+  .icon-del{
+    position: relative;
+    background-color: red;
+    right: 27px;
+    top: -85px;
+   }
+   .abc {
+     position: relative;
+     width: 15%;
+     display: inline-block;
+     margin-right: 25px;
+     margin-top: 20px;
+   }
+   .file-hide {
+     display: none;
+   }
+   .abc a {
+     position: absolute;
+     top: -10px;
+     right: -12px;
+   }
+   .img-thumbnail {
+     width: 100%;
+   }
+   .add-img-btn {
+     background-color: #007bff;color:#fff;
+     float: right
+   }
   .img-div {
     text-align: center;
   }
   .img-div img {
     margin-top: 8px;
   }
-  @media(min-width: 768px) and (max-width: 1023px) {
+  .discount-div, .price-div, .cost-div {
+    position: relative;
+  }
+  .discount-div .textbox, .price-div .textbox, .cost-div .textbox {
+    padding-right: 40px;
+  }
+  .dram {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-weight: 600;
+  }
+  @media(min-width: 768px) and (max-width: 1024px) {
     .add-product-form {
       margin: 25px 50px 0;
+    }
+    .abc {
+      width: 46%;
+    }
+    .list-img {
+      max-height: 485px;
+      overflow-y: auto;
     }
   }
   @media(max-width: 767px) {
@@ -24,6 +79,13 @@
     }
     .product-footer {
       padding: 18px;
+    }
+    .abc {
+      width: 92%;
+    }
+    .list-img {
+      max-height: 515px;
+      overflow-y: auto;
     }
   }
 </style>
@@ -60,11 +122,15 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <label class="product-info-item-label" for="">Giảm giá<span class="repuired">(%)</span></label>
+                    <label class="product-info-item-label" for="">Giảm giá</label>
                     <i class="fas fa-info note-info">
                       <p>Nhập ký tự số từ 1 đến 100</p>
                     </i>
-                    <input class="textbox" type="number" placeholder="Nhập giảm giá" name="giamgia">
+                    <div class="discount-div">
+                      <input class="textbox" type="number" placeholder="Nhập giảm giá" name="giamgia">
+                      <p class="dram">%</p>
+                    </div>
+                    <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
                   </div>
                 </div>
               </div>
@@ -95,7 +161,10 @@
                     <i class="fas fa-info note-info">
                       <p>Nhập ký tự số</p>
                     </i>
-                    <input class="textbox" type="text" placeholder="Nhập giá gốc" name="giagoc">
+                    <div class="cost-div"> 
+                      <input class="textbox" type="text" placeholder="Nhập giá gốc" name="giagoc">
+                      <p class="dram">VNĐ</p>
+                    </div>
                     <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
               </div>
               <div class="product-info-item">
@@ -103,27 +172,33 @@
                     <i class="fas fa-info note-info">
                       <p>Nhập ký tự số</p>
                     </i>
-                    <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
+                    <div class="price-div">
+                      <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
+                      <p class="dram">VNĐ</p>
+                    </div>
                     <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
               </div>
-              <div class="row">
-                @for($i = 1; $i <=4 ; $i++)
-                <div class="col-3 img-col">
-                  <div class="product-info product-picture">
-                    <input type="file" class="form-control" name="link[]" id="link_{{$i}}" data-id="{{$i}}" onchange="loadfile(this)">
-                    <div class="form-group abc-{{$i}} img-div">
-                        <img src="{{asset(getLink('product','no-image.png'))}}" alt="no img" id="imgsp_{{$i}}" class="img-thumbnail" width="200px">
-                    </div>
-                  </div>
+              <div>
+                <div class="add-img-div">
+                  <button id="add-img-btn" type="button" class="btn save-btn">Thêm hình ảnh</button>
                 </div>
-                @endfor
+                <div class="list-img">
+                  {{--  <div class="abc" id="{{$i}}">
+                    <img src="https://thumbs.dreamstime.com/b/no-image-available-icon-vector-illustration-flat-design-140633878.jpg" class="img-thumbnail" width="60%">
+                    <a href="javascript:void(0)" type="button" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a>      
+                      <input type="file" class="form-control" data-id="{{$i}}" name="link[]" id="link_{{$i}}" onchange="loadfile(this)">
+                  </div>  --}}
+                </div>
+                {{--  @for($i = 1; $i <=4 ; $i++)
+                
+                @endfor  --}}
               </div>
             </div>
           </div>
           
-          <div class="col-12 pr-0 pl-10">
+          {{--  <div class="col-12 pr-0 pl-10">
 
-          </div>
+          </div>  --}}
           {{-- @for($i = 1; $i <=4 ; $i++)
           <div class="col-12 pl-0 mt-20 pr-0">
             <div class="product-info">
@@ -140,26 +215,49 @@
                 <label class="product-info-item-label" for="">Mô tả</label>
                 <textarea class="ckeditor" cols="30" rows="10" name="mota" id="textarea1">
                 </textarea>
-                <div class="error error-name" 	@if($errors->has('mota')) style="display:block;color:red" @endif>{{$errors->first('mota')}}</div>
               </div>
             </div>
           </div>
         </div>
         <div class="product-footer">
           <div class="product-footer-btn">
-            <button class="save-btn btn">Lưu</button>
+            <button onclick="LayNoiDung()" class="save-btn btn">Lưu</button>
           </div>
         </div>
       </form>
     </div>
     <script>
-        var loadfile = function(trung){
-        var id = trung.getAttribute('data-id');
-        console.log(id);
+      CKEDITOR.replace( 'textarea1');
+      function LayNoiDung(){
+        var data = CKEDITOR.instances.txt_noi_dung.getData();
+        alert(data)
+      }
+    </script>
+    <script type="text/javascript">
+      var loadfile = function(trung) {
+        var id = trung.getAttribute('id');
         var img = document.getElementById(`imgsp_${id}`);
+        var img_div = document.getElementById(`file_items_${id}`);
+        if(img_div.classList.contains('file-hide')) {
+          img_div.classList.remove('file-hide');
+        }
         img.src = URL.createObjectURL(trung.files[0]);
-        
-    }
-    CKEDITOR.replace( 'textarea1');
+      };
+      $('#add-img-btn').click(function() {
+        jQuery('.abc').last().find('input[type="file"]').val();
+        var d = new Date();
+        var _time = d.getTime();
+        var _html = '<div class="abc file-hide" id="file_items_' + _time + '">';
+        _html += '<img id="imgsp_' + _time + '" class="img-thumbnail" width="60%">';
+        _html += '<input type="file" style="display: none"  onchange="loadfile(this)" id="' + _time + '"   />';
+        _html += '<a onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a> ';
+        _html += ' </div>';
+        jQuery('.list-img').append(_html);
+        jQuery('.abc').last().find('input[type="file"]').click();
+      });  
+
+      function DelImg(el) {
+        jQuery(el).closest('.abc').remove();
+      }
     </script>
 @endsection

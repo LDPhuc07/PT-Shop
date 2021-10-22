@@ -17,51 +17,51 @@ use Session;
 class TaiKhoanController extends Controller
 {
 
-    public function login_facebook()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
+    // public function login_facebook()
+    // {
+    //     return Socialite::driver('facebook')->redirect();
+    // }
 
-    public function callback_facebook(){
-        $provider = Socialite::driver('facebook')->user();
-        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
-        if($account){
-        //login in vao trang quan tri
-        $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
-        Session::put('ho_ten',$account_name->ho_ten);
-        Session::put('id',$account_name->id);
-        return redirect()->route('index');
-        }else{
+    // public function callback_facebook(){
+    //     $provider = Socialite::driver('facebook')->user();
+    //     $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
+    //     if($account){
+    //     //login in vao trang quan tri
+    //     $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
+    //     Session::put('ho_ten',$account_name->ho_ten);
+    //     Session::put('id',$account_name->id);
+    //     return redirect()->route('index');
+    //     }else{
         
-        $hieu = new Social([
-        'provider_user_id' => $provider->getId(),
-        'provider' => 'facebook'
-        ]);
+    //     $hieu = new Social([
+    //     'provider_user_id' => $provider->getId(),
+    //     'provider' => 'facebook'
+    //     ]);
         
-        $orang = TaiKhoan::where('email',$provider->getEmail())->first();
+    //     $orang = TaiKhoan::where('email',$provider->getEmail())->first();
         
-        if(!$orang){
-        $orang = TaiKhoan::create([
+    //     if(!$orang){
+    //     $orang = TaiKhoan::create([
         
-        'ho_ten' => $provider->getName(),
-        'email' => $provider->getEmail(),
-        'password' => '',
-        'so_dien_thoai' => '',
-        'anh_dai_dien' =>'',
-        'admin' => 0
+    //     'ho_ten' => $provider->getName(),
+    //     'email' => $provider->getEmail(),
+    //     'password' => '',
+    //     'so_dien_thoai' => '',
+    //     'anh_dai_dien' =>'',
+    //     'admin' => 0
         
-        ]);
-        }
-        $hieu->login()->associate($orang);
-        $hieu->save();
+    //     ]);
+    //     }
+    //     $hieu->login()->associate($orang);
+    //     $hieu->save();
         
-        $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
+    //     $account_name = TaiKhoan::where('id',$account->tai_khoans_id)->first();
         
-        Session::put('ho_ten',$account_name->ho_ten);
-        Session::put('id',$account_name->id);
-        return redirect()->route('index');
-        }
-    }
+    //     Session::put('ho_ten',$account_name->ho_ten);
+    //     Session::put('id',$account_name->id);
+    //     return redirect()->route('index');
+    //     }
+    // }
 
 
     public function getDangNhapAdmin() {
@@ -176,10 +176,6 @@ class TaiKhoanController extends Controller
         $array = ['arrays'=>TaiKhoan::paginate(5)];
         return view('admin.account.index', $array);
     }
-    public function getSearch() {
-        $array = ['arrays'=>TaiKhoan::paginate(5)];
-        return redirect('admin/accounts');
-    }
     public function lock($id) {
         $new = TaiKhoan::find($id);
         $new->trang_thai = false;
@@ -201,7 +197,7 @@ class TaiKhoanController extends Controller
                 $new = TaiKhoan::find($id);
                 $new->password = Hash::make($requests->mat_khau_moi);
                 $new->save();
-                return redirect()->route('admin.products');
+                return redirect()->back()->with('info_doi_mk','Đổi mật khẩu thành công');
             }
             else {
                 return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
@@ -217,7 +213,7 @@ class TaiKhoanController extends Controller
                 $new->save();
                 return redirect()->route('accounts.getChangePassword',$id)->with('success', 'Cập nhật mật khẩu thành công');
         } else {
-            return redirect()->route('accounts.getChangePassword',$id)->with('error', 'Cập nhật mật khẩu không thành công');;
+            return redirect()->back()->with('error', 'Cập nhật mật khẩu không thành công');;
         }
     }
     public function editAccountAdmin($id) {
@@ -259,7 +255,7 @@ class TaiKhoanController extends Controller
             $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
         }
         $new->save();
-        return redirect()->route('admin.products');
+        return redirect()->route('admin.accounts.edit', Auth::user()->id)->with('success', 'Cập nhật tài khoản thành công');;
     }
     public function updateAccount(Request $requests, $id) {
         $requests->validate([
@@ -308,54 +304,61 @@ class TaiKhoanController extends Controller
         $key = $requests->search;
         $key_admin = $requests->admin;
         $key_trang_thai = $requests->trang_thai;
-        if($requests->admin == null) {
-            if($key_trang_thai == null) {
-                $query = TaiKhoan::where(
-                    function($que) use ($key) {
-                        $que->where('ho_ten','LIKE','%'.$key.'%');
-                        $que->orwhere('email','LIKE','%'.$key.'%');
-                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
-                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
-                    }
-                );
+        if($key != null || $key_admin != null || $key_trang_thai != null) {
+            if($requests->admin == null) {
+                if($key_trang_thai == null) {
+                    $query = TaiKhoan::where(
+                        function($que) use ($key) {
+                            $que->where('ho_ten','LIKE','%'.$key.'%');
+                            $que->orwhere('email','LIKE','%'.$key.'%');
+                            $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                            $que->orwhere('dia_chi','LIKE','%'.$key.'%');
+                        }
+                    );
+                } else {
+                    $query = TaiKhoan::where(
+                        function($que) use ($key) {
+                            $que->where('ho_ten','LIKE','%'.$key.'%');
+                            $que->orwhere('email','LIKE','%'.$key.'%');
+                            $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                            $que->orwhere('dia_chi','LIKE','%'.$key.'%');
+                        }
+                    )
+                    ->where('trang_thai',$key_trang_thai);
+                }
             } else {
-                $query = TaiKhoan::where(
-                    function($que) use ($key) {
-                        $que->where('ho_ten','LIKE','%'.$key.'%');
-                        $que->orwhere('email','LIKE','%'.$key.'%');
-                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
-                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
-                    }
-                )
-                ->where('trang_thai',$key_trang_thai);
+                if($key_trang_thai == null) {
+                    $query = TaiKhoan::where(
+                        function($que) use ($key) {
+                            $que->where('ho_ten','LIKE','%'.$key.'%');
+                            $que->orwhere('email','LIKE','%'.$key.'%');
+                            $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                            $que->orwhere('dia_chi','LIKE','%'.$key.'%');
+                        }
+                    )
+                    ->where('admin',$key_admin);
+                } else {
+                    $query = TaiKhoan::where(
+                        function($que) use ($key) {
+                            $que->where('ho_ten','LIKE','%'.$key.'%');
+                            $que->orwhere('email','LIKE','%'.$key.'%');
+                            $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
+                            $que->orwhere('dia_chi','LIKE','%'.$key.'%');
+                        }
+                    )
+                    ->where('admin',$key_admin)
+                    ->where('trang_thai',$key_trang_thai);
+                }
             }
+            $array = ['arrays'=> $query->paginate(5)];
+    
+            return view('admin.account.index', $array);
         } else {
-            if($key_trang_thai == null) {
-                $query = TaiKhoan::where(
-                    function($que) use ($key) {
-                        $que->where('ho_ten','LIKE','%'.$key.'%');
-                        $que->orwhere('email','LIKE','%'.$key.'%');
-                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
-                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
-                    }
-                )
-                ->where('admin',$key_admin);
-            } else {
-                $query = TaiKhoan::where(
-                    function($que) use ($key) {
-                        $que->where('ho_ten','LIKE','%'.$key.'%');
-                        $que->orwhere('email','LIKE','%'.$key.'%');
-                        $que->orwhere('so_dien_thoai','LIKE','%'.$key.'%');
-                        $que->orwhere('dia_chi','LIKE','%'.$key.'%');
-                    }
-                )
-                ->where('admin',$key_admin)
-                ->where('trang_thai',$key_trang_thai);
-            }
+            $array = ['arrays'=>TaiKhoan::paginate(5)];
+
+            return redirect('admin/accounts');
         }
-        $array = ['arrays'=> $query->paginate(5)];
-        // dd($array);
-        return view('admin.account.index', $array);
+        
     }
     // public function loginGoogle() {
     //     return Socialite::driver('google')->redirect();

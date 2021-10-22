@@ -18,6 +18,9 @@
     max-height: 130px;
     overflow-y: auto;
   }
+  .filter-catagories-wrap, .filter-catagories-sport-wrap, .filter-producer-wrap {
+    width: calc( 100% / 3 );
+  }
   @media(max-width: 767px) {
     .head-table {
       display: grid;  
@@ -54,49 +57,49 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
-                   <form action="">
-                  <div class="head-table">
-                    <div class="search">
-                     
-                        <input style="padding-right: 4px" class="search-txt" type="text" placeholder="Search.." name="search">
+                  <form action="{{ route('sanpham.search') }}" method="GET">
+                    <div class="head-table">
+                      <div class="search">
                       
+                          <input style="padding-right: 4px" class="search-txt" type="text" placeholder="Search.." name="search">
+                        
+                      </div>
+                      <div class="group-filter-btn">
+                        <div class="filter-catagories-sport-wrap">
+                          <select style="height: 100%;border-right: none;
+                          border-radius: 3px 0 0 3px;" style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
+                            <option value="">Môn thể thao</option>
+                            <?php $monthethao = App\MonTheThao::all()  ?>
+                            @foreach($monthethao as $i)
+                              <option value="{{$i['id']}}">{{$i['ten_the_thao']}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="filter-catagories-sport-wrap">
+                          <select style="height: 100%;border-radius: unset;" class="textbox" style="border-radius: unset" name="nhasanxuat" id="nhasanxuat">
+                            <option value="">Nhà sản xuất</option>
+                            <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
+                            @foreach($nhasanxuat as $i)
+                              <option value="{{$i['id']}}">{{$i['ten_nha_san_xuat']}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="filter-catagories-sport-wrap">
+                          <select style="height: 100%;border-radius: 0 3px 3px 0;
+                          border-left: 0;" class="textbox" style="border-radius: 0 3px 3px 0; border-left: unset" name="loaisanpham" id="loaisanpham">
+                            <option value="">Loại sản phẩm</option>
+                            <?php $loaisanpham = App\LoaiSanPham::all()  ?>
+                            @foreach($loaisanpham as $i)
+                              <option value="{{$i['id']}}">{{$i['ten_loai_san_pham']}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      <input type="submit" style="color: #fff;
+                        background-color: #0069d9;
+                        border-color: #0062cc;" class="btn tim_kiem_btn" value="Tìm kiếm">
                     </div>
-                    <div class="group-filter-btn">
-                      <div class="filter-catagories-sport-wrap">
-                        <select style="height: 100%;border-right: none;
-                        border-radius: 3px 0 0 3px;" style="border-radius: 3px 0 0 3px; border-right: unset" class="textbox" name="monthethao" id="monthethao">
-                          <option value="">Môn thể thao</option>
-                          <?php $monthethao = App\MonTheThao::all()  ?>
-                          @foreach($monthethao as $i)
-                            <option value="{{$i['id']}}">{{$i['ten_the_thao']}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="filter-catagories-sport-wrap">
-                        <select style="height: 100%;border-radius: unset;" class="textbox" style="border-radius: unset" name="nhasanxuat" id="nhasanxuat">
-                          <option value="">Nhà sản xuất</option>
-                          <?php $nhasanxuat = App\NhaSanXuat::all()  ?>
-                          @foreach($nhasanxuat as $i)
-                            <option value="{{$i['id']}}">{{$i['ten_nha_san_xuat']}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                      <div class="filter-catagories-sport-wrap">
-                        <select style="height: 100%;border-radius: 0 3px 3px 0;
-                        border-left: 0;" class="textbox" style="border-radius: 0 3px 3px 0; border-left: unset" name="loaisanpham" id="loaisanpham">
-                          <option value="">Loại sản phẩm</option>
-                          <?php $loaisanpham = App\LoaiSanPham::all()  ?>
-                          @foreach($loaisanpham as $i)
-                            <option value="{{$i['id']}}">{{$i['ten_loai_san_pham']}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    <input type="submit" style="color: #fff;
-                      background-color: #0069d9;
-                      border-color: #0062cc;" class="btn tim_kiem_btn" value="Tìm kiếm">
-                  </div>
-                </form>
+                  </form>
                   <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">
                       <thead>
@@ -198,10 +201,10 @@
                                 </div>
                               </div>
                             </td>
-                            <td>
-                              <?php
-                                echo $ds->mo_ta;
-                              ?>
+                            <td style="max-width: 200px;">
+                              <div style="overflow-y: auto; width: 100%; max-height: 150px">
+                                {!!$ds->mo_ta!!}
+                              </div>
                             </td>
                             <td style="display:flex">
                               <a href="{{route('sanpham.edit',['id' => $ds['id']])}}" class="edit-btn"><i class="fas fa-edit"></i></a>

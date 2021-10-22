@@ -1,39 +1,74 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .add-img-div {
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .list-img {
+    max-height: 440px;
+    overflow-y: auto;
+  }
   .icon-del{
-   position: relative;
-   background-color: red;
-   right: 27px;
-   top: -85px;
-  }
-  .abc {
     position: relative;
-    width: 50%;
+    background-color: red;
+    right: 27px;
+    top: -85px;
+   }
+   .abc {
+     position: relative;
+     width: 15%;
+     display: inline-block;
+     margin-right: 25px;
+     margin-top: 20px;
+   }
+   .file-hide {
+     display: none;
+   }
+   .abc a {
+     position: absolute;
+     top: -10px;
+     right: -12px;
+   }
+   .img-thumbnail {
+     width: 100%;
+   }
+   .add-img-btn {
+     background-color: #007bff;color:#fff;
+     float: right
+   }
+  .img-div {
+    text-align: center;
   }
-  .abc a {
+  .img-div img {
+    margin-top: 8px;
+  }
+  .discount-div, .price-div, .cost-div {
+    position: relative;
+  }
+  .discount-div .textbox, .price-div .textbox, .cost-div .textbox {
+    padding-right: 40px;
+  }
+  .dram {
     position: absolute;
-    top: -10px;
-    right: -12px;
+    top: 5px;
+    right: 8px;
+    font-weight: 600;
   }
-  .img-thumbnail {
-    width: 100%;
-  }
-  .add-img-btn {
-    background-color: #007bff;color:#fff;
-    margin-top: 15px;
-    float: right
-  }
-  @media(min-width: 768px) and (max-width: 1023px) {
+  @media(min-width: 768px) and (max-width: 1024px) {
     .add-product-form {
       margin: 0;
-    }
-    .abc {
-      width: 80%;
     }
     .head-add-pro {
       padding: 18px;
       margin-bottom: 0;
+    }
+    .abc {
+      width: 46%;
+    }
+    .list-img {
+      max-height: 485px;
+      overflow-y: auto;
     }
   }
   @media(max-width: 767px) {
@@ -43,7 +78,7 @@
     .add-product-form {
       margin: unset;
     }
-    .info-pdt {
+    {{--  .info-pdt {
       padding: unset;
       min-width: 100%;
     }
@@ -53,14 +88,13 @@
     }
     .img-item {
       padding: unset;
-    }
+    }  --}}
     .abc {
-      max-width: 40%;
-      display: inline-block;
-      margin: 16px;
+      width: 92%;
     }
-    .add-img-btn {
-      margin-right: 20px;
+    .list-img {
+      max-height: 515px;
+      overflow-y: auto;
     }
     .product-footer {
       padding: 20px
@@ -83,8 +117,7 @@
         @csrf
         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
         <div class="row add-product-form">
-          <div class="col-8 info-pdt">
-            <div class="col-12 pl-0 pr-10">
+            <div class="col-12 pl-0 pr-0">
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Tên sản phẩm<span class="repuired"> *</span></label>
@@ -107,12 +140,15 @@
                     </div>
                     
                     <div class="col-6">
-                      <label class="product-info-item-label" for="">Giảm giá<span class="repuired">(%)</span></label>
+                      <label class="product-info-item-label" for="">Giảm giá</label>
                       <i class="fas fa-info note-info">
                         <p>Nhập ký tự số từ 1 đến 100</p>
                       </i>
-                      <input class="textbox" type="number" placeholder="Nhập giảm giá"  value="{{$dsSanPham['giam_gia']}}" name="giamgia">
-                      {{-- <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div> --}}
+                      <div class="discount-div">
+                        <input class="textbox" type="text" placeholder="Nhập giảm giá"  value="{{$dsSanPham['giam_gia']}}" name="giamgia">
+                        <p class="dram">%</p>
+                      </div>
+                      <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
                     </div>
                   </div>
                 </div>
@@ -143,7 +179,10 @@
                       <i class="fas fa-info note-info">
                         <p>Nhập ký tự số</p>
                       </i>
-                      <input class="textbox" type="text" placeholder="Nhập giá gốc" value="{{$dsSanPham['gia_goc']}}" name="giagoc">
+                      <div class="cost-div"> 
+                        <input class="textbox" type="text" placeholder="Nhập giá gốc" value="{{$dsSanPham['gia_goc']}}" name="giagoc">
+                        <p class="dram">VNĐ</p>
+                      </div>
                       <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
                 </div>
                 <div class="product-info-item">
@@ -151,34 +190,37 @@
                       <i class="fas fa-info note-info">
                         <p>Nhập ký tự số</p>
                       </i>
-                      <input class="textbox" type="text" placeholder="Nhập giá bán" value="{{$dsSanPham['gia_ban']}}" name="giaban">
+                      <div class="price-div">
+                        <input class="textbox" type="text" placeholder="Nhập giá bán" value="{{$dsSanPham['gia_ban']}}" name="giaban">
+                        <p class="dram">VNĐ</p>
+                      </div>
                       <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
+                </div>
+                <div>
+                  <div class="add-img-div">
+                    <button id="add-img-btn" type="button" class="btn save-btn">Thêm hình ảnh</button>
+                  </div>
+                  <div class="list-img">
+                    @foreach($dsSanPham->anh as $i => $anh)
+                      <div class="form-group abc" id="{{$i}}">
+                        <img src="{{asset($anh->link)}}" alt="no img" id="{{$i}}" data-id="{{$anh->id}}" idHinh="imgsp_{{$i}}" class="img-thumbnail" width="60%">
+                        <a href="javascript:void(0)" onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a>      
+                        <input type="file" class="form-control" style="display: none" data-id="{{$i}}" name="link[]" id="link_{{$i}}" onchange="loadfile(this)">
+                      </div>
+                     @endforeach
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-12 pl-0 mt-20 pr-10">
+            <div class="col-12 pl-0 mt-20 pr-0">
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Mô tả</label>
                   <textarea class="ckeditor" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
-                  <div class="error error-name" 	@if($errors->has('mota')) style="display:block;color:red" @endif>{{$errors->first('mota')}}</div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-4 img-pdt">
-            <div class="col-12 img-item">
-              @foreach($dsSanPham->anh as $i => $anh)
-                <div class="form-group abc" id="{{$i}}">
-                  <img src="{{asset($anh->link)}}" alt="no img" id="{{$i}}" data-id="{{$anh->id}}" idHinh="imgsp_{{$i}}" class="img-thumbnail" width="60%">
-                  <a href="javascript:void(0)" type="button" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a>      
-                    {{-- <input type="file" class="form-control" data-id="{{$i}}" name="link[]" id="link_{{$i}}" onchange="loadfile(this)"> --}}
-                </div>
-              @endforeach
-              <button type="button" class="btn btn-primary add-img-btn" id=addImages >Thêm hình ảnh</button>
-            </div>
-            <div id="insert"></div>
-          </div>
+          
         </div>
         <div class="product-footer">
           <div class="product-footer-btn">
@@ -189,13 +231,7 @@
       </form>
     </div>
     <script>
-      var loadfile = function(trung){
-        var id = trung.getAttribute('data-id');
-        console.log(id);
-        var img = document.getElementById(`imgsp_${id}`);
-        img.src = URL.createObjectURL(trung.files[0]);
-    }
-    CKEDITOR.replace( 'textarea1');
+      CKEDITOR.replace( 'textarea1');
     </script>
 @endsection
 @section('script')
@@ -208,7 +244,7 @@
     })
     });
     $(document).ready(function(){
-      $('a#del_img_demo').on('click',function(){
+      {{--  $('a#del_img_demo').on('click',function(){
         var url = location.origin + "/admin/sanpham/delimg/";
         var _token = $("form[name='frmEditProduct']").find("input[name='_token']").val();
         var idHinh = $(this).parent().find("img").data("id");
@@ -228,7 +264,35 @@
             }
           }
         });
-      })
+      })  --}}
+      
     });
+  </script>
+  <script type="text/javascript">
+    var loadfile = function(trung) {
+      var id = trung.getAttribute('id');
+      var img = document.getElementById(`imgsp_${id}`);
+      var img_div = document.getElementById(`file_items_${id}`);
+      if(img_div.classList.contains('file-hide')) {
+        img_div.classList.remove('file-hide');
+      }
+      img.src = URL.createObjectURL(trung.files[0]);
+    };
+    $('#add-img-btn').click(function() {
+      jQuery('.abc').last().find('input[type="file"]').val();
+      var d = new Date();
+      var _time = d.getTime();
+      var _html = '<div class="abc file-hide" id="file_items_' + _time + '">';
+      _html += '<img id="imgsp_' + _time + '" class="img-thumbnail" width="60%">';
+      _html += '<input type="file" style="display: none"  onchange="loadfile(this)" id="' + _time + '"   />';
+      _html += '<a onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a> ';
+      _html += ' </div>';
+      jQuery('.list-img').append(_html);
+      jQuery('.abc').last().find('input[type="file"]').click();
+    });  
+
+    function DelImg(el) {
+      jQuery(el).closest('.abc').remove();
+    }
   </script>
 @endsection

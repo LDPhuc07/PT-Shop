@@ -17,115 +17,209 @@ use Illuminate\Support\Facades\Input;
 class SanPhamController extends Controller
 {
     public function indexAdmin(Request $request) {
-        if(!empty($request->search))
-        {
-            $search = $request->search;
-            $key_loaisanpham= $request->loaisanpham;
-            $key_monthethao = $request->monthethao;
-            $key_nhasanxuat = $request->nhasanxuat;
-            // dd(!empty($key_monthethao));
-            if(!empty($key_monthethao) && !empty($key_nhasanxuat) && !empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
-                    $query->where('id','=',$key_monthethao);
-                })
-                ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
-                    $query->where('id','=',$key_nhasanxuat);
-                })
-                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
-                    $query->where('id','=',$key_loaisanpham);
-                })->paginate(4);
-            }
-            else if(!empty($key_monthethao) && !empty($key_nhasanxuat) && empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
-                    $query->where('id','=',$key_monthethao);
-                })
-                ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
-                    $query->where('id','=',$key_nhasanxuat);
-                })->paginate(4);
-            }
-            else if(!empty($key_monthethao) && empty($key_nhasanxuat) && empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
-                    $query->where('id','=',$key_monthethao);
-                })->paginate(4);
-            }
-            else if(empty($key_monthethao) && !empty($key_nhasanxuat) && !empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
-                    $query->where('id','=',$key_nhasanxuat);
-                })
-                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
-                    $query->where('id','=',$key_loaisanpham);
-                })->paginate(4);
-            }
-            else if(empty($key_monthethao) && empty($key_nhasanxuat) && !empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
-                    $query->where('id','=',$key_loaisanpham);
-                })->paginate(4);
-            }
-            else if(empty($key_monthethao) && !empty($key_nhasanxuat) && empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
-                    $query->where('id','=',$key_nhasanxuat);
-                })->paginate(4);
-            }
-            else if(!empty($key_monthethao) && empty($key_nhasanxuat) && !empty($key_loaisanpham))
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
-                    $query->where('id','=',$key_monthethao);
-                })
-                ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
-                    $query->where('id','=',$key_loaisanpham);
-                })->paginate(4);
-            }
-            else
-            {
-                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->paginate(4);
-            }
+        // if(!empty($request->all()))
+        // {
+        //     $search = $request->search;
+        //     $key_loaisanpham = $request->loaisanpham;
+        //     $key_monthethao = $request->monthethao;
+        //     $key_nhasanxuat = $request->nhasanxuat;
+        //     // dd($key_monthethao);
+        //     // dd(!empty($key_monthethao));
+        //     if($search != null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+        //         $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //     } else {
+        //         if($search != null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->paginate(4);
+        //         }
+                
+        //         if($search == null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+        //             // $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+        //             //                 ->paginate(4);
+        //             echo "ok";
+        //         }
+
+        //         if($search == null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search == null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('mon_the_thaos_id', $key_monthethao)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search == null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search == null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search == null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search == null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+
+        //         if($search != null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+        //             $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //                             ->where('nha_san_xuats_id', $key_nhasanxuat)
+        //                             ->where('loai_san_phams_id', $key_loaisanpham)
+        //                             ->paginate(4);
+        //         }
+        //     }
+        //     // if($key_monthethao != "ko" && $key_nhasanxuat != "ko" && $key_loaisanpham != "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+        //     //         $query->where('id','=',$key_monthethao);
+        //     //     })
+        //     //     ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+        //     //         $query->where('id','=',$key_nhasanxuat);
+        //     //     })
+        //     //     ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+        //     //         $query->where('id','=',$key_loaisanpham);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao != "ko" && $key_nhasanxuat != "ko" && $key_loaisanpham == "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+        //     //         $query->where('id','=',$key_monthethao);
+        //     //     })
+        //     //     ->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+        //     //         $query->where('id','=',$key_nhasanxuat);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao != "ko" && $key_nhasanxuat == "ko" && $key_loaisanpham == "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+        //     //         $query->where('id','=',$key_monthethao);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao == "ko" && $key_nhasanxuat != "ko" && $key_loaisanpham != "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+        //     //         $query->where('id','=',$key_nhasanxuat);
+        //     //     })
+        //     //     ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+        //     //         $query->where('id','=',$key_loaisanpham);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao == "ko" && $key_nhasanxuat == "ko" && $key_loaisanpham != "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+        //     //         $query->where('id','=',$key_loaisanpham);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao == "ko" && $key_nhasanxuat != "ko" && $key_loaisanpham == "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('nhaSanXuat', function($query) use ($key_nhasanxuat) {
+        //     //         $query->where('id','=',$key_nhasanxuat);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else if($key_monthethao != "ko" && $key_nhasanxuat == "ko" && $key_loaisanpham != "ko")
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->whereHas('monTheThao', function($query) use ($key_monthethao) {
+        //     //         $query->where('id','=',$key_monthethao);
+        //     //     })
+        //     //     ->whereHas('loaiSanPham', function($query) use ($key_loaisanpham) {
+        //     //         $query->where('id','=',$key_loaisanpham);
+        //     //     })->paginate(4);
+        //     // }
+        //     // else
+        //     // {
+        //     //     $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')->paginate(4);
+        //     // }
             
-            // {
-            //     if($key_monthethao != 'null')
-            //     {
-            //         $a->where('ten_san_pham','LIKE','%'.$search.'%')->where('loai_san_phams_id','=',$key_monthethao);
-            //         // if(!empty($key_monthethao))
-            //         // {
-            //         //     $a->where('loai_san_phams_id','=',$key_monthethao);
-            //         // }
+        //     // {
+        //     //     if($key_monthethao != 'null')
+        //     //     {
+        //     //         $a->where('ten_san_pham','LIKE','%'.$search.'%')->where('loai_san_phams_id','=',$key_monthethao);
+        //     //         // if(!empty($key_monthethao))
+        //     //         // {
+        //     //         //     $a->where('loai_san_phams_id','=',$key_monthethao);
+        //     //         // }
                     
-            //     }
-            //     if($key_monthethao == 'null')
-            //     {
-            //         $a->where('ten_san_pham','LIKE','%'.$search.'%');
-            //     }
-            // })
+        //     //     }
+        //     //     if($key_monthethao == 'null')
+        //     //     {
+        //     //         $a->where('ten_san_pham','LIKE','%'.$search.'%');
+        //     //     }
+        //     // })
             
             
-            // $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
-            //                     ->orwhereHas('nhaSanXuat', function($query) use ($search) {
-            //                         $query->where('ten_nha_san_xuat','LIKE','%'.$search.'%');
-            //                     })
-            //                     ->orwhereHas('monTheThao', function($query) use ($search) {
-            //                         $query->where('ten_the_thao','LIKE','%'.$search.'%');
-            //                     })
-            //                     ->with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])
-            //                     ->paginate(4);
+        //     // $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+        //     //                     ->orwhereHas('nhaSanXuat', function($query) use ($search) {
+        //     //                         $query->where('ten_nha_san_xuat','LIKE','%'.$search.'%');
+        //     //                     })
+        //     //                     ->orwhereHas('monTheThao', function($query) use ($search) {
+        //     //                         $query->where('ten_the_thao','LIKE','%'.$search.'%');
+        //     //                     })
+        //     //                     ->with(['nhaSanXuat','monTheThao','loaiSanPham','anh'])
+        //     //                     ->paginate(4);
 
 
             
-            // $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
-            //                     ->groupBy('san_phams_id')
-            //                     ->get();
-            // $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
-            //                     ->groupBy('san_phams_id')
-            //                     ->get();
-        }
-        else
-        {
+        //     // $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+        //     //                     ->groupBy('san_phams_id')
+        //     //                     ->get();
+        //     // $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia')))
+        //     //                     ->groupBy('san_phams_id')
+        //     //                     ->get();
+        // }
+        // else
+        // {
             $timkiem = SanPham::where('trang_thai',1)->paginate(4);
-        }
+            
+        // }
         $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
                                     ->groupBy('san_phams_id')
                                     ->get();
@@ -142,16 +236,153 @@ class SanPhamController extends Controller
             'listDanhGia'=>$list_danh_gia
 
         ];
-        // dd($dsSanPham['dsSanPham']);    
         return view('admin.product.index',$dsSanPham);
+        // dd($dsSanPham['dsSanPham']);    
+        // return view('admin.product.index',$dsSanPham);
+    }
+    public function search(Request $request) {
+        $search = $request->search;
+        $key_loaisanpham = $request->loaisanpham;
+        $key_monthethao = $request->monthethao;
+        $key_nhasanxuat = $request->nhasanxuat;
+
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                    ->groupBy('san_phams_id')
+                                    ->get();
+        $danh_gia = DanhGia::select(array('san_phams_id',DB::raw('AVG(diem) as danh_gia'),DB::raw('COUNT(san_phams_id) as dem_danh_gia')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        $list_yeu_thich = YeuThich::all();
+        $list_danh_gia = DanhGia::all();
+
+        // dd($key_monthethao);
+        // dd(!empty($key_monthethao));
+        if($search != null || $key_monthethao != null || $key_nhasanxuat != null || $key_loaisanpham != null) {
+            if($search != null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+                $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+            } else {
+                if($search != null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->paginate(4);
+                }
+                
+                if($search == null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('mon_the_thaos_id', $key_monthethao)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao != null && $key_nhasanxuat == null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao != null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('mon_the_thaos_id', $key_monthethao)
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search != null && $key_monthethao == null && $key_nhasanxuat != null && $key_loaisanpham != null) {
+                    $timkiem = SanPham::where('ten_san_pham','LIKE','%'.$search.'%')
+                                    ->where('nha_san_xuats_id', $key_nhasanxuat)
+                                    ->where('loai_san_phams_id', $key_loaisanpham)
+                                    ->paginate(4);
+                }
+    
+                if($search == null && $key_monthethao == null && $key_nhasanxuat == null && $key_loaisanpham == null) {
+                    $timkiem = SanPham::where('trang_thai',1)->paginate(4);
+                }
+            }
+            $dsSanPham = [
+                'dsSanPham'=>$timkiem,
+                'dsYeuThich'=>$yeu_thich,
+                'dsDanhGia'=>$danh_gia,
+                'listYeuThich'=>$list_yeu_thich,
+                'listDanhGia'=>$list_danh_gia
+    
+            ];
+            return view('admin.product.index',$dsSanPham);
+        } else {
+            $timkiem = SanPham::where('trang_thai',1)->paginate(4);
+            $dsSanPham = [
+                'dsSanPham'=>$timkiem,
+                'dsYeuThich'=>$yeu_thich,
+                'dsDanhGia'=>$danh_gia,
+                'listYeuThich'=>$list_yeu_thich,
+                'listDanhGia'=>$list_danh_gia
+    
+            ];
+            return redirect('admin/producs');
+        }
+        
     }
     public function storeAdmin(Request $request) {
         $rule = [
-            'mota' => 'required',
             // 'giaban' => 'numeric',
             'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
+            'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
             // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
@@ -164,8 +395,8 @@ class SanPhamController extends Controller
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
-            'mota.required' => 'Bạn chưa nhập mô tả',
-            'giamgia.required' => 'Bạn chưa nhập giảm giá',
+            'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
+            'giamgia.max' => 'Giá trị của giảm giá từ 1% đến 100%',
             'giagoc.required' => 'Bạn chưa nhập giá gốc',
         ];
         $customName = [
@@ -250,11 +481,11 @@ class SanPhamController extends Controller
     public function update(Request $request, $id){
  
         $rule = [
-            'mota' => 'required',
             // 'giaban' => 'numeric',
             'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
+            'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
             // 'image' => 'mimes:jpeg,jpg,png|max:10000',
         ];
@@ -267,8 +498,8 @@ class SanPhamController extends Controller
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
-            'mota.required' => 'Bạn chưa nhập mô tả',
-            'giamgia.required' => 'Bạn chưa nhập giảm giá',
+            'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
+            'giamgia.max' => 'Giá trị của giảm giá từ 1% đến 100%',
             'giagoc.required' => 'Bạn chưa nhập giá gốc',
         ];
         $customName = [

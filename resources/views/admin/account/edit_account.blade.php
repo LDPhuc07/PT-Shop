@@ -26,9 +26,17 @@
   .head-product-picture label:hover {
     border-bottom: 1px solid blue; 
   }
+  .alert-success {
+    width: 60%;
+    margin: 0 20% 0;
+  }
   @media(max-width: 767px) {
     .add-product-form {
       width: 100%;
+    }
+    .alert-success {
+      width: 100%;
+      margin: 0;
     }
     .product-footer {
       padding: 16px; 
@@ -49,6 +57,10 @@
     .head-add-pro {
       padding: 25px 45px 0;
     }
+    .alert-success {
+      width: 90%;
+      margin: 0 5% 0;
+    }
   }
 </style>
 <div class="product-container">
@@ -59,6 +71,7 @@
       </a>
       <h3>Quản lý tài khoản</h3>
     </div>
+    @include('admin.mess.message')
     @foreach ($arrays as $array)
       <form action="{{ route('admin.accounts.update',$array->id) }}" method="POST" enctype="multipart/form-data">
       @method('PUT')
@@ -114,7 +127,7 @@
                 </div>
                   <div class="product-info-item">
                   <label class="product-info-item-label" for="">Địa chỉ</label>
-                  <input class="textbox" style="    width: 100%;" type="text" name="dia_chi" value="{{ $array->diachi }}" placeholder="Nhập địa chỉ">
+                  <input class="textbox" style="    width: 100%;" type="text" name="dia_chi" value="{{ $array->dia_chi }}" placeholder="Nhập địa chỉ">
                   @if($errors->has('dia_chi'))
                     <span style="font-size: 13px; color:red">
                         <i class="fas fa-times"></i>
@@ -151,7 +164,6 @@
           </div>
           <div class="product-footer">
             <div class="product-footer-btn">
-              <button class="destroy-btn btn">Hủy</button>
               <button class="save-btn btn">Lưu</button>
             </div>
           </div>

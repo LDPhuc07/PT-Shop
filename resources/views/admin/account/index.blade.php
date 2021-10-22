@@ -76,8 +76,7 @@
                 <div class="ds-sanpham">
                   <div class="head-table">
                     <div class="search">
-                      <form action="{{ route('admin.accounts.search') }}" method="POST">
-                        @csrf
+                      <form action="{{ route('admin.accounts.search') }}" method="GET">
                         <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại, địa chỉ" name="search">
                     </div>
                     <div style="margin-right: 16px" class="group-filter-btn">

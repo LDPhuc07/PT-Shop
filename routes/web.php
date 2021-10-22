@@ -33,8 +33,7 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
     Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
     Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
-    Route::post('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
-    Route::get('/accounts/search','TaiKhoanController@getSearch');
+    Route::get('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
     
      // Môn thể thao
@@ -68,6 +67,7 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::put('/sanpham/{id}',("SanPhamController@update"))->name('sanpham.update');
     Route::delete('/sanpham/delete/{id}',("SanPhamController@delete"))->name('sanpham.delete');
     Route::get('/sanpham/delimg/{id}',("SanPhamController@getDelImg"))->name('sanpham.delimg');
+    Route::get('/sanpham/search','SanPhamController@search')->name('sanpham.search');
     // chi tiết sản phẩm
     Route::match(['get','post'],'sanpham/{id}/chitietsanpham',("ChiTietSanPhamController@index"))->name('chitietsanpham.index');
     Route::get('sanpham/{id}/chitietsanpham/create',("ChiTietSanPhamController@create"))->name('chitietsanpham.create');
@@ -89,8 +89,6 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
     Route::get('bill/check-bill/{id}','HoaDonController@checkBill')->name('admin.bill.check-bill');
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
-    Route::post('bill/search','HoaDonController@search')->name('admin.bill.search');
-    Route::get('bill/search','HoaDonController@getSearch');
     
     //thống kê
     Route::get('statistics','HoaDonController@indexStatistic')->name('admin.statistics');

@@ -57,24 +57,24 @@
           </div>
           <div class="add-pro">
             @if(empty($thong_ke_theo))
-              <a href="admin/statistics/print">
+              <a target="_blank" href="admin/statistics/print">
             @else
               @if($thong_ke_theo == "ko")
                 @if(empty($key_from_day))
                   @if(empty($key_to_day))
-                    <a href="admin/statistics/print">
+                    <a target="_blank" href="admin/statistics/print">
                   @else
-                    <a href="admin/statistics/printKeyToDay/{{ $key_to_day }}">
+                    <a target="_blank" href="admin/statistics/printKeyToDay/{{ $key_to_day }}">
                   @endif
                 @else
                   @if(empty($key_to_day))
                     <a href="admin/statistics/printKeyFromDay/{{ $key_from_day }}">
                   @else
-                    <a href="admin/statistics/printKeyFromToDay/{{ $key_from_day }}/{{ $key_to_day }}">
+                    <a target="_blank" href="admin/statistics/printKeyFromToDay/{{ $key_from_day }}/{{ $key_to_day }}">
                   @endif
                 @endif
               @else
-                <a href="admin/statistics/printThongKeTheo/{{ $thong_ke_theo }}">
+                <a target="_blank" href="admin/statistics/printThongKeTheo/{{ $thong_ke_theo }}">
               @endif
             @endif
               <p>Xuất thông kê</p>
@@ -99,7 +99,7 @@
                       </div>
                       <div style="display: flex">
                         <label class="lbl_thong_ke_theo">Thống kê theo: </label>
-                        <select class="thong_ke_theo" name="thong_ke_theo" class="dashboard-filter">
+                        <select class="thong_ke_theo form-control" name="thong_ke_theo">
                           <option value="ko">--Chọn--</option>
                           <option value="7ngay">Tuần qua</option>
                           <option value="thangtruoc">Tháng trước</option>
