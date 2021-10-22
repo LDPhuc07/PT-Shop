@@ -84,6 +84,29 @@
   }
   /* Mobile & tablet  */
 @media (max-width: 1023px) {
+  .all-img {
+    display: flex;
+    width: 100%;
+    overflow-y: unset;
+    overflow-x: auto;
+    height: unset;
+  }
+  .all-img::-webkit-scrollbar {
+    height: 4px;
+}
+.all-img::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .all-img::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  .all-img::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 }
 /* tablet */
 @media (min-width: 740px) and (max-width: 1023px) {
@@ -102,9 +125,9 @@
     background-position: center;
     margin-bottom: 10px;
   }
-  .all-img > li {
+  /* .all-img > li {
     display: inline-block;
-  }
+  } */
   .all-img {
     padding: unset;
   }
@@ -122,6 +145,7 @@
     padding: 25px 0 35px 0;
     font-size: small;
   }
+  
 }
 /* mobile */
 @media (max-width: 739px) {
@@ -137,9 +161,9 @@
     background-position: center;
     margin-bottom: 10px;
   }
-  .all-img > li {
+  /* .all-img > li {
     display: inline-block;
-  }
+  } */
   .all-img {
     padding: unset;
   }
@@ -165,6 +189,7 @@
   .shopnow {
     width: 100%;
     margin-bottom: 15px;
+    margin-top: 15px;
   }
   .likenow {
     width: 100%;
@@ -175,6 +200,7 @@
   .alert {
     width: 100%;
   }
+  
 } 
 </style>
 @endsection
@@ -574,9 +600,9 @@
         <textarea class="ckeditor" name="binhluan" id="cmt" cols="70" rows="10"></textarea>
            
         @if(Auth::check() and Auth::user()->admin != 1)
-        <a onclick="postBinhLuan()" class="btn btn-comment" style="float: right">Gửi Bình Luận</a>
+        <a onclick="postBinhLuan()" class="btn btn-comment btn-buynow" style="float: right">Gửi Bình Luận</a>
         @else
-        <a class="btn btn-comment" data-toggle="modal" data-target="#myModal2" >Gửi Bình Luận</a>
+        <a class="btn btn-comment btn-buynow" data-toggle="modal" data-target="#myModal2" style="float: right">Gửi Bình Luận</a>
         @endif
       </div>
       <div class="col-12">
@@ -650,7 +676,7 @@
       @endforeach
     </div>
     <div class="seemore">
-      <a href="">Xem thêm</a>
+      <a href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Xem thêm</a>
     </div>
   </div>
 </div>
@@ -669,7 +695,7 @@
       </div>
   </div>
   <div class="alert__footer">
-      <a class="click__cart">Xem giỏ hàng</a>
+      <a class="click__cart" style="border-radius: 4px">Xem giỏ hàng</a>
   </div>
 </div>
 <div class="overlay" style="display: none" onclick="fadeout()">

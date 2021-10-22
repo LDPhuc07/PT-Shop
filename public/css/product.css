@@ -85,6 +85,7 @@
     position: relative;
     overflow: hidden;
     transition: 1s all ease;
+    border-radius: 4px;
 }
 .loadmore-btn::before{
     background-color: var(--black-color);

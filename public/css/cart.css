@@ -72,6 +72,8 @@
     font-size: 16px;
     text-align: center;
     vertical-align: middle;
+    width: 25px;
+    height: 25px;
 }
 .text-input {
     text-align: center;
@@ -134,6 +136,7 @@
     cursor: pointer;
     display: block;
     text-align: center;
+    border-radius: 4px;
 }
 .center {
     text-align: center;

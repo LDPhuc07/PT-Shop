@@ -341,7 +341,6 @@
     line-height: 36px;
     font-weight: 600;
     font-size: 14px;
-    
 }
 .click-slideshow:hover {
     color: var(--hover-color);
@@ -382,6 +381,7 @@
     color: var(--white-color);
     position: relative;
     overflow: hidden;
+    border-radius: 4px;
 }
 .btn-buynow::before {
     content:"";
@@ -395,7 +395,6 @@
     border-radius: 50% 50% 0 0;
     bottom: 0;
     height: 180%;
-    
 }
 .btn-buynow:hover {
     text-decoration:none;
@@ -410,9 +409,10 @@
 }
 .card {
     position: relative;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
     transition: transform linear 0.1s;
     will-change: transform;
+    border-radius: 4px !important;
 }
 .card:hover {
     transform: translateY(-8px);
@@ -473,7 +473,7 @@
     padding-bottom: 4px;
 }
 .card-text {
-    font-size:16px;
+    font-size:15px;
 }
 .shoesnews__all{
     display: flex;
@@ -602,6 +602,7 @@
     list-style: none;
     z-index: 9;
     box-shadow: 0 2px 4px #e0e0e0;
+    border-radius: 4px;
 }
 .nav-item__first-menu::before {
     content: "";

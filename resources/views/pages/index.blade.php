@@ -6,6 +6,27 @@
   .den {
     color: #000 !important;
   }
+  .custom-text-price {
+    display: block;
+    height: 55px;
+  }
+  /* Mobile & tablet  */
+  @media (max-width: 1023px) {
+    
+  }
+
+  /* tablet */
+  @media (min-width: 740px) and (max-width: 1023px) {
+
+  }
+
+  /* mobile */
+  @media (max-width: 739px) {
+    .custom-text-price {
+      display: flex;
+      height: unset;
+    }
+  }
 </style>
 @endsection
 @section('content')
@@ -78,7 +99,7 @@
                     align-items: center;">
                       <a href="{{route('product_detail',['id'=>$sanphamphobien->id])}}" class="btn btn-buynow">Xem ngay <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 5px;"></i></a>
                       <div>
-                        <span id="luot-like-{{ $sanphamphobien->id }}" class="luot-like-{{ $sanphamphobien->id }}" style="margin-right: 12px;font-size: 25px">
+                        <span id="luot-like-{{ $sanphamphobien->id }}" class="luot-like-{{ $sanphamphobien->id }}" style="margin-right: 12px;font-size: 22px">
                           @foreach($yeu_thich as $like)
                             @if($sanphamphobien->id == $like->san_phams_id)
                               {{ $like->yeu_thich }}
@@ -99,14 +120,14 @@
                           @endforeach
                           @if($is_liked == true)
                             <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="den icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
-                        font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                           @else
                             <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamphobien->id }})" class="icon-like like-{{ $sanphamphobien->id }}" style="color: #ccc;
-                        font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                           @endif
                         @else
                           <a class="icon-like" style="color: #ccc;
-                        font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                        font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                         @endif 
                       </div>
                     </div>
@@ -139,7 +160,7 @@
                     </div>
                     <div style="display:flex;justify-content: flex-end;
                     align-items: center;">
-                    <span id="luot-like-{{ $sanphammoinhat->id }}" class="luot-like-{{ $sanphammoinhat->id }}" style="margin-right: 12px;font-size:25px">
+                    <span id="luot-like-{{ $sanphammoinhat->id }}" class="luot-like-{{ $sanphammoinhat->id }}" style="margin-right: 12px;font-size:22px">
                     @foreach($yeu_thich as $like)
                       @if($sanphammoinhat->id == $like->san_phams_id)
                         {{ $like->yeu_thich }}
@@ -160,14 +181,14 @@
                       @endforeach
                       @if($is_liked == true)
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="den icon-like like-{{ $sanphammoinhat->id }}" style="color: #ccc;
-                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @else
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphammoinhat->id }})" class="icon-like like-{{ $sanphammoinhat->id }}" style="color: #ccc;
-                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @endif
                     @else
                       <a class="icon-like" style="color: #ccc;
-                    font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif 
                     </div>
                     <div class="sale-off" data-id="{{$sanphammoinhat['giam_gia']}}">
@@ -201,7 +222,7 @@
                     </div>
                     <div style="display:flex;justify-content: flex-end;
                     align-items: center;">
-                    <span id="luot-like-{{ $sanphamhot->id }}" class="luot-like-{{ $sanphamhot->id }}" style="margin-right: 12px;font-size:25px">
+                    <span id="luot-like-{{ $sanphamhot->id }}" class="luot-like-{{ $sanphamhot->id }}" style="margin-right: 12px;font-size:22px">
                       @foreach($yeu_thich as $like)
                         @if($sanphamhot->id == $like->san_phams_id)
                           {{ $like->yeu_thich }}
@@ -222,14 +243,14 @@
                       @endforeach
                       @if($is_liked == true)
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="den icon-like like-{{ $sanphamhot->id }}" style="color: #ccc;
-                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @else
                         <a onclick="doimau({{ Auth::user()->id }},{{ $sanphamhot->id }})" class="icon-like like-{{ $sanphamhot->id }}" style="color: #ccc;
-                    font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                       @endif
                     @else
                     <a class="icon-like" style="color: #ccc;
-                    font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif 
                     </div>
                     <div class="sale-off" data-id="{{$sanphamhot['giam_gia']}}">
@@ -255,9 +276,9 @@
                   @endforeach
                   <div class="card-body">
                     <h5 class="card-title custom__name-product" style="font-size:14px">{{$sanpham['ten_san_pham']}}</h5>
-                    <div class="product__price" id="price">
-                      <p style="font-size: 9px" class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
-                      <p  style="font-size: 9px" data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
+                    <div class="product__price custom-text-price" id="price">
+                      <p class="card-text price-color product__price-new">{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</p>
+                      <p  data-id="{{$sanpham['giam_gia']}}"  class="card-text price-color product__price-old">{{number_format($sanpham['gia_ban'],0,',','.').' '.'VNĐ'}}</p>
                     </div>
                     <div style="display:flex;justify-content: flex-end;
                     align-items: center;">

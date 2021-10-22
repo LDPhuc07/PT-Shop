@@ -298,36 +298,13 @@
                   </li>
                 </ul>
               </li>
-              <li class="ng-scope ng-has-child2">
-                <a href="">Bóng đá <i class="fas fa-plus cong4" onclick="hienthi(4,`abc4`)"></i> <i class="fas fa-minus tru4 hidden " onclick="hienthi(4,`abc4`)"></i></a>
-                <ul class="ul-has-child2 hidden" id="abc4">
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                  <li class="ng-scope">
-                    <a href="">Bóng đá</a>
-                  </li>
-                </ul>
-              </li>
             </ul>
           </li>
           <li class="ng-scope">
             <a href="">Tin tức</a>
           </li>
           <li class="ng-scope">
-            <a href="">Liên hệ</a>
+            <a href="{{ route('pages.contact') }}">Liên hệ</a>
           </li>
         </ul>
       </div>
@@ -511,7 +488,7 @@
             </div>
           </li>
           <li class="header_nav-list-item"><a href="#">Tin tức</a></li>
-          <li class="header_nav-list-item"><a href="#">Liên hệ</a></li>
+          <li class="header_nav-list-item"><a href="{{ route('pages.contact') }}">Liên hệ</a></li>
         </ul>
       </div>
     </nav>

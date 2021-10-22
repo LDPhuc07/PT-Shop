@@ -18,12 +18,18 @@
 
   /* tablet */
   @media (min-width: 740px) and (max-width: 1023px) {
-    
+    .btn-blocker {
+    display: block;
+    width: 100%;
+    }
   }
 
   /* mobile */
   @media (max-width: 739px) {
-    
+      .btn-blocker {
+      display: block;
+      width: 100%;
+    }
   }
 </style>
 <div class="cart" style="margin-top: 30px">
@@ -145,7 +151,7 @@
                       <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                     @endif
                   </div>
-                  <button class="form-submit">Lưu</button>
+                  <button class="form-submit btn-blocker">Lưu</button>
                 </form>
                 @endforeach
               </div>

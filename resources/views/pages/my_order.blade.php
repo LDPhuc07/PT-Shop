@@ -99,7 +99,7 @@
                             <span class="btn-stt blue" >Đang xác nhận</span>
                           @endif
                         </td>
-                        <td><a onclick="showModal({{ $bill->id }})">Xem</a></td>
+                        <td><a onclick="showModal({{ $bill->id }})" style="cursor: pointer">Xem</a></td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -137,11 +137,13 @@
                     
                   </form> --}}
                 </div>
-                <nav aria-label="Page navigation example" style="margin-top:20px">
-                  <ul class="pagination">
-                    {!! $arrays->appends(request()->query())->links() !!}
-                  </ul>
-                </nav>
+                <div style="margin-left:50%">
+                  <nav aria-label="Page navigation example" style="margin-top:20px">
+                    <ul class="pagination">
+                      {!! $arrays->appends(request()->query())->links() !!}
+                    </ul>
+                  </nav>
+                </div>
               </div>
           </div>
         </div>
