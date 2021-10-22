@@ -204,8 +204,8 @@
                     @foreach($dsSanPham->anh as $i => $anh)
                       <div class="form-group abc" id="{{$i}}">
                         <img src="{{asset($anh->link)}}" alt="no img" id="{{$i}}" data-id="{{$anh->id}}" idHinh="imgsp_{{$i}}" class="img-thumbnail" width="60%">
-                        <a href="javascript:void(0)" onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a>      
-                        <input type="file" class="form-control" style="display: none" data-id="{{$i}}" name="link[]" id="link_{{$i}}" onchange="loadfile(this)">
+                        <a href="javascript:void(0)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a>      
+                        {{-- <input type="file" class="form-control" style="display: none" data-id="{{$i}}" name="link[]" id="{{$i}}" onchange="loadfile(this)"> --}}
                       </div>
                      @endforeach
                   </div>
@@ -244,7 +244,7 @@
     })
     });
     $(document).ready(function(){
-      {{--  $('a#del_img_demo').on('click',function(){
+        $('a#del_img_demo').on('click',function(){
         var url = location.origin + "/admin/sanpham/delimg/";
         var _token = $("form[name='frmEditProduct']").find("input[name='_token']").val();
         var idHinh = $(this).parent().find("img").data("id");
@@ -264,7 +264,7 @@
             }
           }
         });
-      })  --}}
+      })
       
     });
   </script>
@@ -284,7 +284,7 @@
       var _time = d.getTime();
       var _html = '<div class="abc file-hide" id="file_items_' + _time + '">';
       _html += '<img id="imgsp_' + _time + '" class="img-thumbnail" width="60%">';
-      _html += '<input type="file" style="display: none"  onchange="loadfile(this)" id="' + _time + '"   />';
+      _html += '<input type="file" name="link[]" style="display: none"  onchange="loadfile(this)" id="' + _time + '"   />';
       _html += '<a onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a> ';
       _html += ' </div>';
       jQuery('.list-img').append(_html);

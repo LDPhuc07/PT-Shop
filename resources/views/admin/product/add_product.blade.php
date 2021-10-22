@@ -196,19 +196,19 @@
             </div>
           </div>
           
-          {{--  <div class="col-12 pr-0 pl-10">
-
-          </div>  --}}
-          {{-- @for($i = 1; $i <=4 ; $i++)
-          <div class="col-12 pl-0 mt-20 pr-0">
-            <div class="product-info">
-              <div class="product-info-item">
-                <label class="product-info-item-label" for="">Thêm ảnh {{ $i }}</label>
-                <input type="file" name=anhchitiet[]>
-              </div>  
+           {{-- <div class="col-12 pr-0 pl-10">
+              @for($i = 1; $i <=4 ; $i++)
+            <div class="col-12 pl-0 mt-20 pr-0">
+              <div class="product-info">
+                <div class="product-info-item">
+                  <label class="product-info-item-label" for="">Thêm ảnh {{ $i }}</label>
+                  <input type="file" >
+                </div>  
+              </div>
+              @endfor
             </div>
-            @endfor
-          </div> --}}
+          </div>  --}}
+          
           <div class="col-12 pl-0 mt-20 pr-0">
             <div class="product-info">
               <div class="product-info-item">
@@ -249,7 +249,7 @@
         var _time = d.getTime();
         var _html = '<div class="abc file-hide" id="file_items_' + _time + '">';
         _html += '<img id="imgsp_' + _time + '" class="img-thumbnail" width="60%">';
-        _html += '<input type="file" style="display: none"  onchange="loadfile(this)" id="' + _time + '"   />';
+        _html += '<input type="file" name="link[]" style="display: none" onchange="loadfile(this)" id="' + _time + '"   />';
         _html += '<a onclick="DelImg(this)" id="del_img_demo" class="btn btn-danger btn-cricle icon-del"><i class="fa fa-times"></i></a> ';
         _html += ' </div>';
         jQuery('.list-img').append(_html);
