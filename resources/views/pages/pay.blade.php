@@ -293,15 +293,22 @@
                             @endif
                         </div>
                         <div style="margin-top:20px;font-size: 16px;color:black">
-                            <label for="" style="font-weight:bold">Chọn Phương thức thanh toán khác:</label>
+                            <label for="" style="font-weight:bold">Chọn Phương thức thanh toán:</label>
+                            
                             <br>
+                            <span style="color: #999;font-size:13px"><i>*Vui lòng chọn phương thức thanh toán trước khi thanh toán</i></span>
+                            <div style="display:flex;align-items: center;">
+                                <input type="radio" style="margin-right:5px" class="tttructiep">
+                                <span>Thanh toán trực tiếp</span>
+                            </div>
                             <div style="display:flex;justify-content: space-between;">
                                 <div style="display:flex;align-items: center;">
-                                    <input type="radio" name="payment" style="margin-right:5px" >
-                                    <span>Thanh toán VnPay</span>
+                                    <input type="radio" name="payment" style="margin-right:5px" class="ttonline">
+                                    <span>Thanh toán online</span>
                                 </div>
                                 <img src="{{asset(getLink('logo','vn.png'))}}" alt="" style="width:50%;height:50px">
                             </div>
+                            
                         </div>
                         <div class="main-footer">
                             <div class="continue">
@@ -314,11 +321,11 @@
                                 
                                 @if($dem3 != 0)
                             <div class="pay">
-                                <button type="submit" class="btn-pay">Thanh toán</button>
+                                <button type="submit" class="btn-pay" disabled>Thanh toán</button>
                             </div>
                             @else 
                             <div class="pay">
-                                <button type="button" class="btn-pay">Thanh toán</button>
+                                <button type="button" class="btn-pay" disabled>Thanh toán</button>
                             </div>
                             @endif
                             @else
@@ -331,11 +338,11 @@
                                 @endforeach
                                 @if($dem != 0)
                                 <div class="pay">
-                                    <button type="submit" class="btn-pay">Thanh toán</button>
+                                    <button type="submit" class="btn-pay"  disabled>Thanh toán</button>
                                 </div>
                                 @else
                                 <div class="pay">
-                                    <button type="button" class="btn-pay">Thanh toán</button>
+                                    <button type="button" class="btn-pay"  disabled>Thanh toán</button>
                                 </div>
                                 @endif
                             @endif                      

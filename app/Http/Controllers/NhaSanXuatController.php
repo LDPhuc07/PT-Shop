@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NhaSanXuat;
+use App\SanPham;
 use Illuminate\Support\Facades\Validator;
 class NhaSanXuatController extends Controller
 {

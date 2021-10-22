@@ -7,6 +7,10 @@
   .den {
     color: #000 !important;
   }
+  .custom-text-price {
+    display: block;
+    height: 55px;
+  }
   /* Mobile & tablet  */
   @media (max-width: 1023px) {
     .sortby {
@@ -33,7 +37,10 @@
 
   /* mobile */
   @media (max-width: 739px) {
-    
+    .custom-text-price {
+      display: flex;
+      height: unset;
+    }
   }
 </style>
 @endsection
@@ -373,21 +380,36 @@
           })
           
         }
+        if(arrayThuongHieu.length > 0){
+            $.ajax({
+            type:'get',
+            url: '/api/trademark',
+            data: {
+              'page' : trang,
+              'idlsp' : idlsp,
+              'idmtt' : idmtt,
+              'tradeMark': tradeMark,
+              'arrayThuongHieu': arrayThuongHieu
+            },
+            success: function(products){
+              render(products);
+            }
+          });
+        }
+        else
+        {
+          $.ajax({
+            type:'get',
+            url:'/api/product?page='+trang+'&idlsp='+idlsp+'&idmtt='+idmtt,
+            success: function(products){
+             
+              render(products);
+              console.log(products);
+          }
+          });
+        }
     console.log(arrayThuongHieu);
-    $.ajax({
-      type:'get',
-      url: '/api/trademark',
-      data: {
-        'page' : trang,
-        'idlsp' : idlsp,
-        'idmtt' : idmtt,
-        'tradeMark': tradeMark,
-        'arrayThuongHieu': arrayThuongHieu
-      },
-      success: function(products){
-        render(products);
-      }
-    });
+    
   }
  
   var role = 'all'; 
@@ -443,14 +465,14 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
-              html+='<div class="product__price" id="price">';
-                html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+              html+='<div class="product__price custom-text-price" id="price">';
+                html+='<p class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
               html+='<div>'
-                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 25px">'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 22px">'
                   @foreach($yeu_thich as $like)
                     if(product.id == {{ $like->san_phams_id }}) {
                       html+='{{ $like->yeu_thich }}'
@@ -466,10 +488,10 @@
                 @endforeach
                 if(is_liked == 1) {
                   html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
-                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 } else {
                   html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
-                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 }
               @else
                   <?php
@@ -479,7 +501,7 @@
                     }
                   ?>
                 html+='<a class="icon-like" style="color: #ccc;'
-                html+='font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                html+='font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
               @endif
               html+='</div>'
               html+='  </div>';
@@ -570,14 +592,14 @@
             html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
-              html+='<div class="product__price" id="price">';
-                html+='<p style="font-size:11px" class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
-                html+='<p style="font-size:11px" data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+              html+='<div class="product__price custom-text-price" id="price">';
+                html+='<p class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
                 html+='</div>';
               html+='<div style="display:flex;justify-content: space-between;';
               html+='align-items: center;">';
               html+='<div>'
-                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 25px">'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 22px">'
                   @foreach($yeu_thich as $like)
                     if(product.id == {{ $like->san_phams_id }}) {
                       html+='{{ $like->yeu_thich }}'
@@ -593,10 +615,10 @@
                 @endforeach
                 if(is_liked == 1) {
                   html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
-                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 } else {
                   html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
-                  html+='font-size: 25px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
                 }
               @else
                   <?php
@@ -606,7 +628,7 @@
                     }
                   ?>
                 html+='<a class="icon-like" style="color: #ccc;'
-                html+='font-size: 25px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                html+='font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
               @endif
               html+='</div>'
               html+='  </div>';

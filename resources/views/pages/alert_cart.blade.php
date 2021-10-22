@@ -15,7 +15,7 @@
             </div>
       </div>
       <div class="alert__footer">
-            <a href="{{ route('cart.index') }}" class="click__cart">Xem giỏ hàng</a>
+            <a href="{{ route('cart.index') }}" class="click__cart" style="border-radius: 4px">Xem giỏ hàng</a>
       </div>
 @else
       @foreach($arrays as $array)

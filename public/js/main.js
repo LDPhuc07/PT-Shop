@@ -72,3 +72,17 @@ function hienthi(id, name){
     $(`.cong${id}`).toggleClass('hidden');
     $(`.tru${id}`).toggleClass('hidden');
 }
+$('.ttonline').change(function(){
+    document.querySelector(".ttonline").checked = true;
+    document.querySelector(".tttructiep").checked = false;
+    $('.btn-pay').css('color','#fff');
+    $('.btn-pay').css('backgroundColor','#000');
+    $('.btn-pay').attr('disabled', false);
+})
+$('.tttructiep').change(function(){
+    document.querySelector(".tttructiep").checked = true;
+    document.querySelector(".ttonline").checked = false;
+    $('.btn-pay').css('color','#fff');
+    $('.btn-pay').css('backgroundColor','#000');
+    $('.btn-pay').attr('disabled', false);
+})

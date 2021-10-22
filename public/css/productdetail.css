@@ -4,7 +4,25 @@
 .all-img {
     float:left;
     list-style: none;
+    overflow-y: auto;
+    height: 440px;
 }
+.all-img::-webkit-scrollbar {
+    width: 4px;
+}
+.all-img::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .all-img::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  .all-img::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 .img-item img{
     width: 100px;
     cursor: pointer;
@@ -12,10 +30,10 @@
 }
 #main-img {
     float: left;
-    max-width: 500px;
+    max-width: 470px;
 }
 #main-img img {
-    width: 370px;
+    width: 350px;
     margin-left: 30px;
     margin-top: 15px;
     background-size: cover;
@@ -60,8 +78,8 @@
     margin-right: 15px;
 }
 .product__wrap input {
-    width: 50px;
-    height: 40px;
+    width: 45px;
+    height: 35px;
 }
 .control {
     border-radius: unset;
@@ -81,7 +99,7 @@
 }
 .add-cart {
     width: 200px;
-    height: 40px;
+    height: 50px;
     background:none;
     color: #d9121f;
     font-size: 16px;
@@ -91,6 +109,7 @@
     overflow: hidden;
     border: 1px solid #d9121f;
     cursor: pointer;
+    border-radius: 4px;
 }
 .add-cart::before {
     content:"";
@@ -118,7 +137,7 @@
 }
 .shopnow {
     width: 250px;
-    height: 40px;
+    height: 50px;
     background:var(--black-color);
     color: var(--white-color);
     font-size: 16px;
@@ -127,6 +146,7 @@
     position: relative;
     overflow: hidden;
     border: 1px solid var(--black-color);
+    border-radius: 4px;
 }
 .shopnow::before {
     content:"";
@@ -202,6 +222,7 @@
 .seemore {
     text-align: center;
     margin: 70px 0;
+   
 }
 .seemore a {
     padding: 10px 40px;
@@ -212,6 +233,7 @@
     position: relative;
     overflow: hidden;
     transition: 1s all ease;
+    border-radius: 4px;
 }
 .seemore a::before{
     background-color: var(--black-color);
@@ -424,13 +446,13 @@
 .btn-comment {
     margin-top: 1.4rem;
     padding: 15px 40px;
-    background-color: var(--black-color);
-    color: var(--white-color);
+    /* background-color: var(--black-color);
+    color: var(--white-color); */
     font-size: 16px;
     text-transform: uppercase;
 }
 .btn-comment:hover {
-    color: var(--white-color);
+    /* color: var(--white-color); */
 }
 .btn-comment:focus {
     box-shadow: unset;

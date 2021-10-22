@@ -118,6 +118,9 @@ Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@get
 Route::get('/news', function () {
     return view('pages.news');
 });
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('pages.contact');;
 Route::get('/order-success', function () {
     return view('pages.oder_success');
 })->name('ordersuccess');

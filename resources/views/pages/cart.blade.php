@@ -210,7 +210,7 @@
                           <span class="total__price">{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span>
                       </div>
                       <div class="cart-buttons col-12">
-                          <a href="{{ route('checkout.index') }}" class="chekout">Thanh toán</a>
+                          <a href="{{ route('checkout.index') }}" class="chekout ">Thanh toán</a>
                       </div>
                     </div>
                   </div>

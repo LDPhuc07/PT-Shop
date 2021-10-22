@@ -18,12 +18,18 @@
 
   /* tablet */
   @media (min-width: 740px) and (max-width: 1023px) {
-    
+      .btn-blocker {
+      display: block;
+      width: 100%;
+    }
   }
 
   /* mobile */
   @media (max-width: 739px) {
-    
+      .btn-blocker {
+      display: block;
+      width: 100%;
+    }
   }
 </style>
 <div class="cart" style="margin-top:30px">
@@ -131,7 +137,7 @@
                       </style>
                   @endif
                 </div>
-                <button class="form-submit submit-change-pass">Lưu</button>
+                <button class="form-submit submit-change-pass btn-blocker">Lưu</button>
               </form>
               @endforeach
             </div>
