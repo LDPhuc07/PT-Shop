@@ -55,6 +55,55 @@ class AnhSeeder extends Seeder
             ['id'=> 38, 'san_phams_id'=> 5,'anhchinh'=>false,'anhchitiet'=>'cushioned2.png','link'=>'/img/product/cushioned2.png', 'trang_thai'=>true],
             ['id'=> 39, 'san_phams_id'=> 5,'anhchinh'=>false,'anhchitiet'=>'cushioned3.png','link'=>'/img/product/cushioned3.png', 'trang_thai'=>true],
             ['id'=> 40, 'san_phams_id'=> 5,'anhchinh'=>false,'anhchitiet'=>'cushioned4.png','link'=>'/img/product/cushioned4.png', 'trang_thai'=>true],
+
+            ['id'=> 41, 'san_phams_id'=> 11,'anhchinh'=>true,'anhchitiet'=>'ambush1.jpg','link'=>'/img/product/ambush1.jpg', 'trang_thai'=>true],
+            ['id'=> 42, 'san_phams_id'=> 11,'anhchinh'=>false,'anhchitiet'=>'ambush2.png','link'=>'/img/product/ambush2.png', 'trang_thai'=>true],
+            ['id'=> 43, 'san_phams_id'=> 11,'anhchinh'=>false,'anhchitiet'=>'ambush3.png','link'=>'/img/product/ambush3.png', 'trang_thai'=>true],
+            ['id'=> 44, 'san_phams_id'=> 11,'anhchinh'=>false,'anhchitiet'=>'ambush4.png','link'=>'/img/product/ambush4.png', 'trang_thai'=>true],
+
+            ['id'=> 45, 'san_phams_id'=> 12,'anhchinh'=>true,'anhchitiet'=>'aoni1.jpg','link'=>'/img/product/aoni1.jpg', 'trang_thai'=>true],
+            ['id'=> 46, 'san_phams_id'=> 12,'anhchinh'=>false,'anhchitiet'=>'aoni2.jpg','link'=>'/img/product/aoni2.jpg', 'trang_thai'=>true],
+            
+
+            ['id'=> 47, 'san_phams_id'=> 13,'anhchinh'=>true,'anhchitiet'=>'bongars1.jpg','link'=>'/img/product/bongars1.jpg', 'trang_thai'=>true],
+            ['id'=> 48, 'san_phams_id'=> 13,'anhchinh'=>false,'anhchitiet'=>'bongars2.jpg','link'=>'/img/product/bongars2.jpg', 'trang_thai'=>true],
+            ['id'=> 49, 'san_phams_id'=> 13,'anhchinh'=>false,'anhchitiet'=>'bongars3.jpg','link'=>'/img/product/bongars3.jpg', 'trang_thai'=>true],
+            ['id'=> 50, 'san_phams_id'=> 13,'anhchinh'=>false,'anhchitiet'=>'bongars4.jpg','link'=>'/img/product/bongars4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 51, 'san_phams_id'=> 14,'anhchinh'=>true,'anhchitiet'=>'jordanjumpman1.jpg','link'=>'/img/product/jordanjumpman1.jpg', 'trang_thai'=>true],
+            ['id'=> 52, 'san_phams_id'=> 14,'anhchinh'=>false,'anhchitiet'=>'jordanjumpman2.png','link'=>'/img/product/jordanjumpman2.png', 'trang_thai'=>true],
+            ['id'=> 53, 'san_phams_id'=> 14,'anhchinh'=>false,'anhchitiet'=>'jordanjumpman3.png','link'=>'/img/product/jordanjumpman3.png', 'trang_thai'=>true],
+            ['id'=> 54, 'san_phams_id'=> 14,'anhchinh'=>false,'anhchitiet'=>'jordanjumpman4.png','link'=>'/img/product/jordanjumpman4.png', 'trang_thai'=>true],
+
+            ['id'=> 55, 'san_phams_id'=> 15,'anhchinh'=>true,'anhchitiet'=>'tatchaybo1.jpg','link'=>'/img/product/tatchaybo1.jpg', 'trang_thai'=>true],
+            ['id'=> 56, 'san_phams_id'=> 15,'anhchinh'=>false,'anhchitiet'=>'tatchaybo2.jpg','link'=>'/img/product/tatchaybo2.jpg', 'trang_thai'=>true],
+            ['id'=> 57, 'san_phams_id'=> 15,'anhchinh'=>false,'anhchitiet'=>'tatchaybo3.jpg','link'=>'/img/product/tatchaybo3.jpg', 'trang_thai'=>true],
+            ['id'=> 58, 'san_phams_id'=> 15,'anhchinh'=>false,'anhchitiet'=>'tatchaybo4.jpg','link'=>'/img/product/tatchaybo4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 59, 'san_phams_id'=> 16,'anhchinh'=>true,'anhchitiet'=>'ult1.jpg','link'=>'/img/product/ult1.jpg', 'trang_thai'=>true],
+            ['id'=> 60, 'san_phams_id'=> 16,'anhchinh'=>false,'anhchitiet'=>'ult2.jpg','link'=>'/img/product/ult2.jpg', 'trang_thai'=>true],
+            ['id'=> 61, 'san_phams_id'=> 16,'anhchinh'=>false,'anhchitiet'=>'ult3.jpg','link'=>'/img/product/ult3.jpg', 'trang_thai'=>true],
+            ['id'=> 62, 'san_phams_id'=> 16,'anhchinh'=>false,'anhchitiet'=>'ult4.jpg','link'=>'/img/product/ult4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 63, 'san_phams_id'=> 17,'anhchinh'=>true,'anhchitiet'=>'quansort1.jpg','link'=>'/img/product/quansort1.jpg', 'trang_thai'=>true],
+            ['id'=> 64, 'san_phams_id'=> 17,'anhchinh'=>false,'anhchitiet'=>'quansort2.jpg','link'=>'/img/product/quansort2.jpg', 'trang_thai'=>true],
+            ['id'=> 65, 'san_phams_id'=> 17,'anhchinh'=>false,'anhchitiet'=>'quansort3.jpg','link'=>'/img/product/quansort3.jpg', 'trang_thai'=>true],
+            ['id'=> 66, 'san_phams_id'=> 17,'anhchinh'=>false,'anhchitiet'=>'quansort4.jpg','link'=>'/img/product/quansort4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 67, 'san_phams_id'=> 18,'anhchinh'=>true,'anhchitiet'=>'stansmithgolf1.jpg','link'=>'/img/product/stansmithgolf1.jpg', 'trang_thai'=>true],
+            ['id'=> 68, 'san_phams_id'=> 18,'anhchinh'=>false,'anhchitiet'=>'stansmithgolf2.jpg','link'=>'/img/product/stansmithgolf2.jpg', 'trang_thai'=>true],
+            ['id'=> 69, 'san_phams_id'=> 18,'anhchinh'=>false,'anhchitiet'=>'stansmithgolf3.jpg','link'=>'/img/product/stansmithgolf3.jpg', 'trang_thai'=>true],
+            ['id'=> 70, 'san_phams_id'=> 18,'anhchinh'=>false,'anhchitiet'=>'stansmithgolf4.jpg','link'=>'/img/product/stansmithgolf4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 71, 'san_phams_id'=> 19,'anhchinh'=>true,'anhchitiet'=>'quangiavay1.jpg','link'=>'/img/product/quangiavay1.jpg', 'trang_thai'=>true],
+            ['id'=> 72, 'san_phams_id'=> 19,'anhchinh'=>false,'anhchitiet'=>'quangiavay2.jpg','link'=>'/img/product/quangiavay2.jpg', 'trang_thai'=>true],
+            ['id'=> 73, 'san_phams_id'=> 19,'anhchinh'=>false,'anhchitiet'=>'quangiavay3.jpg','link'=>'/img/product/quangiavay3.jpg', 'trang_thai'=>true],
+            ['id'=> 74, 'san_phams_id'=> 19,'anhchinh'=>false,'anhchitiet'=>'quangiavay4.jpg','link'=>'/img/product/quangiavay4.jpg', 'trang_thai'=>true],
+
+            ['id'=> 75, 'san_phams_id'=> 20,'anhchinh'=>true,'anhchitiet'=>'mubongchay1.jpg','link'=>'/img/product/mubongchay1.jpg', 'trang_thai'=>true],
+            ['id'=> 76, 'san_phams_id'=> 20,'anhchinh'=>false,'anhchitiet'=>'mubongchay2.jpg','link'=>'/img/product/mubongchay2.jpg', 'trang_thai'=>true],
+            ['id'=> 77, 'san_phams_id'=> 20,'anhchinh'=>false,'anhchitiet'=>'mubongchay3.jpg','link'=>'/img/product/mubongchay3.jpg', 'trang_thai'=>true],
+            ['id'=> 78, 'san_phams_id'=> 20,'anhchinh'=>false,'anhchitiet'=>'mubongchay4.jpg','link'=>'/img/product/mubongchay4.jpg', 'trang_thai'=>true],
             
         ]);
     }
