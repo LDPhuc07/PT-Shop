@@ -22,7 +22,7 @@
 </style>
     <div class="container-login">
         <div class="head-title head-add-pro">
-            <a href="{{ route('admin.products') }}">
+            <a href="{{ route('admin.dashboards') }}">
               <i class="fas fa-chevron-left"></i>
               <span>Quay lại trang chủ</span>
             </a>

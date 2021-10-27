@@ -84,8 +84,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
-                  <form action="{{ route('admin.bill.search') }}" method="POST">
-                    @csrf
+                  <form action="{{ route('admin.bill.search') }}" method="GET">
                     <div class="head-table">
                       <div class="search">
                           <input class="search-txt" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">

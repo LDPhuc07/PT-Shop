@@ -89,10 +89,11 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
     Route::get('bill/check-bill/{id}','HoaDonController@checkBill')->name('admin.bill.check-bill');
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
+    Route::get('bill/search','HoaDonController@search')->name('admin.bill.search');
     
     //thống kê
     Route::get('statistics','HoaDonController@indexStatistic')->name('admin.statistics');
-    Route::post('statistics/search','HoaDonController@statistic')->name('admin.statistics.search');
+    Route::get('statistics/search','HoaDonController@statistic')->name('admin.statistics.search');
     Route::get('statistics/print','HoaDonController@printStatistic')->name('admin.statistics.print');
     Route::get('statistics/printKeyToDay/{key_to_day}','HoaDonController@printStatisticKeyToDay');
     Route::get('statistics/printKeyFromDay/{key_from_day}','HoaDonController@printStatisticKeyFromDay');

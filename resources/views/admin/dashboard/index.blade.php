@@ -8,6 +8,9 @@
         flex: 0 0 50%;
         max-width: 25%;
     }
+    .over-flow-x-auto {
+        overflow-x: auto;
+    }
     @media(max-width: 767px) {
         .rpv-head {
             -webkit-box-flex: 0;
@@ -93,7 +96,7 @@
             <form autocomplete="off">
                 @csrf
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 over-flow-x-auto">
                         <p>Từ ngày: <input type="text" id="datepicker" name="from_date" class="form-control"></p>
                     </div>
                     <div class="col-md-2">

@@ -372,7 +372,7 @@ class SanPhamController extends Controller
                 'listDanhGia'=>$list_danh_gia
     
             ];
-            return redirect('admin/producs');
+            return redirect()->route('admin.products');
         }
         
     }

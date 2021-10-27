@@ -54,7 +54,7 @@ class SlideShowController extends Controller
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
-            'link' => 'mimes:jpeg,jpg,png',
+            'link' => 'required|mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -63,7 +63,8 @@ class SlideShowController extends Controller
             'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
-            'tenslideshow.max' => 'Slideshow không quá 100 ký tự'
+            'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
+            'link.required' => 'Bạn chưa chọn hình ảnh'
         ];
         $customName = [
             'tenslideshow' => 'Tên slideshow',
@@ -133,7 +134,7 @@ class SlideShowController extends Controller
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
-            'link' => 'mimes:jpeg,jpg,png',
+            'link' => 'required|mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -142,7 +143,8 @@ class SlideShowController extends Controller
             'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
-            'tenslideshow.max' => 'Slideshow không quá 100 ký tự'
+            'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
+            'link.required' => 'Bạn chưa chọn hình ảnh'
         ];
         $customName = [
             'tenslideshow' => 'Tên slideshow',

@@ -16,7 +16,7 @@ class ChiTietSanPhamController extends Controller
     public function index(Request $request,$id)
     {
         //
-        if(!empty($request->search))
+        if($request->search != null)
         {
             $timkiem = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')
                                         ->where('mau','LIKE','%'.$request->search.'%')

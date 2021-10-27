@@ -84,8 +84,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ds-sanpham">
-                  <form action="{{ route('admin.statistics.search') }}" method="POST">
-                    @csrf
+                  <form action="{{ route('admin.statistics.search') }}" method="GET">
                     <div class="head-table">
                       <div class="key_day">
                         <label style="white-space: nowrap; margin-right: 8px;

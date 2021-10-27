@@ -37,7 +37,7 @@
                     <i class="fas fa-info note-info">
                       <p>Nhập màu không quá 20 ký tự</p>
                     </i>
-                    <input class="textbox" style="width: 100%" type="text" name="mau" required pattern="[ a-zA-Z,#.-]+">
+                    <input class="textbox" style="width: 100%" type="text" name="mau" pattern="[ a-zA-Z,#.-]+">
                     <div class="error error-name" 	@if($errors->has('mau')) style="display:block;color:red" @endif>{{$errors->first('mau')}}</div>
                   </div>
                   <div class="col-4">

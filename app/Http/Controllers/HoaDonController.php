@@ -823,93 +823,97 @@ class HoaDonController extends Controller
         $key_from_day = $request->key_from_day;
         $key_to_day = $request->key_to_day;
         $chot_don = $request->chot_don;
-        if(empty($request->key_from_day)) {
-            if(empty($request->key_to_day)) {
-                if($request->chot_don == null) {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where('id','LIKE','%' .$key. '%')
-                    ->orWhereHas('taiKhoan', function($query) use ($key) {
-                        $query->where('ho_ten','LIKE','%'.$key.'%');
-                    });
-                } else {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
+        if(!empty($key) || !empty($key_from_day) || !empty($key_to_day) || !empty($chot_don)) {
+            if(empty($key_from_day)) {
+                if(empty($key_to_day)) {
+                    if($chot_don == null) {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where('id','LIKE','%' .$key. '%')
+                        ->orWhereHas('taiKhoan', function($query) use ($key) {
                             $query->where('ho_ten','LIKE','%'.$key.'%');
                         });
-                    })
-                    ->where('chot_don',$request->chot_don);
+                    } else {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('chot_don',$chot_don);
+                    }
+                } else {
+                    if($chot_don == null) {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('ngay_lap_hd','<=',$key_to_day);
+                    } else {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('chot_don',$chot_don)
+                        ->where('ngay_lap_hd','<=',$key_to_day);
+                    }
                 }
             } else {
-                if($request->chot_don == null) {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->where('ngay_lap_hd','<=',$key_to_day);
+                if(empty($key_to_day)) {
+                    if($chot_don == null) {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('ngay_lap_hd','>=',$key_from_day);
+                    } else {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('ngay_lap_hd','>=',$key_from_day)
+                        ->where('chot_don',$chot_don);
+                    }
                 } else {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->where('chot_don',$request->chot_don)
-                    ->where('ngay_lap_hd','<=',$key_to_day);
-                }
+                    if($chot_don == null) {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+                    } else {
+                        $query = HoaDon::where('trang_thai',1)
+                        ->where(function($que) use ($key) {
+                            $que->where('id','LIKE','%' .$key. '%');
+                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                                $query->where('ho_ten','LIKE','%'.$key.'%');
+                            });
+                        })
+                        ->where('chot_don',$chot_don)
+                        ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+                    }
+                } 
             }
+            $array = ['arrays'=> $query->paginate(5)];
+            return view('admin.bill.index',$array);
         } else {
-            if(empty($request->key_to_day)) {
-                if($request->chot_don == null) {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->where('ngay_lap_hd','>=',$key_from_day);
-                } else {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->where('ngay_lap_hd','>=',$key_from_day)
-                    ->where('chot_don',$request->chot_don);
-                }
-            } else {
-                if($request->chot_don == null) {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->whereBetween('ngay_lap_hd',[$key_to_day,$key_to_day]);
-                } else {
-                    $query = HoaDon::where('trang_thai',1)
-                    ->where(function($que) use ($key) {
-                        $que->where('id','LIKE','%' .$key. '%');
-                        $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->where('chot_don',$request->chot_don)
-                    ->whereBetween('ngay_lap_hd',[$key_to_day,$key_to_day]);
-                }
-            } 
+            return redirect()->route('admin.bill.index');
         }
-        $array = ['arrays'=> $query->paginate(5)];
-        return view('admin.bill.index',$array);
         // if($request->chot_don == null) {
         //     echo "7";
         // } else {
@@ -1009,101 +1013,110 @@ class HoaDonController extends Controller
     }
     public function statistic(Request $request) {
         // dd($request->all());
-        if($request->thong_ke_theo != "ko") {
-            $dau_thang_nay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
-            $dau_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
-            $cuoi_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
-
-            $sub_7_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(7)->toDateString();
-            $sub_365_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(365)->toDateString();
-
-            $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
-
-            if($request->thong_ke_theo == '7ngay') {
-                $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                
-            }
-            if($request->thong_ke_theo == 'thangtruoc') {
-                $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                
-            }
-            if($request->thong_ke_theo == 'thangnay') {
-                $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                
-            }
-            if($request->thong_ke_theo == '365ngayqua') {
-                $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                
-            }
-        } else {
-            if(!empty($request->key_from_day)) {
-                if(!empty($request->key_to_day)) {
-                    $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereBetween('hoa_dons.ngay_lap_hd',[$request->key_from_day, $request->key_to_day])
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                } else {
-                    $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->key_from_day)
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
-                }
-            } else {
-                if(!empty($request->key_to_day)) {
+        if($request->thong_ke_theo != "ko" || !empty($request->key_from_day) || !empty($request->key_to_day)) {
+            if($request->thong_ke_theo != "ko") {
+                $dau_thang_nay = Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString();
+                $dau_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->startOfMonth()->toDateString();
+                $cuoi_thang_truoc = Carbon::now('Asia/Ho_Chi_Minh')->subMonth()->endOfMonth()->toDateString();
+    
+                $sub_7_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(7)->toDateString();
+                $sub_365_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(365)->toDateString();
+    
+                $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+    
+                if($request->thong_ke_theo == '7ngay') {
                     $arrays = DB::table('chi_tiet_hoa_dons')
                             ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->key_to_day)
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
-                } else {
+                    
+                }
+                if($request->thong_ke_theo == 'thangtruoc') {
                     $arrays = DB::table('chi_tiet_hoa_dons')
-                    ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                    ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                    ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                    ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                    ->get();
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                    
+                }
+                if($request->thong_ke_theo == 'thangnay') {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                    
+                }
+                if($request->thong_ke_theo == '365ngayqua') {
+                    $arrays = DB::table('chi_tiet_hoa_dons')
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                    
+                }
+            } else {
+                if(!empty($request->key_from_day)) {
+                    if(!empty($request->key_to_day)) {
+                        $arrays = DB::table('chi_tiet_hoa_dons')
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$request->key_from_day, $request->key_to_day])
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                    } else {
+                        $arrays = DB::table('chi_tiet_hoa_dons')
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->key_from_day)
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
+                    }
+                } else {
+                    if(!empty($request->key_to_day)) {
+                        $arrays = DB::table('chi_tiet_hoa_dons')
+                                ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                                ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                                ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                                ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                                ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->key_to_day)
+                                ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                                ->get();
+                    } else {
+                        $arrays = DB::table('chi_tiet_hoa_dons')
+                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                        ->get();
+                    }
                 }
             }
+            $key_from_day = $request->key_from_day;
+            $key_to_day = $request->key_to_day;
+            $thong_ke_theo = $request->thong_ke_theo;
+            return view('admin.statistic.index',compact('arrays','key_from_day','key_to_day','thong_ke_theo'));
+        } else {
+            return redirect()->route('admin.statistics');
         }
+        
         // if($request->key_from_day == null and $request->key_to_day = null and $request->thong_ke_theo == "ko") {
         //     $arrays = DB::table('chi_tiet_hoa_dons')
         //             ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
@@ -1116,10 +1129,6 @@ class HoaDonController extends Controller
         // else {
         //     echo "2";
         // }
-        $key_from_day = $request->key_from_day;
-        $key_to_day = $request->key_to_day;
-        $thong_ke_theo = $request->thong_ke_theo;
-        return view('admin.statistic.index',compact('arrays','key_from_day','key_to_day','thong_ke_theo'));
     }
     public function printStatistic() {
         $pdf = \App::make('dompdf.wrapper');

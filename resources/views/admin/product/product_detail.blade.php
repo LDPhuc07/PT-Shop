@@ -25,7 +25,7 @@
   }
   @media(max-width: 767px) {
     .search {
-      width: 100%;
+      width: calc( 100% - 96px);
       margin: unset;
     }
     .sanpham-chitiet {

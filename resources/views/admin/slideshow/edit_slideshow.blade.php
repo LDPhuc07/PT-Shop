@@ -66,10 +66,10 @@
                 <p style="display: inline-block" class="product-info-item-label">Ảnh<span class="repuired"> *</span></p>
                 <label class="lbl-img"  for="link">Chọn ảnh</label>
                 <input type="file" hidden class="form-control" placeholder="Ảnh" value="{{$dsSlideShow['link']}}"  name="link" id="link" onchange="loadfile(event)">
-                <div class="error error-name" 	@if($errors->has('link')) style="display:block;color:red" @endif>{{$errors->first('link')}}</div>
                 <div class="form-group">
                   <img src="{{asset(getLink('slideshow',$dsSlideShow['link']))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
-              </div>
+                </div>
+                <div class="error error-name" 	@if($errors->has('link')) style="display:block;color:red" @endif>{{$errors->first('link')}}</div>
               </div>
             </div>
           </div>
