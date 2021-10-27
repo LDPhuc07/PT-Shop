@@ -34,12 +34,14 @@
   }
 </style>
 <div class="content-wrapper">
-  <div class="head-title">
-    <div class="title-name">
-      <a href="{{route('chitietsanpham.index',['id' =>$id])}}" style="color:black;"><h3>CHI TIẾT SẢN PHẨM</h3></a>
-    </div>
+  <div class="head-title head-add-pro">
+    <a href="{{ route('sanpham.indexAdmin') }}">
+      <i class="fas fa-chevron-left"></i>
+      <span>Quay lại danh sách sản phẩm</span>
+    </a>
+    <h3>{{ $sanpham->ten_san_pham}}</h3>
     <div class="add-pro">
-      <a href="{{route('chitietsanpham.create',['id' =>$id])}}">
+      <a href="{{route('chitietsanpham.create',$id)}}">
         <i class="fas fa-plus"></i>
         <p>Thêm chi tiết sản phẩm</p>
       </a>
@@ -50,7 +52,7 @@
       <div class="col-sm-12 sanpham-chitiet">
           <div class="ds-sanpham">
             <div class="head-table">
-              <form class="search-form" action="{{route('chitietsanpham.index',['id' =>$id])}}" method="GET">
+              <form class="search-form" action="{{route('chitietsanpham.index',$id)}}" method="GET">
                 <div class="search">
                   <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">  
                 </div>

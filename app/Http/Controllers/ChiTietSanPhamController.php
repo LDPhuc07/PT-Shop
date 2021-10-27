@@ -18,7 +18,7 @@ class ChiTietSanPhamController extends Controller
         //
         if($request->search != null)
         {
-            $timkiem = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')
+            $dsChiTietSanPham = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')
                                         ->where('mau','LIKE','%'.$request->search.'%')
                                         ->orWhere('kich_thuoc','LIKE','%'.$request->search.'%')  
                                         ->orWhere('so_luong',$request->search)
@@ -27,16 +27,17 @@ class ChiTietSanPhamController extends Controller
         }
         else
         {
-            $timkiem = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')->paginate(4);
+            $dsChiTietSanPham = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')->paginate(4);
             // dd($timkiem);
         }
+        $sanpham = SanPham::where('id',$id)->first();
         // ["dsMonTheThao"=>MonTheThao::find($id)]
-        $dsChiTietSanPham = [
-            'dsChiTietSanPham'=>$timkiem,
-            'id'=>$id
-        ];
+        // $dsChiTietSanPham = [
+        //     'dsChiTietSanPham'=>$timkiem,
+        //     'id'=>$id
+        // ];
         // dd($dsChiTietSanPham['dsChiTietSanPham'][0]->sanPham->id);
-        return view('admin.product.product_detail',$dsChiTietSanPham);
+        return view('admin.product.product_detail',compact('dsChiTietSanPham','id','sanpham'));
     }
 
     /**
