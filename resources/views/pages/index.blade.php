@@ -149,9 +149,11 @@
               <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
                 <a href="{{route('product_detail',['id'=>$sanphammoinhat->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
-                  @foreach($sanphammoinhat->anh as $anh)
-                    <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
-                  @endforeach
+                  {{-- @foreach($sanphammoinhat->anh as $anh) --}}
+                  {{-- @php dd($sanphammoinhat->getImage() ?? ) @endphp --}}
+                    <img class="card-img-top" src="{{ asset($sanphammoinhat->getImage() ?? '/img/product/no-image.png' )}}" alt="Card image cap">
+                    {{-- <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap"> --}}
+                  {{-- @endforeach --}}
                   <div class="card-body">
                     <h5 class="card-title custom__name-product">{{$sanphammoinhat['ten_san_pham']}}</h5>
                     <div class="product__price" id="price">
@@ -209,9 +211,9 @@
             <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
               <a href="{{route('product_detail',['id'=>$sanphamhot->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
-                  @foreach($sanphamhot->anh as $anh)
-                  <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
-                  @endforeach
+                  {{-- @foreach($sanphamhot->anh as $anh) --}}
+                  <img class="card-img-top" src="{{ asset($sanphamhot->getImage() ?? '/img/product/no-image.png' )}}" alt="Card image cap">
+                  {{-- @endforeach --}}
                   <div class="card-body">
                     <h5 class="card-title custom__name-product">
                       {{$sanphamhot['ten_san_pham']}}
@@ -271,9 +273,9 @@
             <div class="col-lg-2 col-md-4 col-sm-12 mb-20">
               <a href="{{route('product_detail',['id'=>$sanpham->id])}}" class="product__new-item">
                 <div class="card" style="width: 100%">
-                  @foreach($sanpham->anh as $anh)
-                    <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
-                  @endforeach
+                  {{-- @foreach($sanpham->anh as $anh) --}}
+                    <img class="card-img-top" src="{{ asset($sanpham->getImage() ?? '/img/product/no-image.png' )}}" alt="Card image cap">
+                  {{-- @endforeach --}}
                   <div class="card-body">
                     <h5 class="card-title custom__name-product" style="font-size:14px">{{$sanpham['ten_san_pham']}}</h5>
                     <div class="product__price custom-text-price" id="price">
