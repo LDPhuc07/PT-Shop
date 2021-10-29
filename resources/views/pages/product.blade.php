@@ -459,10 +459,20 @@
     let html ='';
     
     $.each(products,function(index, product){
+     
       html+='<div class="col-lg-3 col-md-6 col-12 mb-20" style="margin-bottom: 20px">';
       html+='<a href="/product-details/'+product.id+'" class="product__new-item">';
           html+='<div class="card" style="width: 100%">';
-            html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+            if($.isEmptyObject(product.anh[0]))
+            {
+              html+='<img class="card-img-top" src="/img/product/no-image.png" alt="Card image cap">';
+              
+            }
+            else
+            {
+              html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+              
+            }
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price custom-text-price" id="price">';
@@ -589,7 +599,16 @@
       html+='<div class="col-lg-3 col-md-6 col-12 mb-20" style="margin-bottom: 20px">';
       html+='<a href="/product-details/'+product.id+'" class="product__new-item">';
           html+='<div class="card" style="width: 100%">';
-            html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+            if($.isEmptyObject(product.anh[0]))
+            {
+              html+='<img class="card-img-top" src="/img/product/no-image.png" alt="Card image cap">';
+             
+            }
+            else
+            {
+              html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+         
+            }
             html+='<div class="card-body">';
               html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
               html+='<div class="product__price custom-text-price" id="price">';

@@ -225,9 +225,7 @@
           </ul>
         </div>
         <div id="main-img" style="cursor: pointer;">
-          @foreach($anhchinh->anh as $anh)
-            <img src="{{asset($anh->link)}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{asset($anh->link)}}">
-          @endforeach
+            <img src="{{ asset($anhchinh->getImage() ?? '/img/product/no-image.png' )}}" class="big-img" alt="ảnh chính" id="img-main" xoriginal="{{ asset($anhchinh->getImage() ?? '/img/product/no-image.png' )}}">
         </div>
       </div>
       <div class="col-lg-6 col-12">
@@ -624,9 +622,9 @@
       <a href="{{route('product_detail',['id'=>$sanphamlienquan->id])}}" class="product__new-item">
         <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
           <div class="card" style="width: 100%">
-            @foreach($sanphamlienquan->anh as $anh)
-              <img class="card-img-top" src="{{asset($anh->link)}}" alt="Card image cap">
-            @endforeach
+           
+              <img class="card-img-top" src="{{ asset($sanphamlienquan->getImage() ?? '/img/product/no-image.png' )}}" alt="Card image cap">
+         
             <div class="card-body">
               <h5 class="card-title">{{$sanphamlienquan['ten_san_pham']}}</h5>
               <div class="product__price" id="price">
