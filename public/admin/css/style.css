@@ -12,6 +12,9 @@ html, body {
 .mt-8 {
   margin-top: 8px;
 }
+.mr-8 {
+  margin-right: 8px;
+}
 .nav li a {
   padding: 8px 16px;
   display: block;

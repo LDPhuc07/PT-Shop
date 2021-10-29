@@ -23,6 +23,16 @@
   .search-txt {
     padding: 4px 6px 4px 6px;
   }
+  .display-flex {
+    display: flex;
+  }
+  .sanpham-chitiet {
+    padding: 0 106px 0;
+  }
+  .pro-head {
+    width: 45px;
+    height: 45px;
+  } 
   @media(max-width: 767px) {
     .search {
       width: calc( 100% - 96px);
@@ -30,7 +40,10 @@
     }
     .sanpham-chitiet {
       padding: unset;
-    } 
+    }
+    .head-add-pro {
+      padding: unset;
+    }
   }
 </style>
 <div class="content-wrapper">
@@ -39,7 +52,14 @@
       <i class="fas fa-chevron-left"></i>
       <span>Quay lại danh sách sản phẩm</span>
     </a>
-    <h3>{{ $sanpham->ten_san_pham}}</h3>
+    <div class="display-flex mt-8">
+      @foreach($sanpham->anh as $anh)
+        @if($anh->anhchinh == 1)
+          <img class="avt-head mr-8 pro-head" src="{{asset($anh->link)}}" alt="anh"></td>
+        @endif
+      @endforeach
+      <h3 style="text-transform: uppercase; verticle-align: middle;">{{ $sanpham->ten_san_pham}}</h3>
+    </div>
     <div class="add-pro">
       <a href="{{route('chitietsanpham.create',$id)}}">
         <i class="fas fa-plus"></i>

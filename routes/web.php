@@ -17,6 +17,7 @@ Route::get('/admin/login', 'TaiKhoanController@getDangNhapAdmin')->name('admin.a
 Route::post('/admin/login', 'TaiKhoanController@postDangNhapAdmin');
 Route::get('/admin/sign-up','TaiKhoanController@getDangKyAdmin')->name('admin.accounts.sign-up');
 Route::post('/admin/sign-up','TaiKhoanController@postDangKyAdmin');
+Route::post('/admin/sign-up/validate','TaiKhoanController@validateSignUpAdmin');
 Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], function() {
     Route::get('/dashboards', 'DashboardController@index')->name('admin.dashboards');
     Route::post('/dashboards/filter-by-date','DashboardController@filterByDate');
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('/accounts/change-password/{id}', 'TaiKhoanController@getDoiMatKhauAdmin')->name('admin.changPassword');
     Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
     Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
-    Route::put('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
+    Route::post('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::get('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
     Route::get('/logout', 'TaiKhoanController@dangXuatAdmin')->name('admin.accounts.logout'); 
     
@@ -163,3 +164,5 @@ Route::get('/dislike-product-detail-splq/{sp_id}/{tk_id}','PageController@dislik
 Route::get('/rating','PageController@indexRating');
 Route::get('/rating/create/{sao}/{id}/{sanpham}','PageController@rating');
 
+Route::get('my-form','TaiKhoanController@myform');
+Route::post('my-form','TaiKhoanController@myformPost');

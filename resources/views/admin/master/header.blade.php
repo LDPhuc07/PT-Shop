@@ -44,6 +44,9 @@
     </ul>
 </div>  --}}
 <style>
+    .no-img {
+        border: 1px solid #666;
+    }
     .avt-head {
         width: 35px;
         height: 35px;
@@ -62,7 +65,12 @@
     @if(Auth::check() and Auth::user()->admin != 0) 
         <div class="header-btn account-btn">
             <button style="padding: 14px;height: 54px" id="account-nav">
-                <img class="avt-head" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh"></td>
+                @if(Auth::user()->anh_dai_dien == null)
+                <img class="avt-head no-img" src="https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png" alt="anh">
+                @else
+                <img class="avt-head" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh">
+                @endif
+                
                 {{ Auth::user()->ho_ten }}
             </button>
             <ul id="account-popover" class="popover account-popover">

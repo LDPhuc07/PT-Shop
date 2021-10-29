@@ -86,6 +86,7 @@
       var loadfile = function(event){
         var img = document.getElementById('imgsp');
         img.src = URL.createObjectURL(event.target.files[0]);
+        console.log($("input[name='link']").val());
     }
     </script>
 @endsection
