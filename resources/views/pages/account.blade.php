@@ -7,6 +7,46 @@
 @endsection
 @section('content')
 <style>
+  .error-msg {
+      font-size: 13px;
+      color: red;
+  }
+  .error-msg i {
+      margin-right: 2px;
+  }
+  .border-error {
+      border: 1px solid red;
+  }
+  .head-product-picture .del-img {
+      margin-left: 8px;
+      color: #8f8888;
+      font-size: 13px;
+      float: right;
+  }
+  .head-product-picture .del-img:hover {
+      border-bottom: 1px solid #8f8888; 
+      text-decoration: none;
+  }
+  .display-none {
+      display: none;
+  }
+  .head-product-picture label {
+    font-size: 14px; 
+    cursor: pointer;
+    float: right;
+    color: blue;
+    margin: 0;
+  }
+  .head-product-picture label:hover {
+    border-bottom: 1px solid blue; 
+  }
+  .img-col {
+    text-align: center;
+  }
+  .alert-success {
+    font-size: 18px;
+    padding: 1.75rem 2.25rem;
+  }
   /* Mobile & tablet  */
   @media (max-width: 1023px) {
    .detial__my-profile {
@@ -68,13 +108,17 @@
               </div>
           </div>
           <div class="col-lg-8 col-12">
+
             <div class="detial__my-profile ">
               <div class="heading-edit-account">
                 <h2>Hồ sơ của tôi</h2>
+                <div class=" alert-block">
+      
+                </div>
                 @foreach($arrays as $account)
-                <form action="{{ route('accounts.update',$account->id) }}" method="POST" enctype="multipart/form-data">
-                  @method('PUT')
+                <form id="form">
                   @csrf
+                  <input type="text" value="{{ $account->id }}" name="id" hidden>
                   <div class="form-group">
                     <label for="fullname" class="form-label">Tên đầy đủ</label>
                     <input id="fullname" name="ho_ten" type="text" placeholder="VD: Quốc Trung" class="form-control" value="{{ $account->ho_ten }}">
@@ -139,18 +183,32 @@
                       </style>
                     @endif
                   </div>
-                  <div class="form-group">
-                    <label for="avatar" class="form-label">Cập nhật avatar</label>
-                    <input id="avatar" name="anh_dai_dien" type="file" onchange="loadfile(event)" class="form-control">
-                    <span class="form-message"></span>
-                  </div>
-                  <div class="form-group">
+                  
                     @if($account->anh_dai_dien == null)
-                      <img src="{{asset('img/no-image.png')}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                      <div class="form-group head-product-picture">
+                        <span class="form-label">Cập nhật avatar</span>
+                        <a href="javascript:void(0)" onclick="delImg()" class="del-img display-none">Xóa ảnh</a>
+                        <input id="avatar" name="anh_dai_dien" type="file" onchange="loadfile(event)" class="form-control" hidden>
+                        <label for="avatar">Chọn ảnh</label>
+                        <span class="form-message"></span>
+                      </div>
+                      <div class="form-group img-col">
+                          <img src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                      </div>
                     @else
-                      <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                      <div class="form-group head-product-picture">
+                        <span class="form-label">Cập nhật avatar</span>
+                        <a href="javascript:void(0)" onclick="delImg()" class="del-img">Xóa ảnh</a>
+                        <input id="avatar" name="anh_dai_dien" value="{{ $account->anh_dai_dien }}" type="file" onchange="loadfile(event)" class="form-control" hidden>
+                        <label for="avatar">Chọn ảnh</label>
+                        <span class="form-message"></span>
+                      </div>
+                      <div class="form-group img-col">
+                          <img src="{{asset(getLink('anh-dai-dien',$account->anh_dai_dien))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
+                      </div>
                     @endif
-                  </div>
+                    
+                  
                   <button class="form-submit btn-blocker">Lưu</button>
                 </form>
                 @endforeach
@@ -163,8 +221,89 @@
       var loadfile = function(event){
         var img = document.getElementById('imgsp');
         img.src = URL.createObjectURL(event.target.files[0]);
-    }
+        if($(".del-img").hasClass("display-none")) {
+          $(".del-img").removeClass("display-none");
+        }
+      }
+      function delImg () {
+        $("input[name='anh_dai_dien']").val("");
+        var src1 = 'https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png';
+        $("#imgsp").attr("src", src1);
+        $(".del-img").addClass("display-none");
+      }
     </script>
+    <script type="text/javascript">
+
+      $(function(){
+  
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
+  
+        $("#form").submit(function(e){
+            e.preventDefault();
+            var formData = new FormData($("#form")[0]);
+
+            $.ajax({
+                url:"accounts/" + $("input[name='id']").val(),
+                data:formData,
+                processData:false,
+                contentType:false,
+                type:"POST",
+                success:function(data){
+                  if($.isEmptyObject(data.error)){
+                    var _html = `<button type="button" class="close" data-dismiss="alert">×</button>`;
+                        _html += `<strong>` + data.success + `</strong>`;
+                    jQuery(".alert-block").append(_html);
+                    $(".alert-block").addClass("alert alert-success");
+                  
+                  }else{
+                      if(!$.isEmptyObject(data.error.ho_ten)) {
+                        printErrorMsg (data.error.ho_ten, 'ho_ten');
+                      }
+                      if(!$.isEmptyObject(data.error.email)) {
+                        printErrorMsg (data.error.email, 'email');
+                      }
+                      if(!$.isEmptyObject(data.error.mat_khau)) {
+                        printErrorMsg (data.error.mat_khau, 'mat_khau');
+                      }
+                      if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
+                        printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
+                      }
+                      if(!$.isEmptyObject(data.error.so_dien_thoai)) {
+                        printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
+                      }
+                      if(!$.isEmptyObject(data.error.anh_dai_dien)) {
+                        var _html = '<span class="error-msg">';
+                            _html += '<i class="fas fa-times"></i>';
+                            _html += data.error.anh_dai_dien;
+                            _html += '</span>';
+                        jQuery(".img-col").append(_html);
+                      }
+                  }
+                   
+                }
+            })
+        });
+  
+    });
+    function printErrorMsg (msg, name) {
+      var _html = '<span class="error-msg">';
+          _html += '<i class="fas fa-times"></i>';
+          _html += msg;
+          _html += '</span>';
+      jQuery(`input[name='${name}']`).after(_html);
+      $(`input[name='${name}']`).addClass("border-error");
+    }
+  
+    function removeErrorMsg(){
+        $(".error-msg").remove();
+        $("input").removeClass("border-error");
+        $(".del-img").addClass("display-none");
+    }
+  </script>
 @endsection
 @section('js')
 

@@ -138,23 +138,57 @@ class TaiKhoanController extends Controller
     public function getDangKy() {
         return view('pages.sign_up');
     }
-    public function postDangKy(DangKyRequest $requests) {
-        $newAccount=new TaiKhoan();
-        $newAccount->ho_ten = $requests->ho_ten;
-        $newAccount->email = $requests->email;
-        $newAccount->password = Hash::make($requests->mat_khau);
-        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
-            $img = $requests->anh_dai_dien;
-            $newAccount->anh_dai_dien=$img->getClientOriginalName();
-            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+    public function postDangKy(Request $requests) {
+
+        $rule = [
+            'ho_ten' => 'required|max:50',
+            'email' => 'required|email|unique:tai_khoans,email|max:50',
+            'mat_khau' => 'required|min:6',
+            'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
+            'so_dien_thoai' => 'required|digits:10|numeric|unique:tai_khoans,so_dien_thoai',
+            'anh_dai_dien' => 'nullable|mimes:jpg,jpeg,png',
+        ];
+        $messages = [
+            'ho_ten.required' => 'Vui lòng nhập họ và tên',
+            'ho_ten.max' => 'Họ và tên không quá 50 ký tự',
+            'email.required' => 'Vui lòng nhập email',
+            'email.email' => 'Email không hợp lệ',
+            'email.unique' => 'Email đã đã được đăng ký',
+            'email.max' => 'Email không quá 50 ký tự',
+            'mat_khau.required' => 'Vui lòng nhập mật khẩu',
+            'mat_khau.min' => 'Mật khẩu phải từ 6 ký tự trở lên',
+            'nhap_lai_mat_khau.required_with' => 'Nhập lại mật khẩu không hợp lệ',
+            'nhap_lai_mat_khau.same' => 'Nhập lại mật khẩu không hợp lệ',
+            'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+            'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+            'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
+            'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký',
+            'anh_dai_dien.mimes' => 'Ảnh đại diện không hợp lệ',
+        ];
+
+        $validator = Validator::make($requests->all(),$rule,$messages);
+
+
+        if ($validator->passes()) {
+            $newAccount=new TaiKhoan();
+            $newAccount->ho_ten = $requests->ho_ten;
+            $newAccount->email = $requests->email;
+            $newAccount->password = Hash::make($requests->mat_khau);
+            if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+                $img = $requests->anh_dai_dien;
+                $newAccount->anh_dai_dien=$img->getClientOriginalName();
+                $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+            }
+            else
+            {
+                $newAccount->anh_dai_dien = null;
+            }
+            $newAccount->admin = false;
+            $newAccount->save();
+            return response()->json(['success'=>'Đăng ký thành công']);
         }
-        else
-        {
-            $newAccount->anh_dai_dien='no-avatar.jpg';
-        }
-        $newAccount->admin = false;
-        $newAccount->save();
-        return redirect()->route('accounts.login');
+        
+        return response()->json(['error'=>$validator->errors()]);
     }
     public function postDangKyAdmin(Request $request) {
 
@@ -181,6 +215,7 @@ class TaiKhoanController extends Controller
             'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
             'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
             'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký',
+            'anh_dai_dien.mimes' => 'Ảnh đại diện không hợp lệ',
         ];
 
         $validator = Validator::make($request->all(),$rule,$messages);
@@ -266,7 +301,7 @@ class TaiKhoanController extends Controller
         $messages = [
             'ho_ten.required' => 'Vui lòng nhập họ và tên',
             'ho_ten.max' => 'Họ và tên không quá 50 ký tự',
-            'anh_dai_dien.mimes' => 'Hình ảnh không hợp lệ'
+            'anh_dai_dien.mimes' => 'Ảnh đại diện không hợp lệ'
         ];
         // $requests->validate([
         //     'ho_ten' => 'required|max:50',
@@ -297,9 +332,10 @@ class TaiKhoanController extends Controller
                 $validator1 = Validator::make($requests->all(),$rule1,$messages1);
 
                 if ($validator1->passes()) {
+
                     $new->email = $requests->email;
                 } else {
-                return response()->json(["error"=>$validator1->errors()]);
+                    return response()->json(["error"=>$validator1->errors()]);
                 }
                 // requests->validate([
                 //     'email' => 'required|email|unique:tai_khoans,email|max:50'
@@ -342,6 +378,8 @@ class TaiKhoanController extends Controller
                 $img = $requests->anh_dai_dien;
                 $new->anh_dai_dien=$img->getClientOriginalName();
                 $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+            } else {
+                $new->anh_dai_dien = null;
             }
             $new->save();
             return response()->json(["success"=>"Câp nhật tài khoản thành công"]);
@@ -350,39 +388,71 @@ class TaiKhoanController extends Controller
         }
     }
     public function updateAccount(Request $requests, $id) {
-        $requests->validate([
-            'ho_ten' => 'required'
-        ],[
-            'ho_ten.required' => 'Vui lòng nhập họ và tên'
-        ]);
-        $new = TaiKhoan::find($id);
-        $new->ho_ten = $requests->ho_ten;
-        if(Auth::user()->email != $requests->email) {
-            $requests->validate([
-                'email' => 'required|email|unique:tai_khoans,email'
-            ],[
-                'email.required' => 'Vui lòng nhập email',
-                'email.email' => 'Email không hợp lệ',
-                'email.unique' => 'Email đã được đăng ký'
-            ]);
-            $new->email = $requests->email;
+        $rule = [
+            'ho_ten' => 'required|max:50',
+            'anh_dai_dien' => 'nullable|mimes:jpeg,jpg,png'
+        ];
+        $messages = [
+            'ho_ten.required' => 'Vui lòng nhập họ và tên',
+            'ho_ten.max' => 'Họ và tên không quá 50 ký tự',
+            'anh_dai_dien.mimes' => 'Hình ảnh không hợp lệ'
+        ];
+        $validator = Validator::make($requests->all(),$rule,$messages);
+
+        if ($validator->passes()) {
+            $new = TaiKhoan::find($id);
+            $new->ho_ten = $requests->ho_ten;
+            if(Auth::user()->email != $requests->email) {
+                $rule1 = [
+                    'email' => 'required|email|unique:tai_khoans,email|max:50'
+                ];
+                $messages1 = [
+                    'email.required' => 'Vui lòng nhập email',
+                    'email.email' => 'Email không hợp lệ',
+                    'email.unique' => 'Email đã được đăng ký',
+                    'email.max' => 'Email không quá 50 ký tự',
+                ];
+
+                $validator1 = Validator::make($requests->all(),$rule1,$messages1);
+                if ($validator1->passes()) {
+                    $new->email = $requests->email;
+                } else {
+                    return response()->json(["error"=>$validator1->errors()]);
+                }
+            }
+            if(Auth::user()->so_dien_thoai != $requests->so_dien_thoai) {
+                $rule2 = [
+                    'so_dien_thoai' => 'required|digits:10|numeric|unique:tai_khoans,so_dien_thoai'
+                ];
+                $messages2 = [
+                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                    'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+                    'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
+                    'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký',
+                ];
+
+                $validator2 = Validator::make($requests->all(),$rule2,$messages2);
+
+                if ($validator2->passes()) {
+                    $new->so_dien_thoai = $requests->so_dien_thoai;
+                } else {
+                    return response()->json(["error"=>$validator2->errors()]);
+                }
+            }
+            $new->dia_chi = $requests->dia_chi;
+            if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+                $img = $requests->anh_dai_dien;
+                $new->anh_dai_dien=$img->getClientOriginalName();
+                $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+            } else {
+                $new->anh_dai_dien = null;
+            }
+            $new->save();
+            return response()->json(["success"=>"Câp nhật tài khoản thành công"]);
         }
-        if(Auth::user()->so_dien_thoai != $requests->so_dien_thoai) {
-            $requests->validate([
-                'so_dien_thoai' => 'unique:tai_khoans,so_dien_thoai'
-            ],[
-                'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký'
-            ]);
-            $new->so_dien_thoai = $requests->so_dien_thoai;
-        }
-        $new->dia_chi = $requests->dia_chi;
-        if($requests->hasFile('anh_dai_dien')){// neu anh co ton
-            $img = $requests->anh_dai_dien;
-            $new->anh_dai_dien=$img->getClientOriginalName();
-            $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
-        }
-        $new->save();
-        return redirect()->route('index');
+
+        return response()->json(["error"=>$validator->errors()]);
+        
     }
     public function quanLyTaiKhoan($id) {
         $array = ['arrays'=>TaiKhoan::where('id',$id)->get()];

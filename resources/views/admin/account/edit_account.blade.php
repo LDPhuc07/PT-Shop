@@ -2,25 +2,25 @@
 @section('content')
 <style>
   .error-msg {
-    font-size: 13px;
-    color: red;
-}
-.error-msg i {
-    margin-right: 2px;
-}
-.border-error {
-    border: 1px solid red;
-}
-  .head-product-picture .del-img {
-    margin-left: 8px;
-    color: #8f8888;
-}
-.head-product-picture .del-img:hover {
-    border-bottom: 1px solid #8f8888; 
-}
-.display-none {
-    display: none;
-}
+      font-size: 13px;
+      color: red;
+  }
+  .error-msg i {
+      margin-right: 2px;
+  }
+  .border-error {
+      border: 1px solid red;
+  }
+    .head-product-picture .del-img {
+      margin-left: 8px;
+      color: #8f8888;
+  }
+  .head-product-picture .del-img:hover {
+      border-bottom: 1px solid #8f8888; 
+  }
+  .display-none {
+      display: none;
+  }
   .add-product-form {
     width: 60%;
     margin-left: auto;
@@ -101,6 +101,7 @@
           <div class="product-info">
             <div class="row">
               <div class="col-md-6">
+                <input class="textbox"  type="text" name="id" value="{{ $array->id }}" hidden>
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Họ và tên</label>
                   <input class="textbox" style="    width: 100%;" type="text" name="ho_ten" value="{{ $array->ho_ten }}" placeholder="Nhập họ và tên">
@@ -245,14 +246,14 @@
 
       $("#form").submit(function(e){
           e.preventDefault();
-          var formData = new FormData($("form")[0]);
+          var formData = new FormData($("#form")[0]);
           if($("input[name='anh_dai_dien']").val() != "" && $(".del-img").hasClass("display-none")) {
               $(".del-img").removeClass("display-none");
           } else {
               $(".del-img").addClass("display-none");
           }
           $.ajax({
-              url:"admin/accounts/2",
+              url:"admin/accounts/" + $("input[name='id']").val(),
               data:formData,
               processData:false,
               contentType:false,
