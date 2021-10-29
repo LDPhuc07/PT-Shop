@@ -31,7 +31,7 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('/accounts/lock/{id}', 'TaiKhoanController@lock')->name('admin.lockAccounts');
     Route::get('/accounts/unlock/{id}', 'TaiKhoanController@unlock')->name('admin.unlockAccounts');
     Route::get('/accounts/change-password/{id}', 'TaiKhoanController@getDoiMatKhauAdmin')->name('admin.changPassword');
-    Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
+    Route::post('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhauAdmin');
     Route::get('/accounts/{id}/edit','TaiKhoanController@editAccountAdmin')->name('admin.accounts.edit');
     Route::post('/accounts/{id}','TaiKhoanController@updateAccountAdmin')->name('admin.accounts.update');
     Route::get('/accounts/search','TaiKhoanController@search')->name('admin.accounts.search');
@@ -130,7 +130,7 @@ Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');
 Route::get('/accounts/change-password/{id}','TaiKhoanController@DoiMatKhau')->name('accounts.getChangePassword');
-Route::put('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
+Route::post('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')->name('account.changePassword');
 Route::post('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');

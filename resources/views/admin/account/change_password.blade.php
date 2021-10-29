@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+    .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
     .alert-info {
         width: 430px;
         margin-left: auto;
@@ -8,6 +18,19 @@
     }
     .form-login {
         padding-top: 8px;
+    }
+    .cls-stay {
+        font-size: 18px;
+    }
+    .cls-stay a {
+        color: #414c56;
+    }
+    .cls-logout {
+        font-size: 18px;
+        margin-left: 8px;
+    }
+    .cls-stay:hover a {
+        color: black;
     }
     @media(max-width: 767px) {
         .head-add-pro {
@@ -28,71 +51,36 @@
             </a>
             <h3>Đổi mật khẩu</h3>
         </div>
-          @include('admin.mess.message')
+        <div class="alert-block">
+            
+        </div>
         <div class="form-login">
             <div class="container-form-login">
-                <form method="POST">
-                    @method('put')
+                <form id="form">
                     @csrf
                     <div style="position: relative" class="login-txt mb-16">
                         <input class="textbox" style="    width: 100%;" name="mat_khau_cu" type="password" placeholder="Mật khẩu cũ" autofocus>
                         <a id="mat_khau_cu" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-                        @if($errors->has('mat_khau_cu'))
-                            <span class="error-msg">
-                                <i class="fas fa-times"></i>
-                                {{ $errors->first('mat_khau_cu') }}
-                            </span>
-                            <style>
-                                .login-txt input[name='mat_khau_cu'] {
-                                    border: 1px solid red;
-                                }
-                            </style>
-                        @endif
+
                     </div>
                     <div class="login-txt password-txt mb-16">
                         <input class=" textbox" style="    width: 100%;" name="mat_khau_moi" type="password" placeholder="Mật khẩu mới">
                         <a id="mat_khau_moi" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-                        @if($errors->has('mat_khau_moi'))
-                            <span class="error-msg">
-                                <i class="fas fa-times"></i>
-                                {{ $errors->first('mat_khau_moi') }}
-                            </span>
-                            <style>
-                                .login-txt input[name='mat_khau_moi'] {
-                                    border: 1px solid red;
-                                }
-                            </style>
-                        @endif
+
                     </div>
                     <div style="position: relative" class="login-txt password-txt mb-16">
                         <input class="textbox" style="    width: 100%;" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu mới">
                         <a id="nhap_lai_mat_khau" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-                        @if($errors->has('nhap_lai_mat_khau'))
-                            <span class="error-msg">
-                                <i class="fas fa-times"></i>
-                                {{ $errors->first('nhap_lai_mat_khau') }}
-                            </span>
-                            <style>
-                                .login-txt input[name='nhap_lai_mat_khau'] {
-                                    border: 1px solid red;
-                                }
-                            </style>
-                        @endif
+
                     </div>
                     <div class="login-txt mb-16">
-                        @if(session('thong_bao'))
-                            <span class="error-msg">
-                                <i class="fas fa-times"></i>
-                                {{ session('thong_bao') }}
-                            </span>
-                        @endif
-                        <button class="btn login-btn">Đổi mật khẩu</button>
+                        <button id="change_pass" class="btn login-btn">Đổi mật khẩu</button>
                     </div>
                 </form>
             </div>
@@ -125,5 +113,77 @@
                 }
             }
         });
+    </script>
+    <script type="text/javascript">
+
+
+        $(function(){
+    
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+    
+            $("#form").submit(function(e){
+                e.preventDefault();
+                removeErrorMsg();
+                var formData = new FormData($("#form")[0]);
+                $.ajax({
+                    url:"/accounts/change-password/" + {{ Auth::user()->id }},
+                    data:formData,
+                    processData:false,
+                    contentType:false,
+                    type:"POST",
+                    success:function(data){
+                        if(!$.isEmptyObject(data.success)) {
+                            var _html = `<button type="button" class="close cls-logout" ><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></button>`;
+                                _html += `<button type="button" class="close cls-stay"><a href="{{ route('admin.dashboards') }}">Ở lại</a></button>`;
+                                _html += `<strong>` + data.success + `</strong>`;
+                            jQuery(".alert-block").append(_html);
+                            $(".alert-block").addClass("alert alert-info");
+                            $("input").val("");
+                        } 
+                        if(!$.isEmptyObject(data.error)) {
+                            if(!$.isEmptyObject(data.error.mat_khau_cu)) {
+                                printErrorMsg (data.error.mat_khau_cu, 'mat_khau_cu');
+                            }
+                            if(!$.isEmptyObject(data.error.mat_khau_moi)) {
+                                printErrorMsg (data.error.mat_khau_moi, 'mat_khau_moi');
+                            }
+                            if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
+                                printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
+                                $("input[name='mat_khau_moi']").val("");
+                                $("input[name='nhap_lai_mat_khau']").val("");
+                            }
+                        }
+                        if(!$.isEmptyObject(data.errorAll)) {
+                            var _html = '<span class="error-msg">';
+                                _html += '<i class="fas fa-times"></i>';
+                                _html += data.errorAll;
+                                _html += '</span>';
+                            jQuery("#change_pass").before(_html);
+                            $("input").val("");
+                        }
+                       
+                    }
+                })
+            });
+            
+        });
+    
+        function printErrorMsg (msg, name) {
+            var _html = '<span class="error-msg">';
+                _html += '<i class="fas fa-times"></i>';
+                _html += msg;
+                _html += '</span>';
+            jQuery(`input[name='${name}']`).after(_html);
+            $(`input[name='${name}']`).addClass("border-error");
+          }
+
+          function removeErrorMsg(){
+              $(".error-msg").remove();
+              $("input").removeClass("border-error");
+          }
     </script>
 @endsection

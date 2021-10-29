@@ -7,6 +7,38 @@
 @endsection
 @section('content')
 <style>
+  .error-msg {
+      font-size: 13px;
+      color: red;
+  }
+  .error-msg i {
+      margin-right: 2px;
+  }
+  .border-error {
+      border: 1px solid red;
+  }
+  .alert {
+    padding: 1.75rem 2.25rem;
+  }
+  .alert-info strong {
+    font-size: 18px;
+  }
+  .form-login {
+      padding-top: 8px;
+  }
+  .cls-stay {
+      font-size: 18px;
+  }
+  .cls-stay a {
+      color: #414c56;
+  }
+  .cls-logout {
+      font-size: 18px;
+      margin-left: 8px;
+  }
+  .cls-stay:hover a {
+      color: black;
+  }
   /* Mobile & tablet  */
   @media (max-width: 1023px) {
    .detail__confirm-password {
@@ -73,9 +105,11 @@
               <div class="heading-edit-password">
                 <h2>Đổi lại mật khẩu</h2>
               </div>
+              <div class="alert-block">
+            
+              </div>
               @foreach($arrays as $account)
-              <form action="{{ route('account.changePassword',$account->id) }}" method="POST">
-                @method('PUT')
+              <form id="form">
                 @csrf
                 <div class="form-group form-group-old-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -85,17 +119,7 @@
                   </div>
                   <input id="password" name="mat_khau_cu" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>
-                  @if($errors->has('mat_khau_cu'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('mat_khau_cu') }}
-                      </span>
-                      <style>
-                          input[name='mat_khau_cu'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                  @endif
+                  
                 </div>
                 <div class="form-group form-group-new-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -105,17 +129,7 @@
                   </div>
                   <input id="password-new" name="mat_khau_moi" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>
-                  @if($errors->has('mat_khau_moi'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('mat_khau_moi') }}
-                      </span>
-                      <style>
-                          input[name='mat_khau_moi'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                  @endif
+                  
                 </div>
                 <div class="form-group form-group-confirm-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -125,19 +139,9 @@
                   </div>
                   <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
                   <span class="form-message"></span>
-                  @if($errors->has('nhap_lai_mat_khau'))
-                      <span style="font-size: 13px; color:red">
-                          <i class="fas fa-times"></i>
-                          {{ $errors->first('nhap_lai_mat_khau') }}
-                      </span>
-                      <style>
-                          input[name='nhap_lai_mat_khau'] {
-                              border: 1px solid red;
-                          }
-                      </style>
-                  @endif
+                  
                 </div>
-                <button class="form-submit submit-change-pass btn-blocker">Lưu</button>
+                <button id="change_pass" class="form-submit submit-change-pass btn-blocker">Lưu</button>
               </form>
               @endforeach
             </div>
@@ -236,4 +240,76 @@
       });
     };
   </script>  --}}
+  <script type="text/javascript">
+
+
+    $(function(){
+
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
+
+        $("#form").submit(function(e){
+            e.preventDefault();
+            removeErrorMsg();
+            var formData = new FormData($("#form")[0]);
+            $.ajax({
+                url:"/accounts/change-password/" + {{ Auth::user()->id }},
+                data:formData,
+                processData:false,
+                contentType:false,
+                type:"POST",
+                success:function(data){
+                    if(!$.isEmptyObject(data.success)) {
+                        var _html = `<button type="button" class="close cls-logout" ><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></button>`;
+                            _html += `<button type="button" class="close cls-stay"><a href="">Ở lại</a></button>`;
+                            _html += `<strong>` + data.success + `</strong>`;
+                        jQuery(".alert-block").append(_html);
+                        $(".alert-block").addClass("alert alert-info");
+                        $("input").val("");
+                    } 
+                    if(!$.isEmptyObject(data.error)) {
+                        if(!$.isEmptyObject(data.error.mat_khau_cu)) {
+                            printErrorMsg (data.error.mat_khau_cu, 'mat_khau_cu');
+                        }
+                        if(!$.isEmptyObject(data.error.mat_khau_moi)) {
+                            printErrorMsg (data.error.mat_khau_moi, 'mat_khau_moi');
+                        }
+                        if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
+                            printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
+                            $("input[name='mat_khau_moi']").val("");
+                            $("input[name='nhap_lai_mat_khau']").val("");
+                        }
+                    }
+                    if(!$.isEmptyObject(data.errorAll)) {
+                        var _html = '<span class="error-msg">';
+                            _html += '<i class="fas fa-times"></i>';
+                            _html += data.errorAll;
+                            _html += '</span>';
+                        jQuery("#change_pass").before(_html);
+                        $("input").val("");
+                    }
+                   
+                }
+            })
+        });
+        
+    });
+
+    function printErrorMsg (msg, name) {
+        var _html = '<span class="error-msg">';
+            _html += '<i class="fas fa-times"></i>';
+            _html += msg;
+            _html += '</span>';
+        jQuery(`input[name='${name}']`).after(_html);
+        $(`input[name='${name}']`).addClass("border-error");
+      }
+
+      function removeErrorMsg(){
+          $(".error-msg").remove();
+          $("input").removeClass("border-error");
+      }
+</script>
 @endsection

@@ -70,59 +70,91 @@ class TaiKhoanController extends Controller
     public function getDangNhap() {
         return view('pages.login');
     }
-    public function postDangNhapAdmin(DangNhapRequest $requests) {
+    public function postDangNhapAdmin(Request $requests) {
+        $rule = [
+            'email' => 'required',
+            'mat_khau' => 'required'
+        ];
+        $messages = [
+            'email.required' => 'Vui lòng nhập email',
+            'mat_khau.required' => 'Vui lòng nhập mật khẩu'
+        ];
+
+        $validator = Validator::make($requests->all(),$rule,$messages);
         $email = $requests->email;
         $password = $requests->mat_khau;
         $remember = $requests->remember;
-        if(!empty($remember)) {
-            Session::put('email',$requests->email);
-            Session::put('mat_khau',$requests->mat_khau);
-            Session::put('remember',$remember);
-        }
-        else {
-            if(Session::has('email')) {
-                Session::forget('email');
-            }
-            if(Session::has('mat_khau')) {
-                Session::forget('mat_khau');
-            }
-            if(Session::has('remember')) {
-                Session::forget('remember');
-            }
-        }
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => true],$remember)) {
-            if(Auth::user()->trang_thai == 1) {
-                return redirect('admin/dashboards');
+
+        if ($validator->passes()) {
+            if(!empty($remember)) {
+                Session::put('email',$requests->email);
+                Session::put('mat_khau',$requests->mat_khau);
+                Session::put('remember',$remember);
             }
             else {
-                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+                if(Session::has('email')) {
+                    Session::forget('email');
+                }
+                if(Session::has('mat_khau')) {
+                    Session::forget('mat_khau');
+                }
+                if(Session::has('remember')) {
+                    Session::forget('remember');
+                }
+            }
+            if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => true],$remember)) {
+                if(Auth::user()->trang_thai == 1) {
+                    return response()->json(['success'=>'Đăng ký thành công']);
+                }
+                else {
+                    return response()->json(['errorAll'=>'Tài khoản đã bị khóa']);
+                }
+            }
+            else {
+                return response()->json(['errorAll'=>'Email hoặc mật khẩu không chính xác']); 
             }
         }
-        else {
-            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
-        }
+
+        return response()->json(['error'=>$validator->errors()]);
+        
     }
-    public function postDangNhap(DangNhapRequest $requests) {
+    public function postDangNhap(Request $requests) {
+        $rule = [
+            'email' => 'required',
+            'mat_khau' => 'required'
+        ];
+        $messages = [
+            'email.required' => 'Vui lòng nhập email',
+            'mat_khau.required' => 'Vui lòng nhập mật khẩu'
+        ];
+
+        $validator = Validator::make($requests->all(),$rule,$messages);
         
         $email = $requests->email;
         $password = $requests->mat_khau;
         $remember = $requests->remember;
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
-            if(Auth::user()->trang_thai == 1) {
-                if(Session::has('url previous')) {
-                    $url_dn = Session::get('url previous');
-                    Session::forget('url previous');
-                    return redirect($url_dn);
+
+        if ($validator->passes()) {
+            if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => false],$remember)) {
+                if(Auth::user()->trang_thai == 1) {
+                    if(Session::has('url previous')) {
+                        $url_dn = Session::get('url previous');
+                        Session::forget('url previous');
+                        return redirect($url_dn);
+                    }
+                    return response()->json(['success'=>'Đăng nhập thành công']);
                 }
-                return redirect()->route('index');
+                else {
+                    return response()->json(['errorAll'=>'Tài khoản đã bị khóa']);
+                }
             }
             else {
-                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
+                return response()->json(['errorAll'=>'Email hoặc mật khẩu không chính xác']); 
             }
         }
-        else {
-            return redirect()->back()->with('thong_bao','Email hoặc mật khẩu không chính xác'); 
-        }
+
+        return response()->json(['error'=>$validator->errors()]);
+        
     }
     public function dangXuatAdmin() { 
         Auth::logout();
@@ -264,30 +296,69 @@ class TaiKhoanController extends Controller
     public function getDoiMatKhauAdmin() {
         return view('admin.account.change_password');
     }
-    public function putDoiMatKhauAdmin(DoiMatKhauRequest $requests, $id) {
-        if(Auth::attempt(['email' => Auth::user()->email, 'password' => $requests->mat_khau_cu])) {
-            if(Auth::user()->trang_thai == 1) {
-                $new = TaiKhoan::find($id);
-                $new->password = Hash::make($requests->mat_khau_moi);
-                $new->save();
-                return redirect()->back()->with('info_doi_mk','Đổi mật khẩu thành công');
+    public function putDoiMatKhauAdmin(Request $requests, $id) {
+
+        $rule = [
+            'mat_khau_cu' => 'required',
+            'mat_khau_moi' => 'required|min:6',
+            'nhap_lai_mat_khau' => 'required_with:mat_khau_moi|same:mat_khau_moi'
+        ];
+        $messages = [
+            'mat_khau_cu.required' => 'Vui lòng nhập mật khẩu cũ',
+            'mat_khau_moi.required' => 'Vui lòng nhập mật khẩu mới',
+            'mat_khau_moi.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+            'nhap_lai_mat_khau.required_with' => 'Vui lòng nhập lại mật khẩu',
+            'nhap_lai_mat_khau.same' => 'Nhập lại mật khẩu không khớp',
+        ];
+
+        $validator = Validator::make($requests->all(),$rule,$messages);
+
+        if ($validator->passes()) {
+            if(Auth::attempt(['email' => Auth::user()->email, 'password' => $requests->mat_khau_cu])) {
+                if(Auth::user()->trang_thai == 1) {
+                    $new = TaiKhoan::find($id);
+                    $new->password = Hash::make($requests->mat_khau_moi);
+                    $new->save();
+                    return response()->json(['success'=>'Đăng nhập thành công']);
+                }
+                else {
+                    return response()->json(['errorAll'=>'Tài khoản đã bị khóa']);
+                }
+            } else {
+                return response()->json(['errorAll'=>'Mật khẩu không đúng']);
             }
-            else {
-                return redirect()->back()->with('thong_bao','Tài khoản đã bị khóa');
-            }
-        } else {
-            return redirect()->back()->with('thong_bao','Mật khẩu không đúng');
         }
+
+        return response()->json(['error'=>$validator->errors()]);
     }
-    public function putDoiMatKhau(DoiMatKhauRequest $requests, $id) {
-        if(Auth::attempt(['email' => Auth::user()->email, 'password' => $requests->mat_khau_cu])) {
-                $new = TaiKhoan::find($id);
-                $new->password = Hash::make($requests->mat_khau_moi);
-                $new->save();
-                return redirect()->route('accounts.getChangePassword',$id)->with('success', 'Cập nhật mật khẩu thành công');
-        } else {
-            return redirect()->back()->with('error', 'Cập nhật mật khẩu không thành công');;
+    public function putDoiMatKhau(Request $requests, $id) {
+        $rule = [
+            'mat_khau_cu' => 'required',
+            'mat_khau_moi' => 'required|min:6',
+            'nhap_lai_mat_khau' => 'required_with:mat_khau_moi|same:mat_khau_moi'
+        ];
+        $messages = [
+            'mat_khau_cu.required' => 'Vui lòng nhập mật khẩu cũ',
+            'mat_khau_moi.required' => 'Vui lòng nhập mật khẩu mới',
+            'mat_khau_moi.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+            'nhap_lai_mat_khau.required_with' => 'Vui lòng nhập lại mật khẩu',
+            'nhap_lai_mat_khau.same' => 'Nhập lại mật khẩu không khớp',
+        ];
+
+        $validator = Validator::make($requests->all(),$rule,$messages);
+
+        if ($validator->passes()) {
+            if(Auth::attempt(['email' => Auth::user()->email, 'password' => $requests->mat_khau_cu])) {
+                    $new = TaiKhoan::find($id);
+                    $new->password = Hash::make($requests->mat_khau_moi);
+                    $new->save();
+                    return response()->json(['success'=>'Đăng nhập thành công']);
+            } else {
+                return response()->json(['errorAll'=>'Mật khẩu không đúng']);
+            }
         }
+
+        return response()->json(['error'=>$validator->errors()]);
     }
     public function editAccountAdmin($id) {
         $array = ['arrays'=>taiKhoan::where('id',$id)->get()];

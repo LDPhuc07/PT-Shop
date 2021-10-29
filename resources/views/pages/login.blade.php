@@ -6,6 +6,16 @@
 @endsection
 @section('content')
 <style>
+  .error-msg {
+      font-size: 13px;
+      color: red;
+  }
+  .error-msg i {
+      margin-right: 2px;
+  }
+  .border-error {
+      border: 1px solid red;
+  }
   form.example input[type=text] {
     padding: 10px;
     font-size: 17px;
@@ -68,7 +78,7 @@
     <div class="login__form">
       <div class="row">
         <div class="col-sm-12 col-lg-6">
-         <form action="" method="POST" class="form" >
+         <form id="form" class="form" >
            @csrf
             <h3 class="heading">ĐĂNG NHẬP</h3>
             <a href="{{route('resertPassowrd')}}" class="form__forgot-password">Bạn quên mật khẩu?</a>
@@ -76,17 +86,6 @@
               <label for="email" class="form-label">Email</label>
               <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
               <span class="form-message"></span>
-              @if($errors->has('email'))
-                <span style="font-size: 13px; color:red">
-                    <i class="fas fa-times"></i>
-                    {{ $errors->first('email') }}
-                </span>
-                <style>
-                    #email {
-                        border: 1px solid red;
-                    }
-                </style>
-              @endif
             </div>
         
             <div class="form-group matkhau">
@@ -95,26 +94,10 @@
               <span class="show-hide"><i class="fas fa-eye"></i></span>
               <!-- <i class="fi-rs-eye-crossed undisplay" onclick="showhide()"></i> -->
               <span class="form-message"></span>
-              @if($errors->has('mat_khau'))
-                            <span style="font-size: 13px; color:red">
-                                <i class="fas fa-times"></i>
-                                {{ $errors->first('mat_khau') }}
-                            </span>
-                            <style>
-                                #password {
-                                    border: 1px solid red;
-                                }
-                            </style>
-              @endif
+
             </div>
             <input type="hidden" name="remember">
-            @if(session('thong_bao'))
-                            <span class="error-msg">
-                                <i class="fas fa-times"></i>
-                                {{ session('thong_bao') }}
-                            </span>
-                        @endif
-            <button class="form-submit btn-blocker ">ĐĂNG NHẬP <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button>
+            <button id="login-id" class="form-submit btn-blocker ">ĐĂNG NHẬP <i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button>
             {{--  <h4>HOẶC</h4>  --}}
             <div class="form-social">
               {{--  <a href="{{url('/login-facebook')}}" class="form-submit-social">
@@ -211,4 +194,65 @@
         }
       });
     </script>
+    <script type="text/javascript">
+
+
+      $(function(){
+  
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+  
+          $("#form").submit(function(e){
+              e.preventDefault();
+              removeErrorMsg();
+              var formData = new FormData($("#form")[0]);
+              $.ajax({
+                  url:"login",
+                  data:formData,
+                  processData:false,
+                  contentType:false,
+                  type:"POST",
+                  success:function(data){
+                      if(!$.isEmptyObject(data.success)) {
+                          location.replace("http://127.0.0.1:8000");
+                      } 
+                      if(!$.isEmptyObject(data.error)) {
+                          if(!$.isEmptyObject(data.error.email)) {
+                              printErrorMsg (data.error.email, 'email');
+                          }
+                          if(!$.isEmptyObject(data.error.mat_khau)) {
+                              printErrorMsg (data.error.mat_khau, 'mat_khau');
+                          }
+                      }
+                      if(!$.isEmptyObject(data.errorAll)) {
+                          var _html = '<span class="error-msg">';
+                              _html += '<i class="fas fa-times"></i>';
+                              _html += data.errorAll;
+                              _html += '</span>';
+                          jQuery("#login-id").before(_html);
+                      }
+                     
+                  }
+              })
+          });
+          
+      });
+  
+      function printErrorMsg (msg, name) {
+          var _html = '<span class="error-msg">';
+              _html += '<i class="fas fa-times"></i>';
+              _html += msg;
+              _html += '</span>';
+          jQuery(`input[name='${name}']`).after(_html);
+          $(`input[name='${name}']`).addClass("border-error");
+        }
+
+        function removeErrorMsg(){
+            $(".error-msg").remove();
+            $("input").removeClass("border-error");
+        }
+  </script>
 @endsection

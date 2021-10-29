@@ -13,6 +13,18 @@
     <title>Document</title>
 </head>
 <body>
+    <style>
+        .error-msg {
+            font-size: 13px;
+            color: red;
+        }
+        .error-msg i {
+            margin-right: 2px;
+        }
+        .border-error {
+            border: 1px solid red;
+        }
+    </style>
     <div class="container-login">
         <div class="form-login">
             <div class="head-form-login">
@@ -20,7 +32,7 @@
             </div>
             <div class="container-form-login">
                 <h3 class="mb-16">Đăng nhập</h3>
-                <form method="POST">
+                <form id="form">
                     @csrf
                     <div class="login-txt mb-16">
                         @if(Session::has('email'))
@@ -28,7 +40,7 @@
                         @else
                             <input style="width: 100%" class="textbox" name="email" type="text" placeholder="Email" autofocus>
                         @endif
-                        @if($errors->has('email'))
+                        {{--  @if($errors->has('email'))
                             <span class="error-msg">
                                 <i class="fas fa-times"></i>
                                 {{ $errors->first('email') }}
@@ -38,7 +50,7 @@
                                     border: 1px solid red;
                                 }
                             </style>
-                        @endif
+                        @endif  --}}
                     </div>
                     <div class="login-txt password-txt mb-16">
                         @if(Session::has('mat_khau'))
@@ -49,7 +61,7 @@
                         <a class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-                        @if($errors->has('mat_khau'))
+                        {{--  @if($errors->has('mat_khau'))
                             <span class="error-msg">
                                 <i class="fas fa-times"></i>
                                 {{ $errors->first('mat_khau') }}
@@ -59,7 +71,7 @@
                                     border: 1px solid red;
                                 }
                             </style>
-                        @endif
+                        @endif  --}}
                     </div>
                     <div class="login-txt remember-box mb-16">
                         @if(Session::has('remember'))
@@ -70,14 +82,14 @@
                         Nhớ mật khẩu
                         <a href="{{ route('admin.accounts.sign-up') }}">Đăng ký</a>
                     </div>
-                    <div class="login-txt mb-16">
-                        @if(session('thong_bao'))
+                    <div id="login-id" class="login-txt mb-16">
+                        {{--  @if(session('thong_bao'))
                             <span class="error-msg">
                                 <i class="fas fa-times"></i>
                                 {{ session('thong_bao') }}
                             </span>
-                        @endif
-                        <button class="btn login-btn">Đăng nhập</button>
+                        @endif  --}}
+                        <button type="submit" class="btn login-btn">Đăng nhập</button>
                     </div>
                     {{--  <div class="social-auth-links text-center">
                         <p>Hoặc</p>
@@ -99,6 +111,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script>
         $(document).ready(function() {
             $(".input-inline-btn").on('click', function(event){
@@ -113,6 +126,67 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+
+
+        $(function(){
+    
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+    
+            $("#form").submit(function(e){
+                e.preventDefault();
+                removeErrorMsg();
+                var formData = new FormData($("#form")[0]);
+                $.ajax({
+                    url:"/admin/login",
+                    data:formData,
+                    processData:false,
+                    contentType:false,
+                    type:"POST",
+                    success:function(data){
+                        if(!$.isEmptyObject(data.success)) {
+                            location.replace("http://127.0.0.1:8000/admin/dashboards");
+                        } 
+                        if(!$.isEmptyObject(data.error)) {
+                            if(!$.isEmptyObject(data.error.email)) {
+                                printErrorMsg (data.error.email, 'email');
+                            }
+                            if(!$.isEmptyObject(data.error.mat_khau)) {
+                                printErrorMsg (data.error.mat_khau, 'mat_khau');
+                            }
+                        }
+                        if(!$.isEmptyObject(data.errorAll)) {
+                            var _html = '<span class="error-msg">';
+                                _html += '<i class="fas fa-times"></i>';
+                                _html += data.errorAll;
+                                _html += '</span>';
+                            jQuery("#login-id").before(_html);
+                        }
+                       
+                    }
+                })
+            });
+            
+        });
+    
+        function printErrorMsg (msg, name) {
+            var _html = '<span class="error-msg">';
+                _html += '<i class="fas fa-times"></i>';
+                _html += msg;
+                _html += '</span>';
+            jQuery(`input[name='${name}']`).after(_html);
+            $(`input[name='${name}']`).addClass("border-error");
+          }
+
+          function removeErrorMsg(){
+              $(".error-msg").remove();
+              $("input").removeClass("border-error");
+          }
     </script>
 </body>
 </html>
