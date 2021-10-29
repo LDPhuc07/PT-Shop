@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Anh;
 class SanPham extends Model
 {
     protected $table = 'san_phams';
@@ -43,5 +44,13 @@ class SanPham extends Model
     public function binhLuan()
     {
         return $this->hasMany('App\BinhLuan', 'san_phams_id','id');
+    }
+    public function getImage()
+    {
+        $anh = Anh::where('san_phams_id',$this->id)->first();
+        // dd($anh);
+        if(empty($anh)) return;
+
+        return $anh->link;
     }
 }

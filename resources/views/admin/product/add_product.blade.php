@@ -176,7 +176,17 @@
                       <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
                       <p class="dram">VNĐ</p>
                     </div>
-                    <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
+                    @if($errors->has('giaban'))
+                    <span style="font-size: 13px; color:red">
+                        <i class="fas fa-times"></i>
+                        {{ $errors->first('giaban') }}
+                    </span>
+                    <style>
+                        input[name='giaban'] {
+                            border: 1px solid red;
+                        }
+                    </style>
+                  @endif
               </div>
               <div>
                 <div class="add-img-div">
@@ -192,7 +202,29 @@
                 {{--  @for($i = 1; $i <=4 ; $i++)
                 
                 @endfor  --}}
+                <?php $dem = 0 ?>
+                @foreach($errors->all() as $error)
+                
+                @if($error== 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.')
+                  <?php $dem++ ?>
+                  @if($dem > 1)
+                    <span style="font-size: 13px; color:red">
+                        <i class="fas fa-times"></i>
+                       
+                        {{ $error }}
+                    </span>
+                
+                    <style>
+                        input[name='link[]'] {
+                            border: 1px solid red;
+                        }
+                    </style>
+                    @endif
+                  @endif
+                  @endforeach
+                {{-- <div class="error error-name" 	@if($errors->has('link.*')) style="display:block;color:red" @endif>{{$errors->first('link.*')}}</div> --}}
               </div>
+             
             </div>
           </div>
           

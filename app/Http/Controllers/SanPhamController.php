@@ -377,6 +377,7 @@ class SanPhamController extends Controller
         
     }
     public function storeAdmin(Request $request) {
+        // dd($request->all());
         $rule = [
             // 'giaban' => 'numeric',
             'tensanpham' => 'required|max:50',
@@ -384,13 +385,14 @@ class SanPhamController extends Controller
             'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
+            'link.*' => 'mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'digits_between' => ':attribute giá bán lớn hơn 1000 và nhỏ hơn 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+            'mimes'=>'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg',
+            'link.*' => 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
@@ -409,8 +411,12 @@ class SanPhamController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
+            // dd($validator);
             return redirect()->back()->withErrors($validator);
         }
+
+        //check image
+
         if(empty($request->id))
         {
             $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
@@ -487,13 +493,13 @@ class SanPhamController extends Controller
             'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
+            'link.*' => 'mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'digits_between' => ':attribute giá bán lớn hơn 1000 và nhỏ hơn 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+            'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
