@@ -6,6 +6,14 @@
 @endsection
 @section('content')
 <style>
+    .btn-pay {
+        background-color: black;
+        color: white;
+    }
+    .mess-pay {
+        color: red;
+        font-size: 13px;
+    }
     /* Mobile & tablet  */
     @media (max-width: 1023px) {
         .summary {
@@ -22,7 +30,7 @@
 <div class="content">
     <div class="wrap">
         <div class="container">
-            <form action="{{ route('bill.create') }}" method="POST">
+            <form id="form" action="{{ route('bill.create') }}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="summary col-lg-6 col-12 hidden">
@@ -32,83 +40,78 @@
                             </div>
                             <div class="summary-heading-price">
                                 <h4>
-                                    {{-- 3.000.000  --}}
-                                    <i class="fas fa-chevron-down"
-                                        style="margin-left: 20px;margin-right: 5px;"></i></h4>
+                                    <i class="fas fa-chevron-down" style="margin-left: 20px;margin-right: 5px;"></i>
+                                </h4>
                             </div>
                         </div>
                         <div class="summary-content hidden">
-
                             @if(Auth::check() and Auth::user()->admin != 1)
-                            <?php
+                                <?php
                                     $dem3 = 0; 
                                 ?>
                                 @foreach($arrays as $array)
-                                <?php
-                                $dem3++; 
-                                ?>
-                                @endforeach
-                            @if($dem3 != 0)
-                                <?php
-                                $tongtien = 0;
-                                ?>
-                                
-                                <div class="sliderbar">
-                                    <div class="sliderbar-header">
-                                        <h2>Thông tin đơn hàng</h2>
-                                    </div>
-                                    @foreach($arrays as $array)
                                     <?php
-                                    $tongtien +=($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong;;
+                                        $dem3++; 
                                     ?>
-                                    <div class="sliderbar-content" >
-                                        <div class="row row-sliderbar">
-                                            <div class="col-4">
-                                                @foreach($array->chiTietSanPham->sanPham->anh as $anh)
-                                                    <img src="{{asset($anh->link)}}" alt="" width="80%">
-                                                @endforeach
-                                                <span class="notice">{{ $array->so_luong }}</span>
-                                            </div>
-                                            <div class="col-5">
+                                @endforeach
+                                @if($dem3 != 0)
+                                    <?php
+                                        $tongtien = 0;
+                                    ?>
+                                    <div class="sliderbar">
+                                        <div class="sliderbar-header">
+                                            <h2>Thông tin đơn hàng</h2>
+                                        </div>
+                                        @foreach($arrays as $array)
+                                            <?php
+                                                $tongtien +=($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong;;
+                                            ?>
+                                            <div class="sliderbar-content" >
+                                                <div class="row row-sliderbar">
+                                                    <div class="col-4">
+                                                        @foreach($array->chiTietSanPham->sanPham->anh as $anh)
+                                                            <img src="{{asset($anh->link)}}" alt="" width="80%">
+                                                        @endforeach
+                                                        <span class="notice">{{ $array->so_luong }}</span>
+                                                    </div>
+                                                <div class="col-5">
                                                 <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
                                             </div>
                                             <div class="col-3">
                                                 <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>
                                             </div>
-                                        
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                 </div>
-                                <div class="slider-footer">
-                                    <div class="subtotal">
-                                        <div class="row row-sliderbar-footer">
-                                            <div class="col-6"><span>Tạm tính:</span></div>
-                                            <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
-                                        </div>
-                                        <div class="row row-sliderbar-footer">
-                                            <div class="col-6"><span>Phí vận chuyển</span></div>
-                                            <div class="col-6 text-right"><span></span></div>
-                                        </div>
+                            </div>
+                            <div class="slider-footer">
+                                <div class="subtotal">
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Tạm tính:</span></div>
+                                        <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
                                     </div>
-                                    <div class="total">
-                                        <div class="row row-sliderbar-footer">
-                                            <div class="col-6"><span>Tổng cộng:</span></div>
-                                            <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
-                                        </div>
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Phí vận chuyển</span></div>
+                                        <div class="col-6 text-right"><span></span></div>
                                     </div>
-                                    @php
+                                </div>
+                                <div class="total">
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Tổng cộng:</span></div>
+                                        <div class="col-6 text-right"><span>{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span></div>
+                                    </div>
+                                </div>
+                                @php
                                     $vnd_to_usd = $tongtien;
-                                    @endphp
-                                    <div>
-                                        <div id="paypal-button"></div>
-                                        <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
-                                    </div>
+                                @endphp
+                                <div>
+                                    <div id="paypal-button"></div>
+                                    <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
                                 </div>
-                                
-                            @else
-                            <h1 style="text-align: center;margin-top: 25%;">Không có sản phẩm để thanh toán</h1>
-                            @endif
+                            </div> 
+                                @else
+                                    <h1 style="text-align: center;margin-top: 25%;">Không có sản phẩm để thanh toán</h1>
+                                @endif
                             @else
                                 <?php
                                     $tongtien = 0;
@@ -125,25 +128,24 @@
                                         <h2>Thông tin đơn hàng</h2>
                                     </div>
                                     @foreach($contents as $content)
-                                    <?php
-                                        $tongtien +=($content->price * $content->qty);
-                                    ?>
-                                    <div class="sliderbar-content"  >
-                                        <div class="row row-sliderbar">
-                                            <div class="col-4">
-                                                <img src="{{asset(getLink('product',$content->options->image))}}" alt="" width="80%">
-                                                <span class="notice">{{ $content->qty }}</span>
-                                            </div>
-                                            <div class="col-5">
-                                                <h5>{{ $content->name }}</h5>
-                                            </div>
-                                            <div class="col-3">
-                                                <h4 style="font-size:12px">{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</h4>
+                                        <?php
+                                            $tongtien +=($content->price * $content->qty);
+                                        ?>
+                                        <div class="sliderbar-content"  >
+                                            <div class="row row-sliderbar">
+                                                <div class="col-4">
+                                                    <img src="{{asset(getLink('product',$content->options->image))}}" alt="" width="80%">
+                                                    <span class="notice">{{ $content->qty }}</span>
+                                                </div>
+                                                <div class="col-5">
+                                                    <h5>{{ $content->name }}</h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <h4 style="font-size:12px">{{number_format($content->price * $content->qty,0,',','.').' '.'VNĐ'}}</h4>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endforeach
-                                    
                                 </div>
                                 <div class="slider-footer">
                                     <div class="subtotal">
@@ -163,18 +165,17 @@
                                         </div>
                                     </div>
                                     @php
-                                    $vnd_to_usd = $tongtien;
+                                        $vnd_to_usd = $tongtien;
                                     @endphp
                                     <div>
                                         <div id="paypal-button"></div>
                                         <input type="hidden" id="vnd_to_usd" value="{{$vnd_to_usd}}" name="online">
                                     </div>
                                 </div>
-                                
                                 @else
-                                <h1 style="text-align: center;margin-top: 50%;">Không có sản phẩm để thanh toán</h1>
+                                    <h1 style="text-align: center;margin-top: 50%;">Không có sản phẩm để thanh toán</h1>
                                 @endif
-                                @endif      
+                            @endif      
                         </div>
                     </div>
                     <div class="col-lg-6 col-12">
@@ -188,37 +189,37 @@
                                 </div>
                             <div class="main-customer-info">
                                 @if(Auth::check() and Auth::user()->admin != 1)
-                                <div class="main-customer-info-img">
-                                    <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
-                                </div>
+                                    <div class="main-customer-info-img">
+                                        <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
+                                    </div>
                                 @else
-                                <div class="main-customer-info-img" style="display:none">
-                                    <img src="{{asset(getLink('anh-dai-dien','no-image.png'))}}" alt="" width="60px" height="60px">
-                                </div>
+                                    <div class="main-customer-info-img" style="display:none">
+                                        <img src="{{asset(getLink('anh-dai-dien','no-image.png'))}}" alt="" width="60px" height="60px">
+                                    </div>
                                 @endif
                                 @if(Auth::check() and Auth::user()->admin != 1)
-                                <div class="main-customer-info-logged">
-                                    <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
-                                    <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
-                                </div>
+                                    <div class="main-customer-info-logged">
+                                        <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
+                                        <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
+                                    </div>
                             </div>
                             <div class="fieldset">
                                 @if(Auth::user()->dia_chi == null)
-                                <div class="fieldset-address">
-                                    <label class="form-label" for="">Địa chỉ</label>
-                                    <input type="text" class="form-control" name="dia_chi">
-                                @if($errors->has('dia_chi'))
-                                    <span style="font-size: 13px; color:red">
-                                    <i class="fas fa-times"></i>
-                                    {{ $errors->first('dia_chi') }}
-                                    </span>
-                                    <style>
-                                        input[name = 'dia_chi'] {
-                                            border: 1px solid red;
-                                        }
-                                    </style>
-                                @endif
-                                </div>
+                                    <div class="fieldset-address">
+                                        <label class="form-label" for="">Địa chỉ</label>
+                                        <input type="text" class="form-control" name="dia_chi">
+                                    @if($errors->has('dia_chi'))
+                                        <span style="font-size: 13px; color:red">
+                                        <i class="fas fa-times"></i>
+                                        {{ $errors->first('dia_chi') }}
+                                        </span>
+                                        <style>
+                                            input[name = 'dia_chi'] {
+                                                border: 1px solid red;
+                                            }
+                                        </style>
+                                    @endif
+                                    </div>
                                 @endif
                                 @if(Auth::user()->so_dien_thoai == null)
                                 <div class="fieldset-phone">
@@ -296,14 +297,14 @@
                             <label for="" style="font-weight:bold">Chọn Phương thức thanh toán:</label>
                             
                             <br>
-                            <span style="color: #999;font-size:13px"><i>*Vui lòng chọn phương thức thanh toán trước khi thanh toán</i></span>
+                            <span class="mess-pay hidden"><i>*Vui lòng chọn phương thức thanh toán trước khi thanh toán</i></span>
                             <div style="display:flex;align-items: center;">
-                                <input type="radio" style="margin-right:5px" class="tttructiep">
+                                <input type="radio" name="payment" value="0" style="margin-right:5px" class="tttructiep">
                                 <span>Thanh toán trực tiếp</span>
                             </div>
                             <div style="display:flex;justify-content: space-between;">
                                 <div style="display:flex;align-items: center;">
-                                    <input type="radio" name="payment" style="margin-right:5px" class="ttonline">
+                                    <input type="radio" name="payment" value="1" style="margin-right:5px" class="ttonline">
                                     <span>Thanh toán online</span>
                                 </div>
                                 <img src="{{asset(getLink('logo','vn.png'))}}" alt="" style="width:50%;height:50px">
@@ -321,11 +322,11 @@
                                 
                                 @if($dem3 != 0)
                             <div class="pay">
-                                <button type="submit" class="btn-pay" disabled>Thanh toán</button>
+                                <button  type="button" class="btn-pay submit_id" >Thanh toán</button>
                             </div>
                             @else 
                             <div class="pay">
-                                <button type="button" class="btn-pay" disabled>Thanh toán</button>
+                                <button type="button" class="btn-pay" >Thanh toán</button>
                             </div>
                             @endif
                             @else
@@ -338,7 +339,7 @@
                                 @endforeach
                                 @if($dem != 0)
                                 <div class="pay">
-                                    <button type="submit" class="btn-pay"  disabled>Thanh toán</button>
+                                    <button  type="button" class="btn-pay submit_id" >Thanh toán</button>
                                 </div>
                                 @else
                                 <div class="pay">

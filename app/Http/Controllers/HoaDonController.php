@@ -234,7 +234,7 @@ class HoaDonController extends Controller
                 $new_update->save();
             }
             //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         $id = Auth::user()->id;
         session(['tong_tien' => $request->online]);
@@ -346,7 +346,7 @@ class HoaDonController extends Controller
                 $account_id = TaiKhoan::insertGetId($account);
 
                     //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         session(['tong_tien' => $request->online]);
         session(['cost_id' => $request->id]);
@@ -413,7 +413,7 @@ class HoaDonController extends Controller
             else { 
 
                 //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         session(['tong_tien' => $request->online]);
         session(['cost_id' => $request->id]);
@@ -528,7 +528,7 @@ class HoaDonController extends Controller
                 $new_update->save();
             }
                //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         $id = Auth::user()->id;
         session(['tong_tien' => $request->online]);
@@ -632,7 +632,7 @@ class HoaDonController extends Controller
                 $account_id = TaiKhoan::insertGetId($account);
 
                     //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         session(['tong_tien' => $request->online]);
         session(['cost_id' => $request->id]);
@@ -701,7 +701,7 @@ class HoaDonController extends Controller
             else { 
 
                 //thanh toán vnpay
-        if(!empty($request->payment))
+        if($request->payment == "1")
         {
         session(['tong_tien' => $request->online]);
         session(['cost_id' => $request->id]);
