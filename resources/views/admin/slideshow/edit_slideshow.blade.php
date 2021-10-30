@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
   .lbl-img {
     float: right;
     color: blue;
@@ -38,9 +48,10 @@
         </a>
         <h3>Chỉnh sửa môn thể thao</h3>
       </div>
-      <form action="{{route('slideshow.update',$dsSlideShow['id'])}}" method="POST" enctype="multipart/form-data">
+      <form id="form">
         @method('PUT')
         @csrf
+        <input type="hidden" value="{{$dsSlideShow['id']}}" name="id" id="id">
         <div class="row add-product-form">
           <div class="name-slide col-8 pl-0 pr-10">
             <div class="product-info">
@@ -86,6 +97,66 @@
       var loadfile = function(event){
           var img = document.getElementById('imgsp');
           img.src = URL.createObjectURL(event.target.files[0]);
+      }
+  </script>
+  <script type="text/javascript">
+    var idInput = $('#id').val();
+    console.log(idInput);
+    $(function(){
+  
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
+  
+        $("#form").submit(function(e){
+            e.preventDefault();
+            removeErrorMsg();
+            var formData = new FormData($("#form")[0]);
+            $.ajax({
+                url:"admin/slideshow/" + idInput,
+                data:formData,
+                processData:false,
+                contentType:false,
+                type:"POST",
+                success:function(data){
+                    if(!$.isEmptyObject(data.success)) {
+                      location.replace("http://127.0.0.1:8000/admin/slideshow");
+                      alert(data.success);
+                    } 
+                    if(!$.isEmptyObject(data.error)) {
+                        
+                        if(!$.isEmptyObject(data.error.tenslideshow)) {
+                            printErrorMsg (data.error.tenslideshow, 'tenslideshow');
+                            $("input[name=tenslideshow]").focus();
+                        }
+                        if(!$.isEmptyObject(data.error.link)) {
+                          printErrorMsg (data.error.link, 'link');
+                          
+                      }
+                      
+                    }
+                    
+                  
+                }
+            })
+        });
+        
+    });
+  
+    function printErrorMsg (msg, name) {
+        var _html = '<span class="error-msg">';
+            _html += '<i class="fas fa-times"></i>';
+            _html += msg;
+            _html += '</span>';
+        jQuery(`input[name='${name}']`).after(_html);
+        $(`input[name='${name}']`).addClass("border-error");
+      }
+  
+      function removeErrorMsg(){
+          $(".error-msg").remove();
+          $("input").removeClass("border-error");
       }
   </script>
 @endsection

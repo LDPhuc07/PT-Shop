@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
   .lbl-img {
     float: right;
     color: blue;
@@ -38,7 +48,7 @@
         </a>
         <h3>Thêm mới slideshow</h3>
       </div>
-      <form action="{{route('slideshow.store')}}" method="post" enctype="multipart/form-data">
+      <form id="form">
         @csrf
         <div class="row add-product-form">
           <div class="name-slide col-8 pl-0 pr-10">
@@ -89,4 +99,66 @@
         console.log($("input[name='link']").val());
     }
     </script>
+
+
+<script type="text/javascript">
+
+
+  $(function(){
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+
+      $("#form").submit(function(e){
+          e.preventDefault();
+          removeErrorMsg();
+          var formData = new FormData($("#form")[0]);
+          $.ajax({
+              url:"admin/slideshow/store",
+              data:formData,
+              processData:false,
+              contentType:false,
+              type:"POST",
+              success:function(data){
+                  if(!$.isEmptyObject(data.success)) {
+                    location.replace("http://127.0.0.1:8000/admin/slideshow");
+                    alert(data.success);
+                  } 
+                  if(!$.isEmptyObject(data.error)) {
+                      
+                      if(!$.isEmptyObject(data.error.tenslideshow)) {
+                          printErrorMsg (data.error.tenslideshow, 'tenslideshow');
+                          $("input[name=tenslideshow]").focus();
+                      }
+                      if(!$.isEmptyObject(data.error.link)) {
+                          printErrorMsg (data.error.link, 'link');
+                          
+                      }
+                    
+                  }
+                  
+                
+              }
+          })
+      });
+      
+  });
+
+  function printErrorMsg (msg, name) {
+      var _html = '<span class="error-msg">';
+          _html += '<i class="fas fa-times"></i>';
+          _html += msg;
+          _html += '</span>';
+      jQuery(`input[name='${name}']`).after(_html);
+      $(`input[name='${name}']`).addClass("border-error");
+    }
+
+    function removeErrorMsg(){
+        $(".error-msg").remove();
+        $("input").removeClass("border-error");
+    }
+</script>
 @endsection
