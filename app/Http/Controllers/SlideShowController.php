@@ -50,7 +50,7 @@ class SlideShowController extends Controller
     {
         //
         $rule = [
-            'tenslideshow' => 'required|max:100',
+            'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -60,10 +60,11 @@ class SlideShowController extends Controller
             'required' => 'Bạn chưa nhập tên :attribute',
             // 'numeric' => 'The :attribute is invalid',
             // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+            'mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
             'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
+            'tenslideshow.unique' => 'Đã có tên slideshow',
             'link.required' => 'Bạn chưa chọn hình ảnh'
         ];
         $customName = [
@@ -72,15 +73,15 @@ class SlideShowController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
         }
-        if(empty($request->id))
-        {
-            $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
-            if(!empty($dsSlideShow_check)){
-                return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
-            }
-        }
+        // if(empty($request->id))
+        // {
+        //     $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
+        //     if(!empty($dsSlideShow_check)){
+        //         return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
+        //     }
+        // }
         $dsSlideShow = new Slideshow();
         $dsSlideShow->slideshow=$request->tenslideshow;
         if($request->hasFile('link')){// neu anh co ton
@@ -92,7 +93,7 @@ class SlideShowController extends Controller
         else
             {$dsSlideShow->link='no-image.png';}
         $dsSlideShow->save();
-        return redirect()->route('slideshow.index')->with('success', 'Thêm slideshow mới thành công');
+        return response()->json(['success'=>'Thêm slideshow thành công']);
     }
 
     /**
@@ -130,21 +131,22 @@ class SlideShowController extends Controller
     {
         //
         $rule = [
-            'tenslideshow' => 'required|max:100',
+            'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
-            'link' => 'required|mimes:jpeg,jpg,png',
+            'link' => 'mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             // 'numeric' => 'The :attribute is invalid',
             // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+            'mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
             // 'max'=> 'The :attribute must be less than :max',
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
             'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
-            'link.required' => 'Bạn chưa chọn hình ảnh'
+            'tenslideshow.unique' => 'Đã có tên slideshow',
+            // 'link.required' => 'Bạn chưa chọn hình ảnh'
         ];
         $customName = [
             'tenslideshow' => 'Tên slideshow',
@@ -152,15 +154,16 @@ class SlideShowController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
+
         }
-        if(empty($request->id))
-        {
-            $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
-            if(!empty($dsSlideShow_check)){
-                return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
-            }
-        }
+        // if(empty($request->id))
+        // {
+        //     $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
+        //     if(!empty($dsSlideShow_check)){
+        //         return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
+        //     }
+        // }
         $dsSlideShow = Slideshow::find($id);
         $dsSlideShow->slideshow=$request->tenslideshow;
         if($request->hasFile('link')){// neu anh co ton
@@ -172,7 +175,7 @@ class SlideShowController extends Controller
         // else
         //     {$dsSlideShow->link='no-image.png';}
         $dsSlideShow->save();
-        return redirect()->route('slideshow.index')->with('success', 'Cập nhật slideshow thành công');
+        return response()->json(['success'=>'Cập nhật slideshow thành công']);
     }
 
     /**

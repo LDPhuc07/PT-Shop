@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
   .product-container {
     margin-top: unset;
   }
@@ -25,7 +35,7 @@
         </a>
         <h3>Thêm mới môn thể thao</h3>
       </div>
-      <form action="{{route('monthethao.store')}}" method="post">
+      <form id="form">
         @csrf
         <div class="add-product-form">
           <div style="border-bottom: 1px solid #dfe4e8; padding-bottom: 24px" class="pl-0 pr-0">
@@ -49,4 +59,63 @@
         </div>
       </form>
     </div>
+
+
+    <script type="text/javascript">
+
+
+      $(function(){
+    
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+    
+          $("#form").submit(function(e){
+              e.preventDefault();
+              removeErrorMsg();
+              var formData = new FormData($("#form")[0]);
+              $.ajax({
+                  url:"admin/monthethao/store",
+                  data:formData,
+                  processData:false,
+                  contentType:false,
+                  type:"POST",
+                  success:function(data){
+                      if(!$.isEmptyObject(data.success)) {
+                        location.replace("http://127.0.0.1:8000/admin/monthethao");
+                        alert(data.success);
+                      } 
+                      if(!$.isEmptyObject(data.error)) {
+                          
+                          if(!$.isEmptyObject(data.error.tenthethao)) {
+                              printErrorMsg (data.error.tenthethao, 'tenthethao');
+                              $("input[name=tenthethao]").focus();
+                          }
+                          
+                        
+                      }
+                      
+                    
+                  }
+              })
+          });
+          
+      });
+    
+      function printErrorMsg (msg, name) {
+          var _html = '<span class="error-msg">';
+              _html += '<i class="fas fa-times"></i>';
+              _html += msg;
+              _html += '</span>';
+          jQuery(`input[name='${name}']`).after(_html);
+          $(`input[name='${name}']`).addClass("border-error");
+        }
+    
+        function removeErrorMsg(){
+            $(".error-msg").remove();
+            $("input").removeClass("border-error");
+        }
+    </script>
 @endsection

@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
   .add-product-form {
     border-bottom: unset;
     padding-bottom: unset;
