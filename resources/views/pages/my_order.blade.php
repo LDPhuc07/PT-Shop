@@ -39,8 +39,12 @@
         <div class="row">
           <div class="col-lg-4 col-12">
               <div class="heading">
+                @if(Auth::user()->anh_dai_dien != null)
                   <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="heading-img">
-                  <span class="heading-name_acc">{{Auth::user()->ho_ten}}</span>
+                @else
+                  <img src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="" class="heading-img">
+                @endif
+                <span class="heading-name_acc">{{Auth::user()->ho_ten}}</span>
               </div>  
               <div class="menu-manager">
                 <a href="{{ route('accounts',Auth::user()->id) }}" class="bbc">

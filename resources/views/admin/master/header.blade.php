@@ -66,7 +66,7 @@
         <div class="header-btn account-btn">
             <button style="padding: 14px;height: 54px" id="account-nav">
                 @if(Auth::user()->anh_dai_dien == null)
-                <img class="avt-head no-img" src="https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png" alt="anh">
+                <img class="avt-head" src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="anh">
                 @else
                 <img class="avt-head" src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="anh">
                 @endif

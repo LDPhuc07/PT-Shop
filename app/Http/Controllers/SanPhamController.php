@@ -217,8 +217,7 @@ class SanPhamController extends Controller
         // }
         // else
         // {
-            $timkiem = SanPham::where('trang_thai',1)->paginate(4);
-            
+           $timkiem = SanPham::where('trang_thai',1)->paginate(4);
         // }
         $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
                                     ->groupBy('san_phams_id')

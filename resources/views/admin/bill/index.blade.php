@@ -125,8 +125,12 @@
                         @foreach($arrays as $bill)
                         <tr id="bill-item-{{ $bill->id }}">
                             <td>{{ $bill->id }}</td>
-                            <td>
-                              <img class="avt" src="{{asset(getLink('anh-dai-dien',$bill->taiKhoan->anh_dai_dien))}}" alt="">
+                            <td> 
+                              @if($bill->taiKhoan->anh_dai_dien != null)
+                                <img class="avt" src="{{asset(getLink('anh-dai-dien',$bill->taiKhoan->anh_dai_dien))}}" alt="anh">
+                              @else
+                                <img class="avt" src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="anh">
+                              @endif
                               {{ $bill->taiKhoan->ho_ten}}
                             </td>
                             <td>{{ $bill->ngay_lap_hd }}</td>

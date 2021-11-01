@@ -339,7 +339,11 @@
             @if(Auth::check() and Auth::user()->admin != 1)
            <ul class="nav nav__first right m-auto">
               <li class="nav-item nav-item__first nav-item__first-user">
-                <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="nav-item__first-img">
+                @if(Auth::user()->anh_dai_dien != null)
+                  <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" class="nav-item__first-img">
+                @else
+                <img src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="" class="nav-item__first-img">
+                @endif
                 <span class="nav-item__first-name">{{ Auth::user()->ho_ten }}</span>
                 <ul class="nav-item__first-menu">
                   <li class="nav-item__first-item">
