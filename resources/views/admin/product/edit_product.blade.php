@@ -1,6 +1,16 @@
 @extends('admin.master.master')
 @section('content')
 <style>
+  .error-msg {
+        font-size: 13px;
+        color: red;
+    }
+    .error-msg i {
+        margin-right: 2px;
+    }
+    .border-error {
+        border: 1px solid red;
+    }
   .add-img-div {
     text-align: right;
     margin-bottom: 8px;
@@ -112,9 +122,10 @@
         </a>
         <h3>Sửa sản phẩm</h3>
       </div>
-      <form action="{{route('sanpham.update',$dsSanPham['id'])}}" method="POST" enctype="multipart/form-data" name="frmEditProduct">
+      <form id="form" >
         @method('PUT')
         @csrf
+        <input type="hidden" value="{{$dsSanPham['id']}}" name="id" id="id">
         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
         <div class="row add-product-form">
             <div class="col-12 pl-0 pr-0">
@@ -295,4 +306,74 @@
       jQuery(el).closest('.abc').remove();
     }
   </script>
+
+
+<script type="text/javascript">
+  var idInput = $('#id').val();
+  console.log(idInput);
+  $(function(){
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+
+      $("#form").submit(function(e){
+          e.preventDefault();
+          removeErrorMsg();
+          var formData = new FormData($("#form")[0]);
+          $.ajax({
+              url:"admin/sanpham/" + idInput,
+              data:formData,
+              processData:false,
+              contentType:false,
+              type:"POST",
+              success:function(data){
+                  if(!$.isEmptyObject(data.success)) {
+                    location.replace("http://127.0.0.1:8000/admin/sanpham");
+                    alert(data.success);
+                  } 
+                  if(!$.isEmptyObject(data.error)) {
+                      if(!$.isEmptyObject(data.error.giaban)) {
+                          printErrorMsg (data.error.giaban, 'giaban');
+                          $("input[name=giaban]").focus();
+                      }
+                      if(!$.isEmptyObject(data.error.giagoc)) {
+                          printErrorMsg (data.error.giagoc, 'giagoc');
+                          $("input[name=giagoc]").focus();
+                      }
+                      if(!$.isEmptyObject(data.error.giamgia)) {
+                          printErrorMsg (data.error.giamgia, 'giamgia');
+                          $("input[name=giamgia]").focus();
+                      }
+                      if(!$.isEmptyObject(data.error.tensanpham)) {
+                          printErrorMsg (data.error.tensanpham, 'tensanpham');
+                          $("input[name=tensanpham]").focus();
+                      }
+                      
+                    
+                  }
+                  
+                
+              }
+          })
+      });
+      
+  });
+
+  function printErrorMsg (msg, name) {
+      var _html = '<span class="error-msg">';
+          _html += '<i class="fas fa-times"></i>';
+          _html += msg;
+          _html += '</span>';
+      jQuery(`input[name='${name}']`).after(_html);
+      $(`input[name='${name}']`).addClass("border-error");
+    }
+
+    function removeErrorMsg(){
+        $(".error-msg").remove();
+        $("input").removeClass("border-error");
+    }
+</script>
 @endsection

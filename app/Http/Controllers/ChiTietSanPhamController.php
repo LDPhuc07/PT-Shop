@@ -65,9 +65,9 @@ class ChiTietSanPhamController extends Controller
     {
         //
         $rule = [
-            'mau' => 'required|max:20',
-            'kichthuoc'=>'required|max:10',
-            'soluong'=>'required|numeric',
+            'mau' => 'required|unique:chi_tiet_san_phams,mau|max:20',
+            'kichthuoc'=>'required|unique:chi_tiet_san_phams,kich_thuoc|max:10',
+            'soluong'=>'required|unique:chi_tiet_san_phams,so_luong|numeric',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -86,22 +86,22 @@ class ChiTietSanPhamController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
         }
         $dsChiTietSanPham = new ChiTietSanPham();
         $dsChiTietSanPham->san_phams_id=$id;
         $dsChiTietSanPham->mau=$request->mau;
         $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
         $dsChiTietSanPham->so_luong=$request->soluong;
-        if(!empty($id))
-        {
-            $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
-            if(!empty($dsChiTietSanPham_check)){
-                return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
-            }
-        }
+        // if(!empty($id))
+        // {
+        //     $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
+        //     if(!empty($dsChiTietSanPham_check)){
+        //         return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
+        //     }
+        // }
         $dsChiTietSanPham->save();
-        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Thêm chi tiết sản phẩm mới thành công');
+        return response()->json(['success'=>'Thêm chi tiết sản phẩm thành công']);
     }
 
     /**

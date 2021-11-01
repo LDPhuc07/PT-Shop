@@ -379,21 +379,22 @@ class SanPhamController extends Controller
         // dd($request->all());
         $rule = [
             // 'giaban' => 'numeric',
-            'tensanpham' => 'required|max:50',
+            'tensanpham' => 'required|unique:san_phams,ten_san_pham|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
-            'link.*' => 'mimes:jpeg,jpg,png',
+            // 'link.*' => 'mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'digits_between' => ':attribute giá bán lớn hơn 1000 và nhỏ hơn 99999999999',
-            'mimes'=>'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg',
-            'link.*' => 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.',
+            // 'mimes'=>'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg',
+            // 'link.*' => 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
+            'tensanpham.unique' => 'Đã có tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
@@ -411,18 +412,18 @@ class SanPhamController extends Controller
         if($validator->fails())
         {
             // dd($validator);
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
         }
 
         //check image
 
-        if(empty($request->id))
-        {
-            $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
-            if(!empty($dsSanPham_check)){
-                return redirect()->route('sanpham.indexAdmin')->with('error', 'Đã có tên sản phẩm');
-            }
-        }
+        // if(empty($request->id))
+        // {
+        //     $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
+        //     if(!empty($dsSanPham_check)){
+        //         return response()->json(['error1'=>'Đã có tên sản phẩm']);
+        //     }
+        // }
        
         $dsSanPham = new SanPham();
         $dsSanPham->ten_san_pham=$request->tensanpham;
@@ -461,7 +462,7 @@ class SanPhamController extends Controller
             }
         }
         
-         return redirect()->route('sanpham.indexAdmin')->with('success', 'Thêm sản phẩm mới thành công');
+        return response()->json(['success'=>'Thêm sản phẩm thành công']);
     }
     public function create() {
         return view('admin.product.add_product');
@@ -487,20 +488,22 @@ class SanPhamController extends Controller
  
         $rule = [
             // 'giaban' => 'numeric',
-            'tensanpham' => 'required|max:50',
+            'tensanpham' => 'required|unique:san_phams,ten_san_pham|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'numeric|min:1|max:50',
             // 'description' => 'required',
-            'link.*' => 'mimes:jpeg,jpg,png',
+            // 'link.*' => 'mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
             'numeric' => ':attribute không hợp lệ',
             'digits_between' => ':attribute giá bán lớn hơn 1000 và nhỏ hơn 99999999999',
-            'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+            // 'mimes'=>'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg',
+            // 'link.*' => 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.',
             // 'max'=> 'The :attribute must be less than :max',
             'tensanpham.required' => 'Bạn chưa nhập tên sản phẩm',
+            'tensanpham.unique' => 'Đã có tên sản phẩm',
             'tensanpham.max' => 'Tên sản phẩm không quá 50 ký tự',
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
@@ -517,15 +520,15 @@ class SanPhamController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
         }
-        if(empty($request->id))
-        {
-            $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
-            if(!empty($dsSanPham_check)){
-                return redirect()->route('sanpham.indexAdmin')->with('error', 'Đã có tên sản phẩm');
-            }
-        }
+        // if(empty($request->id))
+        // {
+        //     $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
+        //     if(!empty($dsSanPham_check)){
+        //         return redirect()->route('sanpham.indexAdmin')->with('error', 'Đã có tên sản phẩm');
+        //     }
+        // }
         
         $dsSanPham = SanPham::find($id);
         $dsSanPham->ten_san_pham=$request->tensanpham;
@@ -592,7 +595,7 @@ class SanPhamController extends Controller
         //         }
         //     }
         // }
-        return redirect()->route('sanpham.indexAdmin')->with('success', 'Cập nhật sản phẩm thành công');
+        return response()->json(['success'=>'Cập nhật sản phẩm thành công']);
     }
     public function getDelImg(Request $request,$id){
     //     return response()->json([
