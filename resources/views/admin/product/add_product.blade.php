@@ -137,7 +137,7 @@
                       <p>Nhập ký tự số từ 1 đến 100</p>
                     </i>
                     <div class="discount-div">
-                      <input class="textbox" type="number" placeholder="Nhập giảm giá" name="giamgia">
+                      <input class="textbox" type="text" placeholder="Nhập giảm giá" name="giamgia">
                       <p class="dram">%</p>
                     </div>
                     <div class="error error-name" 	@if($errors->has('giamgia')) style="display:block;color:red" @endif>{{$errors->first('giamgia')}}</div>
@@ -167,7 +167,9 @@
                 </div>
               </div>
               <div class="product-info-item">
-                <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
+                <div class="row">
+                  <div class="col-6">
+                    <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
                     <i class="fas fa-info note-info">
                       <p>Nhập ký tự số</p>
                     </i>
@@ -175,10 +177,9 @@
                       <input class="textbox" type="text" placeholder="Nhập giá gốc" name="giagoc">
                       <p class="dram">VNĐ</p>
                     </div>
-                    <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
-              </div>
-              <div class="product-info-item">
-                <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
+                  </div>
+                  <div class="col-6">
+                    <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
                     <i class="fas fa-info note-info">
                       <p>Nhập ký tự số</p>
                     </i>
@@ -186,18 +187,11 @@
                       <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
                       <p class="dram">VNĐ</p>
                     </div>
-                    @if($errors->has('giaban'))
-                    <span style="font-size: 13px; color:red">
-                        <i class="fas fa-times"></i>
-                        {{ $errors->first('giaban') }}
-                    </span>
-                    <style>
-                        input[name='giaban'] {
-                            border: 1px solid red;
-                        }
-                    </style>
-                  @endif
+                  </div>
+                </div>
+              
               </div>
+            
               <div>
                 <div class="add-img-div">
                   <button id="add-img-btn" type="button" class="btn save-btn">Thêm hình ảnh</button>
@@ -263,17 +257,13 @@
         </div>
         <div class="product-footer">
           <div class="product-footer-btn">
-            <button onclick="LayNoiDung()" class="save-btn btn">Lưu</button>
+            <button class="save-btn btn">Lưu</button>
           </div>
         </div>
       </form>
     </div>
     <script>
       CKEDITOR.replace( 'textarea1');
-      function LayNoiDung(){
-        var data = CKEDITOR.instances.txt_noi_dung.getData();
-        alert(data)
-      }
     </script>
     <script type="text/javascript">
       var loadfile = function(trung) {
@@ -348,7 +338,19 @@
                           printErrorMsg (data.error.tensanpham, 'tensanpham');
                           $("input[name=tensanpham]").focus();
                       }
-                    
+                      var dem = 0;
+                      $.each( data.error, function( key, value ) {
+                        if(value == "Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.") {
+                          dem++;
+                        }
+                      });
+                      if(dem > 0) {
+                        var _html = '<span style="display: block" class="error-msg">';
+                            _html += '<i class="fas fa-times"></i>';
+                            _html += 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.';
+                            _html += '</span>';
+                        $('.list-img').after(_html);
+                      }
                   }
                   
                 
