@@ -63,27 +63,27 @@
                                             <h2>Thông tin đơn hàng</h2>
                                         </div>
                                         @foreach($arrays as $array)
-                                            <?php
-                                                $tongtien +=($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong;;
-                                            ?>
-                                            <div class="sliderbar-content" >
-                                                <div class="row row-sliderbar">
-                                                    <div class="col-4">
-                                                        @foreach($array->chiTietSanPham->sanPham->anh as $anh)
-                                                            <img src="{{asset($anh->link)}}" alt="" width="80%">
-                                                        @endforeach
-                                                        <span class="notice">{{ $array->so_luong }}</span>
-                                                    </div>
+                                        <?php
+                                            $tongtien +=($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100)*$array->so_luong;;
+                                        ?>
+                                        <div class="sliderbar-content" >
+                                            <div class="row row-sliderbar">
+                                                <div class="col-4">
+                                                    @foreach($array->chiTietSanPham->sanPham->anh as $anh)
+                                                        <img src="{{asset($anh->link)}}" alt="" width="80%">
+                                                    @endforeach
+                                                    <span class="notice">{{ $array->so_luong }}</span>
+                                                </div>
                                                 <div class="col-5">
-                                                <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                                                    <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                                                </div>
+                                                <div class="col-3">
+                                                    <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>
+                                                </div>
                                             </div>
-                                            <div class="col-3">
-                                                <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                            </div>
                             <div class="slider-footer">
                                 <div class="subtotal">
                                     <div class="row row-sliderbar-footer">

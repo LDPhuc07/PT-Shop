@@ -19,9 +19,9 @@ use DB;
 class PageController extends Controller
 {
     //
-    public function tatcasanpham($idlsp, $idmtt){
+    public function tatcasanpham(Request $request){
 
-        return view('pages.product');
+        return view('pages.product2');
         
     }
     public function index() {

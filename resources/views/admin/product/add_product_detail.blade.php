@@ -33,13 +33,14 @@
         </a>
         <h3>Thêm mới chi tiết sản phẩm</h3>
       </div>
-      <form action="{{route('chitietsanpham.store',['id' =>$id])}}" method="POST">
+      <form id="form">
         @csrf
+        <input type="hidden" name="id" value="{{$id}}" id="id">
         <div class="add-product-form">
           <div style="padding-bottom: 24px;border-bottom: 1px solid #dfe4e8;" class="col-12 pl-0 pr-0">
             <div class="product-info">
               <div class="product-info-item">
-                {{-- <input type="hidden" name="id"> --}}
+                
               <div class="product-info-item">
                 <div class="row">
                   <div class="col-4">
@@ -78,5 +79,67 @@
         </div>
       </form>
     </div>
+    <script type="text/javascript">
+      var idInput = $('#id').val();
+      console.log(idInput);
+      $(function(){
     
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+    
+          $("#form").submit(function(e){
+              e.preventDefault();
+              removeErrorMsg();
+              var formData = new FormData($("#form")[0]);
+              $.ajax({
+                  url:`admin/sanpham/${idInput}/chitietsanpham/store` ,
+                  data:formData,
+                  processData:false,
+                  contentType:false,
+                  type:"POST",
+                  success:function(data){
+                      if(!$.isEmptyObject(data.success)) {
+                        location.replace(`http://127.0.0.1:8000/admin/sanpham/${idInput}/chitietsanpham/`);
+                        alert(data.success);
+                      } 
+                      if(!$.isEmptyObject(data.error)) {
+                          
+                          
+                          if(!$.isEmptyObject(data.error.kichthuoc)) {
+                              printErrorMsg (data.error.kichthuoc, 'kichthuoc');
+                              $("input[name=kichthuoc]").focus();
+                          }
+                          if(!$.isEmptyObject(data.error.soluong)) {
+                              printErrorMsg (data.error.soluong, 'soluong');
+                              $("input[name=soluong]").focus();
+                          }
+                          if(!$.isEmptyObject(data.error.mau)) {
+                              printErrorMsg (data.error.mau, 'mau');
+                              $("input[name=mau]").focus();
+                          }
+                        
+                      }                    
+                  }
+              })
+          });
+          
+      });
+    
+      function printErrorMsg (msg, name) {
+          var _html = '<span class="error-msg">';
+              _html += '<i class="fas fa-times"></i>';
+              _html += msg;
+              _html += '</span>';
+          jQuery(`input[name='${name}']`).after(_html);
+          $(`input[name='${name}']`).addClass("border-error");
+        }
+    
+        function removeErrorMsg(){
+            $(".error-msg").remove();
+            $("input").removeClass("border-error");
+        }
+    </script>
 @endsection

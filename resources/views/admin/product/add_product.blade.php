@@ -263,18 +263,12 @@
         </div>
         <div class="product-footer">
           <div class="product-footer-btn">
-            <button onclick="LayNoiDung()" class="save-btn btn">Lưu</button>
+            <button class="save-btn btn">Lưu</button>
           </div>
         </div>
       </form>
     </div>
-    <script>
-      CKEDITOR.replace( 'textarea1');
-      function LayNoiDung(){
-        var data = CKEDITOR.instances.txt_noi_dung.getData();
-        alert(data)
-      }
-    </script>
+    
     <script type="text/javascript">
       var loadfile = function(trung) {
         var id = trung.getAttribute('id');
@@ -371,5 +365,10 @@
         $(".error-msg").remove();
         $("input").removeClass("border-error");
     }
+</script>
+@endsection
+@section('script')
+<script>
+  
 </script>
 @endsection

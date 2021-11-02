@@ -25,6 +25,11 @@
     padding: 16px;
   }
 }
+.cart-body {
+    height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 /* mobile */
 @media (max-width: 739px) {
   .cart-wrap {
