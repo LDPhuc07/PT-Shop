@@ -20,6 +20,136 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function listProduct(Request $request ) {
+        $idlsp = 2;
+        $idmtt = 1;
+        $priceFrom = 6000000;
+        $priceTo = 7000000;
+        $dataSortFrom = 'gia_ban';
+        $dataSortTo = 'asc';
+        $tradeMark;
+        $arrayThuongHieu = [2];
+        $page = 0;
+
+        $query = SanPham::whereNull('deleted_at');
+        if(!empty($idlsp)){
+            $query->where('loai_san_phams_id',$idmtt);
+        }
+        if(!empty($idmtt)){
+            $query->where('mon_the_thaos_id',$idmtt);
+        }
+        if(!empty($priceFrom)) {
+            $query->whereBetween('gia_ban',[$priceFrom, $priceTo]);
+        }
+        if(!empty($arrayThuongHieu)) {
+            $query->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+                $query->whereIn('id',$arrayThuongHieu);
+            });
+        }
+        if(!empty($dataSortFrom)) {
+            $query->orderBy($dataSortFrom, $dataSortTo);
+        }
+        $data = $query->offset($page*8)
+        ->limit(8)
+        ->with(array('anh' => function($query) {
+            $query->where('anhchinh',1);
+        }))->get();
+        dd($data);
+        // if(!empty($idlsp)){
+        //     if(!empty($idmtt)){
+        //         if(!empty($priceFrom))
+        //         {
+        //             if(!empty($arrayThuongHieu))
+        //             {
+        //                 if(!empty($dataSortFrom))
+        //                 {
+        //                     // có 3 value
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereBetween('gia_ban',[$priceFrom, $priceTo])
+        //                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+        //                                 $query->whereIn('id',$arrayThuongHieu);
+        //                             })
+        //                             ->orderBy($dataSortFrom, $dataSortTo)
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
+        //                     dd($data);
+        //                 }
+        //                 else
+        //                 {
+        //                     // value xs k có 2 cái còn lại có
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 if(!empty($request->idxs))
+        //                 {
+        //                     // thương hiệu k có 2 cái còn lại có
+        //                 }
+        //                 else
+        //                 {
+        //                     // thương hiệu và sx k có cái còn lại có
+        //                 }
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if(!empty($request->idth))
+        //             {
+        //                 if(!empty($request->idxs))
+        //                 {
+        //                     // khoảng giá k có 2 cái còn lại có
+        //                 }
+        //                 else
+        //                 {
+        //                     // khoảng giá với sx k có thương hiệu có
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 if(!empty($request->idxs))
+        //                 {
+        //                     // sắp xếp có 2 cái còn lại k có
+        //                 }
+        //                 else
+        //                 {
+        //                     // 3 cái đều k có
+        //                 }
+        //             }
+        //         }
+                
+        //     }
+        //     else
+        //     {
+        //         // $data = SanPham::whereNull('deleted_at')
+        //         //         ->where('loai_san_phams_id',$request->idlsp)
+        //         //         ->orderBy('id','asc')
+        //         //         ->offset($request->page*8)
+        //         //         ->limit(8)
+        //         //         ->with(array('anh' => function($query) {
+        //         //             $query->where('anhchinh',1);
+        //         //         }))->get();
+        //     }
+        // }
+        // else
+        // {
+        //     $data = SanPham::whereNull('deleted_at')
+        //             ->orderBy('id','asc')
+        //             ->offset($request->page*8)
+        //             ->limit(8)
+        //             ->with(array('anh' => function($query) {
+        //                 $query->where('anhchinh',1);
+        //             }))->get();
+        // }
+
+        return $data;
+    }
     public function index(Request $request)
     {
         // dd($request->idmtt);
@@ -82,7 +212,7 @@ class ProductController extends Controller
                         ->with(array('anh' => function($query) {
                             $query->where('anhchinh',1);
                         }))->get();
-
+                        dd($data);
             }
             else
             {
@@ -105,7 +235,7 @@ class ProductController extends Controller
                                     $query->where('anhchinh',1);
                                 }))->get();
         }
-
+        
         return $data;
     }
     public function sanphamcu(Request $request)
@@ -292,6 +422,7 @@ class ProductController extends Controller
     }
     public function tenketthuc(Request $request)
     {
+        
         if(!empty($request->idlsp)){
             if(!empty($request->idmtt)){
                 //  dd($request->idmtt);
@@ -379,7 +510,8 @@ class ProductController extends Controller
     {
         $tradeMark = $request->tradeMark;
         $arrayThuongHieu = $request->arrayThuongHieu;
-
+        
+        
         if(!empty($request->idlsp)){
             if(!empty($request->idmtt)){
            
@@ -428,6 +560,7 @@ class ProductController extends Controller
     public function kichthuoc(Request $request)
     {
         $key = $request->kichthuoc;
+     
         $data = SanPham::whereNull('deleted_at')
                         ->whereHas('chiTietSanPham', function($query) use ($key) {
                             $query->where('kich_thuoc',$key);

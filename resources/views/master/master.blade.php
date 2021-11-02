@@ -72,14 +72,7 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script> --}}
-    <div class="zalo-chat-widget" data-oaid="813275282970584175" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420" style="    bottom: 52px;
-    right: 52px;
-    border: none;
-    visibility: visible;
-    position: fixed;
-    width: 60px;
-    z-index: 0;
-    height: 60px;"></div>
+    <div class="zalo-chat-widget" data-oaid="813275282970584175" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420" ></div>
 
   <script src="https://sp.zalo.me/plugins/sdk.js"></script>
   <script>

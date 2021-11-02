@@ -115,6 +115,7 @@ Route::get('/', 'PageController@index')->name('index');
 Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
 Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
+Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
 Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
 Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
 Route::get('/news', function () {

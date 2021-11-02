@@ -63,11 +63,12 @@ class ChiTietSanPhamController extends Controller
      */
     public function store(Request $request,$id)
     {
+
         //
         $rule = [
-            'mau' => 'required|unique:chi_tiet_san_phams,mau|max:20',
-            'kichthuoc'=>'required|unique:chi_tiet_san_phams,kich_thuoc|max:10',
-            'soluong'=>'required|unique:chi_tiet_san_phams,so_luong|numeric',
+            'mau' => 'required|max:20',
+            'kichthuoc'=>'required|max:10',
+            'soluong'=>'required|numeric',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -77,6 +78,9 @@ class ChiTietSanPhamController extends Controller
             'kichthuoc.required' => 'Bạn chưa nhập kích thước',
             'kichthuoc.max' => 'Kích thước không quá 10 ký tự',
             'soluong.required' => 'Bạn chưa nhập số lượng', 
+            'mau.unique' => 'Đã có màu sản phẩm',
+            'kichthuoc.unique' => 'Đã có kích thước sản phẩm',
+            
         ];
         $customName = [
             'mau' => 'Màu',
@@ -88,19 +92,25 @@ class ChiTietSanPhamController extends Controller
         {
             return response()->json(['error'=>$validator->errors()]);
         }
-        $dsChiTietSanPham = new ChiTietSanPham();
-        $dsChiTietSanPham->san_phams_id=$id;
-        $dsChiTietSanPham->mau=$request->mau;
-        $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
-        $dsChiTietSanPham->so_luong=$request->soluong;
-        // if(!empty($id))
-        // {
-        //     $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
-        //     if(!empty($dsChiTietSanPham_check)){
-        //         return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
-        //     }
-        // }
-        $dsChiTietSanPham->save();
+       
+        
+        $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
+        if(empty($dsChiTietSanPham_check->id))
+        {
+            $dsChiTietSanPham = new ChiTietSanPham();
+            $dsChiTietSanPham->san_phams_id=$id;
+            $dsChiTietSanPham->mau=$request->mau;
+            $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
+            $dsChiTietSanPham->so_luong=$request->soluong;
+            $dsChiTietSanPham->save();
+        }
+        else
+        {
+            $newdsChiTietSanPham = ChiTietSanPham::find($dsChiTietSanPham_check->id);
+            $newdsChiTietSanPham->so_luong+=$request->soluong;
+            $newdsChiTietSanPham->save();
+        }
+        
         return response()->json(['success'=>'Thêm chi tiết sản phẩm thành công']);
     }
 
@@ -156,6 +166,9 @@ class ChiTietSanPhamController extends Controller
             'kichthuoc.required' => 'Bạn chưa nhập kích thước',
             'kichthuoc.max' => 'Kích thước không quá 10 ký tự',
             'soluong.required' => 'Bạn chưa nhập số lượng', 
+            'mau.unique' => 'Đã có màu sản phẩm',
+            'kichthuoc.unique' => 'Đã có kích thước sản phẩm',
+            
         ];
         $customName = [
             'mau' => 'Màu',
@@ -165,23 +178,55 @@ class ChiTietSanPhamController extends Controller
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator);
+            return response()->json(['error'=>$validator->errors()]);
         }
 
-        $dsChiTietSanPham = ChiTietSanPham::find($idct);
-        $dsChiTietSanPham->san_phams_id=$id;
-        $dsChiTietSanPham->mau=$request->mau;
-        $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
-        $dsChiTietSanPham->so_luong=$request->soluong;
-        if(!empty($id))
+        
+
+        $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
+        if(empty($dsChiTietSanPham_check->id))
         {
-            $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
-            if(!empty($dsChiTietSanPham_check)){
-                return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
-            }
+            
+            $dsChiTietSanPham = ChiTietSanPham::find($idct);
+            $dsChiTietSanPham->san_phams_id=$id;
+            $dsChiTietSanPham->mau=$request->mau;
+            $dsChiTietSanPham->kich_thuoc=$request->kichthuoc;
+            $dsChiTietSanPham->so_luong=$request->soluong;
+            $dsChiTietSanPham->save();
         }
-        $dsChiTietSanPham->save();
-        return redirect()->route('chitietsanpham.index',['id' =>$id])->with('success', 'Cập nhật chi tiết sản phẩm thành công');
+        else {
+            if($dsChiTietSanPham_check->id == $idct)
+            {
+                $dsChiTietSanPham = ChiTietSanPham::find($idct);
+                $dsChiTietSanPham->so_luong=$request->soluong;
+                $dsChiTietSanPham->save();
+            }
+            else
+            {
+                if($dsChiTietSanPham_check->mau == $request->mau && $dsChiTietSanPham_check->kich_thuoc == $request->kichthuoc)
+                {
+                    $newdsChiTietSanPham = ChiTietSanPham::find($dsChiTietSanPham_check->id);
+                    $newdsChiTietSanPham->so_luong+=$request->soluong;
+                    $newdsChiTietSanPham->save();
+                    $dsChiTietSanPham = ChiTietSanPham::find($idct);
+                    $dsChiTietSanPham->delete();
+                }
+                else
+                {
+                    return "1";
+                }
+            }
+            
+        }
+        // if(!empty($id))
+        // {
+        //     $dsChiTietSanPham_check = ChiTietSanPham::where('san_phams_id',$id)->where('mau',$request->mau)->where('kich_thuoc',$request->kichthuoc)->first();
+        //     if(!empty($dsChiTietSanPham_check)){
+        //         return redirect()->route('chitietsanpham.index',['id' =>$id])->with('error', 'Đã có chi tiết sản phẩm');
+        //     }
+        // }
+        
+        return response()->json(['success'=>'Cập nhật chi tiết sản phẩm thành công']);
     }
 
     /**
