@@ -2,6 +2,10 @@
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
+  .tbody-div {
+    overflow-y: scroll;
+    max-height: 340px;
+  }
   .lbl_thong_ke_theo {
     white-space: nowrap;
     margin-right: 8px;
@@ -118,22 +122,27 @@
                           <th>Lãi</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <?php
-                          $tong = 0;
-                        ?>
-                        @foreach($arrays as $array)
-                        <tr>
-                            <td>{{ $array->ten_san_pham }}</td>
-                            <td>{{ $array->so_luong}}</td>
-                            <td>{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
-                            <?php
-                              $tong += ($array->gia_ban - $array->gia_goc) * $array->so_luong;
-                            ?>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                  </table>
+                    </table>
+                    <div class="tbody-div">
+                      <table class="table-ds-sanpham">
+                        <tbody>
+                          <?php
+                            $tong = 0;
+                          ?>
+                          @foreach($arrays as $array)
+                          <tr>
+                              <td>{{ $array->ten_san_pham }}</td>
+                              <td>{{ $array->so_luong}}</td>
+                              <td>{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
+                              <?php
+                                $tong += ($array->gia_ban - $array->gia_goc) * $array->so_luong;
+                              ?>
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                    
                   {{--  <nav aria-label="Page navigation example" style="margin-top:20px">
                     <ul class="pagination">
                       {!! $arrays->appends(request()->query())->links() !!}

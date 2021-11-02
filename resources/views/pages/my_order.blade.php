@@ -94,7 +94,7 @@
                       @foreach($arrays as $bill)
                       <tr class="pre">
                         <td>{{ $bill->id }}</td>
-                        <td>{{ date('Y-m-d', strtotime($bill->ngay_lap_hd)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}</td>
                         <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                         <td>
                           @if ($bill->chot_don == true)

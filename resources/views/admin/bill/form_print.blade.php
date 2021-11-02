@@ -43,7 +43,7 @@
                 <label for="">Khách hàng:</label> {{ $bill->taiKhoan->ho_ten}} <br/>
             </div>
             <div class="info_item">
-                <label for="">Ngày lập HD:</label> {{ $bill->ngay_lap_hd }} <br/>
+                <label for="">Ngày lập HD:</label> {{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}<br/>
             </div>
             <div class="info_item">
                 <label for="">Thu Ngân:</label> {{ Auth::user()->ho_ten }}

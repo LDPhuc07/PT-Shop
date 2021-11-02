@@ -186,7 +186,9 @@
                   </div>
                 </div>
                 <div class="product-info-item">
-                  <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
+                  <div class="row">
+                    <div class="col-6">
+                      <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
                       <i class="fas fa-info note-info">
                         <p>Nhập ký tự số</p>
                       </i>
@@ -194,10 +196,9 @@
                         <input class="textbox" type="text" placeholder="Nhập giá gốc" value="{{$dsSanPham['gia_goc']}}" name="giagoc">
                         <p class="dram">VNĐ</p>
                       </div>
-                      <div class="error error-name" 	@if($errors->has('giagoc')) style="display:block;color:red" @endif>{{$errors->first('giagoc')}}</div>
-                </div>
-                <div class="product-info-item">
-                  <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
+                    </div>
+                    <div class="col-6">
+                      <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
                       <i class="fas fa-info note-info">
                         <p>Nhập ký tự số</p>
                       </i>
@@ -205,7 +206,8 @@
                         <input class="textbox" type="text" placeholder="Nhập giá bán" value="{{$dsSanPham['gia_ban']}}" name="giaban">
                         <p class="dram">VNĐ</p>
                       </div>
-                      <div class="error error-name" 	@if($errors->has('giaban')) style="display:block;color:red" @endif>{{$errors->first('giaban')}}</div>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <div class="add-img-div">
@@ -241,8 +243,10 @@
         </div>
       </form>
     </div>
+
+
     <script>
-      CKEDITOR.replace( 'textarea1');
+      CKEDITOR.replace('textarea1');
     </script>
 @endsection
 @section('script')
@@ -351,10 +355,20 @@
                           printErrorMsg (data.error.tensanpham, 'tensanpham');
                           $("input[name=tensanpham]").focus();
                       }
-                      
-                    
+                      var dem = 0;
+                      $.each( data.error, function( key, value ) {
+                        if(value == "Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.") {
+                          dem++;
+                        }
+                      });
+                      if(dem > 0) {
+                        var _html = '<span style="display: block" class="error-msg">';
+                            _html += '<i class="fas fa-times"></i>';
+                            _html += 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.';
+                            _html += '</span>';
+                        $('.list-img').after(_html);
+                      }
                   }
-                  
                 
               }
           })

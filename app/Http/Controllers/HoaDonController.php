@@ -1101,11 +1101,13 @@ class HoaDonController extends Controller
                                 ->get();
                     } else {
                         $arrays = DB::table('chi_tiet_hoa_dons')
-                        ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
-                        ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
-                        ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
-                        ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
-                        ->get();
+                            ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
+                            ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
+                            ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                            ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
+                            ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
+                            ->get();
                     }
                 }
             }
@@ -1136,10 +1138,15 @@ class HoaDonController extends Controller
         return $pdf->stream();
     }
     public function print_statistic_convert() {
+        $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+        
         $arrays = DB::table('chi_tiet_hoa_dons')
                     ->select('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban',DB::raw('SUM(chi_tiet_hoa_dons.so_luong) AS so_luong'))
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
+                    ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
         return view('admin.statistic.form_print',compact('arrays'));
