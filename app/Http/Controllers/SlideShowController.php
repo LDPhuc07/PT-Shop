@@ -65,7 +65,7 @@ class SlideShowController extends Controller
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
             'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
             'tenslideshow.unique' => 'Đã có tên slideshow',
-            'link.required' => 'Bạn chưa chọn hình ảnh'
+            'link.required' => 'Bạn chưa chọn hình ảnh slideshow'
         ];
         $customName = [
             'tenslideshow' => 'Tên slideshow',
@@ -135,7 +135,7 @@ class SlideShowController extends Controller
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
-            'link' => 'mimes:jpeg,jpg,png',
+            'link' => 'required|mimes:jpeg,jpg,png',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -146,7 +146,7 @@ class SlideShowController extends Controller
             'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
             'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
             'tenslideshow.unique' => 'Đã có tên slideshow',
-            // 'link.required' => 'Bạn chưa chọn hình ảnh'
+            'link.required' => 'Bạn chưa chọn hình ảnh slideshow',
         ];
         $customName = [
             'tenslideshow' => 'Tên slideshow',

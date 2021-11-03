@@ -2,6 +2,9 @@
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
+  
+
+
   @media(max-width: 767px) {
     .search {
       width: 100%;
@@ -183,7 +186,7 @@
                                 <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="check-bill-btn"><i class="fas fa-calendar-check"></i></a>
                               @endif
                               <div class="modal fade" id="form-modal" role="dialog">
-                                <div class="modal-dialog">
+                                <div style="max-width: 800px" class="modal-dialog">
                         
                                     <!-- Modal content-->
                                     <div class="modal-content">
