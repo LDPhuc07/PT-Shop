@@ -65,6 +65,7 @@ class TaiKhoanController extends Controller
 
 
     public function getDangNhapAdmin() {
+        Auth::logout();
         return view('admin.login');
     }
     public function getDangNhap() {
