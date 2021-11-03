@@ -218,6 +218,9 @@
                   success:function(data){
                       if(!$.isEmptyObject(data.success)) {
                           location.replace("http://127.0.0.1:8000");
+                      }
+                      if(!$.isEmptyObject(data.success1)) {
+                          location.replace(data.success1);
                       } 
                       if(!$.isEmptyObject(data.error)) {
                           if(!$.isEmptyObject(data.error.email)) {

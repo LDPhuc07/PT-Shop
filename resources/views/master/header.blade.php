@@ -101,7 +101,7 @@
             <a class="nav-link nav-link__third" href="#">Trang chủ</a>
           </li>
           <li class="nav-item nav-item__third">
-            <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Tất cả sản phẩm</a>
+            <a class="nav-link nav-link__third" href="{{route('products',['idlsp' =>'0','idmtt' => '0'])}}">Tất cả sản phẩm</a>
           </li>
           <li class="nav-item nav-item__third">
             <a class="nav-link nav-link__third" href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}">Giày<i class="fi-rs-caret-down"></i></a>
@@ -230,71 +230,71 @@
             <a href="">Giới thiệu</a>
           </li>
           <li class="ng-scope ng-has-child1">
-            <a href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Sản phẩm <i class="fas fa-plus cong"></i> <i class="fas fa-minus tru hidden"></i></a>
+            <a href="{{route('products',['idlsp' =>'0','idmtt' => '0'])}}">Sản phẩm <i class="fas fa-plus cong"></i> <i class="fas fa-minus tru hidden"></i></a>
             <ul class="ul-has-child1">
               <li class="ng-scope ng-has-child2">
-                <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}">Giày, dép <i class="fas fa-plus cong1" onclick="hienthi(1,`abc`)"></i> <i class="fas fa-minus tru1 hidden" onclick="hienthi(1,`abc`)"></i></a>
+                <a href="{{route('products',['idlsp' =>'1','idmtt' => '0'])}}">Giày, dép <i class="fas fa-plus cong1" onclick="hienthi(1,`abc`)"></i> <i class="fas fa-minus tru1 hidden" onclick="hienthi(1,`abc`)"></i></a>
                 <ul class="ul-has-child2 hidden" id="abc">
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '1'])}}">Bóng đá</a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '1'])}}">Bóng đá</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '9'])}}">Chạy</a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '9'])}}">Chạy</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '5'])}}">Cầu lông</a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '5'])}}">Cầu lông</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '2'])}}">Bóng rỗ</a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '2'])}}">Bóng rỗ</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a>
                   </li>
                 </ul>
               </li>
               <li class="ng-scope ng-has-child2" >
-                <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}">Quần áo<i class="fas fa-plus cong2" onclick="hienthi(2,`abc2`)"></i> <i class="fas fa-minus tru2 hidden" onclick="hienthi(2,`abc2`)"></i></a>
+                <a href="{{route('products',['idlsp' =>'2','idmtt' => '0'])}}">Quần áo<i class="fas fa-plus cong2" onclick="hienthi(2,`abc2`)"></i> <i class="fas fa-minus tru2 hidden" onclick="hienthi(2,`abc2`)"></i></a>
                 <ul class="ul-has-child2 hidden" id="abc2">
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '1'])}}">Bóng đá</a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '1'])}}">Bóng đá</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '9'])}}">Chạy</a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '9'])}}">Chạy</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '5'])}}">Cầu lông</a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '5'])}}">Cầu lông</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '2'])}}">Bóng rỗ</a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '2'])}}">Bóng rỗ</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a>
                   </li>
                 </ul>
               </li>
               <li class="ng-scope ng-has-child2">
-                <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '0'])}}">Phụ kiện <i class="fas fa-plus cong3" onclick="hienthi(3,`abc3`)"></i> <i class="fas fa-minus tru3 hidden" onclick="hienthi(3,`abc3`)"></i></a>
+                <a href="{{route('products',['idlsp' =>'3','idmtt' => '0'])}}">Phụ kiện <i class="fas fa-plus cong3" onclick="hienthi(3,`abc3`)"></i> <i class="fas fa-minus tru3 hidden" onclick="hienthi(3,`abc3`)"></i></a>
                 <ul class="ul-has-child2 hidden" id="abc3">
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '1'])}}">Bóng đá</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '1'])}}">Bóng đá</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '9'])}}">Chạy</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '9'])}}">Chạy</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '5'])}}">Cầu lông</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '5'])}}">Cầu lông</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '2'])}}">Bóng rỗ</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '2'])}}">Bóng rỗ</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '3'])}}">Quần vợt</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '3'])}}">Quần vợt</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '7'])}}">Bơi lội</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '7'])}}">Bơi lội</a>
                   </li>
                   <li class="ng-scope">
-                    <a href="{{route('categlory',['idlsp' =>'3','idmtt' => '6'])}}">Golf</a>
+                    <a href="{{route('products',['idlsp' =>'3','idmtt' => '6'])}}">Golf</a>
                   </li>
                 </ul>
               </li>
@@ -435,12 +435,12 @@
           <li class="header_nav-list-item "><a href="#">Trang chủ</a></li>
           <li class="header_nav-list-item"><a  href="">Giới thiệu</a></li>
           <li class="header_nav-list-item has-mega">
-            <a href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Sản phẩm<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
+            <a href="{{route('products',['idlsp' =>'0','idmtt' => '0'])}}">Sản phẩm<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
             <div class="mega-content" style="overflow-x: hidden;">
               <div class="row" >
                 <ul class="col-8 no-padding level0">
                   <li class="level1">
-                    <a class="hmega" href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Tất cả sản phẩm</a>
+                    <a class="hmega" href="{{route('products',['idlsp' =>'0','idmtt' => '0'])}}">Tất cả sản phẩm</a>
                     <!-- <ul class="level1">
                       <li class="level2"><a href="">Bóng đá</a></li>
                       <li class="level2"><a href="">Bóng đá</a></li>
@@ -449,35 +449,35 @@
                     </ul> -->
                   </li>
                   <li class="level1">
-                    <a class="hmega" href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}">Giày, dép</a>
+                    <a class="hmega" href="{{route('products',['idlsp' =>'1','idmtt' => '0'])}}">Giày, dép</a>
                     <ul class="level1">
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '1'])}}">Bóng đá</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '9'])}}">Chạy</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '5'])}}">Cầu lông</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '2'])}}">Bóng rổ</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '1'])}}">Bóng đá</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '9'])}}">Chạy</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '5'])}}">Cầu lông</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '2'])}}">Bóng rổ</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a></li>
                     </ul>
                   </li>
                   <li class="level1">
-                    <a class="hmega" href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}">Quần, áo</a>
+                    <a class="hmega" href="{{route('products',['idlsp' =>'2','idmtt' => '0'])}}">Quần, áo</a>
                     <ul class="level1">
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '1'])}}">Bóng đá</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '9'])}}">Chạy</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '5'])}}">Cầu lông</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '2'])}}">Bóng rổ</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '1'])}}">Bóng đá</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '9'])}}">Chạy</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '5'])}}">Cầu lông</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '2'])}}">Bóng rổ</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a></li>
                     </ul>
                   </li>
                   <li class="level1">
-                    <a class="hmega" href="{{route('categlory',['idlsp' =>'3','idmtt' => '0'])}}">Phụ kiện</a>
+                    <a class="hmega" href="{{route('products',['idlsp' =>'3','idmtt' => '0'])}}">Phụ kiện</a>
                     <ul class="level1">
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '1'])}}">Bóng đá</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '9'])}}">Chạy</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '5'])}}">Cầu lông</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '2'])}}">Bóng rổ</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '3'])}}">Quần vợt</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '7'])}}">Bơi lội</a></li>
-                      <li class="level2"><a href="{{route('categlory',['idlsp' =>'3','idmtt' => '6'])}}">Golf</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '1'])}}">Bóng đá</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '9'])}}">Chạy</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '5'])}}">Cầu lông</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '2'])}}">Bóng rổ</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '3'])}}">Quần vợt</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '7'])}}">Bơi lội</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'3','idmtt' => '6'])}}">Golf</a></li>
                     </ul>
                   </li>
                 </ul>

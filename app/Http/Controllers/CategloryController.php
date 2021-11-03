@@ -26,7 +26,18 @@ class CategloryController extends Controller
             return view('pages.product',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'yeu_thich' => $yeu_thich]);
         }
     }
-
+    public function index2($idlsp, $idmtt)
+    {
+        $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
+                                ->groupBy('san_phams_id')
+                                ->get();
+        if(Auth::check() and Auth::user()->admin != 1) {
+            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'is_like' => $is_like,'yeu_thich' => $yeu_thich]);
+        } else {
+            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'yeu_thich' => $yeu_thich]);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

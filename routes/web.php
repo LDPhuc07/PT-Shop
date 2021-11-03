@@ -112,10 +112,10 @@ Route::get('/login-google','TaiKhoanController@loginGoogle')->name('accounts.log
 Route::get('/google-plus/callback','TaiKhoanController@callbackGoogle');
 Route::get('/logout', 'TaiKhoanController@dangXuat')->name('accounts.logout');
 Route::get('/', 'PageController@index')->name('index');
-Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
+// Route::get('/products', 'PageController@tatcasanpham')->name('product.products');
 Route::get('/product-details/{id}','PageController@chitietsanpham')->name('product_detail');
-Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
-Route::get('/categlory/{idlsp}/{idmtt}','CategloryController@index')->name('categlory');
+Route::get('/products/{idlsp}/{idmtt}','CategloryController@index2')->name('products');
+// Route::get('/categlorytwo/{idlsp}/{idmtt}','CategloryController@index2')->name('categlory2');
 Route::get('/product-details/get-size/{id}/{mau}','PageController@getSize');
 Route::get('/product-details/get-qty/{id}/{mau}/{kichthuoc}','PageController@getQty');
 Route::get('/news', function () {
