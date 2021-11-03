@@ -84,36 +84,13 @@
                     <div class="product__filter-trademark">
                       <h4 class="product__filter-heading">Thương hiệu <i class="fi-rs-minus" onclick="khonghienthidanhsach(2,`thuonghieu`)" id="minus-2"></i> <i class="fi-rs-plus hidden" onclick="khonghienthidanhsach(2,`thuonghieu`)" id="plus-2"></i></h4>
                       <ul id="thuonghieu" class="product__filter-ckeckbox">
+                        @foreach($nxx as $i)
                         <li class="product__filter-item">
-                          <label class="form-check-label" for="2">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(2)" id="cc2" name="option" value="adidas"><span>Adidas</span>
+                          <label class="form-check-label" for="{{$i['id']}}">
+                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon({{$i['id']}})" id="cc{{$i['id']}}" name="option" value="{{$i['ten_nha_san_xuat']}}"><span>{{$i['ten_nha_san_xuat']}}</span>
                           </label>
                         </li>
-                        <li class="product__filter-item">
-                          <label class="form-check-label" for="1">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(1)" id="cc1" name="option" value="nike"><span>Nike</span>
-                          </label>
-                        </li>
-                        <li class="product__filter-item">
-                          <label class="form-check-label" for="3">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(3)" id="cc3" name="option" value="puma"><span>Puma</span>
-                          </label>
-                        </li>
-                        <li class="product__filter-item">
-                          <label class="form-check-label" for="5">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(5)" id="cc5" name="option" value="kappa"><span>KAPPA</span>
-                          </label>
-                        </li>
-                        <li class="product__filter-item">
-                          <label class="form-check-label" for="9">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(9)" id="cc9" name="option" value="x-storm"><span>X-storm</span>
-                          </label>
-                        </li>
-                        <li class="product__filter-item">
-                          <label class="form-check-label" for="6">
-                            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(6)" id="cc6" name="option" value="fila"><span>FILA</span>
-                          </label>
-                        </li>
+                        @endforeach
                       </ul>
                     </div>
                     {{-- <div class="product__filter-size">
@@ -231,73 +208,16 @@
     <div class="product__filter-trademark">
       <h4 class="product__filter-heading">Thương hiệu <i class="fi-rs-minus" onclick="khonghienthidanhsach(5,`thuonghieu1`)" id="minus-5"></i> <i class="fi-rs-plus hidden" onclick="khonghienthidanhsach(5,`thuonghieu2`)" id="plus-5"></i></h4>
       <ul id="thuonghieu2" class="product__filter-ckeckbox">
+        @foreach($nxx as $i)
         <li class="product__filter-item">
-          <label class="form-check-label" for="2">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(2)" id="cc2" name="option" value="adidas"><span>Adidas</span>
+          <label class="form-check-label" for="{{$i['id']}}">
+            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon({{$i['id']}})" id="cc{{$i['id']}}" name="option" value="{{$i['ten_nha_san_xuat']}}"><span>{{$i['ten_nha_san_xuat']}}</span>
           </label>
         </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="1">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(1)" id="cc1" name="option" value="nike"><span>Nike</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="3">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(3)" id="cc3" name="option" value="puma"><span>Puma</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="5">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(5)" id="cc5" name="option" value="kappa"><span>KAPPA</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="9">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(9)" id="cc9" name="option" value="x-storm"><span>X-storm</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="6">
-            <input type="checkbox" class="form-check-input checkThuongHieu" onclick="chon(6)" id="cc6" name="option" value="fila"><span>FILA</span>
-          </label>
-        </li>
+        @endforeach
+
       </ul>
     </div>
-    {{-- <div class="product__filter-size">
-      <h4 class="product__filter-heading">Size <i class="fi-rs-minus" onclick="khonghienthidanhsach(6,`size3`)" id="minus-6"></i> <i class="fi-rs-plus hidden" onclick="khonghienthidanhsach(6,`size3`)" id="plus-6"></i></h4>
-      <ul id= "size3" class="product__filter-ckeckbox">
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>37.5</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>38</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>38.5</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>x</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>xl</span>
-          </label>
-        </li>
-        <li class="product__filter-item">
-          <label class="form-check-label" for="check2">
-            <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something"><span>l</span>
-          </label>
-        </li>
-      </ul>
-    </div> --}}
 </div>
 </div>
 <!-- end bộ lộc mobile -->

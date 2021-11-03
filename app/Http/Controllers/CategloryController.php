@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\YeuThich;
+use App\NhaSanXuat;
 use DB;
 
 class CategloryController extends Controller
@@ -31,11 +32,12 @@ class CategloryController extends Controller
         $yeu_thich = YeuThich::select(array('san_phams_id',DB::raw('COUNT(id) as yeu_thich')))
                                 ->groupBy('san_phams_id')
                                 ->get();
+        $nxx = NhaSanXuat::whereNull('deleted_at')->get();
         if(Auth::check() and Auth::user()->admin != 1) {
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'is_like' => $is_like,'yeu_thich' => $yeu_thich]);
+            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'is_like' => $is_like,'yeu_thich' => $yeu_thich, 'nxx'=> $nxx]);
         } else {
-            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'yeu_thich' => $yeu_thich]);
+            return view('pages.product2',['idlsp' =>$idlsp, 'idmtt' =>$idmtt,'yeu_thich' => $yeu_thich, 'nxx'=> $nxx]);
         }
     }
     /**
