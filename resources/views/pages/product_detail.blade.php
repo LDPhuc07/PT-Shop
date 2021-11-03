@@ -674,7 +674,7 @@
       @endforeach
     </div>
     <div class="seemore">
-      <a href="{{route('categlory',['idlsp' =>'0','idmtt' => '0'])}}">Xem thêm</a>
+      <a href="{{route('products',['idlsp' =>'0','idmtt' => '0'])}}">Xem thêm</a>
     </div>
   </div>
 </div>
