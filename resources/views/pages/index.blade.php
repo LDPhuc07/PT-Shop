@@ -49,14 +49,14 @@
                 <div class="carousel-item active">
                   <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
                   <div class="carousel-caption">
-                    <a href="{{route('categlory',['idlsp' =>'2','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
                   </div>   
                 </div>
                 @else
                 <div class="carousel-item">
                   <img src="{{asset('img/slideshow/'. $slides[$slide]['link'])}}" alt="Los Angeles" width="1100" height="500">
                   <div class="carousel-caption">
-                    <a href="{{route('categlory',['idlsp' =>'1','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '0'])}}" class="click-slideshow">Xem ngay </a>
                   </div>   
                 </div>
                 @endif

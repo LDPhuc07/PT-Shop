@@ -99,6 +99,7 @@
     }
   }
 </style>
+
     <div class="product-container">
       <div class="head-title head-add-pro">
         <a href="{{ route('sanpham.indexAdmin') }}">
@@ -262,9 +263,7 @@
         </div>
       </form>
     </div>
-    <script>
-      CKEDITOR.replace( 'textarea1');
-    </script>
+    
     <script type="text/javascript">
       var loadfile = function(trung) {
         var id = trung.getAttribute('id');
@@ -374,4 +373,7 @@
         $("input").removeClass("border-error");
     }
 </script>
+@endsection
+@section('script')
+
 @endsection

@@ -141,7 +141,7 @@ class TaiKhoanController extends Controller
                     if(Session::has('url previous')) {
                         $url_dn = Session::get('url previous');
                         Session::forget('url previous');
-                        return redirect($url_dn);
+                        return response()->json(['success1'=>$url_dn]);
                     }
                     return response()->json(['success'=>'Đăng nhập thành công']);
                 }

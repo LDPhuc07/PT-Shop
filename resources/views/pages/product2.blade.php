@@ -331,32 +331,17 @@
 @section('js')
 <script src="js/product.js"></script>
 <script>
-    function handleData() {
-      // lấy dữ liệu của khoảng giá
-      $('.checkGia').click(function () {
-        var price = $(this).attr('value');
-        var priceFrom = price.split("-")[0];
-        var priceTo = price.split("-")[1];
-        console.log(price);
-        console.log(typeof priceFrom);
-        console.log(priceTo);
-      })
-      // lấy dữ liệu của sort sắp xếp
-      $('.dropdown-item').click(function () {
-        var dataSort = $(this).attr('value');
-        var dataSortFrom = dataSort.split('-')[0];
-        var dataSortTo = dataSort.split('-')[1];
-        console.log(dataSort);
-        console.log(dataSortFrom);
-        console.log(dataSortTo);
-      })
-      // lấy dữ liệu của thương hiệu
-    }
-    handleData();
+    var prevTextButton = $('.loadmore-btn').text();
+    $('.loadmore-btn').text('ĐANG TẢI...');
+    var productFetching = false;
+    var page = 0;
+    var idlsp = {{$idlsp}};
+    var idmtt = {{$idmtt}};
+    // lấy dữ liệu của thương hiệu
     var arrayThuongHieu = [];
     function chon(id){
-        var tradeMark = $(this).attr('value');
-        var idTradeMark = document.getElementById('cc'+id);
+      var tradeMark = $(this).attr('value');
+      var idTradeMark = document.getElementById('cc'+id);
         if(idTradeMark.checked)
         {
           arrayThuongHieu.push(id);
@@ -368,32 +353,377 @@
           })
         }
         console.log(arrayThuongHieu);
+        if(arrayThuongHieu.length > 0){
+          page = 0 ;
+          getSanPham(page);
+        }
+        else
+        {
+          page = 0 ;
+          productFetching =true;
+          $.ajax({
+          type: 'GET',
+          url: '/api/listproduct',
+          data: {
+            'page' : page,
+            'idlsp': idlsp,
+            'idmmt': idmtt,
+            'priceFrom' : priceFrom,
+            'priceTo' : priceTo,
+            'dataSortFrom': dataSortFrom,
+            'dataSortTo' : dataSortTo
+          },
+        
+          success: function (products) {
+            $('.loadmore-btn').text(prevTextButton);
+            console.log(products.length);
+            if(products.length == 0) {
+              // if($('.loadmore-btn').hasClass('hidden'))
+              // {
+              //   $('.loadmore-btn').removeClass('hidden');
+              // }
+              console.log('có');
+            }
+            // else
+            // {
+            //   $('.loadmore-btn').addClass('hidden');
+            // }
+            renderSanPham(products);
+            productFetching =false;
+          }
+        });
+        }
     }
-    var page = 0;
-    var idlsp = {{$idlsp}};
-    var idmtt = {{$idmtt}};
-    function getSanPham(page) {
-      if(!page)
-      {
-        page = 0;
-      }
+    
+     // lấy dữ liệu của khoảng giá
+    var priceFrom;
+    var priceTo;
+    $('.checkGia').click(function () {
+        page = 0 ;
+        var price = $(this).attr('value');
+        priceFrom = price.split("-")[0] ? price.split("-")[0] : "0" ;
+        priceTo = price.split("-")[1] ? price.split("-")[1] : "10000000000000";
+        console.log(price);
+        console.log(priceFrom);
+        console.log(priceTo);
+        getSanPham(page);
+    })
+     // lấy dữ liệu của sort sắp xếp
+    var dataSortFrom;
+    var dataSortTo;
+    $('.dropdown-item').click(function () {
+      page = 0 ;
+      var dataSort = $(this).attr('value');
+      dataSortFrom = dataSort.split('-')[0] ? dataSort.split('-')[0] : "gia_ban";
+      dataSortTo = dataSort.split('-')[1] ? dataSort.split('-')[1] : "asc";
+      console.log(dataSort);
+      console.log(dataSortFrom);
+      console.log(dataSortTo);
+      getSanPham(page);
+    })
+    // load more
+
+    $('.loadmore-btn').click(function() {
+      if(productFetching) return;
+      page++;
       $.ajax({
         type: 'GET',
         url: '/api/listproduct',
         data: {
           'page' : page,
           'idlsp': idlsp,
-          'idmmt': idmtt,
+          'idmtt': idmtt,
           'priceFrom' : priceFrom,
           'priceTo' : priceTo,
           'dataSortFrom': dataSortFrom,
-          'priceTo' : priceTo,
-          'arrayThuongHieu': arrayThuongHieu,
-          'tradeMark' : tradeMark
+          'dataSortTo' : dataSortTo,
+          'arrayThuongHieu': arrayThuongHieu
         },
-        success: function(){
         
-      })
+        success: function (products) {
+          $('.loadmore-btn').text(prevTextButton);
+          if(products.length == 0) {
+            $('.loadmore-btn').addClass('hidden');
+          }
+          renderSanPham2(products);
+        }
+      });
+    })
+    function getSanPham() {
+      
+      if(!page)
+      {
+        page = 0;
+      }
+      productFetching = true;
+      $.ajax({
+        type: 'GET',
+        url: '/api/listproduct',
+        data: {
+          'page' : page,
+          'idlsp': idlsp,
+          'idmtt': idmtt,
+          'priceFrom' : priceFrom,
+          'priceTo' : priceTo,
+          'dataSortFrom': dataSortFrom,
+          'dataSortTo' : dataSortTo,
+          'arrayThuongHieu': arrayThuongHieu
+        },
+        
+        success: function (products) {
+          $('.loadmore-btn').text(prevTextButton);
+          console.log(products.length);
+            if(products.length != 0) {
+              if($('.loadmore-btn').hasClass('hidden'))
+              {
+                $('.loadmore-btn').removeClass('hidden');
+              }
+              console.log('có');
+            }
+            else
+            {
+              $('.loadmore-btn').addClass('hidden');
+            }
+          renderSanPham(products);
+          productFetching =false;
+        }
+      });
     }
+    getSanPham();
+    function renderSanPham(products){
+    
+    let html ='';
+    $.each(products,function(index, product){
+      html+='<div class="col-lg-3 col-md-6 col-12 mb-20" style="margin-bottom: 20px">';
+      html+='<a href="/product-details/'+product.id+'" class="product__new-item">';
+          html+='<div class="card" style="width: 100%">';
+            if($.isEmptyObject(product.anh[0]))
+            {
+              html+='<img class="card-img-top" src="/img/product/no-image.png" alt="Card image cap">';
+             
+            }
+            else
+            {
+              html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+         
+            }
+            html+='<div class="card-body">';
+              html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
+              html+='<div class="product__price custom-text-price" id="price">';
+                html+='<p class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='</div>';
+              html+='<div style="display:flex;justify-content: space-between;';
+              html+='align-items: center;">';
+              html+='<div>'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 22px">'
+                  @foreach($yeu_thich as $like)
+                    if(product.id == {{ $like->san_phams_id }}) {
+                      html+='{{ $like->yeu_thich }}'
+                    }
+                  @endforeach
+                html+='</span>'
+              @if(Auth::check() and Auth::user()->admin != 1)
+                var is_liked = 0;
+                @foreach($is_like as $like)
+                  if({{ $like->san_phams_id }} == product.id) {
+                    is_liked = 1;
+                  }
+                @endforeach
+                if(is_liked == 1) {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                } else {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                }
+              @else
+                  <?php
+                    if(!Auth::check())
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
+                html+='<a class="icon-like" style="color: #ccc;'
+                html+='font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+              @endif
+              html+='</div>'
+              html+='  </div>';
+              html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
+                html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
+                html+='<span class="sale-off-label">GIẢM</span>';
+              html+='</div>';
+              html+='</div>';
+              html+='</div>';
+              html+='</a>';
+              html+='</div>';
+    });
+    $('#tatcasanpham').html(html);
+    $(document).ready(function() {
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')) )
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+    $(document).ready(function() {
+      var pGiamGia = $('.product__price').children('.product__price-old');
+      $.each(pGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+  }
+
+
+  // abc
+  function renderSanPham2(products){
+    
+    let html ='';
+    $.each(products,function(index, product){
+      html+='<div class="col-lg-3 col-md-6 col-12 mb-20" style="margin-bottom: 20px">';
+      html+='<a href="/product-details/'+product.id+'" class="product__new-item">';
+          html+='<div class="card" style="width: 100%">';
+            if($.isEmptyObject(product.anh[0]))
+            {
+              html+='<img class="card-img-top" src="/img/product/no-image.png" alt="Card image cap">';
+             
+            }
+            else
+            {
+              html+='<img class="card-img-top" src="'+product.anh[0].link+'" alt="Card image cap">';
+         
+            }
+            html+='<div class="card-body">';
+              html+='<h5 class="card-title custom__name-product title-news">'+product.ten_san_pham+'</h5>';
+              html+='<div class="product__price custom-text-price" id="price">';
+                html+='<p class="card-text price-color product__price-new">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban*(100-product.giam_gia)/100))+' VNĐ</p>';
+                html+='<p data-id="'+product.giam_gia+'" class="card-text price-color product__price-old">'+(new Intl.NumberFormat('de-DE').format(product.gia_ban))+' VNĐ</p>';
+                html+='</div>';
+              html+='<div style="display:flex;justify-content: space-between;';
+              html+='align-items: center;">';
+              html+='<div>'
+                html+='<span id="luot-like-'+product.id+'" class="luot-like-'+product.id+'" style="margin-right: 12px;font-size: 22px">'
+                  @foreach($yeu_thich as $like)
+                    if(product.id == {{ $like->san_phams_id }}) {
+                      html+='{{ $like->yeu_thich }}'
+                    }
+                  @endforeach
+                html+='</span>'
+              @if(Auth::check() and Auth::user()->admin != 1)
+                var is_liked = 0;
+                @foreach($is_like as $like)
+                  if({{ $like->san_phams_id }} == product.id) {
+                    is_liked = 1;
+                  }
+                @endforeach
+                if(is_liked == 1) {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="den icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                } else {
+                  html+='<a onclick="doimau({{ Auth::user()->id }},'+product.id+')" class="icon-like  like-'+product.id+'" style="color: #ccc;'
+                  html+='font-size: 22px;" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+                }
+              @else
+                  <?php
+                    if(!Auth::check())
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
+                html+='<a class="icon-like" style="color: #ccc;'
+                html+='font-size: 22px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>'
+              @endif
+              html+='</div>'
+              html+='  </div>';
+              html+='<div class="sale-off" data-id="'+product.giam_gia+'">';
+                html+='<span class="sale-off-percent" style="margin-right:7px">'+product.giam_gia+'%</span>';
+                html+='<span class="sale-off-label">GIẢM</span>';
+              html+='</div>';
+              html+='</div>';
+              html+='</div>';
+              html+='</a>';
+              html+='</div>';
+    });
+    $('#tatcasanpham').append(html);
+    $(document).ready(function() {
+      var divGiamGia = $('.card-body').children('.sale-off');
+      $.each(divGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')) )
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+    $(document).ready(function() {
+      var pGiamGia = $('.product__price').children('.product__price-old');
+      $.each(pGiamGia, function(i,v){
+        if(!Number($(v).attr('data-id')))
+        {
+          $(v).css('display','none');
+        }
+      });
+    });
+  }
+  // end abc
+
+
+
+  $('.dropdown-item').on("click",function(x){
+    console.log($( x['currentTarget']).text());
+    $('.bbc').html($(x['currentTarget']).text());
+  });
+</script>
+<script>
+  function doimau(tk_id, sp_id) {
+    if($(`.like-${sp_id}`).hasClass('den')) {
+      $.ajax({
+        url: 'dislike/'+sp_id+"/"+tk_id,
+        method: "GET"
+      }).done(function(response) {
+      $(`.like-${sp_id}`).removeClass('den');
+      var like = parseInt($(`#luot-like-${sp_id}`).text());
+      like--;
+      $(`.luot-like-${sp_id}`).html(like.toString());
+      var like_header = parseInt($(`#header__second__like--notice`).text());
+      like_header--;
+      
+      $(`#header__second__like--notice`).html(like_header.toString());
+
+      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1--;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
+        $(`.luot-like-${sp_id}`).html(like.toString());
+    });
+    }
+    else {
+      $.ajax({
+        url: 'like/'+sp_id+"/"+tk_id,
+        method: "GET"
+      }).done(function(response) {
+      $(`.like-${sp_id}`).addClass('den');
+      if(isNaN(parseInt($(`#luot-like-${sp_id}`).text()))) {
+        var like = 0;
+      }
+      else {
+        var like = parseInt($(`#luot-like-${sp_id}`).text());
+      }
+      like++;
+      var like_header = parseInt($(`#header__second__like--notice`).text());
+      like_header++;
+      $(`#header__second__like--notice`).html(like_header.toString());
+      $(`.luot-like-${sp_id}`).html(like.toString());
+
+      var like_header1 = parseInt($(`#header__second__like--notice1`).text());
+        like_header1++;
+        $(`#header__second__like--notice1`).html(like_header1.toString());
+        $(`.luot-like-${sp_id}`).html(like.toString());
+      });
+    }
+  }
 </script>
 @endsection

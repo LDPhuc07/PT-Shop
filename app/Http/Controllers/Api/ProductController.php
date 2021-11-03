@@ -21,24 +21,24 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function listProduct(Request $request ) {
-        $idlsp = 2;
-        $idmtt = 1;
-        $priceFrom = 6000000;
-        $priceTo = 7000000;
-        $dataSortFrom = 'gia_ban';
-        $dataSortTo = 'asc';
-        $tradeMark;
-        $arrayThuongHieu = [2];
-        $page = 0;
+        $idlsp = $request->idlsp;
+        $idmtt = $request->idmtt;
+        $priceFrom = $request->priceFrom;
+        $priceTo = $request->priceTo;
+        $dataSortFrom = $request->dataSortFrom;
+        $dataSortTo = $request->dataSortTo;
+        $tradeMark = $request->tradeMark;
+        $arrayThuongHieu = $request->arrayThuongHieu;
+        $page = $request->page;
 
         $query = SanPham::whereNull('deleted_at');
         if(!empty($idlsp)){
-            $query->where('loai_san_phams_id',$idmtt);
+            $query->where('loai_san_phams_id',$idlsp);
         }
         if(!empty($idmtt)){
             $query->where('mon_the_thaos_id',$idmtt);
         }
-        if(!empty($priceFrom)) {
+        if(!empty($priceTo)) {
             $query->whereBetween('gia_ban',[$priceFrom, $priceTo]);
         }
         if(!empty($arrayThuongHieu)) {
@@ -54,7 +54,6 @@ class ProductController extends Controller
         ->with(array('anh' => function($query) {
             $query->where('anhchinh',1);
         }))->get();
-        dd($data);
         // if(!empty($idlsp)){
         //     if(!empty($idmtt)){
         //         if(!empty($priceFrom))
@@ -79,11 +78,24 @@ class ProductController extends Controller
         //                             ->with(array('anh' => function($query) {
         //                                 $query->where('anhchinh',1);
         //                             }))->get();
-        //                     dd($data);
         //                 }
         //                 else
         //                 {
         //                     // value xs k có 2 cái còn lại có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereBetween('gia_ban',[$priceFrom, $priceTo])
+        //                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+        //                                 $query->whereIn('id',$arrayThuongHieu);
+        //                             })
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //             }
         //             else
@@ -91,10 +103,33 @@ class ProductController extends Controller
         //                 if(!empty($request->idxs))
         //                 {
         //                     // thương hiệu k có 2 cái còn lại có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereBetween('gia_ban',[$priceFrom, $priceTo])
+        //                             ->orderBy($dataSortFrom, $dataSortTo)
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //                 else
         //                 {
         //                     // thương hiệu và sx k có cái còn lại có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereBetween('gia_ban',[$priceFrom, $priceTo])
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //             }
         //         }
@@ -105,10 +140,37 @@ class ProductController extends Controller
         //                 if(!empty($request->idxs))
         //                 {
         //                     // khoảng giá k có 2 cái còn lại có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+        //                                 $query->whereIn('id',$arrayThuongHieu);
+        //                             })
+        //                             ->orderBy($dataSortFrom, $dataSortTo)
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //                 else
         //                 {
         //                     // khoảng giá với sx k có thương hiệu có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->whereHas('nhaSanXuat', function($query) use ($arrayThuongHieu){
+        //                                 $query->whereIn('id',$arrayThuongHieu);
+        //                             })
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //             }
         //             else
@@ -116,10 +178,31 @@ class ProductController extends Controller
         //                 if(!empty($request->idxs))
         //                 {
         //                     // sắp xếp có 2 cái còn lại k có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->orderBy($dataSortFrom, $dataSortTo)
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //                 else
         //                 {
         //                     // 3 cái đều k có
+        //                     $data = SanPham::whereNull('deleted_at')
+        //                             ->where([
+        //                                 ['loai_san_phams_id',$idlsp],
+        //                                 ['mon_the_thaos_id',$idmtt],
+        //                                 ])
+        //                             ->offset($page*8)
+        //                             ->limit(8)
+        //                             ->with(array('anh' => function($query) {
+        //                                 $query->where('anhchinh',1);
+        //                             }))->get();
         //                 }
         //             }
         //         }
@@ -127,20 +210,19 @@ class ProductController extends Controller
         //     }
         //     else
         //     {
-        //         // $data = SanPham::whereNull('deleted_at')
-        //         //         ->where('loai_san_phams_id',$request->idlsp)
-        //         //         ->orderBy('id','asc')
-        //         //         ->offset($request->page*8)
-        //         //         ->limit(8)
-        //         //         ->with(array('anh' => function($query) {
-        //         //             $query->where('anhchinh',1);
-        //         //         }))->get();
+        //         $data = SanPham::whereNull('deleted_at')
+        //                 ->where('loai_san_phams_id',$idlsp)
+        //                 ->orderBy('id','asc')
+        //                 ->offset($request->page*8)
+        //                 ->limit(8)
+        //                 ->with(array('anh' => function($query) {
+        //                     $query->where('anhchinh',1);
+        //                 }))->get();
         //     }
         // }
         // else
         // {
         //     $data = SanPham::whereNull('deleted_at')
-        //             ->orderBy('id','asc')
         //             ->offset($request->page*8)
         //             ->limit(8)
         //             ->with(array('anh' => function($query) {
