@@ -19,7 +19,7 @@ class CreateBinhLuansTable extends Migration
             $table->foreign('san_phams_id')->references('id')->on('san_phams');
             $table->unsignedInteger('tai_khoans_id');
             $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
-            $table->string('noi_dung');
+            $table->text('noi_dung');
             $table->boolean('trang_thai')->default(true);
             $table->timestamps();
             $table->softDeletes();

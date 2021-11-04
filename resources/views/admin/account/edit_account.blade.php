@@ -246,6 +246,7 @@
 
       $("#form").submit(function(e){
           e.preventDefault();
+          removeErrorMsg();
           var formData = new FormData($("#form")[0]);
           if($("input[name='anh_dai_dien']").val() != "" && $(".del-img").hasClass("display-none")) {
               $(".del-img").removeClass("display-none");
@@ -266,21 +267,17 @@
                   $(".alert-block").addClass("alert alert-success");
                 
                 }else{
-                    if(!$.isEmptyObject(data.error.ho_ten)) {
-                      printErrorMsg (data.error.ho_ten, 'ho_ten');
+                    if(!$.isEmptyObject(data.error.so_dien_thoai)) {
+                      printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
                     }
                     if(!$.isEmptyObject(data.error.email)) {
                       printErrorMsg (data.error.email, 'email');
                     }
-                    if(!$.isEmptyObject(data.error.mat_khau)) {
-                      printErrorMsg (data.error.mat_khau, 'mat_khau');
+                    if(!$.isEmptyObject(data.error.ho_ten)) {
+                      printErrorMsg (data.error.ho_ten, 'ho_ten');
                     }
-                    if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
-                      printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
-                    }
-                    if(!$.isEmptyObject(data.error.so_dien_thoai)) {
-                      printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
-                    }
+                    
+                    
                     if(!$.isEmptyObject(data.error.anh_dai_dien)) {
                       var _html = '<span class="error-msg">';
                           _html += '<i class="fas fa-times"></i>';
@@ -302,6 +299,7 @@
         _html += '</span>';
     jQuery(`input[name='${name}']`).after(_html);
     $(`input[name='${name}']`).addClass("border-error");
+    $(`input[name='${name}']`).focus();
   }
 
   function removeErrorMsg(){
