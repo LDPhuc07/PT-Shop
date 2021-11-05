@@ -78,31 +78,44 @@ class PageController extends Controller
         $size = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->distinct()->get();
         // dd($size);
         $color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->distinct()->get();
-        $first_color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->first();
-        $size_by_first_color = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->get();
-        $size_by_first_color_set_qty = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->first();
-        $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->where('kich_thuoc',$size_by_first_color_set_qty->kich_thuoc)->first();
+        
+        
+       
         // sản phẩm liên quan lấy chung loại
         $sanphamlienquans = SanPham::where('loai_san_phams_id','=',$sanpham->loai_san_phams_id)->where('id','<>',$sanpham->id)->orderby('id', 'desc')->with('loaiSanPham') 
                                 ->with(array('anh' => function($query) {
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
-        if(Auth::check() and Auth::user()->admin != 1) {
-            $id_sp = $request->id;
-            $check_bills = HoaDon::where('tai_khoans_id', Auth::user()->id)
-                                        ->whereHas('chiTietHoaDon', function($query) use ($id_sp) {
-                                            $query->whereHas('chiTietSanPham', function($que) use ($id_sp) {
-                                                $que->where('san_phams_id', $id_sp);
-                                            });
-                                        })
-                                        ->get();
-            $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
-            $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills','dem_danh_gia','list_danh_gia'));
+    
+        if(count($color) == 0 || count($size) == 0) 
+        {
+            return view('pages.un_product_detail');
         }
-        else {
-            return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','dem_danh_gia','list_danh_gia'));
+        else
+        {
+            $first_color = ChiTietSanPham::select('mau')->where('san_phams_id',$request->id)->first();
+            $size_by_first_color = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->get();
+            $size_by_first_color_set_qty = ChiTietSanPham::select('kich_thuoc')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->distinct()->first();
+            $qty = ChiTietSanPham::select('so_luong')->where('san_phams_id',$request->id)->where('mau',$first_color->mau)->where('kich_thuoc',$size_by_first_color_set_qty->kich_thuoc)->first();
+            if(Auth::check() and Auth::user()->admin != 1) {
+                $id_sp = $request->id;
+                $check_bills = HoaDon::where('tai_khoans_id', Auth::user()->id)
+                                            ->whereHas('chiTietHoaDon', function($query) use ($id_sp) {
+                                                $query->whereHas('chiTietSanPham', function($que) use ($id_sp) {
+                                                    $que->where('san_phams_id', $id_sp);
+                                                });
+                                            })
+                                            ->get();
+                $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
+                $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
+                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills','dem_danh_gia','list_danh_gia'));
+            }
+            
+            else {
+                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','dem_danh_gia','list_danh_gia'));
+            }
         }
+       
     }
     public function getSize($id, $mau) {
         $id_sp = $id;

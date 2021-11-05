@@ -127,6 +127,9 @@ Route::get('/contact', function () {
 Route::get('/order-success', function () {
     return view('pages.oder_success');
 })->name('ordersuccess');
+Route::get('/un-product-detail', function () {
+    return view('pages.un_product_detail');
+})->name('unproductdetail');
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');

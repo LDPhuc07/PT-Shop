@@ -40,7 +40,7 @@
           <div style="padding-bottom: 24px;border-bottom: 1px solid #dfe4e8;" class="col-12 pl-0 pr-0">
             <div class="product-info">
               <div class="product-info-item">
-                
+
               <div class="product-info-item">
                 <div class="row">
                   <div class="col-4">
@@ -48,7 +48,7 @@
                     <i class="fas fa-info note-info">
                       <p>Nhập màu không quá 20 ký tự</p>
                     </i>
-                    <input class="textbox" style="width: 100%" type="text" name="mau" pattern="[ a-zA-Z,#.-]+">
+                    <input class="textbox" style="width: 100%" type="text" name="mau">
                     <div class="error error-name" 	@if($errors->has('mau')) style="display:block;color:red" @endif>{{$errors->first('mau')}}</div>
                   </div>
                   <div class="col-4">

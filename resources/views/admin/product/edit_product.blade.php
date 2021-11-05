@@ -227,7 +227,7 @@
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Mô tả</label>
-                  <textarea class="ckeditor" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
+                  <textarea class="form-control" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
                 </div>
               </div>
             </div>
