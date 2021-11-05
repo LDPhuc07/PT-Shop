@@ -188,17 +188,7 @@
             </div>
         </div>
     </div>
-  {{-- <script>
-    function xoasanpham(id){
-      $.ajax({
-        url: 'cart/delete-item-ajax/'+id,
-        type: 'GET',
-      }).done(function(response) {
-        $("#cart-content").empty();
-        $("#cart-content").html(response);
-      });
-    }
-</script> --}}
+
 @endsection
 @section('script')
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

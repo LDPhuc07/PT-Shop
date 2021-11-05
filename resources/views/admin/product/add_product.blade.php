@@ -291,8 +291,6 @@
         jQuery(el).closest('.abc').remove();
       }
     </script>
-
-
 <script type="text/javascript">
 
 

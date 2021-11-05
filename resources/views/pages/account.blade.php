@@ -310,33 +310,4 @@
   </script>
 @endsection
 @section('js')
-
-
-  {{--  <script type="text/javascript">
-    $(document).ready(function() {
-      $(".submit-change-pass").ckick(function(e) {
-        e.preventDefault();
-
-        var _token = $("input[name='_token']").val();
-        var mat_khau_cu = $("input[name='mat_khau_cu']").val();
-        var mat_khau_moi = $("input[name='mat_khau_moi']").val();
-        var nhap_lai_mat_khau = $("input[name='nhap_lai_mat_khau']").val();
-
-        $.ajax({
-          url: "{{ route('account.changePassword',Auth::user()->id) }}",
-          type: 'PUT',
-          data: {_token:_token,
-            mat_khau_cu:mat_khau_cu,
-            mat_khau_moi:mat_khau_moi,
-            nhap_lai_mat_khau:nhap_lai_mat_khau},
-          success: function(data) {
-            if($.isEmptyObject(data.error)) {
-              alert(data.success);
-            }
-            
-          }
-        });
-      });
-    };
-  </script>  --}}
 @endsection
