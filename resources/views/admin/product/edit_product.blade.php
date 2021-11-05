@@ -227,7 +227,7 @@
               <div class="product-info">
                 <div class="product-info-item">
                   <label class="product-info-item-label" for="">Mô tả</label>
-                  <textarea class="ckeditor" id="textarea1" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
+                  <textarea class="form-control" id="textarea-edit-product" cols="30" type="text" rows="10" name="mota"><?php echo $dsSanPham['mo_ta']?></textarea>
                 </div>
               </div>
             </div>
@@ -241,9 +241,6 @@
         </div>
       </form>
     </div>
-    <script>
-      CKEDITOR.replace( 'textarea1');
-    </script>
 @endsection
 @section('script')
   <script>
@@ -310,7 +307,6 @@
 
 <script type="text/javascript">
   var idInput = $('#id').val();
-  console.log(idInput);
   $(function(){
 
       $.ajaxSetup({

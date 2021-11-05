@@ -382,7 +382,7 @@ class SanPhamController extends Controller
             'tensanpham' => 'required|unique:san_phams,ten_san_pham|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
-            'giamgia' => 'numeric|min:1|max:50',
+            'giamgia' => 'nullable|numeric|min:1|max:50',
             // 'description' => 'required',
             'link.*' => 'mimes:jpeg,jpg,png',
         ];
