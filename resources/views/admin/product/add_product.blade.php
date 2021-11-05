@@ -250,8 +250,7 @@
             <div class="product-info">
               <div class="product-info-item">
                 <label class="product-info-item-label" for="">Mô tả</label>
-                <textarea class="form-control" cols="30" rows="10" name="mota" id="textarea-add-product">
-                  
+                <textarea class="form-control" cols="30" rows="10" name="mota" id="textarea1">
                 </textarea>
               </div>
             </div>
@@ -264,6 +263,7 @@
         </div>
       </form>
     </div>
+    
     <script type="text/javascript">
       var loadfile = function(trung) {
         var id = trung.getAttribute('id');
@@ -291,6 +291,8 @@
         jQuery(el).closest('.abc').remove();
       }
     </script>
+
+
 <script type="text/javascript">
 
 
