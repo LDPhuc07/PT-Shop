@@ -1005,6 +1005,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->where('hoa_dons.trang_thai', true)
                     ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1029,6 +1030,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1040,6 +1042,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1051,6 +1054,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1062,6 +1066,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1075,6 +1080,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$request->key_from_day, $request->key_to_day])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1084,6 +1090,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->key_from_day)
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1095,6 +1102,7 @@ class HoaDonController extends Controller
                                 ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                                 ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                                 ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                                ->where('hoa_dons.trang_thai', true)
                                 ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->key_to_day)
                                 ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                                 ->get();
@@ -1104,6 +1112,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                            ->where('hoa_dons.trang_thai', true)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1145,6 +1154,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->where('hoa_dons.trang_thai', true)
                     ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1161,6 +1171,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->where('hoa_dons.trang_thai', true)
                     ->whereDate('hoa_dons.ngay_lap_hd','<=',$key_to_day)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1177,6 +1188,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                    ->where('hoa_dons.trang_thai', true)
                     ->whereDate('hoa_dons.ngay_lap_hd','>=',$key_from_day)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1214,6 +1226,7 @@ class HoaDonController extends Controller
                         ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                         ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                         ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
+                        ->where('hoa_dons.trang_thai', true)
                         ->whereBetween('hoa_dons.ngay_lap_hd',[$key_from_day, $key_to_day])
                         ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                         ->get();

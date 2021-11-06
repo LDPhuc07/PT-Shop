@@ -16,13 +16,14 @@ class DashboardController extends Controller
 {
     public function index() {
         $dem_yeu_thich = YeuThich::count();
-        $dem_khach_hang = TaiKhoan::where('admin',false)->count();
+        $dem_khach_hang = TaiKhoan::where('admin',false)->where('trang_thai', true)->count();
         $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
         $dem_don_hang = HoaDon::where('trang_thai',true)->whereBetween('ngay_lap_hd',[$sub_30_days, $now])->count();
         $count_san_pham_max = DB::table('chi_tiet_hoa_dons')->join('chi_tiet_san_phams', 'chi_tiet_hoa_dons.chi_tiet_san_phams_id', '=', 'chi_tiet_san_phams.id')
-                     ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('COUNT(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->first();
+                      ->join('hoa_dons', 'chi_tiet_hoa_dons.hoa_dons_id', '=', 'hoa_dons.id')
+                     ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('COUNT(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai', true)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->first();
         if(empty($count_san_pham_max)) {
             $san_pham_max = null;
         } else {
