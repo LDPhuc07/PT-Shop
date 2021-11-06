@@ -275,17 +275,17 @@
                         $("input").val("");
                     } 
                     if(!$.isEmptyObject(data.error)) {
-                        if(!$.isEmptyObject(data.error.mat_khau_cu)) {
-                            printErrorMsg (data.error.mat_khau_cu, 'mat_khau_cu');
-                        }
-                        if(!$.isEmptyObject(data.error.mat_khau_moi)) {
-                            printErrorMsg (data.error.mat_khau_moi, 'mat_khau_moi');
-                        }
-                        if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
-                            printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
-                            $("input[name='mat_khau_moi']").val("");
-                            $("input[name='nhap_lai_mat_khau']").val("");
-                        }
+                      if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
+                          printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
+                          $("input[name='mat_khau_moi']").val("");
+                          $("input[name='nhap_lai_mat_khau']").val("");
+                      }
+                      if(!$.isEmptyObject(data.error.mat_khau_moi)) {
+                          printErrorMsg (data.error.mat_khau_moi, 'mat_khau_moi');
+                      }
+                      if(!$.isEmptyObject(data.error.mat_khau_cu)) {
+                          printErrorMsg (data.error.mat_khau_cu, 'mat_khau_cu');
+                      }   
                     }
                     if(!$.isEmptyObject(data.errorAll)) {
                         var _html = '<span class="error-msg">';
@@ -309,6 +309,7 @@
             _html += '</span>';
         jQuery(`input[name='${name}']`).after(_html);
         $(`input[name='${name}']`).addClass("border-error");
+        $(`input[name='${name}']`).focus();
       }
 
       function removeErrorMsg(){

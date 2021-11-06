@@ -191,7 +191,6 @@
                     @if($account->anh_dai_dien == null)
                       <div class="form-group head-product-picture">
                         <span class="form-label">Cập nhật avatar</span>
-                        <a href="javascript:void(0)" onclick="delImg()" class="del-img display-none">Xóa ảnh</a>
                         <input id="avatar" name="anh_dai_dien" type="file" onchange="loadfile(event)" class="form-control" hidden>
                         <label for="avatar">Chọn ảnh</label>
                         <span class="form-message"></span>
@@ -202,7 +201,6 @@
                     @else
                       <div class="form-group head-product-picture">
                         <span class="form-label">Cập nhật avatar</span>
-                        <a href="javascript:void(0)" onclick="delImg()" class="del-img">Xóa ảnh</a>
                         <input id="avatar" name="anh_dai_dien" value="{{ $account->anh_dai_dien }}" type="file" onchange="loadfile(event)" class="form-control" hidden>
                         <label for="avatar">Chọn ảnh</label>
                         <span class="form-message"></span>
@@ -229,12 +227,12 @@
           $(".del-img").removeClass("display-none");
         }
       }
-      function delImg () {
+      {{--  function delImg () {
         $("input[name='anh_dai_dien']").val("");
         var src1 = 'https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png';
         $("#imgsp").attr("src", src1);
         $(".del-img").addClass("display-none");
-      }
+      }  --}}
     </script>
     <script type="text/javascript">
 
@@ -248,6 +246,7 @@
   
         $("#form").submit(function(e){
             e.preventDefault();
+            removeErrorMsg();
             var formData = new FormData($("#form")[0]);
 
             $.ajax({
@@ -264,20 +263,14 @@
                     $(".alert-block").addClass("alert alert-success");
                   
                   }else{
-                      if(!$.isEmptyObject(data.error.ho_ten)) {
-                        printErrorMsg (data.error.ho_ten, 'ho_ten');
+                      if(!$.isEmptyObject(data.error.so_dien_thoai)) {
+                        printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
                       }
                       if(!$.isEmptyObject(data.error.email)) {
                         printErrorMsg (data.error.email, 'email');
                       }
-                      if(!$.isEmptyObject(data.error.mat_khau)) {
-                        printErrorMsg (data.error.mat_khau, 'mat_khau');
-                      }
-                      if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
-                        printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
-                      }
-                      if(!$.isEmptyObject(data.error.so_dien_thoai)) {
-                        printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
+                      if(!$.isEmptyObject(data.error.ho_ten)) {
+                        printErrorMsg (data.error.ho_ten, 'ho_ten');
                       }
                       if(!$.isEmptyObject(data.error.anh_dai_dien)) {
                         var _html = '<span class="error-msg">';
@@ -300,12 +293,12 @@
           _html += '</span>';
       jQuery(`input[name='${name}']`).after(_html);
       $(`input[name='${name}']`).addClass("border-error");
+      $(`input[name='${name}']`).focus();
     }
   
     function removeErrorMsg(){
         $(".error-msg").remove();
         $("input").removeClass("border-error");
-        $(".del-img").addClass("display-none");
     }
   </script>
 @endsection

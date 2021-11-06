@@ -33,7 +33,7 @@
           <i class="fas fa-chevron-left"></i>
           <span>Quay lại danh sách loại sản phẩm</span>
         </a>
-        <h3>Chỉnh sửa loại sản phẩm</h3>
+        <h3>Chỉnh sửa nhà sản xuất</h3>
       </div>
       
       <form id="form">

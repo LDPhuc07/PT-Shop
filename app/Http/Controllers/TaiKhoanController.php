@@ -172,7 +172,56 @@ class TaiKhoanController extends Controller
         return view('pages.sign_up');
     }
     public function postDangKy(Request $requests) {
+      $checkTaiKhoan = TaiKhoan::where('so_dien_thoai',$requests->so_dien_thoai)->first();
+      if(!empty($checkTaiKhoan) && $checkTaiKhoan->password == null && $checkTaiKhoan->admin != 1) {
+        $rule = [
+            'ho_ten' => 'required|max:50',
+            'email' => 'required|email|unique:tai_khoans,email|max:50',
+            'mat_khau' => 'required|min:6',
+            'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
+            'so_dien_thoai' => 'required|digits:10|numeric',
+            'anh_dai_dien' => 'nullable|mimes:jpg,jpeg,png',
+        ];
+        $messages = [
+            'ho_ten.required' => 'Vui lòng nhập họ và tên',
+            'ho_ten.max' => 'Họ và tên không quá 50 ký tự',
+            'email.required' => 'Vui lòng nhập email',
+            'email.email' => 'Email không hợp lệ',
+            'email.unique' => 'Email đã đã được đăng ký',
+            'email.max' => 'Email không quá 50 ký tự',
+            'mat_khau.required' => 'Vui lòng nhập mật khẩu',
+            'mat_khau.min' => 'Mật khẩu phải từ 6 ký tự trở lên',
+            'nhap_lai_mat_khau.required_with' => 'Nhập lại mật khẩu không hợp lệ',
+            'nhap_lai_mat_khau.same' => 'Nhập lại mật khẩu không hợp lệ',
+            'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+            'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+            'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
+            'anh_dai_dien.mimes' => 'Ảnh đại diện không hợp lệ',
+        ];
 
+        $validator = Validator::make($requests->all(),$rule,$messages);
+
+
+        if ($validator->passes()) {
+          $new = TaiKhoan::find($checkTaiKhoan->id);
+          $new->ho_ten = $requests->ho_ten;
+          $new->email = $requests->email;
+          $new->password = Hash::make($requests->mat_khau);
+          $new->so_dien_thoai = $requests->so_dien_thoai;
+          $new->dia_chi = $requests->dia_chi;
+          if($requests->hasFile('anh_dai_dien')){// neu anh co ton
+              $img = $requests->anh_dai_dien;
+              $new->anh_dai_dien=$img->getClientOriginalName();
+              $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
+          } else {
+              $new->anh_dai_dien = null;
+          }
+          $new->save();
+          return response()->json(['success'=>'Đăng ký thành công']);
+        }
+        
+        return response()->json(['error'=>$validator->errors()]);
+      } else {
         $rule = [
             'ho_ten' => 'required|max:50',
             'email' => 'required|email|unique:tai_khoans,email|max:50',
@@ -207,6 +256,7 @@ class TaiKhoanController extends Controller
             $newAccount->ho_ten = $requests->ho_ten;
             $newAccount->email = $requests->email;
             $newAccount->password = Hash::make($requests->mat_khau);
+            $newAccount->so_dien_thoai = $requests->so_dien_thoai;
             if($requests->hasFile('anh_dai_dien')){// neu anh co ton
                 $img = $requests->anh_dai_dien;
                 $newAccount->anh_dai_dien=$img->getClientOriginalName();
@@ -216,12 +266,16 @@ class TaiKhoanController extends Controller
             {
                 $newAccount->anh_dai_dien = null;
             }
+            $newAccount->dia_chi = $requests->dia_chi;
             $newAccount->admin = false;
             $newAccount->save();
             return response()->json(['success'=>'Đăng ký thành công']);
         }
         
         return response()->json(['error'=>$validator->errors()]);
+      }
+
+        
     }
     public function postDangKyAdmin(Request $request) {
 
@@ -261,7 +315,7 @@ class TaiKhoanController extends Controller
             $newAccount->email = $request->email;
             $newAccount->password = Hash::make($request->mat_khau);
             $newAccount->so_dien_thoai = $request->so_dien_thoai;
-            $newAccount->so_dien_thoai = $request->dia_chi;
+            $newAccount->dia_chi = $request->dia_chi;
             if($request->hasFile('anh_dai_dien')){// neu anh co ton
                 $img = $request->anh_dai_dien;
                 $newAccount->anh_dai_dien=$img->getClientOriginalName();
@@ -450,8 +504,6 @@ class TaiKhoanController extends Controller
                 $img = $requests->anh_dai_dien;
                 $new->anh_dai_dien=$img->getClientOriginalName();
                 $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
-            } else {
-                $new->anh_dai_dien = null;
             }
             $new->save();
             return response()->json(["success"=>"Câp nhật tài khoản thành công"]);
@@ -516,8 +568,6 @@ class TaiKhoanController extends Controller
                 $img = $requests->anh_dai_dien;
                 $new->anh_dai_dien=$img->getClientOriginalName();
                 $requests->anh_dai_dien->move('img/anh-dai-dien',$img->getClientOriginalName());
-            } else {
-                $new->anh_dai_dien = null;
             }
             $new->save();
             return response()->json(["success"=>"Câp nhật tài khoản thành công"]);

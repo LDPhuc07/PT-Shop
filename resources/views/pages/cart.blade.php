@@ -26,7 +26,7 @@
   }
 }
 .cart-body {
-    height: 450px;
+    max-height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
   }

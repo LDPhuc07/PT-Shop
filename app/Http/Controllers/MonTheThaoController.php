@@ -126,35 +126,38 @@ class MonTheThaoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $rule = [
-            'tenthethao' => 'required|unique:mon_the_thaos,ten_the_thao|max:50',
-        ];
-        $messages = [
-            'required' => 'Bạn chưa nhập tên :attribute',
-            'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
-            'tenthethao.max' => 'Tên thể thao không quá 50 ký tự',
-            'tenthethao.unique' => 'Đã có tên môn thể thao'
-        ];
-        $customName = [
-            'tenthethao' => 'Tên thể thao',
-        ];
-        $validator = Validator::make($request->all(),$rule,$messages,$customName);
-        if($validator->fails())
-        {
-            return response()->json(['error'=>$validator->errors()]);
+        $dsMonTheThao = MonTheThao::find($id);
+        if($dsMonTheThao->ten_the_thao!=$request->tenthethao) {
+          $rule = [
+              'tenthethao' => 'required|unique:mon_the_thaos,ten_the_thao|max:50',
+          ];
+          $messages = [
+              'required' => 'Bạn chưa nhập tên :attribute',
+              'tenthethao.required' => 'Bạn chưa nhập tên thể thao',
+              'tenthethao.max' => 'Tên thể thao không quá 50 ký tự',
+              'tenthethao.unique' => 'Đã có tên môn thể thao'
+          ];
+          $customName = [
+              'tenthethao' => 'Tên thể thao',
+          ];
+          $validator = Validator::make($request->all(),$rule,$messages,$customName);
+          if($validator->fails())
+          {
+              return response()->json(['error'=>$validator->errors()]);
+          }
+          
+          // if(!empty($request->id))
+          // {
+          //     $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+          //     if(!empty($dsMonTheThao_check)){
+          //         return redirect()->route('monthethao.index')->with('error', 'Đã có tên môn thể thao');
+          //     }
+          // }
+          $dsMonTheThao = MonTheThao::find($id);
+          $dsMonTheThao->ten_the_thao=$request->tenthethao;
+          $dsMonTheThao->save();
         }
         
-        // if(!empty($request->id))
-        // {
-        //     $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
-        //     if(!empty($dsMonTheThao_check)){
-        //         return redirect()->route('monthethao.index')->with('error', 'Đã có tên môn thể thao');
-        //     }
-        // }
-        $dsMonTheThao = MonTheThao::find($id);
-        $dsMonTheThao->ten_the_thao=$request->tenthethao;
-        $dsMonTheThao->save();
         return response()->json(['success'=>'Cập nhật môn thể thao thành công']);
     }
 

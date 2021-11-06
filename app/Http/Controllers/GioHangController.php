@@ -14,7 +14,7 @@ use App\GioHang;
 class GioHangController extends Controller
 {
     public function index() {
-        if(Auth::check() and Auth::user()->admin != 1) {
+        if(Auth::check() && Auth::user()->admin != 1) {
             $arrays = GioHang::where('tai_khoans_id',Auth::user()->id)
                                     ->with(array('chiTietSanPham' => function($query) {
                                         $query->with(array('sanPham' => function($querys) {
@@ -34,7 +34,7 @@ class GioHangController extends Controller
         $ctsp = ChiTietSanPham::where('san_phams_id',$request->id)->where('mau',$request->mau)->where('kich_thuoc',$request->kich_thuoc)->first();
         $anh = Anh::select('anhchitiet')->where('san_phams_id', $request->id)->where('anhchinh',true)->first();
         
-        if(Auth::check() and Auth::user()->admin != 1) {
+        if(Auth::check() && Auth::user()->admin != 1) {
             $check = GioHang::where('tai_khoans_id',Auth::user()->id)->where('chi_tiet_san_phams_id',$ctsp->id)->first();
 
             if(empty($check)) {
@@ -132,7 +132,7 @@ class GioHangController extends Controller
         // ($ctsp->id == $content->id and $ctsp->so_luong >= ($request->so_luong + $content->qty))
     }
     public function deleteItemAjax($id) {
-        if(Auth::check() and Auth::user()->admin != 1) {
+        if(Auth::check() && Auth::user()->admin != 1) {
             $update = GioHang::find($id);
             $update->delete();
 
@@ -153,7 +153,7 @@ class GioHangController extends Controller
         }
     }
     public function updateItem($id, $qty) {
-        if(Auth::check() and Auth::user()->admin != 1) {
+        if(Auth::check() && Auth::user()->admin != 1) {
             $update = GioHang::find($id);
             $update->so_luong = $qty;
             $update->save();

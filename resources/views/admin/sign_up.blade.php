@@ -252,22 +252,22 @@
                         $(".alert-block").addClass("alert alert-info");
                         $("input").val("");
                     } else {
+                        if(!$.isEmptyObject(data.error.so_dien_thoai)) {
+                          printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
+                        }
+                        if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
+                          printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
+                        }
+                        if(!$.isEmptyObject(data.error.mat_khau)) {
+                          printErrorMsg (data.error.mat_khau, 'mat_khau');
+                        }
+                        if(!$.isEmptyObject(data.error.email)) {
+                          printErrorMsg (data.error.email, 'email');
+                        }
                         if(!$.isEmptyObject(data.error.ho_ten)) {
-                            printErrorMsg (data.error.ho_ten, 'ho_ten');
-                          }
-                          if(!$.isEmptyObject(data.error.email)) {
-                            printErrorMsg (data.error.email, 'email');
-                          }
-                          if(!$.isEmptyObject(data.error.mat_khau)) {
-                            printErrorMsg (data.error.mat_khau, 'mat_khau');
-                          }
-                          if(!$.isEmptyObject(data.error.nhap_lai_mat_khau)) {
-                            printErrorMsg (data.error.nhap_lai_mat_khau, 'nhap_lai_mat_khau');
-                          }
-                          if(!$.isEmptyObject(data.error.so_dien_thoai)) {
-                            printErrorMsg (data.error.so_dien_thoai, 'so_dien_thoai');
-                          }
-                          if(!$.isEmptyObject(data.error.anh_dai_dien)) {
+                          printErrorMsg (data.error.ho_ten, 'ho_ten');
+                        }
+                        if(!$.isEmptyObject(data.error.anh_dai_dien)) {
                             var _html = '<span class="error-msg">';
                                 _html += '<i class="fas fa-times"></i>';
                                 _html += data.error.anh_dai_dien;
@@ -286,6 +286,7 @@
                 _html += '</span>';
             jQuery(`input[name='${name}']`).after(_html);
             $(`input[name='${name}']`).addClass("border-error");
+            $(`input[name='${name}']`).focus();
           }
 
           function removeErrorMsg(){
