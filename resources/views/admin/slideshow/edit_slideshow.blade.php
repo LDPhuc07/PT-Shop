@@ -152,6 +152,7 @@
             _html += '</span>';
         jQuery(`input[name='${name}']`).after(_html);
         $(`input[name='${name}']`).addClass("border-error");
+        $(`input[name='${name}']`).focus();
       }
   
       function removeErrorMsg(){

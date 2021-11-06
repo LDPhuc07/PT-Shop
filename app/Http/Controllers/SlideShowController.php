@@ -129,34 +129,44 @@ class SlideShowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $rule = [
-            'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            'link' => 'required|mimes:jpeg,jpg,png',
-        ];
-        $messages = [
-            'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            'mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
-            'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
-            'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
-            'tenslideshow.unique' => 'Đã có tên slideshow',
-            'link.required' => 'Bạn chưa chọn hình ảnh slideshow',
-        ];
-        $customName = [
-            'tenslideshow' => 'Tên slideshow',
-        ];
-        $validator = Validator::make($request->all(),$rule,$messages,$customName);
-        if($validator->fails())
-        {
-            return response()->json(['error'=>$validator->errors()]);
+        $dsSlideShow = Slideshow::find($id);
+        if($dsSlideShow->slideshow != $request->tenslideshow) {
+          $rule = [
+              'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
+              // 'category' => 'numeric',
+              // 'price' => 'required|numeric|digits_between:4,11',
+              // 'description' => 'required',
+              'link' => 'mimes:jpeg,jpg,png',
+          ];
+          $messages = [
+              'required' => 'Bạn chưa nhập tên :attribute',
+              // 'numeric' => 'The :attribute is invalid',
+              // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
+              'mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
+              // 'max'=> 'The :attribute must be less than :max',
+              'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
+              'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
+              'tenslideshow.unique' => 'Đã có tên slideshow',
+          ];
+          $customName = [
+              'tenslideshow' => 'Tên slideshow',
+          ];
+          $validator = Validator::make($request->all(),$rule,$messages,$customName);
+          if($validator->fails())
+          {
+              return response()->json(['error'=>$validator->errors()]);
 
+          }
+          $dsSlideShow->slideshow=$request->tenslideshow;
+          if($request->hasFile('link')){// neu anh co ton
+              $img = $request->link;
+              $dsSlideShow->link=$img->getClientOriginalName();
+              $request->link->move('img/slideshow',$img->getClientOriginalName());
+            
+          }
+          $dsSlideShow->save();
         }
+        return response()->json(['success'=>'Cập nhật slideshow thành công']);
         // if(empty($request->id))
         // {
         //     $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
@@ -164,18 +174,11 @@ class SlideShowController extends Controller
         //         return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
         //     }
         // }
-        $dsSlideShow = Slideshow::find($id);
-        $dsSlideShow->slideshow=$request->tenslideshow;
-        if($request->hasFile('link')){// neu anh co ton
-            $img = $request->link;
-            $dsSlideShow->link=$img->getClientOriginalName();
-            $request->link->move('img/slideshow',$img->getClientOriginalName());
-           
-        }
+        
+        
         // else
         //     {$dsSlideShow->link='no-image.png';}
-        $dsSlideShow->save();
-        return response()->json(['success'=>'Cập nhật slideshow thành công']);
+        
     }
 
     /**

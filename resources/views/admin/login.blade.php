@@ -153,11 +153,11 @@
                             location.replace("http://127.0.0.1:8000/admin/dashboards");
                         } 
                         if(!$.isEmptyObject(data.error)) {
-                            if(!$.isEmptyObject(data.error.email)) {
-                                printErrorMsg (data.error.email, 'email');
-                            }
                             if(!$.isEmptyObject(data.error.mat_khau)) {
                                 printErrorMsg (data.error.mat_khau, 'mat_khau');
+                            }
+                            if(!$.isEmptyObject(data.error.email)) {
+                                printErrorMsg (data.error.email, 'email');
                             }
                         }
                         if(!$.isEmptyObject(data.errorAll)) {
@@ -181,6 +181,7 @@
                 _html += '</span>';
             jQuery(`input[name='${name}']`).after(_html);
             $(`input[name='${name}']`).addClass("border-error");
+            $(`input[name='${name}']`).focus();
           }
 
           function removeErrorMsg(){

@@ -14,7 +14,7 @@ use Session;
 class ThanhToanController extends Controller
 {
     public function index() {
-        if(Auth::check() and Auth::user()->admin != 1) {
+        if(Auth::check() && Auth::user()->admin != 1) {
             $arrays = GioHang::where('tai_khoans_id',Auth::user()->id)
                             ->with(array('chiTietSanPham' => function($query) {
                                 $query->with(array('sanPham' => function($querys) {

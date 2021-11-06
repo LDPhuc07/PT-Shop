@@ -128,42 +128,45 @@ class LoaiSanPhamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $rule = [
-            'tenloaisanpham' => 'required|unique:loai_san_phams,ten_loai_san_pham|max:50',
-            // 'category' => 'numeric',
-            // 'price' => 'required|numeric|digits_between:4,11',
-            // 'description' => 'required',
-            // 'image' => 'mimes:jpeg,jpg,png|max:10000',
-        ];
-        $messages = [
-            'required' => 'Bạn chưa nhập tên :attribute',
-            // 'numeric' => 'The :attribute is invalid',
-            // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-            // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
-            // 'max'=> 'The :attribute must be less than :max',
-            'tenloaisanpham.required' => 'Bạn chưa nhập tên loại sản phẩm',
-            'tenloaisanpham.max' => 'Tên loại sản phẩm không quá 50 ký tự',
-            'tenloaisanpham.unique' => 'Đã có tên loại sản phẩm'
-        ];
-        $customName = [
-            'tenloaisanpham' => 'Tên loại sản phẩm',
-        ];
-        $validator = Validator::make($request->all(),$rule,$messages,$customName);
-        if($validator->fails())
-        {
-            return response()->json(['error'=>$validator->errors()]);
-        }
-        // if(!empty($request->id))
-        // {
-        //     $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
-        //     if(!empty($dsLoaiSanPham_check)){
-        //         return redirect()->route('loaisanpham.index')->with('error', 'Đã có tên loại sản phẩm');
-        //     }
-        // }
         $dsLoaiSanPham = LoaiSanPham::find($id);
-        $dsLoaiSanPham->ten_loai_san_pham=$request->tenloaisanpham;
-        $dsLoaiSanPham->save();
+        if($dsLoaiSanPham->ten_loai_san_pham!=$request->tenloaisanpham) {
+          $rule = [
+              'tenloaisanpham' => 'required|unique:loai_san_phams,ten_loai_san_pham|max:50',
+              // 'category' => 'numeric',
+              // 'price' => 'required|numeric|digits_between:4,11',
+              // 'description' => 'required',
+              // 'image' => 'mimes:jpeg,jpg,png|max:10000',
+          ];
+          $messages = [
+              'required' => 'Bạn chưa nhập tên :attribute',
+              // 'numeric' => 'The :attribute is invalid',
+              // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
+              // 'mimes'=>'The :attribute must be .jpg,.png,.jpeg',
+              // 'max'=> 'The :attribute must be less than :max',
+              'tenloaisanpham.required' => 'Bạn chưa nhập tên loại sản phẩm',
+              'tenloaisanpham.max' => 'Tên loại sản phẩm không quá 50 ký tự',
+              'tenloaisanpham.unique' => 'Đã có tên loại sản phẩm'
+          ];
+          $customName = [
+              'tenloaisanpham' => 'Tên loại sản phẩm',
+          ];
+          $validator = Validator::make($request->all(),$rule,$messages,$customName);
+          if($validator->fails())
+          {
+              return response()->json(['error'=>$validator->errors()]);
+          }
+          // if(!empty($request->id))
+          // {
+          //     $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
+          //     if(!empty($dsLoaiSanPham_check)){
+          //         return redirect()->route('loaisanpham.index')->with('error', 'Đã có tên loại sản phẩm');
+          //     }
+          // }
+          
+          $dsLoaiSanPham->ten_loai_san_pham=$request->tenloaisanpham;
+          $dsLoaiSanPham->save();
+        }
+        
         return response()->json(['success'=>'Cập nhật loại sản phẩm thành công']);
     }
     
