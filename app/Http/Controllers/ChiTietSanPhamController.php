@@ -66,7 +66,7 @@ class ChiTietSanPhamController extends Controller
 
         //
         $rule = [
-            'mau' => 'required|max:20',
+            'mau' => 'required|max:20|regex:/^[A-Za-z\s-_]+$/',
             'kichthuoc'=>'required|max:10',
             'soluong'=>'required|numeric',
         ];
@@ -80,7 +80,7 @@ class ChiTietSanPhamController extends Controller
             'soluong.required' => 'Bạn chưa nhập số lượng', 
             'mau.unique' => 'Đã có màu sản phẩm',
             'kichthuoc.unique' => 'Đã có kích thước sản phẩm',
-            
+            'mau.regex' => 'Vui lòng nhập tên màu không dấu hoặc không phải là số'
         ];
         $customName = [
             'mau' => 'Màu',
@@ -154,7 +154,7 @@ class ChiTietSanPhamController extends Controller
     {
         //
         $rule = [
-            'mau' => 'required|max:20',
+            'mau' => 'required|max:20|regex:/^[A-Za-z\s-_]+$/',
             'kichthuoc'=>'required|max:10',
             'soluong'=>'required|numeric',
         ];
@@ -168,7 +168,7 @@ class ChiTietSanPhamController extends Controller
             'soluong.required' => 'Bạn chưa nhập số lượng', 
             'mau.unique' => 'Đã có màu sản phẩm',
             'kichthuoc.unique' => 'Đã có kích thước sản phẩm',
-            
+            'mau.regex' => 'Vui lòng nhập tên màu không dấu hoặc không phải là số'
         ];
         $customName = [
             'mau' => 'Màu',
