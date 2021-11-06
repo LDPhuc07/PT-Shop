@@ -250,6 +250,12 @@
                   <li class="ng-scope">
                     <a href="{{route('products',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a>
                   </li>
+                  <li class="ng-scope">
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '7'])}}">Bơi lội</a>
+                  </li>
+                  <li class="ng-scope">
+                    <a href="{{route('products',['idlsp' =>'1','idmtt' => '6'])}}">Golf</a>
+                  </li>
                 </ul>
               </li>
               <li class="ng-scope ng-has-child2" >
@@ -269,6 +275,12 @@
                   </li>
                   <li class="ng-scope">
                     <a href="{{route('products',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a>
+                  </li>
+                  <li class="ng-scope">
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '7'])}}">Bơi lội</a>
+                  </li>
+                  <li class="ng-scope">
+                    <a href="{{route('products',['idlsp' =>'2','idmtt' => '6'])}}">Golf</a>
                   </li>
                 </ul>
               </li>
@@ -456,6 +468,8 @@
                       <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '5'])}}">Cầu lông</a></li>
                       <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '2'])}}">Bóng rổ</a></li>
                       <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '3'])}}">Quần vợt</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '7'])}}">Bơi lội</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'1','idmtt' => '6'])}}">Golf</a></li>
                     </ul>
                   </li>
                   <li class="level1">
@@ -466,6 +480,8 @@
                       <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '5'])}}">Cầu lông</a></li>
                       <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '2'])}}">Bóng rổ</a></li>
                       <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '3'])}}">Quần vợt</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '7'])}}">Bơi lội</a></li>
+                      <li class="level2"><a href="{{route('products',['idlsp' =>'2','idmtt' => '6'])}}">Golf</a></li>
                     </ul>
                   </li>
                   <li class="level1">
