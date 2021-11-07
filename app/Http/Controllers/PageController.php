@@ -44,14 +44,19 @@ class PageController extends Controller
                                     $query->where('anhchinh',1);
                                 }))->offset(0)->limit(4)->get();
 
-        $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
-                                ->groupBy('chi_tiet_san_phams_id')
-                                ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('chi_tiet_san_phams_id');
+        // $ctsp = ChiTietHoaDon::select('chi_tiet_san_phams_id', DB::raw('SUM(so_luong) as so_luong'))
+        //                         ->groupBy('chi_tiet_san_phams_id')
+        //                         ->orderBy('so_luong','desc')->offset(0)->limit(2)->get()->pluck('chi_tiet_san_phams_id');
 
+        
+                                    
+        $ctsp = DB::table('chi_tiet_hoa_dons')->join('chi_tiet_san_phams', 'chi_tiet_hoa_dons.chi_tiet_san_phams_id', '=', 'chi_tiet_san_phams.id')
+                      ->join('hoa_dons', 'chi_tiet_hoa_dons.hoa_dons_id', '=', 'hoa_dons.id')
+                     ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('SUM(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai', true)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->limit(2)->get()->pluck('san_phams_id');
         $sanphamphobiens = SanPham::whereIn('id',$ctsp)
-                                    ->with(array('anh' => function($query) {
-                                        $query->where('anhchinh',1);
-                                    }))->get();
+                     ->with(array('anh' => function($query) {
+                         $query->where('anhchinh',1);
+                     }))->get();
         if(Auth::check() and Auth::user()->admin != 1) {
             $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
             return view('pages.index', compact('yeu_thich','danh_gia','slides','sanphammoinhats','sanphams','sanphamhots','sanphamphobiens','is_like'));
