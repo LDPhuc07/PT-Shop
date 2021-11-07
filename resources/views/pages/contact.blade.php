@@ -30,6 +30,7 @@
     .text-contact {
         font-style: italic;
         color: #707e89;
+        font-size: 12px;
     }
     .mapbox {
         border-top: 1px solid #e8e9f1;
