@@ -55,7 +55,7 @@ class LoaiSanPhamController extends Controller
     {
         //
         $rule = [
-            'tenloaisanpham' => 'required|unique:loai_san_phams,ten_loai_san_pham|max:50',
+            'tenloaisanpham' => 'required|max:50',
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -79,13 +79,13 @@ class LoaiSanPhamController extends Controller
         {
             return response()->json(['error'=>$validator->errors()]);
         }
-        // if(empty($request->id))
-        // {
-        //     $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
-        //     if(!empty($dsLoaiSanPham_check)){
-        //         return redirect()->route('loaisanpham.index')->with('error', 'Đã có tên loại sản phẩm');
-        //     }
-        // }
+        if(empty($request->id))
+        {
+            $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
+            if(!empty($dsLoaiSanPham_check)){
+              return response()->json(['error1'=>'Đã có tên loại sản phẩm']);
+            }
+        }
         $dsLoaiSanPham = new LoaiSanPham();
         $dsLoaiSanPham->ten_loai_san_pham=$request->tenloaisanpham;
         $dsLoaiSanPham->save();
@@ -131,7 +131,7 @@ class LoaiSanPhamController extends Controller
         $dsLoaiSanPham = LoaiSanPham::find($id);
         if($dsLoaiSanPham->ten_loai_san_pham!=$request->tenloaisanpham) {
           $rule = [
-              'tenloaisanpham' => 'required|unique:loai_san_phams,ten_loai_san_pham|max:50',
+              'tenloaisanpham' => 'required|max:50',
               // 'category' => 'numeric',
               // 'price' => 'required|numeric|digits_between:4,11',
               // 'description' => 'required',
@@ -155,13 +155,13 @@ class LoaiSanPhamController extends Controller
           {
               return response()->json(['error'=>$validator->errors()]);
           }
-          // if(!empty($request->id))
-          // {
-          //     $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
-          //     if(!empty($dsLoaiSanPham_check)){
-          //         return redirect()->route('loaisanpham.index')->with('error', 'Đã có tên loại sản phẩm');
-          //     }
-          // }
+          if(!empty($request->id))
+          {
+              $dsLoaiSanPham_check = LoaiSanPham::whereNull('deleted_at')->where('ten_loai_san_pham',$request->tenloaisanpham)->first();
+              if(!empty($dsLoaiSanPham_check)){
+                return response()->json(['error1'=>'Đã có tên loại sản phẩm']);
+              }
+          }
           
           $dsLoaiSanPham->ten_loai_san_pham=$request->tenloaisanpham;
           $dsLoaiSanPham->save();

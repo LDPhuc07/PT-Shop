@@ -99,7 +99,10 @@
                           
                         
                       }
-                      
+                      if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tennhasanxuat');
+                        $("input[name=tennhasanxuat]").focus();
+                      } 
                     
                   }
               })

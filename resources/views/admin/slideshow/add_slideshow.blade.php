@@ -143,7 +143,10 @@
                       }
                     
                   }
-                  
+                  if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tenslideshow');
+                        $("input[name=tenslideshow]").focus();
+                      } 
                 
               }
           })

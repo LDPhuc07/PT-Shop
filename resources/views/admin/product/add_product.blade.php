@@ -351,6 +351,10 @@
                         $('.list-img').after(_html);
                       }
                   }
+                  if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tensanpham');
+                        $("input[name=tensanpham]").focus();
+                      } 
                   
                 
               }

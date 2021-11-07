@@ -98,7 +98,10 @@
                           
                         
                       }
-                      
+                      if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tenthethao');
+                        $("input[name=tenthethao]").focus();
+                      } 
                     
                   }
               })

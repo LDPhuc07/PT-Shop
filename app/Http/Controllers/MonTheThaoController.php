@@ -51,7 +51,7 @@ class MonTheThaoController extends Controller
     {
         //
         $rule = [
-            'tenthethao' => 'required|unique:mon_the_thaos,ten_the_thao|max:50',
+            'tenthethao' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -79,13 +79,13 @@ class MonTheThaoController extends Controller
         
         // return redirect('/monthethao);
         // dd($request->tenthethao);
-        // if(empty($request->id))
-        // {
-        //     $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
-        //     if(!empty($dsMonTheThao_check)){
-        //         return redirect()->route('monthethao.index')->with('error', 'Đã có tên môn thể thao');
-        //     }
-        // }
+        if(empty($request->id))
+        {
+            $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+            if(!empty($dsMonTheThao_check)){
+              return response()->json(['error1'=>'Đã có tên môn thể thao']);
+            }
+        }
         $dsMonTheThao = new MonTheThao();
         $dsMonTheThao->ten_the_thao=$request->tenthethao;
         $dsMonTheThao->save();
@@ -129,7 +129,7 @@ class MonTheThaoController extends Controller
         $dsMonTheThao = MonTheThao::find($id);
         if($dsMonTheThao->ten_the_thao!=$request->tenthethao) {
           $rule = [
-              'tenthethao' => 'required|unique:mon_the_thaos,ten_the_thao|max:50',
+              'tenthethao' => 'required|max:50',
           ];
           $messages = [
               'required' => 'Bạn chưa nhập tên :attribute',
@@ -146,13 +146,13 @@ class MonTheThaoController extends Controller
               return response()->json(['error'=>$validator->errors()]);
           }
           
-          // if(!empty($request->id))
-          // {
-          //     $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
-          //     if(!empty($dsMonTheThao_check)){
-          //         return redirect()->route('monthethao.index')->with('error', 'Đã có tên môn thể thao');
-          //     }
-          // }
+          if(!empty($request->id))
+          {
+              $dsMonTheThao_check = MonTheThao::whereNull('deleted_at')->where('ten_the_thao',$request->tenthethao)->first();
+              if(!empty($dsMonTheThao_check)){
+                return response()->json(['error1'=>'Đã có tên môn thể thao']);
+              }
+          }
           $dsMonTheThao = MonTheThao::find($id);
           $dsMonTheThao->ten_the_thao=$request->tenthethao;
           $dsMonTheThao->save();

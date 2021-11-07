@@ -379,7 +379,7 @@ class SanPhamController extends Controller
         // dd($request->all());
         $rule = [
             // 'giaban' => 'numeric',
-            'tensanpham' => 'required|unique:san_phams,ten_san_pham|max:50',
+            'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
             'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'nullable|numeric|min:1|max:50',
@@ -417,13 +417,13 @@ class SanPhamController extends Controller
 
         //check image
 
-        // if(empty($request->id))
-        // {
-        //     $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
-        //     if(!empty($dsSanPham_check)){
-        //         return response()->json(['error1'=>'Đã có tên sản phẩm']);
-        //     }
-        // }
+        if(empty($request->id))
+        {
+            $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
+            if(!empty($dsSanPham_check)){
+                return response()->json(['error1'=>'Đã có tên sản phẩm']);
+            }
+        }
        
         $dsSanPham = new SanPham();
         $dsSanPham->ten_san_pham=$request->tensanpham;
@@ -524,7 +524,7 @@ class SanPhamController extends Controller
             if($dsSanPham->ten_san_pham != $request->tensanpham) {
                 $rule1 = [
                     
-                    'tensanpham' => 'required|unique:san_phams,ten_san_pham|max:50',
+                    'tensanpham' => 'required|max:50',
 
                 ];
                 $messages1 = [
@@ -537,9 +537,17 @@ class SanPhamController extends Controller
 
                 if($validator1->fails()) {
                     return response()->json(['error'=>$validator1->errors()]);
-                } else {
-                    $dsSanPham->ten_san_pham=$request->tensanpham;
                 }
+                
+                else {
+                  $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
+                  if(!empty($dsSanPham_check)){
+                  return response()->json(['error1'=>'Đã có tên sản phẩm']);
+                  }
+                    $dsSanPham->ten_san_pham=$request->tensanpham;
+                    
+                }
+                
             }
             $dsSanPham->nha_san_xuats_id=$request->nhasanxuat;
             $dsSanPham->loai_san_phams_id=$request->loaisanpham;
@@ -578,16 +586,13 @@ class SanPhamController extends Controller
                         $anhsanpham->save();
                     }
                 }
-            }   
+            }
+             
             return response()->json(['success'=>'Cập nhật sản phẩm thành công']);
         }
-        // if(empty($request->id))
-        // {
-        //     $dsSanPham_check = SanPham::whereNull('deleted_at')->where('ten_san_pham',$request->tensanpham)->first();
-        //     if(!empty($dsSanPham_check)){
-        //         return redirect()->route('sanpham.indexAdmin')->with('error', 'Đã có tên sản phẩm');
-        //     }
-        // }
+        
+      
+            
         
         
 

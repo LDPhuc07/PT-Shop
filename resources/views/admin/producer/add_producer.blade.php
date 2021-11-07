@@ -84,16 +84,20 @@
                       if(!$.isEmptyObject(data.success)) {
                         location.replace("http://127.0.0.1:8000/admin/nhasanxuat");
                         alert(data.success);
-                      } 
+                      }
+                       
                       if(!$.isEmptyObject(data.error)) {
                           
                           if(!$.isEmptyObject(data.error.tennhasanxuat)) {
                               printErrorMsg (data.error.tennhasanxuat, 'tennhasanxuat');
                               $("input[name=tennhasanxuat]").focus();
                           }
-                          
-                        
                       }
+                      if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tennhasanxuat');
+                        $("input[name=tennhasanxuat]").focus();
+                      } 
+                     
                       
                     
                   }
