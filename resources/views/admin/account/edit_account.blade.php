@@ -192,6 +192,9 @@
                       _html += `<strong>` + data.success + `</strong>`;
                   jQuery(".alert-block").append(_html);
                   $(".alert-block").addClass("alert alert-success");
+
+                  var images = $('#imgsp').attr('src');
+                  $(".avt-head").attr("src",images);
                 
                 }else{
                     if(!$.isEmptyObject(data.error.so_dien_thoai)) {
