@@ -664,8 +664,8 @@ class ProductController extends Controller
         //                         ->groupBy('san_phams_id')
         //                         ->get();
         $data = SanPham::where('ten_san_pham','LIKE','%'.$request->key_search.'%')
-                            ->offset($request->page*4)
-                            ->limit(4)
+                            ->offset($request->page*8)
+                            ->limit(8)
                             ->with(array('anh' => function($query) {
                                 $query->where('anhchinh',1);
                             }))

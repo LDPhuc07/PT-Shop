@@ -407,9 +407,9 @@ class TaiKhoanController extends Controller
                     $new = TaiKhoan::find($id);
                     $new->password = Hash::make($requests->mat_khau_moi);
                     $new->save();
-                    return response()->json(['success'=>'Đăng nhập thành công']);
+                    return response()->json(['success'=>'Đổi mật khẩu thành công']);
             } else {
-                return response()->json(['errorAll'=>'Mật khẩu không đúng']);
+                return response()->json(['errorAll'=>'Mật khẩu cũ không đúng']);
             }
         }
 

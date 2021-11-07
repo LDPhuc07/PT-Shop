@@ -268,7 +268,7 @@
                 success:function(data){
                     if(!$.isEmptyObject(data.success)) {
                         var _html = `<button type="button" class="close cls-logout" ><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></button>`;
-                            _html += `<button type="button" class="close cls-stay"><a href="">Ở lại</a></button>`;
+                            _html += `<button type="button" class="close cls-stay"><a href="#">Ở lại</a></button>`;
                             _html += `<strong>` + data.success + `</strong>`;
                         jQuery(".alert-block").append(_html);
                         $(".alert-block").addClass("alert alert-info");

@@ -327,7 +327,7 @@ class PageController extends Controller
                             ->with(array('anh' => function($query) {
                                 $query->where('anhchinh',1);
                             }))
-                            ->paginate(4);
+                            ->paginate(8);
         // $dsSanPhamSearch = ['dsSanPhamSearch'=>$timkiem];
         // return view('pages.search_view',$dsSanPhamSearch);
         if(Auth::check() and Auth::user()->admin != 1) {
