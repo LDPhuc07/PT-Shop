@@ -14,6 +14,11 @@
         color: red;
         font-size: 13px;
     }
+    .fieldset-phone,
+    .fieldset-address
+    {
+      margin-bottom: 18px;
+    }
     /* Mobile & tablet  */
     @media (max-width: 1023px) {
         .summary {
@@ -188,7 +193,7 @@
                                     <h2>Thông tin giao hàng</h2>
                                 </div>
                             <div class="main-customer-info">
-                                @if(Auth::check() and Auth::user()->admin != 1)
+                                {{-- @if(Auth::check() and Auth::user()->admin != 1)
                                     <div class="main-customer-info-img">
                                         <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
                                     </div>
@@ -196,35 +201,36 @@
                                     <div class="main-customer-info-img" style="display:none">
                                         <img src="{{asset(getLink('anh-dai-dien','no-image.png'))}}" alt="" width="60px" height="60px">
                                     </div>
-                                @endif
+                                @endif --}}
                                 @if(Auth::check() and Auth::user()->admin != 1)
-                                    <div class="main-customer-info-logged">
+                                    {{-- <div class="main-customer-info-logged">
                                         <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
                                         <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
-                                    </div>
+                                    </div> --}}
                             </div>
                             <div class="fieldset">
-                                @if(Auth::user()->dia_chi == null)
-                                    <div class="fieldset-address">
-                                        <label class="form-label" for="">Địa chỉ</label>
-                                        <input type="text" class="form-control" name="dia_chi">
-                                    @if($errors->has('dia_chi'))
-                                        <span style="font-size: 13px; color:red">
-                                        <i class="fas fa-times"></i>
-                                        {{ $errors->first('dia_chi') }}
-                                        </span>
-                                        <style>
-                                            input[name = 'dia_chi'] {
-                                                border: 1px solid red;
-                                            }
-                                        </style>
-                                    @endif
-                                    </div>
-                                @endif
-                                @if(Auth::user()->so_dien_thoai == null)
+                                <div class="fieldset-address">
+                                      <label class="form-label" for="">Tên khách hàng</label>
+                                      <input type="text" class="form-control" name="ho_ten" value="{{ Auth::user()->ho_ten }}">
+                                  @if($errors->has('ho_ten'))
+                                      <span style="font-size: 13px; color:red">
+                                      <i class="fas fa-times"></i>
+                                      {{ $errors->first('ho_ten') }}
+                                      </span>
+                                      <style>
+                                          input[name = 'ho_ten'] {
+                                              border: 1px solid red;
+                                          }
+                                      </style>
+                                  @endif
+                                  </div>
+                                {{-- @if(Auth::user()->dia_chi == null) --}}
+                                    
+                                {{-- @endif
+                                @if(Auth::user()->so_dien_thoai == null) --}}
                                 <div class="fieldset-phone">
                                     <label class="form-label" for="">Số điện thoại</label>
-                                    <input type="text" class="form-control" name="so_dien_thoai">
+                                    <input type="text" class="form-control" name="so_dien_thoai"  value="{{ Auth::user()->so_dien_thoai }}">
                                     @if($errors->has('so_dien_thoai'))
                                     <span style="font-size: 13px; color:red">
                                     <i class="fas fa-times"></i>
@@ -237,7 +243,22 @@
                                     </style>
                                 @endif
                                 </div>
-                                @endif
+                                {{-- @endif --}}
+                                <div class="fieldset-address">
+                                  <label class="form-label" for="">Địa chỉ</label>
+                                  <input type="text" class="form-control" name="dia_chi"  value="{{ Auth::user()->dia_chi }}">
+                              @if($errors->has('dia_chi'))
+                                  <span style="font-size: 13px; color:red">
+                                  <i class="fas fa-times"></i>
+                                  {{ $errors->first('dia_chi') }}
+                                  </span>
+                                  <style>
+                                      input[name = 'dia_chi'] {
+                                          border: 1px solid red;
+                                      }
+                                  </style>
+                              @endif
+                              </div>
                             </div>
                                 @else
                                 <div class="main-customer-info-logged">
