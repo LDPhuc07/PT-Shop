@@ -716,7 +716,7 @@
       
       <!-- Modal body -->
       <div class="modal-body">
-        Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!
+        Bạn cần phải đăng nhập để mua hàng!
       </div>
       
       <!-- Modal footer -->
