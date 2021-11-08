@@ -77,10 +77,10 @@
                 <p style="display: inline-block" class="product-info-item-label">Ảnh<span class="repuired"> *</span></p>
                 <label class="lbl-img"  for="link">Chọn ảnh</label>
                 <input type="file" hidden class="form-control" placeholder="Ảnh" value="{{$dsSlideShow['link']}}"  name="link" id="link" onchange="loadfile(event)">
-                <div class="form-group">
+                <div class="form-group img-col">
                   <img src="{{asset(getLink('slideshow',$dsSlideShow['link']))}}" alt="no img" id="imgsp" class="img-thumbnail" width="200px">
                 </div>
-                <div class="error error-name" 	@if($errors->has('link')) style="display:block;color:red" @endif>{{$errors->first('link')}}</div>
+              
               </div>
             </div>
           </div>
@@ -132,12 +132,18 @@
                             $("input[name=tenslideshow]").focus();
                         }
                         if(!$.isEmptyObject(data.error.link)) {
-                          printErrorMsg (data.error.link, 'link');
-                          
-                      }
+                          var _html = '<span class="error-msg">';
+                              _html += '<i class="fas fa-times"></i>';
+                              _html += data.error.link;
+                              _html += '</span>';
+                          jQuery(".img-col").after(_html);
+                        }
                       
                     }
-                    
+                    if(!$.isEmptyObject(data.error1)) {
+                        printErrorMsg (data.error1, 'tenslideshow');
+                        $("input[name=tenslideshow]").focus();
+                    } 
                   
                 }
             })

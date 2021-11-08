@@ -50,7 +50,7 @@ class SlideShowController extends Controller
     {
         //
         $rule = [
-            'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
+            'tenslideshow' => 'required|max:100',
             // 'category' => 'numeric',
             // 'price' => 'required|numeric|digits_between:4,11',
             // 'description' => 'required',
@@ -75,13 +75,13 @@ class SlideShowController extends Controller
         {
             return response()->json(['error'=>$validator->errors()]);
         }
-        // if(empty($request->id))
-        // {
-        //     $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
-        //     if(!empty($dsSlideShow_check)){
-        //         return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
-        //     }
-        // }
+        if(empty($request->id))
+        {
+            $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
+            if(!empty($dsSlideShow_check)){
+              return response()->json(['error1'=>'Đã có tên slideshow']);;
+            }
+        }
         $dsSlideShow = new Slideshow();
         $dsSlideShow->slideshow=$request->tenslideshow;
         if($request->hasFile('link')){// neu anh co ton
@@ -130,19 +130,31 @@ class SlideShowController extends Controller
     public function update(Request $request, $id)
     {
         $dsSlideShow = Slideshow::find($id);
+        $rule2 = [
+          'link' => 'mimes:jpeg,jpg,png',
+        ];
+        $messages2 = [
+          'link.mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
+        ];
+        $validator2 = Validator::make($request->all(),$rule2,$messages2);
+        if($validator2->fails())
+        {
+            return response()->json(['error'=>$validator2->errors()]);
+
+        }
         if($dsSlideShow->slideshow != $request->tenslideshow) {
           $rule = [
-              'tenslideshow' => 'required|unique:slideshows,slideshow|max:100',
+              'tenslideshow' => 'required|max:100',
               // 'category' => 'numeric',
               // 'price' => 'required|numeric|digits_between:4,11',
               // 'description' => 'required',
-              'link' => 'mimes:jpeg,jpg,png',
+             
           ];
           $messages = [
               'required' => 'Bạn chưa nhập tên :attribute',
               // 'numeric' => 'The :attribute is invalid',
               // 'digits_between' => 'The :attribute must be more than 1000 and less than 99999999999',
-              'mimes'=>'Dữ liệu bạn nhập không thuộc định dạng .jpg,.png,.jpeg',
+
               // 'max'=> 'The :attribute must be less than :max',
               'tenslideshow.required' => 'Bạn chưa nhập tên slideshow',
               'tenslideshow.max' => 'Slideshow không quá 100 ký tự',
@@ -157,23 +169,25 @@ class SlideShowController extends Controller
               return response()->json(['error'=>$validator->errors()]);
 
           }
+         
+            $dsSlideShow_check = Slideshow::where('slideshow',$request->tenslideshow)->first();
+            if(!empty($dsSlideShow_check)){
+                return response()->json(['error1'=>'Đã có tên slideshow']);
+            }
+          
           $dsSlideShow->slideshow=$request->tenslideshow;
-          if($request->hasFile('link')){// neu anh co ton
-              $img = $request->link;
-              $dsSlideShow->link=$img->getClientOriginalName();
-              $request->link->move('img/slideshow',$img->getClientOriginalName());
-            
-          }
-          $dsSlideShow->save();
+          
         }
+        
+        if($request->hasFile('link')){// neu anh co ton
+          $img = $request->link;
+          $dsSlideShow->link=$img->getClientOriginalName();
+          $request->link->move('img/slideshow',$img->getClientOriginalName());
+        
+        }
+        $dsSlideShow->save();
         return response()->json(['success'=>'Cập nhật slideshow thành công']);
-        // if(empty($request->id))
-        // {
-        //     $dsSlideShow_check = Slideshow::whereNull('deleted_at')->where('slideshow',$request->tenslideshow)->first();
-        //     if(!empty($dsSlideShow_check)){
-        //         return redirect()->route('slideshow.index')->with('error', 'Đã có tên slideshow');
-        //     }
-        // }
+        
         
         
         // else

@@ -53,7 +53,7 @@ class NhaSanXuatController extends Controller
     {
         //
         $rule = [
-            'tennhasanxuat' => 'required|unique:nha_san_xuats,ten_nha_san_xuat|max:50',
+            'tennhasanxuat' => 'required|max:50',
         ];
         $messages = [
             'required' => 'Bạn chưa nhập tên :attribute',
@@ -82,13 +82,13 @@ class NhaSanXuatController extends Controller
         
         // return redirect('/monthethao);
         // dd($request->tenthethao);
-        // if(empty($request->id))
-        // {
-        //     $dsNhaSanXuat_check = NhaSanXuat::whereNull('deleted_at')->where('ten_nha_san_xuat',$request->tennhasanxuat)->first();
-        //     if(!empty($dsNhaSanXuat_check)){
-        //         return redirect()->route('nhasanxuat.index')->with('error', 'Đã có tên nhà sản xuất');
-        //     }
-        // }
+        if(empty($request->id))
+        {
+            $dsNhaSanXuat_check = NhaSanXuat::whereNull('deleted_at')->where('ten_nha_san_xuat',$request->tennhasanxuat)->first();
+            if(!empty($dsNhaSanXuat_check)){
+              return response()->json(['error1'=>'Đã có tên nhà sản xuất']);
+            }
+        }
         $dsNhaSanXuat = new NhaSanXuat();
         $dsNhaSanXuat->ten_nha_san_xuat=$request->tennhasanxuat;
         $dsNhaSanXuat->save();
@@ -135,7 +135,7 @@ class NhaSanXuatController extends Controller
         $dsNhaSanXuat = NhaSanXuat::find($id);
         if($dsNhaSanXuat->ten_nha_san_xuat != $request->tennhasanxuat) {
           $rule = [
-              'tennhasanxuat' => 'required|unique:nha_san_xuats,ten_nha_san_xuat|max:50',
+              'tennhasanxuat' => 'required|max:50',
           ];
           $messages = [
               'required' => 'Bạn chưa nhập tên :attribute',
@@ -153,13 +153,13 @@ class NhaSanXuatController extends Controller
               return response()->json(['error'=>$validator->errors()]);
           }
           
-          // if(!empty($request->id))
-          // {
-          //     $dsNhaSanXuat_check = NhaSanXuat::whereNull('deleted_at')->where('ten_nha_san_xuat',$request->tennhasanxuat)->first();
-          //     if(!empty($dsNhaSanXuat_check)){
-          //         return redirect()->route('nhasanxuat.index')->with('error', 'Đã có tên nhà sản xuất');
-          //     }
-          // }
+          if(!empty($request->id))
+          {
+              $dsNhaSanXuat_check = NhaSanXuat::whereNull('deleted_at')->where('ten_nha_san_xuat',$request->tennhasanxuat)->first();
+              if(!empty($dsNhaSanXuat_check)){
+                return response()->json(['error1'=>'Đã có tên nhà sản xuất']);
+              }
+          }
           
           $dsNhaSanXuat->ten_nha_san_xuat=$request->tennhasanxuat;
           $dsNhaSanXuat->save();
