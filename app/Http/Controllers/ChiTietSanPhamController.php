@@ -15,15 +15,23 @@ class ChiTietSanPhamController extends Controller
      */
     public function index(Request $request,$id)
     {
+      $key = $request->search;
         //
         if($request->search != null)
         {
-            $dsChiTietSanPham = ChiTietSanPham::where('san_phams_id',$id)->with('sanPham')
-                                        ->where('mau','LIKE','%'.$request->search.'%')
-                                        ->orWhere('kich_thuoc','LIKE','%'.$request->search.'%')  
-                                        ->orWhere('so_luong',$request->search)
+            $dsChiTietSanPham = ChiTietSanPham::where('san_phams_id',$id)
+                                        // ->where('mau','LIKE','%'.$request->search.'%')
+                                        // ->orWhere('kich_thuoc','LIKE','%'.$request->search.'%')  
+                                        // ->orWhere('so_luong',$request->search)
+
+                                        ->where(
+                                          function($que) use ($key) {
+                                              $que->where('mau','LIKE','%'.$key.'%');
+                                              $que->orWhere('kich_thuoc','LIKE','%'.$key.'%');
+                                              $que->orWhere('so_luong',$key);
+                                        })
                                         ->paginate(4);
-                                        // dd($timkiem);
+                                        // dd($dsChiTietSanPham);
         }
         else
         {

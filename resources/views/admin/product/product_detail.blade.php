@@ -33,6 +33,12 @@
     width: 45px;
     height: 45px;
   } 
+  .alert-success {
+    width: 100%;
+    margin-left: 106px;
+    margin-right: 106px;
+  }
+ 
   @media(max-width: 767px) {
     .search {
       width: calc( 100% - 96px);
@@ -44,6 +50,10 @@
     .head-add-pro {
       padding: unset;
     }
+    .alert-success {
+    margin-left: unset;
+    margin-right: unset;
+  }
   }
 </style>
 <div class="content-wrapper">
@@ -67,8 +77,8 @@
       </a>
     </div>
   </div>
-  @include('admin.mess.message')
   <div class="row">
+    @include('admin.mess.message')
       <div class="col-sm-12 sanpham-chitiet">
           <div class="ds-sanpham">
             <div class="head-table">
