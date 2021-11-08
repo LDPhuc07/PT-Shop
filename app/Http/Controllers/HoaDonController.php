@@ -822,97 +822,139 @@ class HoaDonController extends Controller
         $key_from_day = $request->key_from_day;
         $key_to_day = $request->key_to_day;
         $chot_don = $request->chot_don;
-        if(!empty($key) || !empty($key_from_day) || !empty($key_to_day) || !empty($chot_don)) {
-            if(empty($key_from_day)) {
-                if(empty($key_to_day)) {
-                    if($chot_don == null) {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where('id','LIKE','%' .$key. '%')
-                        ->orWhereHas('taiKhoan', function($query) use ($key) {
-                            $query->where('ho_ten','LIKE','%'.$key.'%');
-                        });
-                    } else {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('chot_don',$chot_don);
-                    }
-                } else {
-                    if($chot_don == null) {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('ngay_lap_hd','<=',$key_to_day);
-                    } else {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('chot_don',$chot_don)
-                        ->where('ngay_lap_hd','<=',$key_to_day);
-                    }
-                }
-            } else {
-                if(empty($key_to_day)) {
-                    if($chot_don == null) {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('ngay_lap_hd','>=',$key_from_day);
-                    } else {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('ngay_lap_hd','>=',$key_from_day)
-                        ->where('chot_don',$chot_don);
-                    }
-                } else {
-                    if($chot_don == null) {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
-                    } else {
-                        $query = HoaDon::where('trang_thai',1)
-                        ->where(function($que) use ($key) {
-                            $que->where('id','LIKE','%' .$key. '%');
-                            $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                                $query->where('ho_ten','LIKE','%'.$key.'%');
-                            });
-                        })
-                        ->where('chot_don',$chot_don)
-                        ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
-                    }
-                } 
-            }
-            $array = ['arrays'=> $query->paginate(5)];
-            return view('admin.bill.index',$array);
-        } else {
-            return redirect()->route('admin.bill.index');
-        }
+        if(empty($key)) {
+          if(empty($key_from_day)) {
+              if(empty($key_to_day)) {
+                  if($chot_don == null) {
+                    return redirect()->route('admin.bill.index');
+                  } else {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('chot_don',$chot_don);
+                  }
+              } else {
+                  if($chot_don == null) {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('ngay_lap_hd','<=',$key_to_day);
+                  } else {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('chot_don',$chot_don)
+                      ->where('ngay_lap_hd','<=',$key_to_day);
+                  }
+              }
+          } else {
+              if(empty($key_to_day)) {
+                  if($chot_don == null) {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('ngay_lap_hd','>=',$key_from_day);
+                  } else {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('ngay_lap_hd','>=',$key_from_day)
+                      ->where('chot_don',$chot_don);
+                  }
+              } else {
+                  if($chot_don == null) {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+                  } else {
+                      $query = HoaDon::where('trang_thai',1)
+                      ->where('chot_don',$chot_don)
+                      ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+                  }
+              } 
+          }
+          $array = ['arrays'=> $query->paginate(5)];
+          return view('admin.bill.index',$array);
+      } else {
+        if(empty($key_from_day)) {
+          if(empty($key_to_day)) {
+              if($chot_don == null) {
+                $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  });
+              } else {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('chot_don',$chot_don);
+              }
+          } else {
+              if($chot_don == null) {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('ngay_lap_hd','<=',$key_to_day);
+              } else {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('chot_don',$chot_don)
+                  ->where('ngay_lap_hd','<=',$key_to_day);
+              }
+          }
+      } else {
+          if(empty($key_to_day)) {
+              if($chot_don == null) {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('ngay_lap_hd','>=',$key_from_day);
+              } else {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('ngay_lap_hd','>=',$key_from_day)
+                  ->where('chot_don',$chot_don);
+              }
+          } else {
+              if($chot_don == null) {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+              } else {
+                  $query = HoaDon::where('trang_thai',1)
+                  ->where(function($que) use ($key) {
+                      $que->where('id','LIKE','%' .$key. '%');
+                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
+                          $query->where('ho_ten','LIKE','%'.$key.'%');
+                      });
+                  })
+                  ->where('chot_don',$chot_don)
+                  ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+              }
+          } 
+      }
+      $array = ['arrays'=> $query->paginate(5)];
+      return view('admin.bill.index',$array);
+      }
         // if($request->chot_don == null) {
         //     echo "7";
         // } else {

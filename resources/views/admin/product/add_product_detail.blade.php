@@ -102,8 +102,8 @@
                   type:"POST",
                   success:function(data){
                       if(!$.isEmptyObject(data.success)) {
-                        location.replace(`http://127.0.0.1:8000/admin/sanpham/${idInput}/chitietsanpham/`);
                         alert(data.success);
+                        location.replace(`http://127.0.0.1:8000/admin/sanpham/${idInput}/chitietsanpham/`);
                       } 
                       if(!$.isEmptyObject(data.error)) {
                           
