@@ -66,7 +66,7 @@
 </style>
 <div class="cart" style="margin-top:30px">
     <div class="container">
-        @include('admin.mess.message')
+      @include('admin.mess.message')
         <div class="row">
           <div class="col-lg-4 col-12">
             <div class="heading">
@@ -112,8 +112,7 @@
               <div class="alert-block">
             
               </div>
-              @foreach($arrays as $account)
-              <form id="form">
+              <form  method="POST" id="form">
                 @csrf
                 <div class="form-group form-group-old-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -121,9 +120,19 @@
                     <span style="    top: 54px;
     z-index: 1;" class="show-hide"><i class="fas fa-eye"></i></span>
                   </div>
-                  <input id="password" name="mat_khau_cu" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <input id="password" name="mat_khau_cu" type="password" placeholder="Nhập mật khẩu cũ" class="form-control">
                   <span class="form-message"></span>
-                  
+                  @if($errors->has('mat_khau_cu'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('mat_khau_cu') }}
+                      </span>
+                      <style>
+                          input[name='mat_khau_cu'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
                 </div>
                 <div class="form-group form-group-new-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -131,9 +140,19 @@
                     <span style="    top: 54px;
     z-index: 1;" class="show-hide-two"><i class="fas fa-eye fa-eye-2"></i></span>
                   </div>
-                  <input id="password-new" name="mat_khau_moi" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <input id="password-new" name="mat_khau_moi" type="password" placeholder="Nhập mật khẩu mới" class="form-control">
                   <span class="form-message"></span>
-                  
+                  @if($errors->has('mat_khau_moi'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('mat_khau_moi') }}
+                      </span>
+                      <style>
+                          input[name='mat_khau_moi'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
                 </div>
                 <div class="form-group form-group-confirm-password">
                   <div style="display:flex;justify-content: space-between;">
@@ -141,13 +160,28 @@
                     <span style=" right:0;   top: 54px;
     z-index: 1;" class="show-hide-three"><i class="fas fa-eye fa-eye-3"></i></span>
                   </div>
-                  <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập mật khẩu" class="form-control">
+                  <input id="password-confirm" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu mới" class="form-control">
                   <span class="form-message"></span>
-                  
+                  @if($errors->has('nhap_lai_mat_khau'))
+                      <span style="font-size: 13px; color:red">
+                          <i class="fas fa-times"></i>
+                          {{ $errors->first('nhap_lai_mat_khau') }}
+                      </span>
+                      <style>
+                          input[name='nhap_lai_mat_khau'] {
+                              border: 1px solid red;
+                          }
+                      </style>
+                  @endif
                 </div>
+                @if(session('thong_bao'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ session('thong_bao') }}
+                            </span>
+                        @endif
                 <button id="change_pass" class="form-submit submit-change-pass btn-blocker">Lưu</button>
               </form>
-              @endforeach
             </div>
           </div>
         </div>
@@ -244,7 +278,7 @@
       });
     };
   </script>  --}}
-  <script type="text/javascript">
+  {{-- <script type="text/javascript">
 
 
     $(function(){
@@ -316,5 +350,5 @@
           $(".error-msg").remove();
           $("input").removeClass("border-error");
       }
-</script>
+</script> --}}
 @endsection

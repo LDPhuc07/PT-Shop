@@ -51,35 +51,69 @@
             </a>
             <h3>Đổi mật khẩu</h3>
         </div>
-        <div class="alert-block">
-            
-        </div>
+        @include('admin.mess.message')
         <div class="form-login">
             <div class="container-form-login">
-                <form id="form">
+                <form method="POST" id="form">
                     @csrf
                     <div style="position: relative" class="login-txt mb-16">
                         <input class="textbox" style="    width: 100%;" name="mat_khau_cu" type="password" placeholder="Mật khẩu cũ" autofocus>
                         <a id="mat_khau_cu" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-
+                        @if($errors->has('mat_khau_cu'))
+                        <span class="error-msg">
+                            <i class="fas fa-times"></i>
+                            {{ $errors->first('mat_khau_cu') }}
+                        </span>
+                        <style>
+                            .login-txt input[name='mat_khau_cu'] {
+                                border: 1px solid red;
+                            }
+                        </style>
+                    @endif
                     </div>
                     <div class="login-txt password-txt mb-16">
                         <input class=" textbox" style="    width: 100%;" name="mat_khau_moi" type="password" placeholder="Mật khẩu mới">
                         <a id="mat_khau_moi" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-
+                        @if($errors->has('mat_khau_moi'))
+                        <span class="error-msg">
+                            <i class="fas fa-times"></i>
+                            {{ $errors->first('mat_khau_moi') }}
+                        </span>
+                        <style>
+                            .login-txt input[name='mat_khau_moi'] {
+                                border: 1px solid red;
+                            }
+                        </style>
+                    @endif
                     </div>
                     <div style="position: relative" class="login-txt password-txt mb-16">
                         <input class="textbox" style="    width: 100%;" name="nhap_lai_mat_khau" type="password" placeholder="Nhập lại mật khẩu mới">
                         <a id="nhap_lai_mat_khau" class="input-inline-btn">
                             <i class="show-pass fas fa-eye"></i>
                         </a>
-
+                        @if($errors->has('nhap_lai_mat_khau'))
+                        <span class="error-msg">
+                            <i class="fas fa-times"></i>
+                            {{ $errors->first('nhap_lai_mat_khau') }}
+                        </span>
+                        <style>
+                            .login-txt input[name='nhap_lai_mat_khau'] {
+                                border: 1px solid red;
+                            }
+                        </style>
+                    @endif
                     </div>
                     <div class="login-txt mb-16">
+                      @if(session('thong_bao'))
+                            <span class="error-msg">
+                                <i class="fas fa-times"></i>
+                                {{ session('thong_bao') }}
+                            </span>
+                        @endif
                         <button id="change_pass" class="btn login-btn">Đổi mật khẩu</button>
                     </div>
                 </form>
@@ -114,7 +148,7 @@
             }
         });
     </script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
 
 
         $(function(){
@@ -130,7 +164,7 @@
                 removeErrorMsg();
                 var formData = new FormData($("#form")[0]);
                 $.ajax({
-                    url:"/accounts/change-password/" + {{ Auth::user()->id }},
+                    url:"admin/accounts/change-password/" + {{ Auth::user()->id }},
                     data:formData,
                     processData:false,
                     contentType:false,
@@ -188,5 +222,5 @@
               $(".error-msg").remove();
               $("input").removeClass("border-error");
           }
-    </script>
+    </script> --}}
 @endsection
