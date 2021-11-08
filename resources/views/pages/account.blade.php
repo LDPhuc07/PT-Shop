@@ -229,7 +229,7 @@
       }
       {{--  function delImg () {
         $("input[name='anh_dai_dien']").val("");
-        var src1 = 'https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png';
+        var src1 = '{{asset(getLink('anh-dai-dien',no-avatar.jpg))}}';
         $("#imgsp").attr("src", src1);
         $(".del-img").addClass("display-none");
       }  --}}

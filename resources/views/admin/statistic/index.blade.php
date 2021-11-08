@@ -117,9 +117,9 @@
                     <table class="table-ds-sanpham">
                       <thead>
                         <tr>
-                          <th>Tên sản phẩm</th>
-                          <th>Số lượng</th>
-                          <th>Lãi</th>
+                          <th style="width: 50%">Tên sản phẩm</th>
+                          <th style="width: 20%; text-align: center;">Số lượng</th>
+                          <th style="width: 30%; text-align: center;">Lãi</th>
                         </tr>
                       </thead>
                     </table>
@@ -131,9 +131,9 @@
                           ?>
                           @foreach($arrays as $array)
                           <tr>
-                              <td>{{ $array->ten_san_pham }}</td>
-                              <td>{{ $array->so_luong}}</td>
-                              <td>{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
+                              <td style="width: 50%">{{ $array->ten_san_pham }}</td>
+                              <td style="width: 20%; text-align: center;">{{ $array->so_luong}}</td>
+                              <td style="width: 30%; text-align: center;">{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
                               <?php
                                 $tong += ($array->gia_ban - $array->gia_goc) * $array->so_luong;
                               ?>

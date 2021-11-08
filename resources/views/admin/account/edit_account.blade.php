@@ -123,6 +123,7 @@
                 <div class="head-product-picture">
                   <span>Ảnh đại diện</span>
                   @if($array->anh_dai_dien == null)
+                  {{--  <a href="javascript:void(0)" onclick="delImg()" class="del-img display-none">Xóa ảnh</a>  --}}
                   <input type="file" name="anh_dai_dien" id="myFile" style="display: none" onchange="loadfile(event)">
                   <label for="myFile">Chọn ảnh</label>
                 </div>
@@ -130,6 +131,7 @@
                   <img id="imgsp" style="width: 230px; margin: 0; margin-top:30px; height: unset" src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="">
                 </div>
                 @else
+                {{--  <a href="javascript:void(0)" onclick="delImg()" class="del-img display-none">Xóa ảnh</a>  --}}
                 <input type="file" name="anh_dai_dien" value="{{$array->anh_dai_dien}}" id="myFile" style="display: none" onchange="loadfile(event)">
                   <label for="myFile">Chọn ảnh</label>
                 </div>
@@ -159,7 +161,7 @@
     }
     {{--  function delImg () {
       $("input[name='anh_dai_dien']").val("");
-      var src1 = 'https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png';
+      var src1 = 'img/anh-dai-dien/no-avatar.jp';
       $("#imgsp").attr("src", src1);
       $(".del-img").addClass("display-none");
     }  --}}
