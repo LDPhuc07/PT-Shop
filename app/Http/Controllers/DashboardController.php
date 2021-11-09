@@ -20,10 +20,10 @@ class DashboardController extends Controller
         $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
-        $dem_don_hang = HoaDon::where('trang_thai',true)->whereBetween('ngay_lap_hd',[$sub_30_days, $now])->count();
+        $dem_don_hang = HoaDon::where('trang_thai_don_hang',4)->where('ngay_lap_hd','>=',$sub_30_days)->count();
         $count_san_pham_max = DB::table('chi_tiet_hoa_dons')->join('chi_tiet_san_phams', 'chi_tiet_hoa_dons.chi_tiet_san_phams_id', '=', 'chi_tiet_san_phams.id')
                             ->join('hoa_dons', 'chi_tiet_hoa_dons.hoa_dons_id', '=', 'hoa_dons.id')
-                            ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('SUM(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai', true)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->limit(1)->first();
+                            ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('SUM(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai_don_hang', 4)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->limit(1)->first();
         if(empty($count_san_pham_max)) {
             $san_pham_max = null;
         } else {
@@ -47,26 +47,26 @@ class DashboardController extends Controller
             if($request->dashboard_value == '7ngay') {
                 $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
+                    ->where('hoa_dons.trang_thai_don_hang',4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$sub_7_days)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 
             }
             if($request->dashboard_value == 'thangtruoc') {
-                $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
-                    ->groupBy('ngay_lap_hoadon')
-                    ->get();
+              $get = DB::table('hoa_dons')
+              ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+              ->where('hoa_dons.trang_thai_don_hang',4)
+              ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay,$cuoi_thang_truoc])
+              ->groupBy('ngay_lap_hoadon')
+              ->get();
                 
             }
             if($request->dashboard_value == 'thangnay') {
                 $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
+                    ->where('hoa_dons.trang_thai_don_hang',4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$dau_thang_nay)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 
@@ -74,8 +74,8 @@ class DashboardController extends Controller
             if($request->dashboard_value == '365ngayqua') {
                 $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
+                    ->where('hoa_dons.trang_thai_don_hang',4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$sub_365_days)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 
@@ -85,14 +85,14 @@ class DashboardController extends Controller
                 if(!empty($request->to_date)) {
                     $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
+                    ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereBetween('hoa_dons.ngay_lap_hd',[$request->from_date, $request->to_date])
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 } else {
                     $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
+                    ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->from_date)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
@@ -101,14 +101,14 @@ class DashboardController extends Controller
                 if(!empty($request->to_date)) {
                     $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
+                    ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->to_date)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 } else {
                     $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
+                    ->where('hoa_dons.trang_thai_don_hang',4)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 }
@@ -134,8 +134,8 @@ class DashboardController extends Controller
         // $get = HoaDon::whereBetween('ngay_lap_hd',[$sub_30_days, $now])->orderBy('ngay_lap_hd','ASC')->get();
         $get = DB::table('hoa_dons')
                     ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
-                    ->where('hoa_dons.trang_thai',true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
+                    ->where('hoa_dons.trang_thai_don_hang',4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$sub_30_days)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
         foreach($get as $key => $val) {

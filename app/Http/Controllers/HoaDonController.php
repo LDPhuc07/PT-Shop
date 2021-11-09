@@ -20,11 +20,13 @@ use DB;
 class HoaDonController extends Controller
 {
     public function index() {
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->paginate(5)];
+        $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
+
+        $array = ['arrays'=>HoaDon::where('ngay_lap_hd',">=",$sub_30_days)->orderBy('ngay_lap_hd', 'DESC')->paginate(5)];
         return view('admin.bill.index',$array);
     }
     public function getSearch() {
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)->paginate(5)];
+        $array = ['arrays'=>HoaDon::paginate(5)];
         return redirect('admin/bill');
     }
     public function billDetail($id) {
@@ -34,14 +36,16 @@ class HoaDonController extends Controller
 
     // thanh toán online
 
-    public function return(Request $request, $id) {
+    public function return(Request $request, $id, $ho_ten, $so_dien_thoai, $dia_chi) {
         $url = session('url_prev','/');
 
         if($request->vnp_ResponseCode == "00") {
             $bill = array();
             $bill['tai_khoans_id'] = $id;
+            $bill['ho_ten'] = $ho_ten;
+            $bill['so_dien_thoai'] = $so_dien_thoai;
+            $bill['dia_chi'] = $dia_chi;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
@@ -85,7 +89,6 @@ class HoaDonController extends Controller
             $bill = array();
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
@@ -118,14 +121,18 @@ class HoaDonController extends Controller
         return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
     }
 
-    public function returnBuyNow(Request $request, $id) {
+    public function returnBuyNow(Request $request, $id, $ho_ten, $so_dien_thoai, $dia_chi) {
         $url = session('url_prev','/');
 
         if($request->vnp_ResponseCode == "00") {
             $bill = array();
-            $bill['tai_khoans_id'] = $id;
+            if($id != "no") {
+              $bill['tai_khoans_id'] = $id;
+            }
+            $bill['ho_ten'] = $id;
+            $bill['so_dien_thoai'] = $so_dien_thoai;
+            $bill['dia_chi'] = $dia_chi;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
@@ -171,7 +178,6 @@ class HoaDonController extends Controller
             $bill = array();
             $bill['tai_khoans_id'] = $id;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
@@ -210,39 +216,218 @@ class HoaDonController extends Controller
     // end
 
     public function create(Request $request){
-        if(Auth::check() && Auth::user()->admin != 1) {
-            if(Auth::user()->dia_chi == null) {
-                $request->validate([
-                    'dia_chi' => 'required'
-                ],[
-                    'dia_chi.required' => 'Vui lòng nhập địa chỉ'
-                ]);
-                $new_update = TaiKhoan::find(Auth::user()->id);
-                $new_update->dia_chi = $request->dia_chi;
-                $new_update->save();
-            }
-            if(Auth::user()->so_dien_thoai == null) {
-                $request->validate([
-                    'so_dien_thoai' => 'digits:10|required|numeric'
-                ],[
-                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
-                    'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
-                    'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
-                ]);
-                $new_update = TaiKhoan::find(Auth::user()->id);
-                $new_update->so_dien_thoai = $request->so_dien_thoai;
-                $new_update->save();
-            }
-            //thanh toán vnpay
-        if($request->payment == "1") {
-          $id = Auth::user()->id;
+        // if(Auth::check() && Auth::user()->admin != 1) {
+        //     if(Auth::user()->dia_chi == null) {
+        //         $request->validate([
+        //             'dia_chi' => 'required'
+        //         ],[
+        //             'dia_chi.required' => 'Vui lòng nhập địa chỉ'
+        //         ]);
+        //         $new_update = TaiKhoan::find(Auth::user()->id);
+        //         $new_update->dia_chi = $request->dia_chi;
+        //         $new_update->save();
+        //     }
+        //     if(Auth::user()->so_dien_thoai == null) {
+        //         $request->validate([
+        //             'so_dien_thoai' => 'digits:10|required|numeric'
+        //         ],[
+        //             'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+        //             'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+        //             'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
+        //         ]);
+        //         $new_update = TaiKhoan::find(Auth::user()->id);
+        //         $new_update->so_dien_thoai = $request->so_dien_thoai;
+        //         $new_update->save();
+        //     }
+        //     //thanh toán vnpay
+        // if($request->payment == "1") {
+        //   $id = Auth::user()->id;
+        //   session(['tong_tien' => $request->online]);
+        //   session(['cost_id' => $request->id]);
+        //   session(['url_prev' => url()->previous()]);
+        //   $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
+        //   $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
+        //   $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        //   $vnp_Returnurl = "http://localhost:8000/return-vnpay/{$id}";
+        //   $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        //   $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+        //   $vnp_OrderType = 'billpayment';
+        //   $vnp_Amount = $request->online * 100;
+        //   $vnp_Locale = 'vn';
+        //   $vnp_IpAddr = request()->ip();
+
+        //   $inputData = array(
+        //       "vnp_Version" => "2.0.0",
+        //       "vnp_TmnCode" => $vnp_TmnCode,
+        //       "vnp_Amount" => $vnp_Amount,
+        //       "vnp_Command" => "pay",
+        //       "vnp_CreateDate" => date('YmdHis'),
+        //       "vnp_CurrCode" => "VND",
+        //       "vnp_IpAddr" => $vnp_IpAddr,
+        //       "vnp_Locale" => $vnp_Locale,
+        //       "vnp_OrderInfo" => $vnp_OrderInfo,
+        //       "vnp_OrderType" => $vnp_OrderType,
+        //       "vnp_ReturnUrl" => $vnp_Returnurl,
+        //       "vnp_TxnRef" => $vnp_TxnRef,
+        //   );
+        //   $vnp_BankCode = 'ncb';
+        //   if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+        //       $inputData['vnp_BankCode'] = $vnp_BankCode;
+        //   }
+        //   ksort($inputData);
+        //   $query = "";
+        //   $i = 0;
+        //   $hashdata = "";
+        //   foreach ($inputData as $key => $value) {
+        //       if ($i == 1) {
+        //           $hashdata .= '&' . $key . "=" . $value;
+        //       } else {
+        //           $hashdata .= $key . "=" . $value;
+        //           $i = 1;
+        //       }
+        //       $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        //   }
+
+        //   $vnp_Url = $vnp_Url . "?" . $query;
+        //   if (isset($vnp_HashSecret)) {
+        //     // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+        //       $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+        //       $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+        //   }
+        //   return redirect($vnp_Url);
+        // }
+        // //ket thuc thanh toan vnpay
+        //     $bill = array();
+        //     $bill['tai_khoans_id'] = Auth::user()->id;
+        //     $bill['ngay_lap_hd'] = Carbon::now();
+        //     $bill['trang_thai'] = true;
+        //     $bill_id = HoaDon::insertGetId($bill);
+
+        //     $gio_hangs = GioHang::where('tai_khoans_id',Auth::user()->id)->get();
+        //     $loi_nhuan = 0;
+        //     $tongtien = 0;
+        //     foreach($gio_hangs as $gio_hang) {
+        //         $giaban = $gio_hang->chiTietSanPham->sanpham->gia_ban*(100-$gio_hang->chiTietSanPham->sanpham->giam_gia)/100;
+        //         $giagoc = $gio_hang->chiTietSanPham->sanPham->gia_goc;
+        //         $bill_detail = new ChiTietHoaDon();
+        //         $bill_detail->hoa_dons_id = $bill_id;
+        //         $bill_detail->chi_tiet_san_phams_id = $gio_hang->chi_tiet_san_phams_id;
+        //         $bill_detail->so_luong = $gio_hang->so_luong; 
+        //         $bill_detail->gia_goc = $giagoc;
+        //         $bill_detail->gia_ban = $giaban;
+        //         $update_ctsp = ChiTietSanPham::find($gio_hang->chi_tiet_san_phams_id);
+        //         $update_ctsp->so_luong -= $gio_hang->so_luong;
+        //         $update_ctsp->save();
+        //         $bill_detail->save();
+        //         $tongtien += ($giaban*$gio_hang->so_luong);
+        //         $loi_nhuan += (($giaban - $giagoc)*$gio_hang->so_luong);
+        //     }
+        //     $add_loi_nhuan = HoaDon::find($bill_id);
+        //     $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+        //     $add_loi_nhuan->tong_tien = $tongtien;
+        //     $add_loi_nhuan->save();
+
+        //     $delete = GioHang::where('tai_khoans_id', Auth::user()->id)->delete();
+        // }
+        // else {
+            $request->validate([
+                'ho_ten' => 'required',
+                'dia_chi' => 'required',
+                'so_dien_thoai' => 'digits:10|required|numeric'
+            ],[
+                'ho_ten.required' => 'Vui lòng nhập họ và tên',
+                'dia_chi.required' => 'Vui lòng nhập địa chỉ',
+                'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+                'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+                'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
+            ]);
+            // $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
+            // if(empty($check_account)) {
+            //     $account = array();
+            //     $account['ho_ten'] = $request->ho_ten;
+            //     $account['dia_chi'] = $request->dia_chi;
+            //     $account['so_dien_thoai'] = $request->so_dien_thoai;
+            //     $account['admin'] = false;
+            //     $account_id = TaiKhoan::insertGetId($account);
+
+                    //thanh toán vnpay
+        // if($request->payment == "1")
+        // {
+        // session(['tong_tien' => $request->online]);
+        // session(['cost_id' => $request->id]);
+        // session(['url_prev' => url()->previous()]);
+        // $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
+        // $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
+        // $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        // $vnp_Returnurl = "http://localhost:8000/return-vnpay-buy_now-not-acc/{{$account_id}}";
+        // $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        // $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+        // $vnp_OrderType = 'billpayment';
+        // $vnp_Amount = $request->online * 100;
+        // $vnp_Locale = 'vn';
+        // $vnp_IpAddr = request()->ip();
+
+        // $inputData = array(
+        //     "vnp_Version" => "2.0.0",
+        //     "vnp_TmnCode" => $vnp_TmnCode,
+        //     "vnp_Amount" => $vnp_Amount,
+        //     "vnp_Command" => "pay",
+        //     "vnp_CreateDate" => date('YmdHis'),
+        //     "vnp_CurrCode" => "VND",
+        //     "vnp_IpAddr" => $vnp_IpAddr,
+        //     "vnp_Locale" => $vnp_Locale,
+        //     "vnp_OrderInfo" => $vnp_OrderInfo,
+        //     "vnp_OrderType" => $vnp_OrderType,
+        //     "vnp_ReturnUrl" => $vnp_Returnurl,
+        //     "vnp_TxnRef" => $vnp_TxnRef,
+        // );
+        // $vnp_BankCode = 'ncb';
+        // if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+        //     $inputData['vnp_BankCode'] = $vnp_BankCode;
+        // }
+        // ksort($inputData);
+        // $query = "";
+        // $i = 0;
+        // $hashdata = "";
+        // foreach ($inputData as $key => $value) {
+        //     if ($i == 1) {
+        //         $hashdata .= '&' . $key . "=" . $value;
+        //     } else {
+        //         $hashdata .= $key . "=" . $value;
+        //         $i = 1;
+        //     }
+        //     $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        // }
+
+        // $vnp_Url = $vnp_Url . "?" . $query;
+        // if (isset($vnp_HashSecret)) {
+        //    // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+        //     $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+        //     $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+        // }
+        // return redirect($vnp_Url);
+        // }
+        // //ket thuc thanh toan vnpay
+    
+        //         $bill = array();
+        //         $bill['tai_khoans_id'] = $account_id;
+        //         $bill['ngay_lap_hd'] = Carbon::now();
+        //         $bill['trang_thai'] = true;
+        //         $bill_id = HoaDon::insertGetId($bill);
+        //     }
+        //     else { 
+
+        //         //thanh toán vnpay
+        if($request->payment == "1")
+        {
           session(['tong_tien' => $request->online]);
           session(['cost_id' => $request->id]);
           session(['url_prev' => url()->previous()]);
+          $id = Auth::user()->id;
           $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
           $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
           $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-          $vnp_Returnurl = "http://localhost:8000/return-vnpay/{$id}";
+          $vnp_Returnurl = "http://localhost:8000/return-vnpay/{$id}/{$request->ho_ten}/{$request->so_dien_thoai}/{$request->dia_chi}";
           $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
           $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
           $vnp_OrderType = 'billpayment';
@@ -291,10 +476,13 @@ class HoaDonController extends Controller
           return redirect($vnp_Url);
         }
         //ket thuc thanh toan vnpay
+
             $bill = array();
             $bill['tai_khoans_id'] = Auth::user()->id;
+            $bill['ho_ten'] = $request->ho_ten;
+            $bill['so_dien_thoai'] = $request->so_dien_thoai;
+            $bill['dia_chi'] = $request->dia_chi;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $gio_hangs = GioHang::where('tai_khoans_id',Auth::user()->id)->get();
@@ -322,273 +510,280 @@ class HoaDonController extends Controller
             $add_loi_nhuan->save();
 
             $delete = GioHang::where('tai_khoans_id', Auth::user()->id)->delete();
-        }
-        else {
+            return redirect()->route('ordersuccess');
+    }
+    public function createBuyNow(Request $request){
+      //   if(Auth::check()) {
+      //       if(Auth::user()->dia_chi == null) {
+      //           $request->validate([
+      //               'dia_chi' => 'required'
+      //           ],[
+      //               'dia_chi.required' => 'Vui lòng nhập địa chỉ'
+      //           ]);
+      //           $new_update = TaiKhoan::find(Auth::user()->id);
+      //           $new_update->dia_chi = $request->dia_chi;
+      //           $new_update->save();
+      //       }
+      //       if(Auth::user()->so_dien_thoai == null) {
+      //           $request->validate([
+      //               'so_dien_thoai' => 'digits:10|required|numeric'
+      //           ],[
+      //               'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
+      //               'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
+      //               'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
+      //           ]);
+      //           $new_update = TaiKhoan::find(Auth::user()->id);
+      //           $new_update->so_dien_thoai = $request->so_dien_thoai;
+      //           $new_update->save();
+      //       }
+      //          //thanh toán vnpay
+      //   if($request->payment == "1")
+      //   {
+      //   $id = Auth::user()->id;
+      //   session(['tong_tien' => $request->online]);
+      //   session(['cost_id' => $request->id]);
+      //   session(['url_prev' => url()->previous()]);
+      //   $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
+      //   $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
+      //   $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+      //   $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay/{$id}";
+      //   $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+      //   $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+      //   $vnp_OrderType = 'billpayment';
+      //   $vnp_Amount = $request->online * 100;
+      //   $vnp_Locale = 'vn';
+      //   $vnp_IpAddr = request()->ip();
+
+      //   $inputData = array(
+      //       "vnp_Version" => "2.0.0",
+      //       "vnp_TmnCode" => $vnp_TmnCode,
+      //       "vnp_Amount" => $vnp_Amount,
+      //       "vnp_Command" => "pay",
+      //       "vnp_CreateDate" => date('YmdHis'),
+      //       "vnp_CurrCode" => "VND",
+      //       "vnp_IpAddr" => $vnp_IpAddr,
+      //       "vnp_Locale" => $vnp_Locale,
+      //       "vnp_OrderInfo" => $vnp_OrderInfo,
+      //       "vnp_OrderType" => $vnp_OrderType,
+      //       "vnp_ReturnUrl" => $vnp_Returnurl,
+      //       "vnp_TxnRef" => $vnp_TxnRef,
+      //   );
+      //   $vnp_BankCode = 'ncb';
+      //   if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+      //       $inputData['vnp_BankCode'] = $vnp_BankCode;
+      //   }
+      //   ksort($inputData);
+      //   $query = "";
+      //   $i = 0;
+      //   $hashdata = "";
+      //   foreach ($inputData as $key => $value) {
+      //       if ($i == 1) {
+      //           $hashdata .= '&' . $key . "=" . $value;
+      //       } else {
+      //           $hashdata .= $key . "=" . $value;
+      //           $i = 1;
+      //       }
+      //       $query .= urlencode($key) . "=" . urlencode($value) . '&';
+      //   }
+
+      //   $vnp_Url = $vnp_Url . "?" . $query;
+      //   if (isset($vnp_HashSecret)) {
+      //      // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+      //       $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+      //       $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+      //   }
+      //   return redirect($vnp_Url);
+      //   }
+      //   //ket thuc thanh toan vnpay
+      //       $bill = array();
+      //       $bill['tai_khoans_id'] = Auth::user()->id;
+      //       $bill['ngay_lap_hd'] = Carbon::now();
+      //       $bill['trang_thai'] = true;
+      //       $bill_id = HoaDon::insertGetId($bill);
+
+      //       $data = Session::all();
+      //       $loi_nhuan = 0;
+      //       $tongtien = 0;
+      //       $bill_detail = new ChiTietHoaDon();
+      //       $bill_detail->hoa_dons_id = $bill_id;
+      //       $bill_detail->chi_tiet_san_phams_id = $data['id'];
+      //       $bill_detail->so_luong = $data['so_luong']; 
+      //       $update_ctsp = ChiTietSanPham::find($data['id']);
+      //       $update_ctsp->so_luong -= $data['so_luong'];
+      //       $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
+      //       $bill_detail->gia_ban = $data['gia'];
+      //       $tongtien += ($data['gia']*$data['so_luong']);
+      //       $loi_nhuan += (($data['gia'] - $update_ctsp->sanPham->gia_goc)*$data['so_luong']);
+      //       $update_ctsp->save();
+      //       $bill_detail->save();
+      //       $add_loi_nhuan = HoaDon::find($bill_id);
+      //       $add_loi_nhuan->loi_nhuan = $loi_nhuan;
+      //       $add_loi_nhuan->tong_tien = $tongtien;
+      //       $add_loi_nhuan->save();
+      // }
+      // else {
             $request->validate([
                 'ho_ten' => 'required',
                 'dia_chi' => 'required',
                 'so_dien_thoai' => 'digits:10|required|numeric'
             ],[
-                'ho_ten.required' => 'Vui lòng nhập họ và tên',
+                'ho_ten.required' => 'Vui lòng nhập tên khách hàng',
                 'dia_chi.required' => 'Vui lòng nhập địa chỉ',
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
                 'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
             ]);
-            $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
-            if(empty($check_account)) {
-                $account = array();
-                $account['ho_ten'] = $request->ho_ten;
-                $account['dia_chi'] = $request->dia_chi;
-                $account['so_dien_thoai'] = $request->so_dien_thoai;
-                $account['admin'] = false;
-                $account_id = TaiKhoan::insertGetId($account);
+            // dd($request);
+            // $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
+        //     if(empty($check_account)) {
+        //         $account = array();
+        //         $account['ho_ten'] = $request->ho_ten;
+        //         $account['dia_chi'] = $request->dia_chi;
+        //         $account['so_dien_thoai'] = $request->so_dien_thoai;
+        //         $account['admin'] = false;
+        //         $account_id = TaiKhoan::insertGetId($account);
 
-                    //thanh toán vnpay
-        if($request->payment == "1")
-        {
-        session(['tong_tien' => $request->online]);
-        session(['cost_id' => $request->id]);
-        session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-vnpay-buy_now-not-acc/{{$account_id}}";
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->online * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
+        //             //thanh toán vnpay
+        // if($request->payment == "1")
+        // {
+        //   session(['tong_tien' => $request->online]);
+        //   session(['cost_id' => $request->id]);
+        //   session(['url_prev' => url()->previous()]);
+        //   $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
+        //   $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
+        //   $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        //   $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{$account_id}";
+        //   $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        //   $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+        //   $vnp_OrderType = 'billpayment';
+        //   $vnp_Amount = $request->online * 100;
+        //   $vnp_Locale = 'vn';
+        //   $vnp_IpAddr = request()->ip();
 
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
-        $vnp_BankCode = 'ncb';
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
-            } else {
-                $hashdata .= $key . "=" . $value;
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
+        //   $inputData = array(
+        //       "vnp_Version" => "2.0.0",
+        //       "vnp_TmnCode" => $vnp_TmnCode,
+        //       "vnp_Amount" => $vnp_Amount,
+        //       "vnp_Command" => "pay",
+        //       "vnp_CreateDate" => date('YmdHis'),
+        //       "vnp_CurrCode" => "VND",
+        //       "vnp_IpAddr" => $vnp_IpAddr,
+        //       "vnp_Locale" => $vnp_Locale,
+        //       "vnp_OrderInfo" => $vnp_OrderInfo,
+        //       "vnp_OrderType" => $vnp_OrderType,
+        //       "vnp_ReturnUrl" => $vnp_Returnurl,
+        //       "vnp_TxnRef" => $vnp_TxnRef,
+        //   );
+        //   $vnp_BankCode = 'ncb';
+        //   if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+        //       $inputData['vnp_BankCode'] = $vnp_BankCode;
+        //   }
+        //   ksort($inputData);
+        //   $query = "";
+        //   $i = 0;
+        //   $hashdata = "";
+        //   foreach ($inputData as $key => $value) {
+        //       if ($i == 1) {
+        //           $hashdata .= '&' . $key . "=" . $value;
+        //       } else {
+        //           $hashdata .= $key . "=" . $value;
+        //           $i = 1;
+        //       }
+        //       $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        //   }
 
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-           // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return redirect($vnp_Url);
-        }
-        //ket thuc thanh toan vnpay
-    
-                $bill = array();
-                $bill['tai_khoans_id'] = $account_id;
-                $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['trang_thai'] = true;
-                $bill_id = HoaDon::insertGetId($bill);
-            }
-            else { 
+        //   $vnp_Url = $vnp_Url . "?" . $query;
+        //   if (isset($vnp_HashSecret)) {
+        //     // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+        //       $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+        //       $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+        //   }
+        //   return redirect($vnp_Url);
+        // }
+        // //ket thuc thanh toan vnpay
+
+        //         $bill = array();
+        //         $bill['tai_khoans_id'] = $account_id;
+        //         $bill['ngay_lap_hd'] = Carbon::now();
+        //         $bill['trang_thai'] = true;
+        //         $bill_id = HoaDon::insertGetId($bill);
+        //     }
+
+
+        //     else { 
 
                 //thanh toán vnpay
         if($request->payment == "1")
         {
-        session(['tong_tien' => $request->online]);
-        session(['cost_id' => $request->id]);
-        session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-vnpay-not-acc/{$check_account->id}";
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->online * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
+          session(['tong_tien' => $request->online]);
+          session(['cost_id' => $request->id]);
+          session(['url_prev' => url()->previous()]);
+          if(Auth::check() && Auth::user()->admin != 1) {
+            $id = Auth::user()->id;
+          } else {
+            $id = "no";
+          }
+          $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
+          $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
+          $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+          $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay/{$id}/{$request->ho_ten}/{$request->so_dien_thoai}/{$request->dia_chi}";
+          $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+          $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+          $vnp_OrderType = 'billpayment';
+          $vnp_Amount = $request->online * 100;
+          $vnp_Locale = 'vn';
+          $vnp_IpAddr = request()->ip();
 
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
-        $vnp_BankCode = 'ncb';
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
-            } else {
-                $hashdata .= $key . "=" . $value;
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
+          $inputData = array(
+              "vnp_Version" => "2.0.0",
+              "vnp_TmnCode" => $vnp_TmnCode,
+              "vnp_Amount" => $vnp_Amount,
+              "vnp_Command" => "pay",
+              "vnp_CreateDate" => date('YmdHis'),
+              "vnp_CurrCode" => "VND",
+              "vnp_IpAddr" => $vnp_IpAddr,
+              "vnp_Locale" => $vnp_Locale,
+              "vnp_OrderInfo" => $vnp_OrderInfo,
+              "vnp_OrderType" => $vnp_OrderType,
+              "vnp_ReturnUrl" => $vnp_Returnurl,
+              "vnp_TxnRef" => $vnp_TxnRef,
+          );
+          $vnp_BankCode = 'ncb';
+          if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+              $inputData['vnp_BankCode'] = $vnp_BankCode;
+          }
+          ksort($inputData);
+          $query = "";
+          $i = 0;
+          $hashdata = "";
+          foreach ($inputData as $key => $value) {
+              if ($i == 1) {
+                  $hashdata .= '&' . $key . "=" . $value;
+              } else {
+                  $hashdata .= $key . "=" . $value;
+                  $i = 1;
+              }
+              $query .= urlencode($key) . "=" . urlencode($value) . '&';
+          }
 
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-           // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return redirect($vnp_Url);
+          $vnp_Url = $vnp_Url . "?" . $query;
+          if (isset($vnp_HashSecret)) {
+            // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+              $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+              $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+          }
+          return redirect($vnp_Url);
         }
         //ket thuc thanh toan vnpay
 
-                $bill = array();
-                $bill['tai_khoans_id'] = $check_account->id;
-                $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['trang_thai'] = true;
-                $bill_id = HoaDon::insertGetId($bill);
-            }   
-
-            $contents = Cart::content();
-            $loi_nhuan = 0;
-            $tongtien = 0;
-            foreach($contents as $content) {
-                $bill_detail = new ChiTietHoaDon();
-                $bill_detail->hoa_dons_id = $bill_id;
-                $bill_detail->chi_tiet_san_phams_id = $content->id;
-                $bill_detail->so_luong = $content->qty; 
-                $update_ctsp = ChiTietSanPham::find($content->id);
-                $update_ctsp->so_luong -= $content->qty;
-                $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
-                $bill_detail->gia_ban = $content->price;
-                $tongtien += ($content->price*$content->qty);
-                $loi_nhuan += (($content->price - $update_ctsp->sanPham->gia_goc)*$content->qty);
-                $update_ctsp->save();
-                $bill_detail->save();
-            }
-            $add_loi_nhuan = HoaDon::find($bill_id);
-            $add_loi_nhuan->loi_nhuan = $loi_nhuan;
-            $add_loi_nhuan->tong_tien = $tongtien;
-            $add_loi_nhuan->save();
-        }
-        Cart::destroy();
-        return redirect()->route('ordersuccess');
-    }
-    public function createBuyNow(Request $request){
-        if(Auth::check()) {
-            if(Auth::user()->dia_chi == null) {
-                $request->validate([
-                    'dia_chi' => 'required'
-                ],[
-                    'dia_chi.required' => 'Vui lòng nhập địa chỉ'
-                ]);
-                $new_update = TaiKhoan::find(Auth::user()->id);
-                $new_update->dia_chi = $request->dia_chi;
-                $new_update->save();
-            }
-            if(Auth::user()->so_dien_thoai == null) {
-                $request->validate([
-                    'so_dien_thoai' => 'digits:10|required|numeric'
-                ],[
-                    'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
-                    'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
-                    'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
-                ]);
-                $new_update = TaiKhoan::find(Auth::user()->id);
-                $new_update->so_dien_thoai = $request->so_dien_thoai;
-                $new_update->save();
-            }
-               //thanh toán vnpay
-        if($request->payment == "1")
-        {
-        $id = Auth::user()->id;
-        session(['tong_tien' => $request->online]);
-        session(['cost_id' => $request->id]);
-        session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay/{$id}";
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->online * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
-
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
-        $vnp_BankCode = 'ncb';
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
-            } else {
-                $hashdata .= $key . "=" . $value;
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
-
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-           // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return redirect($vnp_Url);
-        }
-        //ket thuc thanh toan vnpay
             $bill = array();
-            $bill['tai_khoans_id'] = Auth::user()->id;
+            if(Auth::check() && Auth::user()->admin != 1) {
+              $bill['tai_khoans_id'] = Auth::user()->id;
+            }
+            $bill['ho_ten'] = $request->ho_ten;
+            $bill['so_dien_thoai'] = $request->so_dien_thoai;
+            $bill['dia_chi'] = $request->dia_chi;
             $bill['ngay_lap_hd'] = Carbon::now();
-            $bill['trang_thai'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
             $data = Session::all();
@@ -610,181 +805,7 @@ class HoaDonController extends Controller
             $add_loi_nhuan->loi_nhuan = $loi_nhuan;
             $add_loi_nhuan->tong_tien = $tongtien;
             $add_loi_nhuan->save();
-        }
-        else {
-            $request->validate([
-                'ho_ten' => 'required',
-                'dia_chi' => 'required',
-                'so_dien_thoai' => 'digits:10|required|numeric'
-            ],[
-                'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
-                'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
-                'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ'
-            ]);
-            $check_account = TaiKhoan::where('so_dien_thoai',$request->so_dien_thoai)->first();
-            if(empty($check_account)) {
-                $account = array();
-                $account['ho_ten'] = $request->ho_ten;
-                $account['dia_chi'] = $request->dia_chi;
-                $account['so_dien_thoai'] = $request->so_dien_thoai;
-                $account['admin'] = false;
-                $account_id = TaiKhoan::insertGetId($account);
 
-                    //thanh toán vnpay
-        if($request->payment == "1")
-        {
-        session(['tong_tien' => $request->online]);
-        session(['cost_id' => $request->id]);
-        session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{$account_id}";
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->online * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
-
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
-        $vnp_BankCode = 'ncb';
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
-            } else {
-                $hashdata .= $key . "=" . $value;
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
-
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-           // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return redirect($vnp_Url);
-        }
-        //ket thuc thanh toan vnpay
-
-                $bill = array();
-                $bill['tai_khoans_id'] = $account_id;
-                $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['trang_thai'] = true;
-                $bill_id = HoaDon::insertGetId($bill);
-            }
-
-
-            else { 
-
-                //thanh toán vnpay
-        if($request->payment == "1")
-        {
-        session(['tong_tien' => $request->online]);
-        session(['cost_id' => $request->id]);
-        session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "UDOPNWS1"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "EBAHADUGCOEWYXCMYZRMTMLSHGKNRPBN"; //Chuỗi bí mật
-        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/return-buy-now-vnpay-not-acc/{$check_account->id}";
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
-        $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $request->online * 100;
-        $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
-
-        $inputData = array(
-            "vnp_Version" => "2.0.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
-        );
-        $vnp_BankCode = 'ncb';
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . $key . "=" . $value;
-            } else {
-                $hashdata .= $key . "=" . $value;
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
-
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-           // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
-            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return redirect($vnp_Url);
-        }
-        //ket thuc thanh toan vnpay
-
-                $bill = array();
-                $bill['tai_khoans_id'] = $check_account->id;
-                $bill['ngay_lap_hd'] = Carbon::now();
-                $bill['trang_thai'] = true;
-                $bill_id = HoaDon::insertGetId($bill);
-            }   
-
-            $data = Session::all();
-            $loi_nhuan = 0;
-            $tongtien = 0;
-            $bill_detail = new ChiTietHoaDon();
-            $bill_detail->hoa_dons_id = $bill_id;
-            $bill_detail->chi_tiet_san_phams_id = $data['id'];
-            $bill_detail->so_luong = $data['so_luong']; 
-            $update_ctsp = ChiTietSanPham::find($data['id']);
-            $update_ctsp->so_luong -= $data['so_luong'];
-            $bill_detail->gia_goc = $update_ctsp->sanPham->gia_goc;
-            $bill_detail->gia_ban = $data['gia'];
-            $tongtien += ($data['gia']*$data['so_luong']);
-            $loi_nhuan += (($data['gia'] - $update_ctsp->sanPham->gia_goc)*$data['so_luong']);
-            $update_ctsp->save();
-            $bill_detail->save();
-            $add_loi_nhuan = HoaDon::find($bill_id);
-            $add_loi_nhuan->loi_nhuan = $loi_nhuan;
-            $add_loi_nhuan->tong_tien = $tongtien;
-            $add_loi_nhuan->save();
-        }
         Session::forget('id');
         Session::forget('ten_san_pham');
         Session::forget('gia');
@@ -796,15 +817,40 @@ class HoaDonController extends Controller
     }
     public function delete($id) {
         $new = HoaDon::find($id);
-        $new->trang_thai = false;
+        $new->trang_thai_don_hang = 0;
         $new->save();
         echo 'done';
     }
-    public function checkBill($id) {
+    public function checkBill($id, $val) {
+      if($val == 'no') {
+      } else {
+        $check = HoaDon::find($id);
+        if($val == 0 && $check->trang_thai_don_hang != $val) {
+          $cthds = ChiTietHoaDon::where('hoa_dons_id', $id)->get();
+          foreach($cthds as $cthd) {
+            $ctsp = ChiTietSanPham::find($cthd->chi_tiet_san_phams_id);
+            $ctsp->so_luong += $cthd->so_luong;
+            $ctsp->save();
+          }
+        }
+        if($val != 0 && $check->trang_thai_don_hang == 0) {
+          $cthds = ChiTietHoaDon::where('hoa_dons_id', $id)->get();
+          foreach($cthds as $cthd) {
+            $ctsp = ChiTietSanPham::find($cthd->chi_tiet_san_phams_id);
+            if($ctsp->so_luong >= $cthd->so_luong) {
+              $ctsp->so_luong -= $cthd->so_luong;
+              $ctsp->save();
+            } else {
+              return 'no';
+            }
+            
+          }
+        }
         $new = HoaDon::find($id);
-        $new->chot_don = true;
+        $new->trang_thai_don_hang = $val;
         $new->save();
-        echo 'done';
+      }
+      return $val;
     }
     public function printBill($id) {
         $pdf = \App::make('dompdf.wrapper');
@@ -821,43 +867,36 @@ class HoaDonController extends Controller
         $key = $request->key_search;
         $key_from_day = $request->key_from_day;
         $key_to_day = $request->key_to_day;
-        $chot_don = $request->chot_don;
+        $trang_thai_don_hang = $request->trang_thai_don_hang;
         if(empty($key)) {
           if(empty($key_from_day)) {
               if(empty($key_to_day)) {
-                  if($chot_don == null) {
+                  if($trang_thai_don_hang == null) {
                     return redirect()->route('admin.bill.index');
                   } else {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('chot_don',$chot_don);
+                      $query = HoaDon::where('trang_thai_don_hang',$trang_thai_don_hang);
                   }
               } else {
-                  if($chot_don == null) {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('ngay_lap_hd','<=',$key_to_day);
+                  if($trang_thai_don_hang == null) {
+                      $query = HoaDon::where('ngay_lap_hd','<=',$key_to_day);
                   } else {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('chot_don',$chot_don)
+                      $query = HoaDon::where('trang_thai_don_hang',$trang_thai_don_hang)
                       ->where('ngay_lap_hd','<=',$key_to_day);
                   }
               }
           } else {
               if(empty($key_to_day)) {
-                  if($chot_don == null) {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('ngay_lap_hd','>=',$key_from_day);
+                  if($trang_thai_don_hang == null) {
+                      $query = HoaDon::where('ngay_lap_hd','>=',$key_from_day);
                   } else {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('ngay_lap_hd','>=',$key_from_day)
-                      ->where('chot_don',$chot_don);
+                      $query = HoaDon::where('ngay_lap_hd','>=',$key_from_day)
+                      ->where('trang_thai_don_hang',$trang_thai_don_hang);
                   }
               } else {
-                  if($chot_don == null) {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
+                  if($trang_thai_don_hang == null) {
+                      $query = HoaDon::whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
                   } else {
-                      $query = HoaDon::where('trang_thai',1)
-                      ->where('chot_don',$chot_don)
+                      $query = HoaDon::where('trang_thai_don_hang',$trang_thai_don_hang)
                       ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
                   }
               } 
@@ -867,87 +906,63 @@ class HoaDonController extends Controller
       } else {
         if(empty($key_from_day)) {
           if(empty($key_to_day)) {
-              if($chot_don == null) {
-                $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+              if($trang_thai_don_hang == null) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   });
               } else {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
-                  ->where('chot_don',$chot_don);
+                  ->where('trang_thai_don_hang',$trang_thai_don_hang);
               }
           } else {
-              if($chot_don == null) {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+              if($trang_thai_don_hang == null) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
                   ->where('ngay_lap_hd','<=',$key_to_day);
               } else {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
-                  ->where('chot_don',$chot_don)
+                  ->where('trang_thai_don_hang',$trang_thai_don_hang)
                   ->where('ngay_lap_hd','<=',$key_to_day);
               }
           }
       } else {
           if(empty($key_to_day)) {
-              if($chot_don == null) {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+              if($trang_thai_don_hang == null) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
                   ->where('ngay_lap_hd','>=',$key_from_day);
               } else {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
                   ->where('ngay_lap_hd','>=',$key_from_day)
-                  ->where('chot_don',$chot_don);
+                  ->where('trang_thai_don_hang',$trang_thai_don_hang);
               }
           } else {
-              if($chot_don == null) {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+              if($trang_thai_don_hang == null) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
                   ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
               } else {
-                  $query = HoaDon::where('trang_thai',1)
-                  ->where(function($que) use ($key) {
+                  $query = HoaDon::where(function($que) use ($key) {
                       $que->where('id','LIKE','%' .$key. '%');
-                      $que->orWhereHas('taiKhoan', function($query) use ($key) {
-                          $query->where('ho_ten','LIKE','%'.$key.'%');
-                      });
+                      $que->orWhere('ho_ten','LIKE','%' .$key. '%');
                   })
-                  ->where('chot_don',$chot_don)
+                  ->where('trang_thai_don_hang',$trang_thai_don_hang)
                   ->whereBetween('ngay_lap_hd',[$key_from_day,$key_to_day]);
               }
           } 
@@ -955,13 +970,13 @@ class HoaDonController extends Controller
       $array = ['arrays'=> $query->paginate(5)];
       return view('admin.bill.index',$array);
       }
-        // if($request->chot_don == null) {
+        // if($request->trang_thai_don_hang == null) {
         //     echo "7";
         // } else {
-        //     dd($request->chot_don);
+        //     dd($request->trang_thai_don_hang);
         // }
             
-        // // dd($request->chot_don);
+        // // dd($request->trang_thai_don_hang);
         // $query = HoaDon::where('trang_thai',1)
         // ->where('id','LIKE','%' .$key. '%');
 
@@ -1019,10 +1034,10 @@ class HoaDonController extends Controller
         // return view('admin.bill.index',$array);
     }
     public function myBill() {
-        $array = ['arrays'=>HoaDon::where('trang_thai',1)
-                                    ->where('tai_khoans_id',Auth::user()->id)
+      $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
+      $array = ['arrays'=>HoaDon::where('tai_khoans_id',Auth::user()->id)->where('ngay_lap_hd',">=",$sub_30_days)->orderBy('ngay_lap_hd', 'DESC')
                                     ->paginate(5)];
-        return view('pages.my_order',$array);
+      return view('pages.my_order',$array);
     }
     public function myBillDetail($id) {
         $array = ChiTietHoaDon::where('hoa_dons_id', $id)
@@ -1047,8 +1062,8 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                    ->where('hoa_dons.trang_thai', true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
+                    ->where('hoa_dons.trang_thai_don_hang', 4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$sub_30_days)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
         return view('admin.statistic.index',compact('arrays'));
@@ -1072,7 +1087,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_7_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1084,7 +1099,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc, $cuoi_thang_truoc])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1096,7 +1111,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1108,7 +1123,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_365_days, $now])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1122,7 +1137,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereBetween('hoa_dons.ngay_lap_hd',[$request->key_from_day, $request->key_to_day])
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1132,7 +1147,7 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
                             ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->key_from_day)
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
@@ -1144,7 +1159,7 @@ class HoaDonController extends Controller
                                 ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                                 ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                                 ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                                ->where('hoa_dons.trang_thai', true)
+                                ->where('hoa_dons.trang_thai_don_hang', 4)
                                 ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->key_to_day)
                                 ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                                 ->get();
@@ -1154,8 +1169,8 @@ class HoaDonController extends Controller
                             ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                             ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                             ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                            ->where('hoa_dons.trang_thai', true)
-                            ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
+                            ->where('hoa_dons.trang_thai_don_hang', 4)
+                            ->where('hoa_dons.ngay_lap_hd','>=',$sub_30_days)
                             ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                             ->get();
                     }
@@ -1196,8 +1211,8 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                    ->where('hoa_dons.trang_thai', true)
-                    ->whereBetween('hoa_dons.ngay_lap_hd',[$sub_30_days, $now])
+                    ->where('hoa_dons.trang_thai_don_hang', 4)
+                    ->where('hoa_dons.ngay_lap_hd','>=',$sub_30_days)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
         return view('admin.statistic.form_print',compact('arrays'));
@@ -1213,7 +1228,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                    ->where('hoa_dons.trang_thai', true)
+                    ->where('hoa_dons.trang_thai_don_hang', 4)
                     ->whereDate('hoa_dons.ngay_lap_hd','<=',$key_to_day)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1230,7 +1245,7 @@ class HoaDonController extends Controller
                     ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                     ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                     ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                    ->where('hoa_dons.trang_thai', true)
+                    ->where('hoa_dons.trang_thai_don_hang', 4)
                     ->whereDate('hoa_dons.ngay_lap_hd','>=',$key_from_day)
                     ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                     ->get();
@@ -1268,7 +1283,7 @@ class HoaDonController extends Controller
                         ->join('chi_tiet_san_phams','chi_tiet_hoa_dons.chi_tiet_san_phams_id','=','chi_tiet_san_phams.id')
                         ->join('san_phams','chi_tiet_san_phams.san_phams_id','=','san_phams.id')
                         ->join('hoa_dons','chi_tiet_hoa_dons.hoa_dons_id','=','hoa_dons.id')
-                        ->where('hoa_dons.trang_thai', true)
+                        ->where('hoa_dons.trang_thai_don_hang', 4)
                         ->whereBetween('hoa_dons.ngay_lap_hd',[$key_from_day, $key_to_day])
                         ->groupBy('san_phams.ten_san_pham','chi_tiet_hoa_dons.gia_goc','chi_tiet_hoa_dons.gia_ban')
                         ->get();

@@ -118,42 +118,28 @@
                                     <h2>Thông tin giao hàng</h2>
                                 </div>
                             <div class="main-customer-info">
-                                {{-- @if(Auth::check() and Auth::user()->admin != 1)
-                                    <div class="main-customer-info-img">
-                                        <img src="{{asset(getLink('anh-dai-dien',Auth::user()->anh_dai_dien))}}" alt="" width="60px" height="60px">
-                                    </div>
-                                @else
-                                    <div class="main-customer-info-img" style="display:none">
-                                        <img src="{{asset(getLink('anh-dai-dien','no-image.png'))}}" alt="" width="60px" height="60px">
-                                    </div>
-                                @endif --}}
+                                
                                 @if(Auth::check() and Auth::user()->admin != 1)
                                 
-                                    {{-- <div class="main-customer-info-logged">
-                                        <p class="main-customer-info-logged-paragraph">{{ Auth::user()->ho_ten }} ({{ Auth::user()->email }})</p>
-                                        <a href="{{ route('accounts.logout') }}">Đăng xuất</a>
-                                    </div> --}}
+                                    
                                  
                             </div>
                             <div class="fieldset">
-                                {{-- @if(Auth::user()->dia_chi == null) --}}
                                   <div class="fieldset-address">
                                         <label class="form-label" for="">Tên khách hàng</label>
-                                        <input type="text" name="ten_khach_hang" class="form-control" value="{{ Auth::user()->ho_ten}}">
-                                    @if($errors->has('ten_khach_hang'))
+                                        <input type="text" name="ho_ten" class="form-control" value="{{ Auth::user()->ho_ten}}">
+                                    @if($errors->has('ho_ten'))
                                         <span style="font-size: 13px; color:red">
                                         <i class="fas fa-times"></i>
-                                        {{ $errors->first('ten_khach_hang') }}
+                                        {{ $errors->first('ho_ten') }}
                                         </span>
                                         <style>
-                                            input[name = 'ten_khach_hang'] {
+                                            input[name = 'ho_ten'] {
                                                 border: 1px solid red;
                                             }
                                         </style>
                                     @endif
                                    
-                                {{-- @endif
-                                @if(Auth::user()->so_dien_thoai == null) --}}
                                 <div class="fieldset-phone">
                                     <label class="form-label" for="">Số điện thoại</label>
                                     <input type="text" class="form-control" name="so_dien_thoai" value="{{ Auth::user()->so_dien_thoai}}">

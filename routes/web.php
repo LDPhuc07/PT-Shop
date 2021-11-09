@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('/bill','HoaDonController@index')->name('admin.bill.index');
     Route::get('/bill/bill-detail/{id}','HoaDonController@billDetail')->name('admin.bill.bill-detail');
     Route::get('bill/delete/{id}','HoaDonController@delete')->name('admin.bill.delete');
-    Route::get('bill/check-bill/{id}','HoaDonController@checkBill')->name('admin.bill.check-bill');
+    Route::get('bill/check-bill/{id}/{val}','HoaDonController@checkBill')->name('admin.bill.check-bill');
     Route::get('bill/print/{id}','HoaDonController@printBill')->name('admin.bill.print');
     Route::get('bill/search','HoaDonController@search')->name('admin.bill.search');
     
@@ -139,9 +139,9 @@ Route::post('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
 Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@returnNotAcc')->name('bill.return');
-Route::get('/return-vnpay/{id}','HoaDoncontroller@return')->name('bill.return');
-Route::get('/return-buy-now-vnpay-not-acc/{tkid}','HoaDoncontroller@returnBuyNowNotAcc');
-Route::get('/return-buy-now-vnpay/{id}','HoaDoncontroller@returnBuyNow');
+Route::get('/return-vnpay/{id}/{ho_ten}/{so_dien_thoai}/{dia_chi}','HoaDoncontroller@return')->name('bill.return');
+Route::get('/return-buy-now-vnpay-not-acc','HoaDoncontroller@returnBuyNowNotAcc');
+Route::get('/return-buy-now-vnpay/{id}/{ho_ten}/{so_dien_thoai}/{dia_chi}','HoaDoncontroller@returnBuyNow');
 // Auth::routes();
 Route::get('/header-like','PageController@headerLike')->name('header.like');
 Route::get('/header-cart','PageController@headerCart')->name('header.cart');

@@ -52,7 +52,7 @@ class PageController extends Controller
                                     
         $ctsp = DB::table('chi_tiet_hoa_dons')->join('chi_tiet_san_phams', 'chi_tiet_hoa_dons.chi_tiet_san_phams_id', '=', 'chi_tiet_san_phams.id')
                       ->join('hoa_dons', 'chi_tiet_hoa_dons.hoa_dons_id', '=', 'hoa_dons.id')
-                     ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('SUM(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai', true)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->limit(2)->get()->pluck('san_phams_id');
+                     ->select(array('chi_tiet_san_phams.san_phams_id',DB::raw('SUM(chi_tiet_san_phams.san_phams_id) as san_pham_max')))->where('hoa_dons.trang_thai_don_hang',4)->groupBy('chi_tiet_san_phams.san_phams_id')->orderBy('san_pham_max', 'DESC')->limit(2)->get()->pluck('san_phams_id');
         $sanphamphobiens = SanPham::whereIn('id',$ctsp)
                      ->with(array('anh' => function($query) {
                          $query->where('anhchinh',1);

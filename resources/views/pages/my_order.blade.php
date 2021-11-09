@@ -7,6 +7,9 @@
 @endsection
 @section('content')
 <style>
+  .yellow {
+    background-color:#bbbb79;
+  }
   /* Mobile & tablet  */
   @media (max-width: 1023px) {
    .detail__my-order {
@@ -86,7 +89,7 @@
                         <th>MĐH</th>
                         <th>Ngày</th>
                         <th>Tổng tiền</th>
-                        <th>Trạng thái</th>
+                        <th>Trạng thái đơn hàng</th>
                         <th>Chi tiết</th>
                       </tr>
                     </thead>
@@ -97,10 +100,20 @@
                         <td>{{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}</td>
                         <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                         <td>
-                          @if ($bill->chot_don == true)
-                          <span class="btn-stt green" >Đã chốt đơn</span>
-                          @else
-                            <span class="btn-stt blue" >Đang xác nhận</span>
+                          @if ($bill->trang_thai_don_hang == 0)
+                            <span class="btn-stt red" >Đã Hủy</span>
+                          @endif
+                          @if ($bill->trang_thai_don_hang == 1)
+                            <span class="btn-stt blue" >Chờ xác nhận</span>
+                          @endif
+                          @if ($bill->trang_thai_don_hang == 2)
+                            <span class="btn-stt yellow" >Chờ lấy hàng</span>
+                          @endif
+                          @if ($bill->trang_thai_don_hang == 3)
+                            <span class="btn-stt yellow" >Đang giao</span>
+                          @endif
+                          @if ($bill->trang_thai_don_hang == 4)
+                            <span class="btn-stt green" >Đã giao</span>
                           @endif
                         </td>
                         <td><a onclick="showModal({{ $bill->id }})" style="cursor: pointer">Xem</a></td>

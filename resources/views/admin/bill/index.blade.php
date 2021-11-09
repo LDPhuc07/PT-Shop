@@ -2,8 +2,12 @@
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-  
-
+  .group-filter-btn .trang-thai-label {
+    width: 300px;
+  }
+  .trang-thai-dh {
+    text-align: center;
+  }
 
   @media(max-width: 767px) {
     .search {
@@ -47,7 +51,8 @@
     }
     .group-filter-btn {
       display: inline-block;
-      margin-right: 19px !important;
+      margin-right: 5px!important;
+      width: 200px;
     }
     .unset-width {
       width: unset !important;
@@ -75,6 +80,7 @@
     margin-top: 6px;
     text-align: center;
   }
+  
 </style>
 @endsection
 @section('content')
@@ -99,11 +105,14 @@
                           <label class="unset-width">Đến ngày: </label><input style="margin-right: 16px" type="text" id="datepicker2" name="key_to_day" class="form-control">
                         </div>
                         <div style="margin-right: 16px;" class="group-filter-btn">
-                          <label class="unset-width">Chốt đơn: </label>
-                          <select  class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="chot_don">
+                          <label class="trang-thai-label" class="unset-width">Trạng thái đơn hàng: </label>
+                          <select  class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai_don_hang">
                             <option value="">--Chọn--</option>
-                            <option value="1">Đã chốt</option>
-                            <option value="0">Chưa chốt</option>
+                            <option value="0">Đã hủy</option>
+                            <option value="1">Chờ xác nhận</option>
+                            <option value="2">Chờ lấy hàng</option>
+                            <option value="3">Đang giao</option>
+                            <option value="4">Đã Giao</option>
                           </select>
                         </div>
                         <input type="submit" style="color: #fff;
@@ -117,10 +126,20 @@
                           <tr>
                               <th>Mã hóa đơn</th>
                               <th>Tên khách hàng</th>
+                              <th>Số điện thoại</th>
+                              <th>Địa chỉ</th>
                               <th>Ngày lập hóa đơn</th>
+                              <th >
+                                <div style="text-align: center">
+                                  Trạng thái đơn hàng
+                                </div>
+                              </th>
+                              <th >
+                                <div style="text-align: center">
+                                  Hình thức thanh toán
+                                </div>
+                              </th>
                               <th>Tổng tiền</th>
-                              <th>Chốt đơn</th>
-                              <th>Hình thức thanh toán</th>
                               <th></th>
                           </tr>
                       </thead>
@@ -129,16 +148,17 @@
                         <tr id="bill-item-{{ $bill->id }}">
                             <td>{{ $bill->id }}</td>
                             <td> 
-                              @if($bill->taiKhoan->anh_dai_dien != null)
-                                <img class="avt" src="{{asset(getLink('anh-dai-dien',$bill->taiKhoan->anh_dai_dien))}}" alt="anh">
-                              @else
-                                <img class="avt" src="https://i.pinimg.com/originals/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.png" alt="anh">
-                              @endif
-                              {{ $bill->taiKhoan->ho_ten}}
+                              {{ $bill->ho_ten }}
+                            </td>
+                            <td> 
+                              {{ $bill->so_dien_thoai }}
+                            </td>
+                            <td> 
+                              {{ $bill->dia_chi }}
                             </td>
                             <td>{{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}</td>
-                            <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
-                            @if ($bill->chot_don == true)
+                            
+                            {{--  @if ($bill->chot_don == true)
                               <td>
                                 <a class="checked"><i class="fas fa-check-circle"></i></a>
                               </td>
@@ -146,45 +166,82 @@
                               <td> 
                                 <a class="check-{{ $bill->id }} not-check-btn"><i class="fas fa-exclamation-circle"></i></a>
                               </td>
-                            @endif
-                            @if ($bill->hinh_thuc_thanh_toan == true)
-                              <td>
-                                <span style="cursor: unset" class="repaid">Trả trước</span>
-                              </td>
-                            @else
-                              <td> 
-                                <span style="cursor: unset" class="postpaid">Trả sau</span>
-                              </td>
-                            @endif
+                            @endif  --}}
                             <td>
-                              <a onclick="deleteBill({{ $bill->id }})" class="delete-btn"><i class="fas fa-trash-alt"></i></a>
+                              <div style="text-align: center" class="trang-thai-dh-{{ $bill->id }}">
+                                @if($bill->trang_thai_don_hang == 0)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã hủy</span>
+                                @endif
+                                @if($bill->trang_thai_don_hang == 1)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#2944e0,#1c18f7)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ xác nhận</span>
+                                @endif
+                                @if($bill->trang_thai_don_hang == 2)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ lấy hàng</span>
+                                @endif
+                                @if($bill->trang_thai_don_hang == 3)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Đang giao</span>
+                                @endif
+                                @if($bill->trang_thai_don_hang == 4)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#2dcc33,#41ca46)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã giao</span>
+                                @endif
+                              </div>
+                            </td>
+                            
+                            <td>
+                              <div style="text-align: center">
+                                @if ($bill->hinh_thuc_thanh_toan == true)
+                                  <span style="cursor: unset" class="repaid">Trả trước</span>
+                                @else
+                                  <span style="cursor: unset" class="postpaid">Trả sau</span>
+                                @endif
+                              </div>
+                            </td>
+                      
+                            <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
+                            <td>
+                              {{--  <a onclick="deleteBill({{ $bill->id }})" class="delete-btn"><i class="fas fa-trash-alt"></i></a>  --}}
                               <div class="modal fade" id="modal">
                                 <div class="modal-dialog modal-dialog-centered">
                                   <div class="modal-content">
                                   
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                      <h4 class="modal-title" style="color:red">Thông báo</h4>
+                                      <h4 class="modal-title">Cập nhật trạng thái đơn hàng</h4>
                                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                      Bạn có thực sự muốn xóa hóa đơn này ?
-                                    </div>
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
-                                      <button type="button" class="btn btn-danger" id="khoa" style="background-color:red;color:white">OK</button>
-                                    </div>
-                                    
+                                    <form id="form">
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                        <div style="margin-right: 16px;" class="group-filter-btn">
+                                        <input type="text" name="cap_nhat_ttdh" hidden>
+                                        <label style="font-size: 18px" class="trang-thai-label unset-width">Trạng thái đơn hàng: </label>
+                                        <select id="ttdh_val" class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai_don_hang">
+                                          <option value="no">--Chọn--</option>
+                                          <option value="0">Đã hủy</option>
+                                          <option value="1">Chờ xác nhận</option>
+                                          <option value="2">Chờ lấy hàng</option>
+                                          <option value="3">Đang giao</option>
+                                          <option value="4">Đã Giao</option>
+                                        </select>
+                                        </div>
+                                      </div>
+                                      <!-- Modal footer -->
+                                      <div style=" border-top: unset;" class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-danger" id="khoa" style="background-color:#08f;color:white">Lưu</button>
+                                      </div>
+                                    </form>
                                   </div>
                                 </div>
                               </div>
                               <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
-                              @if ($bill->chot_don == false)
-                                <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="check-bill-btn"><i class="fas fa-calendar-check"></i></a>
-                              @endif
+                              <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="check-bill-btn"><i class="fas fa-calendar-check"></i></a>
                               <div class="modal fade" id="form-modal" role="dialog">
                                 <div style="max-width: 800px" class="modal-dialog">
                         
@@ -245,39 +302,48 @@
       });
     }
 
-    function deleteBill(id) {
-      $('#modal').modal('show');
-        $("#khoa").click(function() {
-        $.ajax({
-          url: 'admin/bill/delete/' + id,
-          type: 'GET',
-
-          success:function(data) {
-            if(data == 'done') {
-              $(`#bill-item-${id}`).empty();
-            }
-            $('#modal').modal('hide');
-          }
-        });
-      })
-    }
     function checkbill(id) {
-      if($(`.check-${id}`).hasClass('not-check-btn')) {
-        $.ajax({
-          url: 'admin/bill/check-bill/' + id,
-          type: 'GET',
-          
-          success:function(data) {
-            if(data == 'done') {
-              $(`.check-${id}`).removeClass('not-check-btn');
-              $(`.check-${id}`).addClass('checked');
-              $(`.check-${id} .fas`).removeClass('fa-exclamation-circle');
-              $(`.check-${id} .fas`).addClass('fa-check-circle');
-              $(`#check-bill-${id}`).hide();
-            }
-          }
-        });
-      }
+      $('#modal').modal('show');
+      $("input[name='cap_nhat_ttdh']").val(id);
+      console.log($("input[name='cap_nhat_ttdh']").val());  
     }
+    $("#form").submit(function(e){
+
+      e.preventDefault();
+      var id = $("input[name='cap_nhat_ttdh']").val();
+      var val = $("#ttdh_val").val();
+      $.ajax({
+        url: 'admin/bill/check-bill/' + id + '/' + val,
+        type: 'GET',
+        success:function(data) {
+          if(data == 0) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã hủy</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }
+          if(data == 1) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#2944e0,#1c18f7)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ xác nhận</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }
+          if(data == 2) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ lấy hàng</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }
+          if(data == 3) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Đang giao</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }
+          if(data == 4) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#2dcc33,#41ca46)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã giao</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }     
+          $('#modal').modal('hide');   
+        }
+      });
+    });
   </script>
 @endsection

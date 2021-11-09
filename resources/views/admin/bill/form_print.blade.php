@@ -40,7 +40,13 @@
         <h2>HÓA ĐƠN THANH TOÁN</h2>
         <div class="info">
             <div style="margin-top:0" class="info_item">
-                <label for="">Khách hàng:</label> {{ $bill->taiKhoan->ho_ten}} <br/>
+                <label for="">Khách hàng:</label> {{ $bill->ho_ten}} <br/>
+            </div>
+            <div class="info_item">
+              <label for="">Số điện thoại:</label> {{ $bill->so_dien_thoai}}<br/>
+            </div>
+            <div class="info_item">
+              <label for="">Địa chỉ:</label> {{ $bill->dia_chi}}<br/>
             </div>
             <div class="info_item">
                 <label for="">Ngày lập HD:</label> {{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}<br/>
