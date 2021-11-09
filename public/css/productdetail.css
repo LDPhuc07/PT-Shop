@@ -443,6 +443,11 @@
 	background: #000;
 	color: #fff;
 }
+.swatch-element input[type=radio].variant-1:checked ~ .ad {
+  border: 1px solid #000;
+background: #000;
+color: #fff;
+}
 .btn-comment {
     margin-top: 1.4rem;
     padding: 15px 40px;
@@ -555,10 +560,40 @@
     color: red;
 }
 .alert__body-name {
-    height: 48px;
+    height: 20px;
 }
 .header__second__like {
     text-align: right;
     margin-left: 0;
     margin-top: -6px;
+}
+.product__size,
+.product__color {
+  display: flex;
+  align-items: baseline;
+}
+.product__size-title,
+.product__color-title {
+  margin-right: 15px;
+}
+.product__size-title span,
+.product__color-title span {
+  font-size: 16px;
+}
+.ad {
+    padding: 0 8px;
+      display: block;
+      margin: 0;
+      background: #fff;
+      /* width: 40px; */
+      /* height: 40
+  px
+  ; */
+      line-height: 40px;
+      position: relative;
+      border: 1px solid #e5e5e5;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
 }

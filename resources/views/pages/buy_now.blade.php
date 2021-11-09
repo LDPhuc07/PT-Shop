@@ -281,7 +281,11 @@
                                     <span class="notice">{{ $data['so_luong'] }}</span>
                                 </div>
                                 <div class="col-5">
-                                    <h5>{{ $data['ten_san_pham'] }}</h5>
+                                    <h3>{{ $data['ten_san_pham'] }}</h3>
+                                    <div style="display:flex;">
+                                      <span style="font-size: 16px;margin-right: 10px"><i>Màu: {{ $data['mau'] }}</i></span>
+                                      <span style="font-size: 16px"><i>Size: {{ $data['size'] }}</i></span>
+                                    </div>
                                 </div>
                                 <div class="col-3">
                                     <h4 style="font-size:12px">{{number_format($data['gia'] * $data['so_luong'],0,',','.').' '.'VNĐ'}}</h4>

@@ -396,17 +396,26 @@
                 </a>
               </div>
               <div class="mobile_cart visible-sm visible-xs">
-                <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
+                @if(Auth::check() and Auth::user()->admin != 1)
+                  <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="header__second__cart--notice" class="header__second__cart--notice">3</span>
+                  </a>
+                @else
+                
+                <a data-toggle="modal" data-target="#myModalOne" class="header__second__cart--icon">
                   <i class="fas fa-shopping-cart"></i>
                   <span id="header__second__cart--notice" class="header__second__cart--notice">3</span>
                 </a>
+                @endif
                 @if(Auth::check() and Auth::user()->admin != 1)
+
                 <a href="{{ route('listlike') }}" class="header__second__like--icon">
                   <i class="far fa-heart"></i>
                   <span id="header__second__like--notice" class="header__second__like--notice">3</span>
                 </a>
-                @else
-                <a href="{{ route('accounts.login') }}" class="header__second__like--icon">
+                @else 
+                <a data-toggle="modal" data-target="#myModalTwo" class="header__second__like--icon">
                   <i class="far fa-heart"></i>
                 </a>
                 @endif
@@ -419,20 +428,29 @@
             </form>
           </div>
           <div class="col-3 m-auto hidden-sm hidden-xs">
+            @if(Auth::check() and Auth::user()->admin != 1)
+              <div class="item-car clearfix">
+                <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span id="header__second__cart--notice1" class="header__second__cart--notice"></span>
+                </a>
+              </div>
+            @else
             <div class="item-car clearfix">
-              <a href="{{ route('cart.index') }}" class="header__second__cart--icon">
+              <a data-toggle="modal" data-target="#myModalOne" class="header__second__cart--icon">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="header__second__cart--notice1" class="header__second__cart--notice"></span>
               </a>
             </div>
+            @endif
             <div class="item-like clearfix">
               @if(Auth::check() and Auth::user()->admin != 1)
               <a href="{{ route('listlike') }}" class="header__second__like--icon">
                 <i class="far fa-heart"></i>
                 <span id="header__second__like--notice1" class="header__second__like--notice"></span>
               </a>
-              @else
-              <a href="{{ route('accounts.login') }}" class="header__second__like--icon">
+              @else 
+              <a data-toggle="modal" data-target="#myModalTwo" class="header__second__like--icon">
                 <i class="far fa-heart"></i>
               </a>
               @endif
@@ -513,3 +531,56 @@
       </div>
     </nav>
   </header>
+
+  <!-- The Modal -->
+<div class="modal fade" id="myModalOne">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" style="margin-top:4px">Thông báo</h4>
+        <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để xem giỏ hàng!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+ <!-- The Modal -->
+ <div class="modal fade" id="myModalTwo">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" style="margin-top:4px">Thông báo</h4>
+        <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để xem danh sách thích!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
