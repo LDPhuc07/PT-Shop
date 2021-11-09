@@ -261,14 +261,16 @@
           <h2>{{number_format($sanpham['gia_ban']*(100-$sanpham['giam_gia'])/100,0,',','.').' '.'VNĐ'}}</h2>
         </div>
         <div class="product__color">
+          <div class="product__color-title">
+            <span>Màu:</span>
+          </div>
           <div class="select-swap">
             @foreach($color as $i)
-             @if($i->mau == $first_color->mau)
-              @if($i->mau == 'xanh duong')
+             {{-- @if($i->mau == $first_color->mau) --}}
+              {{-- @if($i->mau == 'xanh duong')
               <div class="circlecheck">
                 <input type="radio" id="option-{{$i['mau']}}" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" class="circle-1" name="mau" value="{{$i['mau']}}" checked>
                 <label for="option-{{$i['mau']}}"></label>
-                
                 <div class="outer-circle"></div>
               </div>
               @endif
@@ -424,13 +426,21 @@
                
                <div class="outer-circle"></div>
              </div>
-             @endif
-             @endif
+             @endif --}}
+             <div class="swatch-element">
+              <input type="radio" class="variant-1" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}" checked>
+              <label for="swatch-{{$i['mau']}}" class="ad"><div><span>{{$i->mau}}</span></div></label>
+            </div>
+             {{-- @endif --}}
             @endforeach
+            
           </div>
         </div>
         <div id="product__size">
           <div class="product__size">
+            <div class="product__size-title">
+              <span>Kích thước:</span>
+            </div>
             <div class="select-swap">
               @foreach($size_by_first_color as $i)
               
@@ -566,7 +576,7 @@
                     }
                   ?>
                   <a class="icon-like" style="color: #ccc;
-                  font-size: 20px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                  font-size: 20px;" data-toggle="modal" data-target="#myModal3" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                   @endif
         </div>
         </div>
@@ -664,7 +674,7 @@
                       @endif
                     @else
                     <a class="icon-like" style="color: #ccc;
-                    font-size: 18px;" data-toggle="modal" data-target="#myModal" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
+                    font-size: 18px;" data-toggle="modal" data-target="#myModal3" class="header__second__like--icon"><i class="fas fa-heart"></i></a>
                     @endif
               </div>
               <div class="sale-off" data-id="{{$sanphamlienquan['giam_gia']}}">
@@ -692,6 +702,7 @@
       <img src="./adirunner.jpg" alt="" class="alert__body-img">
       <div>
           <h5 class="alert__body-name"></h5>
+          
           <span class="alert__body-amount">Số lượng: 1</span>
           <h6 class="alert__body-price">2.000.000 VNĐ</h6>
       </div>
@@ -710,8 +721,8 @@
     
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Thông báo</h4>
-        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+        <h4 class="modal-title" style="margin-top:4px">Thông báo</h4>
+        <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
       <!-- Modal body -->
@@ -721,7 +732,7 @@
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <a type="button" class="btn btn-secondary " data-dismiss="modal">Đóng</a>
+        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
         <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
       </div>
       
@@ -729,14 +740,41 @@
   </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal fade" id="myModal3">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" style="margin-top:4px">Thông báo</h4>
+        <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
+        <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
 <div class="modal fade" id="myModal2">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
     
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Thông báo</h4>
-        {{-- <button type="button" class="close" data-dismiss="modal">&times;</button> --}}
+        <h4 class="modal-title" style="margin-top:4px">Thông báo</h4>
+        <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
       <!-- Modal body -->
@@ -746,7 +784,7 @@
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <a type="button" class="btn btn-secondary " data-dismiss="modal">Đóng</a>
+        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
         <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
       </div>
       
