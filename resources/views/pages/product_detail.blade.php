@@ -266,7 +266,7 @@
           </div>
           <div class="select-swap">
             @foreach($color as $i)
-             {{-- @if($i->mau == $first_color->mau) --}}
+             {{--  @if($i->mau == $first_color->mau)  --}}
               {{-- @if($i->mau == 'xanh duong')
               <div class="circlecheck">
                 <input type="radio" id="option-{{$i['mau']}}" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" class="circle-1" name="mau" value="{{$i['mau']}}" checked>
@@ -427,11 +427,17 @@
                <div class="outer-circle"></div>
              </div>
              @endif --}}
-             <div class="swatch-element">
-              <input type="radio" class="variant-1" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}" checked>
-              <label for="swatch-{{$i['mau']}}" class="ad"><div><span>{{$i->mau}}</span></div></label>
-            </div>
-             {{-- @endif --}}
+            @if($i->mau == $first_color->mau)
+              <div class="swatch-element">
+                <input type="radio" class="variant-1" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}" checked>
+                <label for="swatch-{{$i['mau']}}" class="ad"><div><span>{{$i->mau}}</span></div></label>
+              </div>
+            @else
+              <div class="swatch-element">
+                <input type="radio" class="variant-1" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}">
+                <label for="swatch-{{$i['mau']}}" class="ad"><div><span>{{$i->mau}}</span></div></label>
+              </div>
+            @endif
             @endforeach
             
           </div>
