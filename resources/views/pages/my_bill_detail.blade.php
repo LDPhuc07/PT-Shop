@@ -21,7 +21,12 @@
                         @foreach($bill_detail->chiTietSanPham->sanPham->anh as $anh)
                         <img src="{{asset($anh->link)}}" alt="" style="width: 50px;height: 50px;margin-right: 5px;">
                         @endforeach
-                        <h5>{{ $bill_detail->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                          <div>
+                            <h5>{{ $bill_detail->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                            <span>Màu: {{ $bill_detail->chiTietSanPham->mau }}</span>
+                            <br/>
+                            <span>Kích thước: {{ $bill_detail->chiTietSanPham->kich_thuoc }}</span>
+                          </div>
                         </div>
                         <div class="col-1">{{ $bill_detail->so_luong }}</div>
                         <div class="col-3">{{number_format($bill_detail->chiTietSanPham->sanPham->gia_ban,0,',','.').' '.'VNĐ'}}</div>
