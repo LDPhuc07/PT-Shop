@@ -8,7 +8,9 @@
   .trang-thai-dh {
     text-align: center;
   }
-
+  .edit-btn {
+    margin-left: 4px;
+  }
   @media(max-width: 767px) {
     .search {
       width: 100%;
@@ -241,7 +243,7 @@
                               </div>
                               <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
-                              <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="check-bill-btn"><i class="fas fa-calendar-check"></i></a>
+                              <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <div class="modal fade" id="form-modal" role="dialog">
                                 <div style="max-width: 800px" class="modal-dialog">
                         
