@@ -428,7 +428,7 @@
              </div>
              @endif --}}
              <div class="swatch-element">
-              <input type="radio" class="variant-1" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}" checked>
+              <input type="radio" class="variant-1" onclick="myColor(`{{$i['mau']}}`,{{ $sanpham->id }})" id="swatch-{{$i['mau']}}" name="mau" value="{{$i['mau']}}" checked>
               <label for="swatch-{{$i['mau']}}" class="ad"><div><span>{{$i->mau}}</span></div></label>
             </div>
              {{-- @endif --}}

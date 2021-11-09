@@ -15,7 +15,8 @@
         font-size: 13px;
     }
     .fieldset-phone,
-    .fieldset-address
+    .fieldset-address,
+    .fieldset-name
     {
       margin-bottom: 18px;
     }
@@ -125,7 +126,9 @@
                                  
                             </div>
                             <div class="fieldset">
+                              
                                   <div class="fieldset-address">
+                                    <div class="fieldset-name">
                                         <label class="form-label" for="">Tên khách hàng</label>
                                         <input type="text" name="ho_ten" class="form-control" value="{{ Auth::user()->ho_ten}}">
                                     @if($errors->has('ho_ten'))
@@ -139,6 +142,7 @@
                                             }
                                         </style>
                                     @endif
+                                    </div>
                                    
                                 <div class="fieldset-phone">
                                     <label class="form-label" for="">Số điện thoại</label>
@@ -155,7 +159,6 @@
                                     </style>
                                 @endif
                                 </div>
-                                {{-- @endif --}}
                               </div>
                               <div class="fieldset-address">
                                   <label class="form-label" for="">Địa chỉ</label>
