@@ -206,7 +206,7 @@
                             <td>
                               {{--  <a onclick="deleteBill({{ $bill->id }})" class="delete-btn"><i class="fas fa-trash-alt"></i></a>  --}}
                               <div class="modal fade" id="modal">
-                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-dialog modal-dialog">
                                   <div class="modal-content">
                                   
                                     <!-- Modal Header -->
