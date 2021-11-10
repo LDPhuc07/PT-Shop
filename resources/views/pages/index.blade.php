@@ -449,7 +449,15 @@
         var like_header1 = parseInt($(`#header__second__like--notice1`).text());
         like_header1--;
         $(`#header__second__like--notice1`).html(like_header1.toString());
-        $(`.luot-like-${sp_id}`).html(like.toString());
+        if(like == 0)
+        {
+          $(`.luot-like-${sp_id}`).html("");
+        }
+        else
+        {
+          $(`.luot-like-${sp_id}`).html(like.toString());
+        }
+        
       });
     }
     else {

@@ -122,10 +122,11 @@ class HoaDonController extends Controller
     }
 
     public function returnBuyNow(Request $request, $id, $ho_ten, $so_dien_thoai, $dia_chi) {
+       
         $url = session('url_prev','/');
-
+        $data = Session::all();
         if($request->vnp_ResponseCode == "00") {
-            $data = Session::all();
+            
             if(empty($data['id'])) {
               return view('pages.error');
             }
