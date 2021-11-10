@@ -116,7 +116,7 @@
             <div class="detial__my-profile ">
               <div class="heading-edit-account">
                 <h2>Hồ sơ của tôi</h2>
-                <div class=" alert-block">
+                <div class="alert-block">
       
                 </div>
                 @foreach($arrays as $account)
@@ -257,8 +257,8 @@
                 type:"POST",
                 success:function(data){
                   if($.isEmptyObject(data.error)){
-                    var _html = `<button type="button" class="close" data-dismiss="alert">×</button>`;
-                        _html += `<strong>` + data.success + `</strong>`;
+                    var _html = `<div class="alert-content"></div><button type="button" class="close" data-dismiss="alert">×</button>`;
+                        _html += `<strong>` + data.success + `</strong></div>`;
                     jQuery(".alert-block").append(_html);
                     $(".alert-block").addClass("alert alert-success");
 
@@ -304,6 +304,8 @@
     function removeErrorMsg(){
         $(".error-msg").remove();
         $("input").removeClass("border-error");
+        $(".alert-block").empty();
+        $(".alert-block").removeClass("alert alert-success");
     }
   </script>
 @endsection

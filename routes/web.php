@@ -130,6 +130,9 @@ Route::get('/order-success', function () {
 Route::get('/un-product-detail', function () {
     return view('pages.un_product_detail');
 })->name('unproductdetail');
+Route::get('/order-error', function () {
+  return view('pages.error');
+})->name('error');
 Route::get('/search','PageController@timkiem')->name('search');
 Route::get('/list-like', 'PageController@danhSachYeuThich')->name('listlike');
 Route::get('/accounts/{id}', 'TaiKhoanController@quanLyTaiKhoan')->name('accounts');

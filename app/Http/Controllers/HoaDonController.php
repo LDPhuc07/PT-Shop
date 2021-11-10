@@ -125,6 +125,10 @@ class HoaDonController extends Controller
         $url = session('url_prev','/');
 
         if($request->vnp_ResponseCode == "00") {
+            $data = Session::all();
+            if(empty($data['id'])) {
+              return view('pages.error');
+            }
             $bill = array();
             if($id != "no") {
               $bill['tai_khoans_id'] = $id;
@@ -136,7 +140,7 @@ class HoaDonController extends Controller
             $bill['hinh_thuc_thanh_toan'] = true;
             $bill_id = HoaDon::insertGetId($bill);
 
-            $data = Session::all();
+            
             $loi_nhuan = 0;
             $tongtien = 0;
             $bill_detail = new ChiTietHoaDon();
