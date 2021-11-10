@@ -80,7 +80,11 @@
                                                     <span class="notice">{{ $array->so_luong }}</span>
                                                 </div>
                                                 <div class="col-5">
-                                                    <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                                                    <h3>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h3>
+                                                    <div style="display:flex;">
+                                                      <span style="font-size: 16px;margin-right: 10px"><i>Màu: {{ $array->chiTietSanPham->mau }}</i></span>
+                                                      <span style="font-size: 16px"><i>Size: {{ $array->chiTietSanPham->kich_thuoc }}</i></span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-3">
                                                     <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>
@@ -272,11 +276,11 @@
                                 
                                 @if($dem3 != 0)
                             <div class="pay">
-                                <button  type="button" class="btn-pay submit_id" >Thanh toán</button>
+                                <button  type="button" class="btn-pay submit_id" >Đặt hàng</button>
                             </div>
                             @else 
                             <div class="pay">
-                                <button type="button" class="btn-pay" >Thanh toán</button>
+                                <button type="button" class="btn-pay" >Đặt hàng</button>
                             </div>
                             @endif
                             @else
@@ -289,11 +293,11 @@
                                 @endforeach
                                 @if($dem != 0)
                                 <div class="pay">
-                                    <button  type="button" class="btn-pay submit_id" >Thanh toán</button>
+                                    <button  type="button" class="btn-pay submit_id" >Đặt hàng</button>
                                 </div>
                                 @else
                                 <div class="pay">
-                                    <button type="button" class="btn-pay"  disabled>Thanh toán</button>
+                                    <button type="button" class="btn-pay"  disabled>Đặt hàng</button>
                                 </div>
                                 @endif
                             @endif                      
@@ -324,7 +328,11 @@
                                                 <span class="notice">{{ $array->so_luong }}</span>
                                             </div>
                                             <div class="col-5">
-                                                <h5>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h5>
+                                              <h3>{{ $array->chiTietSanPham->sanPham->ten_san_pham }}</h3>
+                                              <div style="display:flex;">
+                                                <span style="font-size: 16px;margin-right: 10px"><i>Màu: {{ $array->chiTietSanPham->mau }}</i></span>
+                                                <span style="font-size: 16px"><i>Size: {{ $array->chiTietSanPham->kich_thuoc }}</i></span>
+                                              </div>
                                             </div>
                                             <div class="col-3">
                                                 <h4 style="font-size:12px">{{number_format($array->chiTietSanPham->sanpham->gia_ban*(100-$array->chiTietSanPham->sanpham->giam_gia)/100,0,',','.').' '.'VNĐ'}}</h4>

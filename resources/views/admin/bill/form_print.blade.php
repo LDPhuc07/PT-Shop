@@ -61,7 +61,7 @@
                     <th>Sản phẩm</th>
                     <th>SL</th>
                     <th>Đơn giá</th>
-                    <th>Thành tiền</th>
+                    <th><div style="text-align: right;padding-right:24px">Thành tiền</div></th>
                 </tr>
             </thead>
             <tbody style="border-bottom: 1px solid">
@@ -70,7 +70,7 @@
                     <td>{{ $i->chiTietSanPham->sanPham->ten_san_pham }}</td>
                     <td>{{ $i->so_luong }} x</td>
                     <td>{{number_format($i->gia_ban,0,',','.').' '.'VNĐ'}}</td>
-                    <td>{{number_format($i->gia_ban * $i->so_luong,0,',','.').' '.'VNĐ'}}</td>
+                    <td><div style="text-align: right;padding-right:24px">{{number_format($i->gia_ban * $i->so_luong,0,',','.').' '.'VNĐ'}}</div></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -78,8 +78,8 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td style="text-align: right;">Tổng tiền: </td>
-                    <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
+                    <td></td>
+                    <td><div style="text-align: right;padding-right:24px"><span style="padding-right: 16px">Tổng tiền:</span>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</div></td>
                 </tr>
             </tfoot>
         </table>

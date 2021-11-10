@@ -23,6 +23,7 @@
             .total {
                 margin-top: 20px;
                 text-align: right;
+                margin-right: 4px;
             }
             .info
             .greeting {
@@ -35,6 +36,9 @@
             }
             table {
                 border-collapse: collapse;
+            }
+            th {
+              text-align: center;
             }
         </style>
     </head>
@@ -67,8 +71,8 @@
                 @foreach($arrays as $array)
                 <tr style="border: 1px solid">
                     <td>{{ $array->ten_san_pham }}</td>
-                    <td>{{ $array->so_luong}}</td>
-                    <td>{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
+                    <td style="text-align: center">{{ $array->so_luong}}</td>
+                    <td style="text-align: right">{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
                     <?php
                         $tong += ($array->gia_ban - $array->gia_goc) * $array->so_luong;
                     ?>

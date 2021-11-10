@@ -129,7 +129,7 @@ class HoaDonController extends Controller
             if($id != "no") {
               $bill['tai_khoans_id'] = $id;
             }
-            $bill['ho_ten'] = $id;
+            $bill['ho_ten'] = $ho_ten;
             $bill['so_dien_thoai'] = $so_dien_thoai;
             $bill['dia_chi'] = $dia_chi;
             $bill['ngay_lap_hd'] = Carbon::now();

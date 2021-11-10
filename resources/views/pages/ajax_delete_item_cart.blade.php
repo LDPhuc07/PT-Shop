@@ -113,7 +113,7 @@
                 
                   <div class="cart-quantity cart-{{$array->id}}">
                       <input type="button" value="-" class="control" onclick="truSoLuong({{$array->id}})">
-                      <input type="text"  value="{{ $array->so_luong }}" class="text-input" name="quantity" id="textsoluong"> 
+                      <input type="text"  value="{{ $array->so_luong }}" class="text-input" name="quantity" id="textsoluong" readonly> 
                       <input type="button" value="+" class="control" onclick="congSoLuong({{$array->id}},{{ $array->chiTietSanPham->so_luong }})">
                   </div>
                 </div>

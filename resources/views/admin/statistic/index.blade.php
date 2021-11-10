@@ -72,7 +72,7 @@
                   @endif
                 @else
                   @if(empty($key_to_day))
-                    <a href="admin/statistics/printKeyFromDay/{{ $key_from_day }}">
+                    <a target="_blank" href="admin/statistics/printKeyFromDay/{{ $key_from_day }}">
                   @else
                     <a target="_blank" href="admin/statistics/printKeyFromToDay/{{ $key_from_day }}/{{ $key_to_day }}">
                   @endif

@@ -123,7 +123,7 @@
                                 
                                   <div class="cart-quantity cart-{{$array->id}}">
                                       <input type="button" value="-" class="control" onclick="truSoLuong({{$array->id}})">
-                                      <input type="text"  value="{{ $array->so_luong }}" class="text-input" name="quantity" id="textsoluong"> 
+                                      <input type="text"  value="{{ $array->so_luong }}" class="text-input" name="quantity" id="textsoluong" readonly> 
                                       <input type="button" value="+" class="control" onclick="congSoLuong({{$array->id}},{{ $array->chiTietSanPham->so_luong }})">
                                   </div>
                                 </div>
@@ -215,7 +215,7 @@
                           <span class="total__price">{{number_format($tongtien,0,',','.').' '.'VNĐ'}}</span>
                       </div>
                       <div class="cart-buttons col-12">
-                          <a href="{{ route('checkout.index') }}" class="chekout ">Thanh toán</a>
+                          <a href="{{ route('checkout.index') }}" class="chekout ">Đặt hàng</a>
                       </div>
                     </div>
                   </div>

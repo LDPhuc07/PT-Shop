@@ -113,11 +113,11 @@ class PageController extends Controller
                                             ->get();
                 $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
                 $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
-                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills','dem_danh_gia','list_danh_gia'));
+                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','is_like','check_rate','check_bills','dem_danh_gia','list_danh_gia','size_by_first_color_set_qty'));
             }
             
             else {
-                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','dem_danh_gia','list_danh_gia'));
+                return view('pages.product_detail',compact('yeu_thich','danh_gia','qty','sanpham','anhchinh','size','color','sanphamlienquans','first_color','size_by_first_color','dem_danh_gia','list_danh_gia','size_by_first_color_set_qty'));
             }
         }
        
