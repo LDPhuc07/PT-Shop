@@ -380,7 +380,12 @@
         <h4 class="modal-title">Thông báo</h4>
         <button style="color:red;font-size: 23px;" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      
+      <?php
+                    if(!(Auth::check() && Auth::user()->admin != 1))
+                    {
+                        Session::put('url previous',url()->current());
+                    }
+                  ?>
       <!-- Modal body -->
       <div class="modal-body">
         Bạn cần phải đăng nhập để đưa sản phẩm vào danh sách thích!

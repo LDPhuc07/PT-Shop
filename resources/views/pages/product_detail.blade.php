@@ -582,7 +582,7 @@
                     @endif
                   @else
                   <?php
-                    if(!Auth::check())
+                    if(!(Auth::check() && Auth::user()->admin != 1))
                     {
                         Session::put('url previous',url()->current());
                     }
