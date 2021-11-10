@@ -1230,7 +1230,7 @@
       $('.overlay').fadeOut();
       $('.alert').fadeOut();
   }
-  setInterval(fadeOutModal, 5000);
+  setInterval(fadeOutModal, 7000);
 </script>
 
 @endsection
