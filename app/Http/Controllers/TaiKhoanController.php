@@ -69,6 +69,7 @@ class TaiKhoanController extends Controller
         return view('admin.login');
     }
     public function getDangNhap() {
+        Auth::logout();
         return view('pages.login');
     }
     public function postDangNhapAdmin(Request $requests) {
@@ -442,6 +443,7 @@ class TaiKhoanController extends Controller
       }
     }
     public function editAccountAdmin($id) {
+
         $array = ['arrays'=>taiKhoan::where('id',$id)->get()];
         return view('admin.account.edit_account',$array);
     }
@@ -603,11 +605,19 @@ class TaiKhoanController extends Controller
         
     }
     public function quanLyTaiKhoan($id) {
+      if(Auth::check() && Auth::user()->admin != 1) {
         $array = ['arrays'=>TaiKhoan::where('id',$id)->get()];
         return view('pages.account',$array);
+      } else {
+        return view('pages.login');
+      }
     }
     public function DoiMatKhau($id) {
+      if(Auth::check() && Auth::user()->admin != 1) {
         return view('pages.change_password');
+      } else {
+        return view('pages.login');
+      }
     }
     public function search(Request $requests) {
         $key = $requests->search;

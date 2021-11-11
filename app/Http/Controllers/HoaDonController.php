@@ -1038,10 +1038,13 @@ class HoaDonController extends Controller
         // return view('admin.bill.index',$array);
     }
     public function myBill() {
-      $sub_30_days = Carbon::now('Asia/Ho_Chi_Minh')->subDay(30)->toDateString();
-      $array = ['arrays'=>HoaDon::where('tai_khoans_id',Auth::user()->id)->where('ngay_lap_hd',">=",$sub_30_days)->orderBy('ngay_lap_hd', 'DESC')
-                                    ->paginate(5)];
-      return view('pages.my_order',$array);
+      if(Auth::check() && Auth::user()->admin != 1) {
+        $array = ['arrays'=>HoaDon::where('tai_khoans_id',Auth::user()->id)->orderBy('ngay_lap_hd', 'DESC')
+                                      ->paginate(5)];
+        return view('pages.my_order',$array);
+      } else {
+        return view('pages.login');
+      }
     }
     public function myBillDetail($id) {
         $array = ChiTietHoaDon::where('hoa_dons_id', $id)

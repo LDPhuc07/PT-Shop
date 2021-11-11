@@ -26,7 +26,7 @@ class ThanhToanController extends Controller
                             ->get();
             return view('pages.pay', compact('arrays')); 
         } else {
-            return view('pages.pay');   
+            return view('pages.index');   
         }
     }
     public function postindex(Request $request) {

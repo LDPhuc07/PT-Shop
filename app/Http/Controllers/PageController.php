@@ -310,6 +310,7 @@ class PageController extends Controller
         
     }
     public function danhSachYeuThich() {
+      if(Auth::check() && Auth::user()->admin != 1) {
         $likes = YeuThich::where('tai_khoans_id', Auth::user()->id)
                                     ->with(array('sanPham' => function($query) {
                                                             $query->with(array('anh' => function($querys) {
@@ -319,6 +320,10 @@ class PageController extends Controller
 
         $dem_yeu_thich = YeuThich::where('tai_khoans_id',Auth::user()->id)->count();
         return view('pages.listlike', compact('likes','dem_yeu_thich'));
+      } else {
+        return view('pages.index');
+      }
+        
     }
     public function timkiem(Request $request)
     {

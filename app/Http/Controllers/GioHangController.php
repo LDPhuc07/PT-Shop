@@ -26,7 +26,7 @@ class GioHangController extends Controller
                                     ->get();
             return view('pages.cart', compact('arrays'));
         } else {
-            return view('pages.cart');
+            return view('pages.index');
         }
     }
     public function save(Request $request) {
