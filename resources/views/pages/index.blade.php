@@ -393,7 +393,7 @@
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <a href="{{ route('accounts.sign-up') }}" type="button" class="btn btn-secondary ">Đăng ký</a>
+        <a type="button" class="btn btn-secondary red" data-dismiss="modal">Đóng</a>
         <a href="{{ route('accounts.logout') }}" type="button" class="btn btn-info">Đăng nhập</a>
       </div>
       

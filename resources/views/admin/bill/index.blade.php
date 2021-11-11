@@ -241,7 +241,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
+                              <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn (mã hóa đơn: {{$bill->id}})')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
                               <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
                               <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <div class="modal fade" id="form-modal" role="dialog">

@@ -184,7 +184,7 @@
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default red" data-dismiss="modal" style="color: white;">Close</button>
+          <button type="button" class="btn btn-default red" data-dismiss="modal" style="color: white;">Đóng</button>
         </div>
       </div>
       
