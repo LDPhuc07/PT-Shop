@@ -13,7 +13,7 @@
       <div>
         <i class="fas fa-check-circle" style="font-size:100px;text-align:center;color:greenyellow;margin-bottom: unset"></i>
       </div>
-      <p style="margin-top: 5px;font-size: 12px;">Đơn hàng sẽ được giao trong 2 đến 7 ngày</p>
+      <p style="margin-top: 5px;font-size: 12px;">Đơn hàng có thể sẽ được giao trong 2 đến 7 ngày</p>
       <div>
         <a style="margin-left: 20px;font-size: 16px;" href="{{route('index')}}" class="btn btn-buynow">Tiếp tục mua hàng</a>
       </div>
