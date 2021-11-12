@@ -230,7 +230,7 @@
   //     }
   //   });
   // </script>
-  // <script>
+   <script>
   //   const pass_field2 = document.querySelector('#password-new');
   //   const show_btn2 = document.querySelector('.fa-eye-2')
   //   show_btn2.addEventListener("click",function(){
@@ -243,7 +243,7 @@
   //     }
   //   });
   // </script>
-  // <script>
+   <script>
   //   const pass_field3 = document.querySelector('#password-confirm');
   //   const show_btn3 = document.querySelector('.fa-eye-3')
   //   show_btn3.addEventListener("click",function(){
