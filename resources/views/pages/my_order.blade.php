@@ -8,7 +8,10 @@
 @section('content')
 <style>
   .yellow {
-    background-color:#bbbb79;
+    background-color:#ffc107;
+  }
+  .btn-stt {
+    padding: 2px 4px;
   }
   /* Mobile & tablet  */
   @media (max-width: 1023px) {
@@ -101,7 +104,7 @@
                         <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
                         <td>
                           @if ($bill->trang_thai_don_hang == 0)
-                            <span class="btn-stt red" >Đã Hủy</span>
+                            <span  class="btn-stt red" >Đã Hủy</span>
                           @endif
                           @if ($bill->trang_thai_don_hang == 1)
                             <span class="btn-stt blue" >Chờ xác nhận</span>

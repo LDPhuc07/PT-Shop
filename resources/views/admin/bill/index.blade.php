@@ -110,11 +110,11 @@
                           <label class="trang-thai-label" class="unset-width">Trạng thái đơn hàng: </label>
                           <select  class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai_don_hang">
                             <option value="">--Chọn--</option>
-                            <option value="0">Đã hủy</option>
                             <option value="1">Chờ xác nhận</option>
                             <option value="2">Chờ lấy hàng</option>
                             <option value="3">Đang giao</option>
                             <option value="4">Đã Giao</option>
+                            <option value="0">Đã hủy</option>
                           </select>
                         </div>
                         <input type="submit" style="color: #fff;
@@ -224,11 +224,11 @@
                                         <label style="font-size: 18px" class="trang-thai-label unset-width">Trạng thái đơn hàng: </label>
                                         <select id="ttdh_val" class="w-100 form-control" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai_don_hang">
                                           <option value="no">--Chọn--</option>
-                                          <option value="0">Đã hủy</option>
                                           <option value="1">Chờ xác nhận</option>
                                           <option value="2">Chờ lấy hàng</option>
                                           <option value="3">Đang giao</option>
                                           <option value="4">Đã Giao</option>
+                                          <option value="0">Đã hủy</option>
                                         </select>
                                         </div>
                                       </div>
