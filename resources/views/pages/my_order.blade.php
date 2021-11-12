@@ -168,7 +168,7 @@
               <div class="note-cancel" style="color:red;font-size:15px;text-align:center;margin-top: 15px">
                 <span><i>
                   *Muốn hủy đơn hàng vui lòng liên hệ
-                  với cửa hàng qua zalo hoặc đường dây nóng: 0912420530</i></span>
+                  với cửa hàng qua zalo hoặc đường dây nóng: 0123456789</i></span>
               </div>
           </div>
         </div>
