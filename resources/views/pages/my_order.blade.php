@@ -94,6 +94,7 @@
                         <th>Tổng tiền</th>
                         <th>Trạng thái đơn hàng</th>
                         <th>Chi tiết</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -120,6 +121,35 @@
                           @endif
                         </td>
                         <td><a onclick="showModal({{ $bill->id }})" style="cursor: pointer">Xem</a></td>
+                        <td>
+                          @if($bill->trang_thai_don_hang < 3)
+                          <button class="btn btn-danger">
+                            <i class="fas fa-times"></i>  
+                          </button>
+
+                          <div class="modal fade" id="modal">
+                            <div class="modal-dialog modal-dialog">
+                              <div class="modal-content">
+                              
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Cập nhật trạng thái đơn hàng</h4>
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                  <!-- Modal body -->
+                                  <div class="modal-body">
+                                    
+                                  </div>
+                                  <!-- Modal footer -->
+                                  <div style=" border-top: unset;" class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+                                    <button type="submit" class="btn btn-danger" id="khoa" style="background-color:#08f;color:white">Lưu</button>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          @endif
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -167,7 +197,7 @@
               </div>
               <div class="note-cancel" style="color:red;font-size:15px;text-align:center;margin-top: 15px">
                 <span><i>
-                  *Muốn hủy đơn hàng vui lòng liên hệ
+                  *Nêu muốn hủy đơn hàng khi đơn hàng ở trạng thái (đang giao hoặc đã giao) thì vui lòng liên hệ
                   với cửa hàng qua zalo hoặc đường dây nóng: 0123456789</i></span>
               </div>
           </div>
