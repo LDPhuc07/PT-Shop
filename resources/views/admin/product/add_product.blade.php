@@ -168,29 +168,14 @@
                 </div>
               </div>
               <div class="product-info-item">
-                <div class="row">
-                  <div class="col-6">
-                    <label class="product-info-item-label" for="">Giá gốc<span class="repuired"> *</span></label>
-                    <i class="fas fa-info note-info">
-                      <p>Nhập ký tự số</p>
-                    </i>
-                    <div class="cost-div"> 
-                      <input class="textbox" type="text" placeholder="Nhập giá gốc" name="giagoc">
-                      <p class="dram">VNĐ</p>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
-                    <i class="fas fa-info note-info">
-                      <p>Nhập ký tự số</p>
-                    </i>
-                    <div class="price-div">
-                      <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
-                      <p class="dram">VNĐ</p>
-                    </div>
-                  </div>
+                <label class="product-info-item-label" for="">Giá bán<span class="repuired"> *</span></label>
+                <i class="fas fa-info note-info">
+                  <p>Nhập ký tự số</p>
+                </i>
+                <div class="price-div">
+                  <input class="textbox" type="text" placeholder="Nhập giá bán" name="giaban">
+                  <p class="dram">VNĐ</p>
                 </div>
-              
               </div>
             
               <div>

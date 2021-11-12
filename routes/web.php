@@ -141,6 +141,8 @@ Route::post('/accounts/change-password/{id}','TaiKhoanController@putDoiMatKhau')
 Route::post('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts.update');
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
+Route::get('/bill/destroy-bill/{id}','HoaDonController@destroyBill');
+Route::get('/bill/cancel-destroy-bill/{id}','HoaDonController@cancelDestroyBill');
 Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@returnNotAcc')->name('bill.return');
 Route::get('/return-vnpay/{id}/{ho_ten}/{so_dien_thoai}/{dia_chi}','HoaDoncontroller@return')->name('bill.return');
 Route::get('/return-buy-now-vnpay-not-acc','HoaDoncontroller@returnBuyNowNotAcc');

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Cart;
 use App\SanPham;
 use App\ChiTietSanPham;
+use App\DanhSachHanChe;
 use App\Anh;
 use App\GioHang;
 use Session;
@@ -48,6 +49,7 @@ class ThanhToanController extends Controller
     }
     public function thanhToanNgayIndex() {
         $data = Session::all();
-        return view('pages.buy_now', compact('data'));
+        $ds_han_che = DanhSachHanChe::all();
+        return view('pages.buy_now', compact('data', 'ds_han_che'));
     }
 }

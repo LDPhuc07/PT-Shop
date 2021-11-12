@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
             if($request->dashboard_value == '7ngay') {
                 $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->where('hoa_dons.ngay_lap_hd','>=',$sub_7_days)
                     ->groupBy('ngay_lap_hoadon')
@@ -55,7 +55,7 @@ class DashboardController extends Controller
             }
             if($request->dashboard_value == 'thangtruoc') {
               $get = DB::table('hoa_dons')
-              ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+              ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
               ->where('hoa_dons.trang_thai_don_hang',4)
               ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay,$cuoi_thang_truoc])
               ->groupBy('ngay_lap_hoadon')
@@ -64,7 +64,7 @@ class DashboardController extends Controller
             }
             if($request->dashboard_value == 'thangnay') {
                 $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->where('hoa_dons.ngay_lap_hd','>=',$dau_thang_nay)
                     ->groupBy('ngay_lap_hoadon')
@@ -73,7 +73,7 @@ class DashboardController extends Controller
             }
             if($request->dashboard_value == '365ngayqua') {
                 $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->where('hoa_dons.ngay_lap_hd','>=',$sub_365_days)
                     ->groupBy('ngay_lap_hoadon')
@@ -84,14 +84,14 @@ class DashboardController extends Controller
             if(!empty($request->from_date)) {
                 if(!empty($request->to_date)) {
                     $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereBetween('hoa_dons.ngay_lap_hd',[$request->from_date, $request->to_date])
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 } else {
                     $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereDate('hoa_dons.ngay_lap_hd','>=',$request->from_date)
                     ->groupBy('ngay_lap_hoadon')
@@ -100,14 +100,14 @@ class DashboardController extends Controller
             } else {
                 if(!empty($request->to_date)) {
                     $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->whereDate('hoa_dons.ngay_lap_hd','<=',$request->to_date)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
                 } else {
                     $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->groupBy('ngay_lap_hoadon')
                     ->get();
@@ -119,7 +119,7 @@ class DashboardController extends Controller
             
             $chart_data[] = array(
                 'ngay_lap_hoadon' => Carbon::parse($val->ngay_lap_hoadon)->format('Y-m-d'),
-                'loi_nhuan' => $val->loi_nhuan
+                'tong_tien' => $val->tong_tien
             );
         }
         // dd($chart_data);
@@ -133,7 +133,7 @@ class DashboardController extends Controller
 
         // $get = HoaDon::whereBetween('ngay_lap_hd',[$sub_30_days, $now])->orderBy('ngay_lap_hd','ASC')->get();
         $get = DB::table('hoa_dons')
-                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.loi_nhuan) AS loi_nhuan'))
+                    ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
                     ->where('hoa_dons.trang_thai_don_hang',4)
                     ->where('hoa_dons.ngay_lap_hd','>=',$sub_30_days)
                     ->groupBy('ngay_lap_hoadon')
@@ -142,7 +142,7 @@ class DashboardController extends Controller
             
             $chart_data[] = array(
                 'ngay_lap_hoadon' => Carbon::parse($val->ngay_lap_hoadon)->format('Y-m-d'),
-                'loi_nhuan' => $val->loi_nhuan
+                'tong_tien' => $val->tong_tien
             );
         }
         // dd($chart_data);

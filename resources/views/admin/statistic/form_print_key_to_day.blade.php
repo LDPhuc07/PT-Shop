@@ -47,7 +47,7 @@
         <p>Địa chỉ: 86 Đinh Bộ Lĩnh, P.26, Q. Bình Thạnh, TPHCM</p>
         <p>ĐT: 0123456789</p>
         <hr/>
-        <h2>BÁO CÁO THỐNG KÊ ĐẾN NGÀY {{ $key_to_day }}</h2>
+        <h2>BÁO CÁO THỐNG KÊ DOANH THU ĐẾN NGÀY {{ $key_to_day }}</h2>
         <div class="info">
             <div class="info_item">
                 <label for="">Ngày lập báo cáo thống kê:</label> 21/02/2021 <br/>
@@ -61,7 +61,7 @@
                 <tr style="border: 1px solid">
                     <th>Sản phẩm</th>
                     <th>Số lượng</th>
-                    <th>Lãi</th>
+                    <th>Doanh thu</th>
                 </tr>
             </thead>
             <tbody >
@@ -72,16 +72,16 @@
                 <tr style="border: 1px solid">
                     <td>{{ $array->ten_san_pham }}</td>
                     <td style="text-align: center">{{ $array->so_luong}}</td>
-                    <td style="text-align: right">{{number_format(($array->gia_ban - $array->gia_goc) * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
+                    <td style="text-align: right">{{number_format($array->gia_ban * $array->so_luong,0,',','.').' '.'VNĐ'}}</td>
                     <?php
-                        $tong += ($array->gia_ban - $array->gia_goc) * $array->so_luong;
+                        $tong += $array->gia_ban * $array->so_luong;
                     ?>
                 </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="total">
-            <label for="">Tổng tiền: </label>    {{number_format($tong,0,',','.').' '.'VNĐ'}}
+            <label for="">Tổng doanh thu: </label>    {{number_format($tong,0,',','.').' '.'VNĐ'}}
         </div>
     </body>
 </html>

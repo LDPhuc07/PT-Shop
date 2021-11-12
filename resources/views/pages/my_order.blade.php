@@ -103,9 +103,12 @@
                         <td>{{ $bill->id }}</td>
                         <td>{{ date('d-m-Y', strtotime($bill->ngay_lap_hd)) }}</td>
                         <td>{{number_format($bill->tong_tien,0,',','.').' '.'VNĐ'}}</td>
-                        <td>
+                        <td id="ttdh-{{ $bill->id }}">
                           @if ($bill->trang_thai_don_hang == 0)
                             <span  class="btn-stt red" >Đã Hủy</span>
+                          @endif
+                          @if ($bill->trang_thai_don_hang == -1)
+                            <span  class="btn-stt red" >Không nhận hàng</span>
                           @endif
                           @if ($bill->trang_thai_don_hang == 1)
                             <span class="btn-stt blue" >Chờ xác nhận</span>
@@ -121,34 +124,40 @@
                           @endif
                         </td>
                         <td><a onclick="showModal({{ $bill->id }})" style="cursor: pointer">Xem</a></td>
-                        <td>
-                          @if($bill->trang_thai_don_hang < 3)
-                          <button class="btn btn-danger">
-                            <i class="fas fa-times"></i>  
-                          </button>
-
+                        <td id="destroy-bill-{{ $bill->id }}">
+                          @if($bill->trang_thai_don_hang < 3 && $bill->trang_thai_don_hang > 0)
+                            <button type="button" class="btn btn-danger" onclick="hienThiModal({{ $bill->id }})">
+                              Hủy đơn hàng
+                            </button>
+                          @endif
+                          @if($bill->trang_thai_don_hang == 0)
+                            <button type="button" class="btn btn-info" onclick="boHuyDonHang({{ $bill->id }})">
+                              Bỏ hủy đơn hàng
+                            </button>
+                          @endif
                           <div class="modal fade" id="modal">
                             <div class="modal-dialog modal-dialog">
                               <div class="modal-content">
                               
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Cập nhật trạng thái đơn hàng</h4>
+                                  <h4 class="modal-title">Thông báo</h4>
                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                   <!-- Modal body -->
                                   <div class="modal-body">
-                                    
+                                    <input type="text" name="cap_nhat_ttdh" hidden>
+                                    Bạn có thật sự muốn hủy đơn hàng ?
                                   </div>
                                   <!-- Modal footer -->
-                                  <div style=" border-top: unset;" class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
-                                    <button type="submit" class="btn btn-danger" id="khoa" style="background-color:#08f;color:white">Lưu</button>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn light" style="border: 1px solid #ccc" data-dismiss="modal">Đóng</button>
+                                    <button type="button" onclick="huyDonHang({{ Auth::user()->id }})" class="btn btn-danger" id="khoa">Hủy đơn hàng</button>
                                   </div>
                               </div>
                             </div>
                           </div>
-                          @endif
+                          
                         </td>
                       </tr>
                       @endforeach
@@ -195,7 +204,7 @@
                   </nav>
                 </div>
               </div>
-              <div class="note-cancel" style="color:red;font-size:15px;text-align:center;margin-top: 15px">
+              <div class="note-cancel" style="color:red;font-size:15px;text-align:center;margin-top: 15px" >
                 <span><i>
                   *Nêu muốn hủy đơn hàng khi đơn hàng ở trạng thái (đang giao hoặc đã giao) thì vui lòng liên hệ
                   với cửa hàng qua zalo hoặc đường dây nóng: 0123456789</i></span>
@@ -234,6 +243,46 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> 
+  <script>
+    function hienThiModal(id) {
+      $('#modal').modal('show');
+      $("input[name='cap_nhat_ttdh']").val(id);
+    }
+    function boHuyDonHang(id) {
+      $.ajax({
+        url: 'bill/cancel-destroy-bill/'+ id,
+        type: 'GET',
+      }).done(function(res) {
+        if(res == "done") {
+          $(`#destroy-bill-${id}`).empty();
+          var _html = `<button type="button" class="btn btn-danger" onclick="hienThiModal({{ $bill->id }})">`;
+              _html += `Hủy đơn hàng`;
+              _html += `</button>`;
+          $(`#destroy-bill-${id}`).html(_html);
+          $('#modal').modal('hide');   
+          $(`#ttdh-${id}`).html('<span  class="btn-stt blue" >Đang xác nhận</span>');
+        }
+        if(res == "no") {
+          alert("Số lượng sản phẩm không đủ");
+        }
+      });
+    }
+    function huyDonHang() {
+      var id = $("input[name='cap_nhat_ttdh']").val();
+      $.ajax({
+        url: 'bill/destroy-bill/'+ id,
+        type: 'GET',
+      }).done(function(res) {
+        $(`#destroy-bill-${id}`).empty();
+        var _html = `<button type="button" class="btn btn-info" onclick="boHuyDonHang({{ $bill->id }})">`;
+            _html += `Bỏ huỷ đơn hàng`;
+            _html += `</button>`;
+        $(`#destroy-bill-${id}`).html(_html);
+        $('#modal').modal('hide');   
+        $(`#ttdh-${id}`).html('<span  class="btn-stt red" >Đã Hủy</span>');
+      });
+    }
+  </script>
 <script>
   function showModal(id) {
     $.ajax({

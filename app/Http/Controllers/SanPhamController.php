@@ -381,7 +381,6 @@ class SanPhamController extends Controller
             // 'giaban' => 'numeric',
             'tensanpham' => 'required|max:50',
             'giaban' => 'required|numeric|digits_between:4,11',
-            'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'nullable|numeric|min:1|max:50',
             // 'description' => 'required',
             'link.*' => 'mimes:jpeg,jpg,png',
@@ -399,14 +398,12 @@ class SanPhamController extends Controller
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
             'giamgia.max' => 'Giá trị của giảm giá từ 1% đến 100%',
-            'giagoc.required' => 'Bạn chưa nhập giá gốc',
         ];
         $customName = [
             'tensanpham' => 'tên sản phẩm',
             'giaban' => 'giá bán',
             'mota' => 'mô tả',
             'giamgia' => 'giảm giá',
-            'giagoc'=>'giá gốc'
         ];
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
@@ -431,7 +428,6 @@ class SanPhamController extends Controller
         $dsSanPham->loai_san_phams_id=$request->loaisanpham;
         $dsSanPham->mon_the_thaos_id=$request->monthethao;
         $dsSanPham->gia_ban=$request->giaban;
-        $dsSanPham->gia_goc=$request->giagoc;
         $dsSanPham->giam_gia=$request->giamgia;
         $dsSanPham->mo_ta=$request->mota;
         $dsSanPham->save();
@@ -490,7 +486,6 @@ class SanPhamController extends Controller
             // 'giaban' => 'numeric',
 
             'giaban' => 'required|numeric|digits_between:4,11',
-            'giagoc' => 'required|numeric|digits_between:4,11',
             'giamgia' => 'nullable|numeric|min:1|max:50',
             // 'description' => 'required',
             'link.*' => 'mimes:jpeg,jpg,png',
@@ -506,14 +501,12 @@ class SanPhamController extends Controller
             'giaban.required' => 'Bạn chưa nhập giá bán',
             'giamgia.min' => 'Giá trị của giảm giá từ 1% đến 100%',
             'giamgia.max' => 'Giá trị của giảm giá từ 1% đến 100%',
-            'giagoc.required' => 'Bạn chưa nhập giá gốc',
         ];
         $customName = [
             'tensanpham' => 'tên sản phẩm',
             'giaban' => 'giá bán',
             'mota' => 'mô tả',
             'giamgia' => 'giảm giá',
-            'giagoc'=>'giá gốc'
         ];
         $validator = Validator::make($request->all(),$rule,$messages,$customName);
         if($validator->fails())
@@ -552,7 +545,6 @@ class SanPhamController extends Controller
             $dsSanPham->nha_san_xuats_id=$request->nhasanxuat;
             $dsSanPham->loai_san_phams_id=$request->loaisanpham;
             $dsSanPham->mon_the_thaos_id=$request->monthethao;
-            $dsSanPham->gia_goc=$request->giagoc;
             $dsSanPham->gia_ban=$request->giaban;
             $dsSanPham->giam_gia=$request->giamgia;
             $dsSanPham->mo_ta=$request->mota;

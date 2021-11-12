@@ -115,6 +115,7 @@
                             <option value="3">Đang giao</option>
                             <option value="4">Đã Giao</option>
                             <option value="0">Đã hủy</option>
+                            <option value="-1">Không nhận hàng</option>
                           </select>
                         </div>
                         <input type="submit" style="color: #fff;
@@ -171,6 +172,10 @@
                             @endif  --}}
                             <td>
                               <div style="text-align: center" class="trang-thai-dh-{{ $bill->id }}">
+                                @if($bill->trang_thai_don_hang == -1)
+                                <span style="cursor: unset;background: linear-gradient( 
+                                  180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Không nhận hàng</span>
+                                @endif
                                 @if($bill->trang_thai_don_hang == 0)
                                 <span style="cursor: unset;background: linear-gradient( 
                                   180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã hủy</span>
@@ -229,6 +234,7 @@
                                           <option value="3">Đang giao</option>
                                           <option value="4">Đã Giao</option>
                                           <option value="0">Đã hủy</option>
+                                          <option value="-1">Không nhận hàng</option>
                                         </select>
                                         </div>
                                       </div>
@@ -321,6 +327,11 @@
           if(data == 0) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã hủy</span>`;
+            $(`.trang-thai-dh-${id}`).html(_html);
+          }
+          if(data == -1) {
+            var _html = `<span style="cursor: unset;background: linear-gradient(`;
+                _html += `180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Không nhận hàng</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
           }
           if(data == 1) {

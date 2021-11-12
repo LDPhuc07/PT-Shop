@@ -180,7 +180,7 @@ class TaiKhoanController extends Controller
             'email' => 'required|email|unique:tai_khoans,email|max:50',
             'mat_khau' => 'required|min:6',
             'nhap_lai_mat_khau' => 'required_with:mat_khau|same:mat_khau',
-            'so_dien_thoai' => 'required|digits:10|numeric',
+            'so_dien_thoai' => 'required|digits:10|numeric|unique:tai_khoans,so_dien_thoai',
             'anh_dai_dien' => 'nullable|mimes:jpg,jpeg,png',
         ];
         $messages = [
@@ -197,6 +197,7 @@ class TaiKhoanController extends Controller
             'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
             'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
             'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
+            'so_dien_thoai.unique' => 'Số điện thoại đã được đăng ký',
             'anh_dai_dien.mimes' => 'Ảnh đại diện không hợp lệ',
         ];
 

@@ -161,7 +161,7 @@
                 // The name of the data record attribute that contains x-values.
                 xkey: 'ngay_lap_hoadon',
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ['loi_nhuan'],
+                ykeys: ['tong_tien'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
                 labels: ['Doanh thu']
