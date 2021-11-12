@@ -23,7 +23,7 @@ class CreateSanPhamsTable extends Migration
             $table->unsignedInteger('mon_the_thaos_id');
             // $table->foreign('mon_the_thaos_id')->references('id')->on('mon_the_thaos');
             // $table->char('anh');
-            $table->unsignedBigInteger('gia_goc');
+            // $table->unsignedBigInteger('gia_goc');
             $table->unsignedBigInteger('gia_ban');
             $table->unsignedInteger('giam_gia')->nullable();
             $table->text('mo_ta')->nullable();
