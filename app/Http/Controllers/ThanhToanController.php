@@ -49,7 +49,6 @@ class ThanhToanController extends Controller
     }
     public function thanhToanNgayIndex() {
         $data = Session::all();
-        $ds_han_che = DanhSachHanChe::all();
-        return view('pages.buy_now', compact('data', 'ds_han_che'));
+        return view('pages.buy_now', compact('data'));
     }
 }
