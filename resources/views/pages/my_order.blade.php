@@ -130,11 +130,6 @@
                               Hủy đơn hàng
                             </button>
                           @endif
-                          @if($bill->trang_thai_don_hang == 0)
-                            <button type="button" class="btn btn-info" onclick="boHuyDonHang({{ $bill->id }})">
-                              Bỏ hủy đơn hàng
-                            </button>
-                          @endif
                           <div class="modal fade" id="modal">
                             <div class="modal-dialog modal-dialog">
                               <div class="modal-content">
@@ -248,38 +243,15 @@
       $('#modal').modal('show');
       $("input[name='cap_nhat_ttdh']").val(id);
     }
-    function boHuyDonHang(id) {
-      $.ajax({
-        url: 'bill/cancel-destroy-bill/'+ id,
-        type: 'GET',
-      }).done(function(res) {
-        if(res == "done") {
-          $(`#destroy-bill-${id}`).empty();
-          var _html = `<button type="button" class="btn btn-danger" onclick="hienThiModal({{ $bill->id }})">`;
-              _html += `Hủy đơn hàng`;
-              _html += `</button>`;
-          $(`#destroy-bill-${id}`).html(_html);
-          $('#modal').modal('hide');   
-          $(`#ttdh-${id}`).html('<span  class="btn-stt blue" >Đang xác nhận</span>');
-        }
-        if(res == "no") {
-          alert("Số lượng sản phẩm không đủ");
-        }
-      });
-    }
     function huyDonHang() {
       var id = $("input[name='cap_nhat_ttdh']").val();
       $.ajax({
         url: 'bill/destroy-bill/'+ id,
         type: 'GET',
       }).done(function(res) {
-        $(`#destroy-bill-${id}`).empty();
-        var _html = `<button type="button" class="btn btn-info" onclick="boHuyDonHang({{ $bill->id }})">`;
-            _html += `Bỏ huỷ đơn hàng`;
-            _html += `</button>`;
-        $(`#destroy-bill-${id}`).html(_html);
-        $('#modal').modal('hide');   
         $(`#ttdh-${id}`).html('<span  class="btn-stt red" >Đã Hủy</span>');
+        $(`#destroy-bill-${id}`).empty();
+        $('#modal').modal('hide');   
       });
     }
   </script>

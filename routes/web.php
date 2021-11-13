@@ -100,6 +100,9 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('statistics/printKeyFromDay/{key_from_day}','HoaDonController@printStatisticKeyFromDay');
     Route::get('statistics/printKeyFromToDay/{key_from_day}/{key_to_day}','HoaDonController@printStatisticKeyFromToDay');
     Route::get('statistics/printThongKeTheo/{thong_ke_theo}','HoaDonController@printStatisticThongKeTheo');
+
+    //danh sách đen
+    Route::get('black-list','BlackListController@index')->name('admin.blacklist');
     
     
 });
@@ -142,7 +145,6 @@ Route::post('/accounts/{id}','TaiKhoanController@updateAccount')->name('accounts
 Route::get('/bill','HoaDonController@myBill')->name('bill');
 Route::get('bill/detail/{id}','HoaDonController@myBillDetail');
 Route::get('/bill/destroy-bill/{id}','HoaDonController@destroyBill');
-Route::get('/bill/cancel-destroy-bill/{id}','HoaDonController@cancelDestroyBill');
 Route::get('/return-vnpay-not-acc/{tkid}','HoaDoncontroller@returnNotAcc')->name('bill.return');
 Route::get('/return-vnpay/{id}/{ho_ten}/{so_dien_thoai}/{dia_chi}','HoaDoncontroller@return')->name('bill.return');
 Route::get('/return-buy-now-vnpay-not-acc','HoaDoncontroller@returnBuyNowNotAcc');
