@@ -14,7 +14,7 @@ class CreateGioHangTable extends Migration
     public function up()
     {
         Schema::create('gio_hangs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->unsignedInteger('tai_khoans_id');
             $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
             $table->unsignedInteger('chi_tiet_san_phams_id');

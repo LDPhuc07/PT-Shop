@@ -140,7 +140,7 @@ class HoaDonController extends Controller
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
                 'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
-                'so_dien_thoai.unique' => 'Số điện thoại của bạn đã bị đưa vào danh sách hạn chế'
+                'so_dien_thoai.unique' => 'Số điện thoại của bạn đã bị đưa vào danh sách đen'
             ]);
             
 
@@ -246,7 +246,7 @@ class HoaDonController extends Controller
                 'so_dien_thoai.required' => 'Vui lòng nhập số điện thoại',
                 'so_dien_thoai.digits' => 'Số điện thoại phải có 10 số',
                 'so_dien_thoai.numeric' => 'Số điện thoại không hợp lệ',
-                'so_dien_thoai.unique' => 'Số điện thoại của bạn đã bị đưa vào danh sách hạn chế'
+                'so_dien_thoai.unique' => 'Số điện thoại của bạn đã bị đưa vào danh sách đen'
             ]);
        
 

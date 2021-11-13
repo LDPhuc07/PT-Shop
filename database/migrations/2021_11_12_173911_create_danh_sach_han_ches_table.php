@@ -14,7 +14,7 @@ class CreateDanhSachHanChesTable extends Migration
     public function up()
     {
         Schema::create('danh_sach_han_ches', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->char('so_dien_thoai', 10)->unique('so_dien_thoai');
             $table->timestamps();
         });

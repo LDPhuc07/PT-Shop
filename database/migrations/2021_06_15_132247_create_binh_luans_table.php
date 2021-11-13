@@ -14,7 +14,7 @@ class CreateBinhLuansTable extends Migration
     public function up()
     {
         Schema::create('binh_luans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->unsignedInteger('san_phams_id');
             $table->foreign('san_phams_id')->references('id')->on('san_phams');
             $table->unsignedInteger('tai_khoans_id');

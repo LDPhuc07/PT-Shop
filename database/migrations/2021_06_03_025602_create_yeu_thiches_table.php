@@ -14,7 +14,7 @@ class CreateYeuThichesTable extends Migration
     public function up()
     {
         Schema::create('yeu_thiches', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->unsignedInteger('tai_khoans_id');
             $table->foreign('tai_khoans_id')->references('id')->on('tai_khoans');
             $table->unsignedInteger('san_phams_id');
