@@ -482,23 +482,6 @@ class HoaDonController extends Controller
 
       echo "done";
     }
-    public function cancelDestroyBill($id) {
-      $new = HoaDon::find($id);
-      $cthds = ChiTietHoaDon::where('hoa_dons_id', $id)->get();
-      foreach($cthds as $cthd) {
-        $ctsp = ChiTietSanPham::find($cthd->chi_tiet_san_phams_id);
-        if($ctsp->so_luong >= $cthd->so_luong) {
-          $ctsp->so_luong -= $cthd->so_luong;
-          $ctsp->save();
-        } else {
-          return 'no';
-        }
-      }
-      $new->trang_thai_don_hang = 1;
-      $new->save();
-
-      return "done";
-    }
     public function printBill($id) {
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($this->print_order_convert($id));

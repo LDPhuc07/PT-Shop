@@ -109,7 +109,6 @@
                               <th>Loại sản phẩm</th>
                               <th>BM thể thao</th>
                               <th>Giá bán</th>
-                              <th>Giá gốc</th>
                               <th>Giảm giá(%)</th>
                               <th>Hình ảnh</th>
                               <th>Yêu thích</th>
@@ -126,7 +125,6 @@
                             <td>{{$ds->loaiSanPham->ten_loai_san_pham}}</td>
                             <td>{{$ds->monTheThao->ten_the_thao}}</td>
                             <td>{{$ds['gia_ban']}}</td>
-                            <td>{{$ds['gia_goc']}}</td>
                             <td>{{$ds['giam_gia']}}</td>
                             <td>
                               @foreach($ds->anh as $anh)

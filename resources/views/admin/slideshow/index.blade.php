@@ -43,7 +43,7 @@
                         <input class="search-txt" value="{{Request::get('search')}}" type="text" placeholder="Search.." name="search">
                       </div>
                       <input type="submit" class="btn tim_kiem_btn" value="Tìm kiếm">
-                  </form>
+                    </form>
                   </div>
                   <div class="ds-sanpham-div">
                     <table class="table-ds-sanpham">
