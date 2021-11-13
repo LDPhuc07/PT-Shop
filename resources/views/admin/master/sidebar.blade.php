@@ -65,6 +65,12 @@
             <p class="nav-text">Slideshow</p>
             </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.blacklist.index') }}">
+          <i class="nav-icon fas fa-radiation"></i>
+          <p class="nav-text">Danh sách đen</p>
+          </a>
+      </li>
         </ul>
     </nav>
     </div>

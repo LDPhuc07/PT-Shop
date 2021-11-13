@@ -130,28 +130,7 @@
                               Hủy đơn hàng
                             </button>
                           @endif
-                          <div class="modal fade" id="modal">
-                            <div class="modal-dialog modal-dialog">
-                              <div class="modal-content">
-                              
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Thông báo</h4>
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                  <!-- Modal body -->
-                                  <div class="modal-body">
-                                    <input type="text" name="cap_nhat_ttdh" hidden>
-                                    Bạn có thật sự muốn hủy đơn hàng ?
-                                  </div>
-                                  <!-- Modal footer -->
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn light" style="border: 1px solid #ccc" data-dismiss="modal">Đóng</button>
-                                    <button type="button" onclick="huyDonHang({{ Auth::user()->id }})" class="btn btn-danger" id="khoa">Hủy đơn hàng</button>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
+                          
                           
                         </td>
                       </tr>
@@ -225,6 +204,28 @@
         </div>
       </div>
       
+    </div>
+  </div>
+  <div class="modal fade" id="modal">
+    <div class="modal-dialog modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Thông báo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <input type="text" name="cap_nhat_ttdh" hidden>
+            Bạn có thật sự muốn hủy đơn hàng ?
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn light" style="border: 1px solid #ccc" data-dismiss="modal">Đóng</button>
+            <button type="button" onclick="huyDonHang({{ Auth::user()->id }})" class="btn btn-danger" id="khoa">Hủy đơn hàng</button>
+          </div>
+      </div>
     </div>
   </div>
     <script>

@@ -102,7 +102,9 @@ Route::group(['prefix' => 'admin','middleware' => 'kiem_tra_dang_nhap'], functio
     Route::get('statistics/printThongKeTheo/{thong_ke_theo}','HoaDonController@printStatisticThongKeTheo');
 
     //danh sách đen
-    Route::get('black-list','BlackListController@index')->name('admin.blacklist');
+    Route::get('black-list','BlackListController@index')->name('admin.blacklist.index');
+    Route::get('black-list/search','BlackListController@search')->name('admin.blacklist.search');
+    Route::get('black-list/un-lock/{id}','BlackListController@unLock')->name('admin.blacklist.unlock');
     
     
 });
