@@ -77,13 +77,13 @@
                   <div class="head-table">
                     <div class="search">
                       <form action="{{ route('admin.accounts.search') }}" method="GET">
-                        <input class="search-txt" type="text" placeholder="Nhập họ tên, email, số điện thoại, địa chỉ" name="search">
+                        <input class="search-txt" type="text" value="{{Request::get('search')}}" placeholder="Nhập họ tên, email, số điện thoại, địa chỉ" name="search">
                     </div>
                     <div style="margin-right: 16px" class="group-filter-btn">
                       <label class="lbl-admin" style="width: 115px;
                       position: relative;
                       top: 6px;">Loại tài khoản: </label>
-                      <select class="slt-admin" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="admin">
+                      <select class="slt-admin" value="{{Request::get('admin')}}" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="admin">
                         <option value="">--Chọn--</option>
                         <option value="1">Admin</option>
                         <option value="0">Người dùng</option>
@@ -93,7 +93,7 @@
                       <label class="lbl-status" style="width: 90px;
                       position: relative;
                       top: 6px;">Trạng thái: </label>
-                      <select class="slt-status" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai">
+                      <select class="slt-status" value="{{Request::get('trang_thai')}}" style="width: 170px;border: 1px solid #ced4da;border-radius: .25rem;" name="trang_thai">
                         <option value="">--Chọn--</option>
                         <option value="0">Đã khóa</option>
                         <option value="1">Đang hoạt động</option>

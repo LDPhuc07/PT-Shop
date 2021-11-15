@@ -98,7 +98,7 @@
                   <form action="{{ route('admin.bill.search') }}" method="GET">
                     <div class="head-table">
                       <div class="search">
-                          <input class="search-txt" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">
+                          <input class="search-txt" value="{{Request::get('key_search')}}" name="key_search" type="text" placeholder="Tìm theo tên khách hàng, mã hóa đơn">
                       </div>
                         <div class="group-filter-btn">
                           <label>Từ ngày: </label><input style="margin-right: 16px" name="key_from_day" type="text" id="datepicker" class="form-control">

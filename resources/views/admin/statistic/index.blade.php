@@ -93,12 +93,12 @@
                       <div class="key_day">
                         <label style="white-space: nowrap; margin-right: 8px;
                         margin-top: 5px;">Từ ngày: </label>
-                        <input name="key_from_day" type="text" id="datepicker" class="form-control">
+                        <input name="key_from_day" value="{{Request::get('key_from_day')}}" type="text" id="datepicker" class="form-control">
                       </div>
                       <div class="key_day">
                         <label style="white-space: nowrap; margin-right: 8px;
                         margin-top: 5px;">Đến ngày: </label>
-                        <input name="key_to_day" type="text" id="datepicker2" class="form-control">
+                        <input name="key_to_day" value="{{Request::get('key_to_day')}}" type="text" id="datepicker2" class="form-control">
                       </div>
                       <div style="display: flex">
                         <label class="lbl_thong_ke_theo">Thống kê theo: </label>
