@@ -33,7 +33,7 @@ class ChiTietSanPhamSeeder extends Seeder
             ['id'=> 19, 'san_phams_id'=> 8,'mau'=>'vàng', 'kich_thuoc'=>'xl', 'so_luong'=>5],
             ['id'=> 20, 'san_phams_id'=> 10,'mau'=>'đen', 'kich_thuoc'=>'40x30', 'so_luong'=>5],
             ['id'=> 21, 'san_phams_id'=> 10,'mau'=>'trắng', 'kich_thuoc'=>'40x25', 'so_luong'=>5],
-            ['id'=> 22, 'san_phams_id'=> 5,'mau'=>'trắng', 'kich_thuoc'=>'to', 'so_luong'=>10],
+            ['id'=> 22, 'san_phams_id'=> 5,'mau'=>'trắng', 'kich_thuoc'=>'m', 'so_luong'=>10],
             ['id'=> 23, 'san_phams_id'=> 6,'mau'=>'đen', 'kich_thuoc'=>'xl', 'so_luong'=>10],
             
             ['id'=> 24, 'san_phams_id'=> 11,'mau'=>'trắng', 'kich_thuoc'=>'xl', 'so_luong'=>10],

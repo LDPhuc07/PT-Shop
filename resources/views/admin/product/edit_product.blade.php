@@ -340,7 +340,19 @@
                           printErrorMsg (data.error.tensanpham, 'tensanpham');
                           $("input[name=tensanpham]").focus();
                       }
-                      
+                      var dem = 0;
+                      $.each( data.error, function( key, value ) {
+                        if(value == "Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.") {
+                          dem++;
+                        }
+                      });
+                      if(dem > 0) {
+                        var _html = '<span style="display: block" class="error-msg">';
+                            _html += '<i class="fas fa-times"></i>';
+                            _html += 'Dữ liệu bạn nhập không phải là .jpg,.png,.jpeg.';
+                            _html += '</span>';
+                        $('.list-img').after(_html);
+                      }
                     
                   }
                   if(!$.isEmptyObject(data.error1)) {
