@@ -82,6 +82,10 @@
     display: none;
     font-size: 11px
   }
+  .sale-off {
+    top: 14px;
+    right: 33px;
+  }
   /* Mobile & tablet  */
 @media (max-width: 1023px) {
   .all-img {
@@ -106,6 +110,10 @@
   /* Handle on hover */
   .all-img::-webkit-scrollbar-thumb:hover {
     background: #555; 
+  }
+  .sale-off {
+    top: 2px;
+    right: 14px;
   }
 }
 /* tablet */
@@ -216,7 +224,7 @@
               @foreach($sanpham->anh as $anh)
                 <li class="img-item">
                   <img src="{{asset($anh->link)}}" class="small-img" alt="anh 1" onclick="changeImg('{{$anh->id}}')" id="{{$anh->id}}">
-                  <div class="sale-off" style="top:14px;right:14px" data-id="{{$sanpham['giam_gia']}}">
+                  <div class="sale-off" data-id="{{$sanpham['giam_gia']}}">
                     <span class="sale-off-percent">{{$sanpham['giam_gia']}}%</span>
                     <span class="sale-off-label">GIẢM</span>
                   </div>
