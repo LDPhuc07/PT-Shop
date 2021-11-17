@@ -248,7 +248,11 @@
                                 </div>
                               </div>
                               <a  onclick="showModal('admin/bill/bill-detail/{{ $bill->id }}','Chi tiết hóa đơn (mã hóa đơn: {{$bill->id}})')" class="view-detail-btn"><i class="fas fa-eye"></i></a>
-                              <a target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
+                              @if($bill->trang_thai_don_hang > 0)
+                                <div id="print-div-{{ $bill->id }}" style="display:inline">
+                                  <a id="print-bill-{{$bill->id}}" target="_blank" class="print-bill-btn" href="{{ route('admin.bill.print',$bill->id) }}"><i class="fas fa-print"></i></a>
+                                </div>
+                              @endif
                               <a onclick="checkbill({{ $bill->id }})" id="check-bill-{{ $bill->id }}" class="edit-btn"><i class="fas fa-edit"></i></a>
                               <div class="modal fade" id="form-modal" role="dialog">
                                 <div style="max-width: 800px" class="modal-dialog">
@@ -328,31 +332,53 @@
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã hủy</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            $(`#print-bill-${id}`).remove();
           }
           if(data == -1) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#ea4040,#e64040)!important; border-color: unset; box-shadow: unset" class="postpaid">Không nhận hàng</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            $(`#print-bill-${id}`).remove();
           }
           if(data == 1) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#2944e0,#1c18f7)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ xác nhận</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            if($(`#print-bill-${id}`).length == 0)
+            {
+              var _html1 = `<a id="print-bill-${id}" target="_blank" class="print-bill-btn" href="admin/bill/print/${id}"><i class="fas fa-print"></i></a>`
+              $(`#print-div-${id}`).html(_html1);
+            }
           }
           if(data == 2) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Chờ lấy hàng</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            if($(`#print-bill-${id}`).length == 0)
+            {
+              var _html1 = `<a id="print-bill-${id}" target="_blank" class="print-bill-btn" href="admin/bill/print/${id}"><i class="fas fa-print"></i></a>`
+              $(`#print-div-${id}`).html(_html1);
+            }
           }
           if(data == 3) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#ffc107,#ffc107)!important; border-color: unset; box-shadow: unset" class="postpaid">Đang giao</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            if($(`#print-bill-${id}`).length == 0)
+            {
+              var _html1 = `<a id="print-bill-${id}" target="_blank" class="print-bill-btn" href="admin/bill/print/${id}"><i class="fas fa-print"></i></a>`
+              $(`#print-div-${id}`).html(_html1);
+            }
           }
           if(data == 4) {
             var _html = `<span style="cursor: unset;background: linear-gradient(`;
                 _html += `180deg ,#2dcc33,#41ca46)!important; border-color: unset; box-shadow: unset" class="postpaid">Đã giao</span>`;
             $(`.trang-thai-dh-${id}`).html(_html);
+            if($(`#print-bill-${id}`).length == 0)
+            {
+              var _html1 = `<a id="print-bill-${id}" target="_blank" class="print-bill-btn" href="admin/bill/print/${id}"><i class="fas fa-print"></i></a>`
+              $(`#print-div-${id}`).html(_html1);
+            }
           }     
           $('#modal').modal('hide');   
         }
