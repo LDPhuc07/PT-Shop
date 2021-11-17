@@ -57,7 +57,7 @@ class DashboardController extends Controller
               $get = DB::table('hoa_dons')
               ->select(DB::raw('DATE(hoa_dons.ngay_lap_hd) AS ngay_lap_hoadon'),DB::raw('SUM(hoa_dons.tong_tien) AS tong_tien'))
               ->where('hoa_dons.trang_thai_don_hang',4)
-              ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_nay,$cuoi_thang_truoc])
+              ->whereBetween('hoa_dons.ngay_lap_hd',[$dau_thang_truoc,$cuoi_thang_truoc])
               ->groupBy('ngay_lap_hoadon')
               ->get();
                 
@@ -114,14 +114,26 @@ class DashboardController extends Controller
                 }
             }
         }
-
+        $dem = 0;
         foreach($get as $key => $val) {
+          $dem++;
+        }
+        if($dem == 0) {
+          
+          $chart_data[] = array(
+            'ngay_lap_hoadon' => Carbon::now('Asia/Ho_Chi_Minh')->startOfMonth()->toDateString(),
+            'tong_tien' => 0
+        );
+        } else {
+          foreach($get as $key => $val) {
             
             $chart_data[] = array(
                 'ngay_lap_hoadon' => Carbon::parse($val->ngay_lap_hoadon)->format('Y-m-d'),
                 'tong_tien' => $val->tong_tien
             );
         }
+        }
+        
         // dd($chart_data);
         echo $data = json_encode($chart_data);
     }
