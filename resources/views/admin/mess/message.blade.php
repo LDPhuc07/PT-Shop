@@ -75,7 +75,7 @@
         }
     </style>
     <div class="alert alert-info alert-block">
-        <button type="button" class="close cls-logout" ><a href="{{ route('admin.accounts.logout') }}">Đăng xuất</a></button>
+        <button type="button" class="close cls-logout" ><a href="{{ route('accounts.logout') }}">Đăng xuất</a></button>
         <button type="button" class="close cls-stay"><a href="">Ở lại</a></button>
         <strong>{{ $message }}</strong>
     </div>

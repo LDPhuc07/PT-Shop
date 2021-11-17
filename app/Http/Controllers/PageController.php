@@ -110,6 +110,7 @@ class PageController extends Controller
                                                     $que->where('san_phams_id', $id_sp);
                                                 });
                                             })
+                                            ->where('trang_thai_don_hang',4)
                                             ->get();
                 $check_rate = DanhGia::where('tai_khoans_id', Auth::user()->id)->where('san_phams_id', $request->id)->first();
                 $is_like = YeuThich::where('tai_khoans_id',Auth::user()->id)->get();
